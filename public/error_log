@@ -1,0 +1,533 @@
+[04-Apr-2023 12:55:03 Asia/Riyadh] PHP Fatal error:  Cannot declare class App\Http\Controllers\Dashboard\ProductController, because the name is already in use in /home/backends/public_html/tutrend/app/Http/Controllers/Site/ProductController.php on line 23
+[04-Apr-2023 12:55:16 Asia/Riyadh] PHP Fatal error:  Cannot declare class App\Http\Controllers\Dashboard\ProductController, because the name is already in use in /home/backends/public_html/tutrend/app/Http/Controllers/Site/ProductController.php on line 23
+[04-Apr-2023 12:55:17 Asia/Riyadh] PHP Fatal error:  Cannot declare class App\Http\Controllers\Dashboard\ProductController, because the name is already in use in /home/backends/public_html/tutrend/app/Http/Controllers/Site/ProductController.php on line 23
+[04-Apr-2023 12:55:47 Asia/Riyadh] PHP Fatal error:  Cannot declare class App\Http\Controllers\Dashboard\ProductController, because the name is already in use in /home/backends/public_html/tutrend/app/Http/Controllers/Site/ProductController.php on line 23
+[04-Apr-2023 12:55:50 Asia/Riyadh] PHP Fatal error:  Cannot declare class App\Http\Controllers\Dashboard\ProductController, because the name is already in use in /home/backends/public_html/tutrend/app/Http/Controllers/Site/ProductController.php on line 23
+[15-May-2023 11:21:20 UTC] PHP Warning:  require(/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:21:20 UTC] PHP Warning:  require(/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:21:20 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/backends/public_html/munjez/vendor/composer/autoload_real.php:71
+Stack trace:
+#0 /home/backends/public_html/munjez/vendor/composer/autoload_real.php(61): composerRequire72449ba4fc77f212606f13c67901f966('ef157334f1067da...', '/home/backends/...')
+#1 /home/backends/public_html/munjez/vendor/autoload.php(7): ComposerAutoloaderInit72449ba4fc77f212606f13c67901f966::getLoader()
+#2 /home/backends/public_html/munjez/public/index.php(34): require('/home/backends/...')
+#3 {main}
+  thrown in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:22:32 UTC] PHP Warning:  require(/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:22:32 UTC] PHP Warning:  require(/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:22:32 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/backends/public_html/munjez/vendor/composer/autoload_real.php:71
+Stack trace:
+#0 /home/backends/public_html/munjez/vendor/composer/autoload_real.php(61): composerRequire72449ba4fc77f212606f13c67901f966('ef157334f1067da...', '/home/backends/...')
+#1 /home/backends/public_html/munjez/vendor/autoload.php(7): ComposerAutoloaderInit72449ba4fc77f212606f13c67901f966::getLoader()
+#2 /home/backends/public_html/munjez/public/index.php(34): require('/home/backends/...')
+#3 {main}
+  thrown in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:22:36 UTC] PHP Warning:  require(/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:22:36 UTC] PHP Warning:  require(/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[15-May-2023 11:22:36 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/backends/public_html/munjez/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/backends/public_html/munjez/vendor/composer/autoload_real.php:71
+Stack trace:
+#0 /home/backends/public_html/munjez/vendor/composer/autoload_real.php(61): composerRequire72449ba4fc77f212606f13c67901f966('ef157334f1067da...', '/home/backends/...')
+#1 /home/backends/public_html/munjez/vendor/autoload.php(7): ComposerAutoloaderInit72449ba4fc77f212606f13c67901f966::getLoader()
+#2 /home/backends/public_html/munjez/public/index.php(34): require('/home/backends/...')
+#3 {main}
+  thrown in /home/backends/public_html/munjez/vendor/composer/autoload_real.php on line 71
+[22-May-2023 06:37:54 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:38:11 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:38:18 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:41:37 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:41:54 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:41:59 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:42:13 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:42:16 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:42:28 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-May-2023 06:42:31 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/backends/public_html/munjez/vendor/composer/platform_check.php on line 24
+[22-Sep-2024 11:14:35 Africa/Cairo] PHP Fatal error:  Cannot declare class App\Http\Requests\Dashboard\User\StoreUserRequest, because the name is already in use in /home/faskhangy/public_html/app/Http/Requests/Dashboard/User/TransferVendorRequest.php on line 8
+[23-Sep-2024 11:04:35 Africa/Cairo] PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php on line 2
+[25-Sep-2024 13:16:10 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:10 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:10 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:10 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:10 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:12 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:14 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:22 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:24 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:58 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:58 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:58 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:58 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:58 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[25-Sep-2024 13:16:58 Africa/Cairo] PHP Fatal error:  During class fetch: Uncaught ParseError: syntax error, unexpected token ";", expecting "]" in /home/faskhangy/public_html/app/Http/Traits/FcmFirebase.php:85
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#1 /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php(12): Composer\Autoload\ClassLoader->loadClass('App\\Http\\Traits...')
+#2 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(571): include('/home/faskhangy...')
+#3 /home/faskhangy/public_html/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/home/faskhangy...')
+#4 [internal function]: Composer\Autoload\ClassLoader->loadClass('App\\Notificatio...')
+#5 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(68): is_subclass_of('App\\Notificatio...', 'Spatie\\LaravelS...')
+#6 [internal function]: Spatie\LaravelSettings\Support\DiscoverSettings->Spatie\LaravelSettings\Support\{closure}('App\\Notificatio...', '/home/faskhangy...')
+#7 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Arr.php(717): array_filter(Array, Object(Closure), 1)
+#8 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Collections/Collection.php(358): Illuminate\Support\Arr::where(Array, Object(Closure))
+#9 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/Support/DiscoverSettings.php(73): Illuminate\Support\Collection->filter(Object(Closure))
+#10 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(78): Spatie\LaravelSettings\Support\DiscoverSettings->discover()
+#11 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(58): Spatie\LaravelSettings\SettingsContainer->discoverSettings()
+#12 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/SettingsContainer.php(27): Spatie\LaravelSettings\SettingsContainer->getSettingClasses()
+#13 /home/faskhangy/public_html/vendor/spatie/laravel-settings/src/LaravelSettingsServiceProvider.php(63): Spatie\LaravelSettings\SettingsContainer->registerBindings()
+#14 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(682): Spatie\LaravelSettings\LaravelSettingsServiceProvider->register()
+#15 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php(75): Illuminate\Foundation\Application->register(Object(Spatie\LaravelSettings\LaravelSettingsServiceProvider))
+#16 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(659): Illuminate\Foundation\ProviderRepository->load(Array)
+#17 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterProviders.php(17): Illuminate\Foundation\Application->registerConfiguredProviders()
+#18 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(237): Illuminate\Foundation\Bootstrap\RegisterProviders->bootstrap(Object(Illuminate\Foundation\Application))
+#19 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(153): Illuminate\Foundation\Application->bootstrapWith(Array)
+#20 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(137): Illuminate\Foundation\Http\Kernel->bootstrap()
+#21 /home/faskhangy/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(111): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#22 /home/faskhangy/public_html/public/index.php(52): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#23 {main} in /home/faskhangy/public_html/app/Notifications/NotifyResturantStatusNotification.php on line 12
+[29-Sep-2024 07:17:05 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:05 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:05 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:10 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:10 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:10 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:11 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:11 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:11 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:12 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:12 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:12 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:14 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:14 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:14 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:17 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:17 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[29-Sep-2024 07:17:17 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:37 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:37 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:37 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:43 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:43 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:43 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:46 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:46 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:46 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:49 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:49 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:49 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:53 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:53 UTC] PHP Warning:  require(/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php): Failed to open stream: No such file or directory in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
+[01-Oct-2024 07:30:53 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/faskhangy/public_html/vendor/composer/../../app/Helpers/helper.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/faskhangy/public_html/vendor/composer/autoload_real.php:53
+Stack trace:
+#0 /home/faskhangy/public_html/vendor/composer/autoload_real.php(36): composerRequiree1ff31e4e33579890552cc78ba799a5b('ef157334f1067da...', '/home/faskhangy...')
+#1 /home/faskhangy/public_html/vendor/autoload.php(25): ComposerAutoloaderInite1ff31e4e33579890552cc78ba799a5b::getLoader()
+#2 /home/faskhangy/public_html/public/index.php(34): require('/home/faskhangy...')
+#3 {main}
+  thrown in /home/faskhangy/public_html/vendor/composer/autoload_real.php on line 53
