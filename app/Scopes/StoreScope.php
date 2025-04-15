@@ -10,7 +10,7 @@ class StoreScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {  
-         if(auth('admin')->check() && auth('admin')->user()->account_type !='admins'){
+         if(auth('admin')->check() && auth('admin')->user()->account_type =='vendors'){
             $builder->where('user_id',auth('admin')->user()->id);
 
         }

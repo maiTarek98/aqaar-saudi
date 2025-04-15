@@ -47,8 +47,8 @@
                             @endphp
                         </div>
                         <div class="description">
-                           {{$note->data['title']}} 
-                          {{ $note->data['title'] }}
+                          <p> {{$note->data['title']}} </p>
+                          <small>{{ $note->data['text'] }}</small>
                         </div>
                     </div>
                     @if($note->read_at == null)

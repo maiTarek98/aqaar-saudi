@@ -35,10 +35,12 @@ class InvoiceController extends Controller
         ]);
 
         foreach ($request->items as $item) {
+            $product= Product::where('id',$item['product_id'])->first();
             Cart::create([
                 'order_id' => $invoice->id,
                 'user_id' => $invoice->user_id,
-                'product_id' => $item['product_id'],
+                'product_id' => $product->id,
+                'store_id' =>$product->store_id,
                 'qty' => $item['quantity'],
                 'price' => $item['price'],
                 // 'total' => $item['quantity'] * $item['price'],
@@ -58,7 +60,7 @@ class InvoiceController extends Controller
     {
         $invoice = Order::with('carts')->findOrFail($id);
         $template = InvoiceTemplate::findOrFail($templateId);
-        $html = $this->renderTemplate($template->html_template, $invoice);
+        $html = $this->renderTemplate($template, $invoice);
 
         $pdf = \PDF::loadHTML($html);
         return $pdf->download("invoice_{$invoice->order_no}.pdf");

@@ -36,7 +36,7 @@ class UpdateOfferRequest extends FormRequest
 
             'offer_price' => 'sometimes|required|integer',
 
-            'offer_start_at' => 'sometimes|required|date|after:yesterday|date_format:Y-m-d',
+            'offer_start_at' => 'sometimes|required|date|date_format:Y-m-d',
 
             'offer_end_at' => 'sometimes|required|date|after_or_equal:offer_start_at|date_format:Y-m-d',
 

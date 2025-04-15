@@ -22,13 +22,17 @@
 
     $isEditOrCreate = str_contains($routeName, 'create') || str_contains($routeName, 'edit');
     $buttonText = $isEditOrCreate ? __('main.showAll') : __('main.addNew');
-    if(request()->segment(2) == 'contacts'|| request()->segment(2) == 'settings'){
+    if(request()->segment(2) == 'contacts'|| request()->segment(2) == 'settings'|| request()->segment(2) == 'pages'){
         $buttonRoute = null;
     }else{
         if(request('account_type')){
             $buttonRoute = $isEditOrCreate ? route("$entity.index",['account_type' => request('account_type')]) : route("$entity.create",['account_type' => request('account_type')]);
         }else{
-            $buttonRoute = $isEditOrCreate ? route("$entity.index") : route("$entity.create");
+            if(request()->segment(2) == 'orders' && $isEditOrCreate == false && auth('admin')->user()->account_type != 'admins'){
+                $buttonRoute = null;
+            }else{
+                $buttonRoute = $isEditOrCreate ? route("$entity.index") : route("$entity.create");
+            }
         }
     }
     
@@ -46,14 +50,14 @@
                         <a href="{{ $item['url'].'?account_type='.request('account_type') }}" class="fs-6 fw-bold">
                             {{ $key == 0
                                 ? __('main.'.lcfirst($item['name']).'.'.lcfirst($item['name'])) 
-                                : __(lcfirst($item['name'])) 
+                                :$item['name'] 
                             }}
                         </a>
                         @else
                         <a href="{{ $item['url'] }}" class="fs-6 fw-bold">
                             {{ $key == 0
                                 ? __('main.'.lcfirst($item['name']).'.'.lcfirst($item['name'])) 
-                                : __(lcfirst($item['name'])) 
+                                : $item['name']
                             }}
                         </a>
                         @endif
@@ -62,12 +66,12 @@
                         $segmentCount = count($segments);
                         $itemName = lcfirst($item['name']);
 
-                        if ($segmentCount == 2) {
+                        if ($segmentCount == 2 || ($segmentCount == 4 && $segments[3] != 'edit')) {
                             $translatedName = __('main.'.$itemName.'.'.$itemName);
                         } elseif (($segmentCount == 3 && $segments[2] == 'create') || ($segmentCount == 4 && $segments[3] == 'edit')) {
                             $translatedName = __('main.'.$itemName);
                         } else {
-                            $translatedName = __($itemName);
+                            $translatedName = $itemName;
                         }
                     @endphp
                         {{ $translatedName}}

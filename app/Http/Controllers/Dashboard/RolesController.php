@@ -163,12 +163,17 @@ class RolesController extends Controller
                         ->with('success',trans('messages.DeleteSuccessfully'));
     }
 
-    public function deleteAll($ids) 
+    public function deleteAll(Request $request) 
     {
-        $idArray = explode(",", $ids);
-        if (in_array(1, $idArray) || in_array(3, $idArray) || in_array(4, $idArray)) {
-            abort(403, 'Unauthorized action: Cannot delete user with ID 1.');
+        $ids = $request->input('ids');
+        if (!$ids || !is_array($ids)) {
+            return response()->json(['error' => 'No valid IDs provided'], 400);
         }
-        return DB::table("roles")->whereIn('id', $idArray)->delete();
+        if (in_array(1, $ids) || in_array(3, $ids) || in_array(4, $ids)) {
+            return response()->json(['error' => 'Unauthorized action: Cannot delete these roles.'], 403);
+        }
+        DB::table("roles")->whereIn('id', $ids)->delete();
+        return response()->json(['success' => 'Roles deleted successfully.']);
     }
+
 }

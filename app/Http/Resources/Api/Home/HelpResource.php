@@ -10,10 +10,10 @@ class HelpResource extends JsonResource
         
         
         return [
-            'id'                 => $this->id,
-            'question'              => $this->question,
-            'answer'              => $this->answer,
-            'created_at'         => $this->created_at,
+            'id'                => $this->id,
+            'question'          => $this->question,
+            'answer'            => $this->answer,
+            'created_at'        => $this->created_at,
         ];
     }
 }

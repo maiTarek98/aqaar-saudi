@@ -20,6 +20,20 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+if ($('.copy-text').length > 0) {
+    let copyText = document.querySelector(".copy-text");
+    copyText.querySelector("button").addEventListener("click", function () {
+      let input = copyText.querySelector("input.text");
+      input.select();
+      document.execCommand("copy");
+      copyText.classList.add("active");
+      window.getSelection().removeAllRanges();
+      setTimeout(function () {
+        copyText.classList.remove("active");
+      }, 2500);
+    });
+}
+
 // upload and preview an image 
 function initImageUpload(box) {
   let uploadField = box.querySelector('.image-upload');

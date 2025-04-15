@@ -26,10 +26,13 @@ class CouponController extends Controller
     
     public function index(Request $request)
     {
+        $searchQuery = trim($request->query('search'));
         $per_page = $request->input('per_page', 10);
         $sortBy = $request->input('sortBy', 'asc');
-        $query = Coupon::when($request->query('category_id'), function($query, $category_id) {
-                $query->where('category_id', $category_id);
+        $query = Coupon::where(function($query) use($searchQuery) {
+            $query->where('coupon_code', 'like',  '%' . $searchQuery .'%')->orWhere('text', 'like',  '%' . $searchQuery .'%');
+        })->when($request->query('offer_type'), function($query, $offer_type) {
+                $query->where('offer_type', $offer_type);
             })->when($request->query('added_by'), function($query, $added_by) {
                 $query->where('added_by', $added_by);
             })->when($request->query('status'), function($query, $status) {
@@ -40,7 +43,7 @@ class CouponController extends Controller
         } else {
             $result = $query->paginate((int) $per_page);
             $result->withQueryString();
-        }        $fields = ['id', 'text', 'offer_type','start_date','end_date'];
+        }        $fields = ['id', 'text','added_by', 'offer_type','start_date','end_date'];
         $model = 'coupons';
         $queryParameters = $request->query(); // Get query parameters
         if ($request->ajax()) {
@@ -80,7 +83,7 @@ class CouponController extends Controller
 
             'buy_product_ids' => 'required_if:choose_type,by_products|array',
             'buy_product_ids.*' => 'exists:products,id', // Validate each product ID exists
-            'choose_type' => 'required|in:by_categorys,by_brands,by_products',
+            'choose_type' => 'required|in:by_categorys,by_brands,by_products,by_all',
             'category_id' => 'nullable|required_if:choose_type,by_categorys|integer|exists:categories,id',
             'brand_id' => 'nullable|required_if:choose_type,by_brands|integer|exists:brands,id',
         ]);
@@ -94,13 +97,14 @@ class CouponController extends Controller
                 'status' => 'hide',
                 'added_by' => auth('admin')->user()->id,
                 'text' => $validatedData['text'],
+                'coupon_code' => $validatedData['coupon_code'],
                 'start_date' => $validatedData['start_date'],
                 'end_date' => $validatedData['end_date'],
                 'offer_type' => $validatedData['offer_type'],
             ]);
             // Create the Discount
             $discount = CouponDiscount::create([
-                'discount_type' => $validatedData['discount_type'],
+                'discount_type' => $validatedData['offer_type'],
                 'discount_value' => $validatedData['discount_value'],
                 'coupon_id' => $offer->id,
                 'brand_id' => $validatedData['brand_id'] ?? null,
@@ -124,17 +128,16 @@ class CouponController extends Controller
                 $offer->products()->attach($validatedData['get_product_ids'], ['apply_for' => 'get']);
             }
 
-            if($offer){
+            if($offer && auth('admin')->user()->account_type == 'vendors'){
                 $admins = User::where('account_type','admins')->get();
                 foreach ($admins as $key => $value) {   
                     if($value->hasPermissionTo('coupons-list')){
-                        Notification::send($value,new \App\Notifications\NotifyAdminNewVendorCoupon($offer));
+                        Notification::send($value,new \App\Notifications\NotifyCouponToAdmin($offer));
                     }
                 }
             }
             // Commit the transaction
             \DB::commit();
-
             return redirect()->route('coupons.index')->with('success',trans('messages.AddSuccessfully'));
 
         } catch (\Exception $e) {
@@ -151,87 +154,109 @@ class CouponController extends Controller
     public function edit(Coupon $coupon)
     {
         $products = Product::where('status','show')->get(); // Get all products
-        return view('admin.coupons.edit', compact('coupon','products'));
+        $brands = Brand::where('status','show')->get(); // Get all products
+        $categorys = Category::where('status','show')->get(); // Get all products
+        $products = Product::where('status','show')->get(); // Get all products
+        return view('admin.coupons.edit', compact('coupon','products','categorys','brands'));
     } 
 
     public function update(Request $request, $id)
-    {
-        // Validate incoming request data
-        $validatedData = $request->validate([
-            'coupon_code' => 'required|string|max:10',
-            'text' => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'offer_type' => 'required|string|max:50',
-            'discount_type' => 'required|in:percentage,fixed',
-            'discount_value' => 'required|numeric|min:0',
-            'min_purchase_value' => 'nullable|numeric|min:0',
-            'buy_x' => 'nullable|integer|min:0',
-            'get_y' => 'nullable|integer|min:0',
-            'get_product_ids' => 'required_if:offer_type,buy_x_get_y|array',
-            'get_product_ids.*' => 'required_if:offer_type,buy_x_get_y|exists:products,id', // Validate each product ID exists
+{
+    // Validate incoming request data
+    $validatedData = $request->validate([
+        'coupon_code' => 'required|string|max:10',
+        'text' => 'required|string|max:255',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
+        'offer_type' => 'required|string|max:50',
+        'discount_type' => 'nullable|in:percentage,fixed',
+        'discount_value' => 'required|numeric|min:0',
+        'min_purchase_value' => 'nullable|numeric|min:0',
+        'buy_x' => 'nullable|integer|min:0',
+        'get_y' => 'nullable|integer|min:0',
+        'get_product_ids' => 'required_if:offer_type,buy_x_get_y|array',
+        'get_product_ids.*' => 'required_if:offer_type,buy_x_get_y|exists:products,id', // Validate each product ID exists
+        'buy_product_ids' => 'nullable|array',
+        'buy_product_ids.*' => 'exists:products,id', // Validate each product ID exists
+        'choose_type' => 'required|in:by_categorys,by_brands,by_products,by_all',
+        'category_id' => 'nullable|required_if:choose_type,by_categorys|integer|exists:categories,id',
+        'brand_id' => 'nullable|required_if:choose_type,by_brands|integer|exists:brands,id',
+    ]);
 
-            'buy_product_ids' => 'required|array',
-            'buy_product_ids.*' => 'exists:products,id', // Validate each product ID exists
+    // Start a database transaction
+    \DB::beginTransaction();
+
+    try {
+        // Find the Offer
+        $offer = Coupon::findOrFail($id);
+
+        // Update the Offer
+        $offer->update([
+            'text' => $validatedData['text'],
+            'coupon_code' => $validatedData['coupon_code'],
+            'start_date' => $validatedData['start_date'],
+            'end_date' => $validatedData['end_date'],
+            'offer_type' => $validatedData['offer_type'],
         ]);
-
-        // Start a database transaction
-        \DB::beginTransaction();
-
-        try {
-            // Find the Offer
-            $offer = Coupon::findOrFail($id);
-
-            // Update the Offer
-            $offer->update([
-                'text' => $validatedData['text'],
-                'start_date' => $validatedData['start_date'],
-                'end_date' => $validatedData['end_date'],
-                'offer_type' => $validatedData['offer_type'],
-            ]);
-
-            // Update the Discount
-            $discount = $offer->discount; // Assuming the relationship is defined as `discount` in the `Coupon` model
+        // Update the Discount if exists
+        $discount = $offer->coupon_discount;
+        if ($discount) {
             $discount->update([
-                'discount_type' => $validatedData['discount_type'],
+                'discount_type' => $validatedData['offer_type'],
                 'discount_value' => $validatedData['discount_value'],
+                'brand_id' => $validatedData['brand_id'] ?? null,
+                'category_id' => $validatedData['category_id'] ?? null,
+
             ]);
-
-            // Update the Condition (if applicable)
-            $condition = $offer->condition; // Assuming the relationship is defined as `condition` in the `Coupon` model
-            if ($validatedData['buy_x'] || $validatedData['get_y']) {
-                if ($condition) {
-                    $condition->update([
-                        'buy_x' => $validatedData['buy_x'] ?? null,
-                        'get_y' => $validatedData['get_y'] ?? null,
-                    ]);
-                } else {
-                    CouponCondition::create([
-                        'buy_x' => $validatedData['buy_x'] ?? null,
-                        'get_y' => $validatedData['get_y'] ?? null,
-                        'coupon_id' => $offer->id,
-                    ]);
-                }
-            }
-
-            // Attach/Detach products to the Offer
-            $offer->products()->sync($validatedData['buy_product_ids']); // Sync products for 'buy'
-            if (array_key_exists('get_product_ids', $validatedData)) {
-                $offer->products()->syncWithoutDetaching($validatedData['get_product_ids']); // Attach 'get' products
-            }
-
-            // Commit the transaction
-            \DB::commit();
-
-            return redirect()->route('coupons.index')->with('success',trans('messages.UpdateSuccessfully'));
-
-        } catch (\Exception $e) {
-            // Rollback the transaction on error
-            \DB::rollBack();
-
-            return redirect()->back()->with('error',trans('messages.error'));
+        } else {
+            // Handle if the discount doesn't exist (optional logic)
+            $offer->coupon_discount()->create([
+                'discount_type' => $validatedData['offer_type'],
+                'discount_value' => $validatedData['discount_value'],
+                'brand_id' => $validatedData['brand_id'] ?? null,
+                'category_id' => $validatedData['category_id'] ?? null,
+            ]);
         }
+
+        // Update the Condition if applicable
+        $condition = $offer->condition;
+        if ($validatedData['buy_x'] || $validatedData['get_y']) {
+            if ($condition) {
+                $condition->update([
+                    'buy_x' => $validatedData['buy_x'] ?? null,
+                    'get_y' => $validatedData['get_y'] ?? null,
+                ]);
+            } else {
+                CouponCondition::create([
+                    'buy_x' => $validatedData['buy_x'] ?? null,
+                    'get_y' => $validatedData['get_y'] ?? null,
+                    'coupon_id' => $offer->id,
+                ]);
+            }
+        }
+
+        // Attach/Detach products to the Offer (for 'buy' and 'get')
+        if (!empty($validatedData['buy_product_ids'])) {
+            $offer->products()->sync($validatedData['buy_product_ids']); // Sync products for 'buy'
+        }
+
+        if (!empty($validatedData['get_product_ids'])) {
+            $offer->products()->syncWithoutDetaching($validatedData['get_product_ids']); // Attach 'get' products
+        }
+
+        // Commit the transaction
+        \DB::commit();
+
+        return redirect()->route('coupons.index')->with('success', trans('messages.UpdateSuccessfully'));
+
+    } catch (\Exception $e) {
+        // Rollback the transaction on error
+        \DB::rollBack();
+
+        return redirect()->back()->with('error', trans('messages.error'));
     }
+}
+
     public function destroy(Coupon $coupon)
     {
         $coupon->delete();      
@@ -262,4 +287,27 @@ class CouponController extends Controller
         }
         return redirect()->back()->with('success',trans('messages.UpdateSuccessfully'));
     }
+    
+    public function approve($id) {
+        $coupon = Coupon::findOrFail($id);
+        $coupon->status = 'approve';
+        $coupon->save();
+        $vendor = User::where('account_type','vendors')->where('id', $coupon->added_by)->first();
+            if($vendor && $vendor->hasPermissionTo('coupons-list')){
+                Notification::send($vendor,new \App\Notifications\NotifyVendorStatusCoupon($coupon));
+            }
+        return back()->with('success', 'تمت الموافقة على الكوبون.');
+    }
+    
+    public function reject($id) {
+        $coupon = Coupon::findOrFail($id);
+        $coupon->status = 'decline'; 
+        $coupon->save();
+        $vendor = User::where('account_type','vendors')->where('id', $coupon->added_by)->first();
+            if($vendor && $vendor->hasPermissionTo('coupons-list')){
+                Notification::send($vendor,new \App\Notifications\NotifyVendorStatusCoupon($coupon));
+            }
+        return back()->with('error', 'تم رفض الكوبون.');
+    }
+
 }

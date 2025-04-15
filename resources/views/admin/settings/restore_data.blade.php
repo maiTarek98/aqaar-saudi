@@ -17,14 +17,13 @@
   <div class="container-fluid">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="mb-0 fs-5 fw-bold" style="color: var(--main)">@lang('main.settings.restore data')</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.content-header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <div>
+                @include('admin.partials.breadcrumb')
+            </div>
+        </div>
+    </div>
+    <!-- /.content-header -->
     <div class="content">
       <div class="row g-3">
         <div class="col-md-3 col-sm-6 col-12">

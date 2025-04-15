@@ -148,11 +148,17 @@ class Product extends BaseModel implements HasMedia
     {
         return $this->product_reviews()->avg('star');
     }
+    public function updateAverageRating()
+    {
+        $this->update([
+            'avg_rate' => $this->averageRating() ?? 0, 
+        ]);
+    }
     public function product_years() {
        return $this->hasMany(\App\Models\ProductYear::class,'category_year_id');
     }
-      public function product_seo() {
-       return $this->hasOne(\App\Models\SeoTag::class,'model_id');
+      public function product_offer() {
+       return $this->hasOne(\App\Models\ProductOffer::class,'product_id');
     }
     public function category() {
        return $this->belongsTo(\App\Models\Category::class);
@@ -187,7 +193,7 @@ class Product extends BaseModel implements HasMedia
       }elseif($this->discount_type == 'percent' && $this->discount > 0){
          $real_price = $this->price - ($this->price * $this->discount / 100);
       }else{
-         $real_price = 0;
+         $real_price = $this->price;
       }
       return $real_price;
     }

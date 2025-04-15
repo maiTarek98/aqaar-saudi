@@ -1,9 +1,16 @@
 @if($sales['sales']->count() > 0)
-            <div class="header">
-                <p>{{__('main.'.$period)}}</p>
-                <p>{{$sales['sales']->count()}}</p>
-                <p>إجمالي المبيعات : {{$sales['grand_total']}}</p>
-                <table class="table mb-0 tbl-server-info text-center">
+<div class="card">
+    <div class="card-header">
+        <p class="m-0">
+            <span>
+                إجمالي المبيعات : {{$sales['grand_total']}}
+                {{__('main.'.$period)}}
+            </span>
+            <span>( {{$sales['sales']->count()}} )</span>
+        </p>
+    </div>
+    <div class="card-body">
+        <table class="table mb-0 tbl-server-info text-center">
                     <thead>
                         <tr>
                             <th>order_no</th>
@@ -25,7 +32,8 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+    </div>
+</div>
 @else
     <img>
     @lang('main.no recent result')

@@ -35,6 +35,9 @@ trait VendorStoreTrait
         if(request('brand_id')){
             $query = $query->where('brand_id',request('brand_id'));
         }
+        if(request('store_id')){
+            $query = $query->where('store_id',request('store_id'));
+        }
         if(request('category_id')){
             $query = $query->where('category_id',request('category_id'));
         }
@@ -54,6 +57,30 @@ trait VendorStoreTrait
                 $q->where('created_at', '>=', now()->subWeek()) 
                   ->whereHas('order', function ($o) {
                       $o->where('status', 'completed');
+                  });
+            });
+        }
+        
+        if (request()->has('search')) {
+            $search = request()->input('search');
+    
+            $query->where(function ($q) use ($search) {
+                $q->where('name_ar', 'LIKE', "%$search%")
+                  ->orWhere('name_en', 'LIKE', "%$search%")
+                  ->orWhere('overview_ar', 'LIKE', "%$search%")
+                  ->orWhere('overview_en', 'LIKE', "%$search%")
+                  ->orWhere('description_ar', 'LIKE', "%$search%")
+                  ->orWhere('description_en', 'LIKE', "%$search%")
+                  ->orWhereHas('category', function ($q) use ($search) {
+                      $q->where('title_ar', 'LIKE', "%$search%")
+                        ->orWhere('title_en', 'LIKE', "%$search%");
+                  })
+                  ->orWhereHas('brand', function ($q) use ($search) {
+                      $q->where('title_ar', 'LIKE', "%$search%")
+                        ->orWhere('title_en', 'LIKE', "%$search%");
+                  })
+                  ->orWhereHas('store', function ($q) use ($search) {
+                      $q->where('name', 'LIKE', "%$search%");
                   });
             });
         }

@@ -45,7 +45,7 @@ trait FcmFirebase {
          $setting=app(GeneralSettings::class); 
         $title = $data['title'];
         $description = $data['text'];
-        $account_type = $data['data']['account_type'];
+        $account_type = null;
         $notification_type = (string) $data['data']['notification_type'];
         $projectId = config('services.fcm.project_id'); # INSERT COPIED PROJECT ID
 

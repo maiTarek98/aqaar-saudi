@@ -29,11 +29,16 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url('/dashboard') }}/dist/css/admin.css">
     <link rel="stylesheet" href="{{ url('/dashboard') }}/dist/css/custom.css">
   
     <link href="{{ url('/dashboard/') }}/dist/css/toastr.css" rel="stylesheet" />
   <style>
+    body{
+       overflow: hidden;
+    }
     #particles-js {
     position: absolute;
     width: 100%;
@@ -70,14 +75,14 @@
         <div class="input-group mb-3">
           <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="@lang('main.enter email')">
           <div class="input-group-text">
-            <span class="fas fa-envelope"></span>
+            <i class="bi bi-envelope"></i>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="@lang('main.enter password')">
-          <div class="input-group-text">
-            <span class="fas fa-lock"></span>
-          </div>
+          <input type="password" name="password" id="password" class="form-control" placeholder="@lang('main.enter password')">
+          <button type="button" class="pass input-group-text" toggle="#password">
+            <i class="bi bi-lock"></i>
+          </button>
         </div>
         <div class="icheck-primary">
           <input type="checkbox" id="remember">
@@ -104,6 +109,8 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
+<!-- demo script -->
+<script src="{{ url('/dashboard') }}/dist/js/demo.js"></script>
 <script>
      $(document).ready(function() {
          

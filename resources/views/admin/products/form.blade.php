@@ -39,38 +39,19 @@
                         
                     <div class="col-md-12">                      
                         <div class="form-group">
-                            <label>@lang('main.products.product_price')<span class="text-danger">*</span></label>
+                            <label>@lang('main.products.product_price')<span class="text-danger">*</span><small>(@lang('main.products.prices with tax'))</small></label>
                             <input type="text" name="price" id="price" value="{{ old('price', $product->price) }}" class="form-control @error('price') is-invalid @enderror" id="price" placeholder="" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="category_id">
-                                @lang('main.products.product_discount')</span>
-                            </label>
-                            <div class="input-group">
-                                <input type="text" name="discount" id="discount" value="{{ old('discount', $product->discount) }}" class="form-control @error('discount') is-invalid @enderror" id="discount" placeholder="" >
-                               
-                                <select name="discount_type" id="discount_type" class="input-group-text form-control form-select"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.products.product_discount_type')" style="width: fit-content;flex: 0 2 auto;padding-inline-end: 2.2rem;">
-                                    <option value="pound" {{ $product->discount_type == 'pound' ? 'selected' : '' }}>@lang('main.products.pound')</option>
-                                    <option value="percent" {{ $product->discount_type == 'percent' ? 'selected' : '' }}>@lang('main.products.percent')</option>
-                                </select>
-                                
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                        <p id="error_percent_message" style="color: red; display: none;">⚠️ الخصم لا يمكن أن يكون أكثر من 100%</p>
-                        <p id="error_message" style="color: red; display: none;">⚠️ الخصم لا يمكن أن يكون أكثر من سعر المنتج</p>
-                    </div>
-                    
                     <div class="col-md-12">                      
                         <div class="form-group">
                             <label>@lang('main.products.product_status') <span class="text-danger">*</span></label>
-                            <select name="status" class="form-control">
-                                <option value="show" {{ $product->status == 'show' ? 'selected' : '' }}>@lang('main.products.published')</option>
-                                <option value="hide" {{ $product->status == 'hide' ? 'selected' : '' }}>@lang('main.products.inactive')</option>
+                            <select name="status" class="form-select">
+                                <option value="pending" {{ $product->status == 'pending' ? 'selected' : '' }}>@lang('main.products.pending')</option>
+                                <option value="shared_onsite" {{ $product->status == 'shared_onsite' ? 'selected' : '' }}>@lang('main.products.shared_onsite')</option>
+                                <option value="approved" {{ $product->status == 'approved' ? 'selected' : '' }}>@lang('main.products.approved')</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -78,78 +59,94 @@
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>تحديد المنتج كـ <span class="text-danger">*</span></label>
-                            <select name="tags[]" class="select2 form-control" multiple>
-                                <option value="new_arrival" {{ $product->new_arrival == 'yes' ? 'selected' : '' }}>@lang('main.products.product_new_arrival')</option>
-                                <option value="we_choose_for_u" {{ $product->we_choose_for_u == 'yes' ? 'selected' : '' }}>@lang('main.products.product_we_choose_for_u')</option>
+                            <label for="is_private"> @lang('main.products.is_private')</label><span class="text-danger">*</span>
+                            <select name="is_private" class="form-select">
+                                <option value="yes" @if($product->is_private == 'yes') selected @endif>@lang('main.yes')</option>
+                                <option value="no" @if($product->is_private == 'no') selected @endif>@lang('main.no')</option>
                             </select>
-                        </div>          
-                    </div>
+                        </div>
+                    </div> 
                     <div class="col-md-12">  
                         <hr class="mt-0">                    
                         <div class="form-group">
-                            <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
                                 <label>@lang('main.products.stock') <span class="text-danger">*</span></label>
                                 <input type="checkbox" class="cm-toggle" id="" name="stock" @if($product->stock == 'on') checked="" @endif>     
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div> 
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="is_in_home"> @lang('main.products.is_in_home')</label><span class="text-danger">*</span>
-                            <select name="is_in_home" class="form-select">
-                                <option value="yes" @if($product->is_in_home == 'yes') selected @endif>@lang('main.yes')</option>
-                                <option value="no" @if($product->is_in_home == 'no') selected @endif>@lang('main.no')</option>
-                            </select>
-                        </div>
-                    </div> 
-                </div>       
-            </div>
-        </div>
+                    
+                </div>
 
-        {{--<div class="card">
+
+
+            </div>
+        </div>  
+        <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@lang('main.products.product_seo')</h3>
+                <h3 class="card-title">@lang('main.products.product_descriptions')</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-sm p-0 px-1 btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                 </div>
             </div>
-            <div class="card-body"> 
+            <div class="card-body">    
                 <div class="row g-3">
-                    <div class="col-12">
+                    @php
+                        $governorates = \App\Models\Location::where('type', 'governorate')->get();
+                        $selectedCity = $product->city_id ?? null;
+                        $selectedDistrict = $product->district_id ?? null;
+                        $cities = $selectedCity 
+                            ? \App\Models\Location::where('parent_id', $product->governorate_id)->where('type', 'city')->get()
+                            : collect();
+                        $districts = $selectedDistrict 
+                            ? \App\Models\Location::where('parent_id', $product->city_id)->where('type', 'district')->get()
+                            : collect();
+                    @endphp
+                        <div class="col-md-4">
+                            <label>@lang('main.locations.governorate')</label>
+                            <select name="governorate_id" id="governorate_select" class="form-select">
+                                <option value="">@lang('main.choose')</option>
+                                @foreach($governorates as $gov)
+                                    <option value="{{ $gov->id }}" {{ (old('governorate_id', $product->governorate_id ?? '') == $gov->id) ? 'selected' : '' }}>
+                                        {{ $gov->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>@lang('main.locations.city')</label>
+                            <select name="city_id" id="city_select" class="form-select">
+                                <option value="">@lang('main.choose')</option>
+                                @foreach($cities as $city)
+                                    <option value="{{ $city->id }}" {{ (old('city_id', $product->city_id ?? '') == $city->id) ? 'selected' : '' }}>
+                                        {{ $city->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>@lang('main.locations.district')</label>
+                            <select name="district_id" id="district_select" class="form-select">
+                                <option value="">@lang('main.choose')</option>
+                                @foreach($districts as $dist)
+                                    <option value="{{ $dist->id }}" {{ (old('district_id', $product->district_id ?? '') == $dist->id) ? 'selected' : '' }}>
+                                        {{ $dist->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    <div class="col-md-12">                      
                         <div class="form-group">
-                            <label>عنوان صفحة تعريفية (Page Title)</label>
-                            <input class="form-control" type="text" id="pageTitle" name="page_title" value="{{old('page_title', $product->page_title)}}" placeholder="إمممم">
+                            <label>@lang('main.products.map_location') (@lang('main.ar'))</label>
+                            <textarea type="text" name="map_location" class="form-control @error('map_location') is-invalid @enderror" id="map_location">{{ old('map_location', $product->map_location) }}</textarea>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
-    
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>رابط صفحة تعريفية (SEO Page URL)</label>
-                            <input class="form-control" type="text" id="pageUrl" name="page_url" value="{{old('page_url', $product->page_url)}}" placeholder="">
-                        </div>
-                    </div>
-    
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label>وصف صفحة تعريفية (Page Description)</label>
-                            <textarea class="form-control" id="pageDescription" name="page_description" placeholder="سسسسسس">{{old('page_description', $product->page_description)}}</textarea>
-                        </div>
-                    </div>
-    
-                    <div class="col-12">
-                        <div class="preview">
-                            <p><strong>إمممم</strong></p>
-                            <a href="#" id="previewUrl">
-                                {{url('/products/')}}/
-                            </a>
-                            <p>سسسسسس</p>
-                        </div>
-                    </div>
-                </div>
+                    
+                </div>                             
             </div>
-        </div>--}}                             
+        </div>                        
     </div>
     <div class="col-lg-8">
         <div class="card">
@@ -160,92 +157,74 @@
                 </div>
             </div>
             <div class="card-body row g-3">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label for="store_id"> @lang('main.products.store')<span class="text-danger">*</span></label>
-                        <select name="store_id" class="form-select store">
-                            <option value="">@lang('main.choose')</option>
-                            @foreach(\App\Models\Store::get() as $value)
-                                <option value="{{$value->id}}" @if($value->id == old('store_id', $product->store_id)  || $value->id == request('store_id') || auth('admin')->user()->store?->id == $value->id) selected @endif >{{$value->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
+             
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="category_id">
-                            @lang('main.products.category')<span class="text-danger">*</span>
+                        <label for="product_for">
+                            @lang('main.products.product_for')<span class="text-danger">*</span>
                         </label>
                         <div class="input-group">
-                            <select name="category_id" class="form-select category">
+                            <select name="product_for" class="form-select">
                                 <option value="">@lang('main.choose')</option>
-                                @foreach(\App\Models\Category::whereNull('parent_id')->get() as $value)
-                                    <option value="{{$value->id}}" @if($value->id == old('category_id', $product->category_id)) selected @endif >{{$value->title}}</option>
-                                @endforeach
+                                <option value="sale" @if('sale' == old('product_for', $product->product_for)) selected @endif > @lang('main.products.sale')</option>
+                                <option value="rent" @if('rent' == old('product_for', $product->product_for)) selected @endif > @lang('main.products.rent')</option>
                             </select>
-                            @if(auth('admin')->user()->account_type != 'vendors' && auth('admin')->user()->account_type != 'subadmins'  && \Request::route()->getName() == 'products.create')
-                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.add new category')">
-                                <a role="button" data-bs-toggle="modal" data-bs-target="#addNewCategory" >
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            </span>
-                            @endif
                         </div>
                     </div>
                 </div>
-
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="category_id">
-                            @lang('main.products.brand')<span class="text-danger">*</span>
+                        <label for="type">
+                            @lang('main.products.type')<span class="text-danger">*</span>
                         </label>
                         <div class="input-group">
-                            <select name="brand_id" class="form-control brand">
+                            <select name="type" id="product_type" class="form-select">
                                 <option value="">@lang('main.choose')</option>
-                                @foreach(\App\Models\Brand::get() as $value)
-                                    <option value="{{$value->id}}" @if($value->id == old('brand_id', $product->brand_id)) selected @endif >{{$value->title}}</option>
-                                @endforeach
+                                <option value="auction" @if('auction' == old('type', $product->type)) selected @endif >@lang('main.products.auction')</option>
+                                <option value="shared" @if('shared' == old('type', $product->type)) selected @endif >@lang('main.products.shared')</option>
+                                <option value="investment" @if('investment' == old('type', $product->type)) selected @endif >@lang('main.products.investment')</option>
                             </select>
-                            @if(auth('admin')->user()->account_type != 'vendors' && auth('admin')->user()->account_type != 'subadmins'  && \Request::route()->getName() == 'products.create')
-                            <span class="input-group-text" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.add new brand')">
-                                <a role="button" data-bs-toggle="modal" data-bs-target="#addNewBrand" >
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            </span>
-                            @endif
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-6">                      
+                <div class="col-md-4 auction-fields">                      
                     <div class="form-group">
-                        <label>@lang('main.products.product_name') (@lang('main.ar'))<span class="text-danger">*</span></label>
-                        <input type="text" name="name_ar" value="{{ old('name_ar', $product->name_ar) }}" class="form-control @error('name_ar') is-invalid @enderror" id="name_ar" placeholder="" required>
+                        <label>@lang('main.products.start_date')<span class="text-danger">*</span></label>
+                        <input type="text" name="start_date" value="{{ old('start_date', $product->product_offer?->start_date) }}" class="form-control @error('start_date') is-invalid @enderror" id="start_date">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 auction-fields">                      
+                    <div class="form-group">
+                        <label>@lang('main.products.end_date')<span class="text-danger">*</span></label>
+                        <input type="text" name="end_date" value="{{ old('end_date', $product->product_offer?->end_date) }}" class="form-control @error('end_date') is-invalid @enderror" id="end_date">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 auction-fields">                      
+                    <div class="form-group">
+                        <label>@lang('main.products.amount')<span class="text-danger">*</span></label>
+                        <input type="text" name="amount" value="{{ old('amount', $product->product_offer?->amount) }}" class="form-control @error('amount') is-invalid @enderror" id="amount">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-6">                      
                     <div class="form-group">
-                        <label>@lang('main.products.product_name') (@lang('main.en'))<span class="text-danger">*</span></label>
-                        <input type="text" name="name_en" value="{{ old('name_en', $product->name_en) }}" class="form-control @error('name_en') is-invalid @enderror" id="name_en" placeholder="" required>
+                        <label>@lang('main.products.title')<span class="text-danger">*</span></label>
+                        <input type="text" name="title" value="{{ old('title', $product->title) }}" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="" required>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
                 <div class="col-md-12">                      
                     <div class="form-group">
-                        <label>@lang('main.products.product_overview') (@lang('main.ar'))</label>
-                        <textarea type="text" name="overview_ar" class="form-control @error('overview_ar') is-invalid @enderror" id="overview_ar">{{ old('overview_ar', $product->overview_ar) }}</textarea>
+                        <label>@lang('main.products.description') (@lang('main.ar'))</label>
+                        <textarea type="text" name="description" class="form-control @error('description') is-invalid @enderror" id="description">{{ old('description', $product->description) }}</textarea>
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="col-md-12">                      
-                    <div class="form-group">
-                        <label>@lang('main.products.product_overview') (@lang('main.en'))</label>
-                        <textarea type="text" name="overview_en" class="form-control @error('overview_en') is-invalid @enderror" id="overview_en">{{ old('overview_en', $product->overview_en) }}</textarea>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
+                
                 <div class="col-md-6">                      
                     <div class="form-group">
                         <label>@lang('main.products.product_sku') </label>
@@ -274,12 +253,12 @@
                     <div class="upload__box">
                         <div class="upload__btn-box">
                             <button type="button" class="upload__btn d-inline-block">
-                                <i class="bi bi-cloud-arrow-up fs-1"></i>
+                                <i class="bi bi-cloud-upload text-muted fs-1"></i>
                                 <h5 class="upload__box_title">
                                 Drag and Drop Your Files to Start Transfer
                                 </h5>
     
-                                <p class="upload__box_text m-0">Or click here</p>
+                                <p class="upload__box_text text-muted m-0">Or click here</p>
                                 <input type="file" accept="images/*" name="document[]" multiple="" data-max_length="20" class="upload__inputfile">
                             </button>
                         </div>
@@ -304,11 +283,11 @@
                         </div>
                     </div>
                 </div>
-                {{--<div class="form-group">
+                <div class="form-group">
                     <label>@lang('main.products.link_video')</label>
                     <textarea type="text" name="link_video" class="form-control @error('link_video') is-invalid @enderror" id="link_video">{{ old('link_video', $product->link_video) }}</textarea>
                     <div class="help-block with-errors"></div>
-                </div>--}}
+                </div>
             </div>
         </div>
         <div class="card">
@@ -320,17 +299,150 @@
             </div>
             <div class="card-body">    
                 <div class="row g-3">
-                    <div class="col-md-12">                      
+                    <div class="col-md-6">                      
                         <div class="form-group">
-                            <label>@lang('main.products.product_description') (@lang('main.ar'))</label>
-                            <textarea type="text" name="description_ar" class="form-control @error('description_ar') is-invalid @enderror" id="description_ar">{{ old('description_ar', $product->description_ar) }}</textarea>
+                            <label>@lang('main.products.area_after_development')<span class="text-danger">*</span></label>
+                            <input type="text" name="area_after_development" value="{{ old('area_after_development', $product->area_after_development) }}" class="form-control @error('area_after_development') is-invalid @enderror" id="area_after_development" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.valuation')<span class="text-danger">*</span></label>
+                            <input type="text" name="valuation" value="{{ old('valuation', $product->valuation) }}" class="form-control @error('valuation') is-invalid @enderror" id="valuation" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.valuation_date')<span class="text-danger">*</span></label>
+                            <input type="date" name="valuation_date" value="{{ old('valuation_date', $product->valuation_date) }}" class="form-control @error('valuation_date') is-invalid @enderror" id="valuation_date" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.annual_rent')<span class="text-danger">*</span></label>
+                            <input type="text" name="annual_rent" value="{{ old('annual_rent', $product->annual_rent) }}" class="form-control @error('annual_rent') is-invalid @enderror" id="annual_rent" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.remaining_lease_years')<span class="text-danger">*</span></label>
+                            <input type="text" name="remaining_lease_years" value="{{ old('remaining_lease_years', $product->remaining_lease_years) }}" class="form-control @error('remaining_lease_years') is-invalid @enderror" id="remaining_lease_years" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.license_number')<span class="text-danger">*</span></label>
+                            <input type="text" name="license_number" value="{{ old('license_number', $product->license_number) }}" class="form-control @error('license_number') is-invalid @enderror" id="license_number" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.has_planning_diagram') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="has_planning_diagram" @if($product->has_planning_diagram == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.has_electronic_deed') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="has_electronic_deed" @if($product->has_electronic_deed == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.has_real_estate_market') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="has_real_estate_marke" @if($product->has_real_estate_market == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.has_mortgage') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="has_mortgage" @if($product->has_mortgage == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.has_penalties') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="has_penalties" @if($product->has_penalties == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.valuation_type') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="valuation_type" @if($product->valuation_type == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.accepts_mortgage') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="accepts_mortgage" @if($product->accepts_mortgage == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.usufruct_lease') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="usufruct_lease" @if($product->usufruct_lease == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.is_rented') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="is_rented" @if($product->is_rented == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.payment_method')<span class="text-danger">*</span></label>
+                            <input type="text" name="payment_method" value="{{ old('payment_method', $product->payment_method) }}" class="form-control @error('payment_method') is-invalid @enderror" id="payment_method" placeholder="" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="col-md-12">                      
                         <div class="form-group">
-                            <label>@lang('main.products.product_description') (@lang('main.en'))</label>
-                            <textarea type="text" name="description_en" class="form-control @error('description_en') is-invalid @enderror" id="description_en">{{ old('description_en', $product->description_en) }}</textarea>
+                            <label>@lang('main.products.additional_info') (@lang('main.en'))</label>
+                            <textarea type="text" name="additional_info" class="form-control @error('additional_info') is-invalid @enderror" id="additional_info">{{ old('additional_info', $product->additional_info) }}</textarea>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -346,93 +458,49 @@
 </div>
 @push('custom-js')
 <script type="text/javascript">
-document.getElementById("discount").addEventListener("input", validateDiscount);
-document.getElementById("discount_type").addEventListener("change", validateDiscount);
+    $(document).ready(function () {
+        $('#governorate_select').on('change', function () {
+            let gov_id = $(this).val();
+            $('#city_select').html('<option value="">@lang("main.loading")...</option>');
+            $('#district_select').html('<option value="">@lang("main.choose")</option>');
 
-function validateDiscount() {
-    let price = parseFloat(document.getElementById("price").value);
-    let discount = parseFloat(document.getElementById("discount").value);
-    let discountType = document.getElementById("discount_type").value;
-    let errorMessage = document.getElementById("error_message");
-    let errorPercentMessage = document.getElementById("error_percent_message");
-
-    if (discountType === "percent") {
-        errorMessage.style.display = "none";
-        if (discount > 100) {
-            errorPercentMessage.style.display = "block";
-        } else {
-            errorPercentMessage.style.display = "none";
-        }
-    } else if (discountType === "pound") {
-        errorPercentMessage.style.display = "none";
-        if (discount > price) {
-            errorMessage.style.display = "block";
-        } else {
-            errorMessage.style.display = "none";
-        }
-    }
-}
-
-    function callAjax(){
-        var priceParent = $('#div');
-        $.ajax({
-            url: "{{url('admin/fetch-subcategory')}}",
-            type: "POST",
-            async: true,
-            data: {
-                category_id: idproduct, 
-                product_id: product,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function (data) {
-                $(priceParent).html('');
-                $(priceParent).html(data.options);
+            if (gov_id) {
+                $.get('{{url('/')}}/locations/cities/' + gov_id, function (data) {
+                    let cityOptions = '<option value="">@lang("main.choose")</option>';
+                    data.forEach(city => {
+                        cityOptions += `<option value="${city.id}">${city.name_ar}</option>`;
+                    });
+                    $('#city_select').html(cityOptions);
+                });
             }
         });
-    }
+        $('#city_select').on('change', function () {
+            let city_id = $(this).val();
+            $('#district_select').html('<option value="">@lang("main.loading")...</option>');
 
-    if ($('select[name="category_id"]').val() != "0") {
-        var idproduct = $('select[name="category_id"]').val();
-        var product= $('.product_id').val();
-        callAjax();
-    }
-
-    $(document).on('change', 'select[name="category_id"]' , function () {
-        var idproduct = this.value;
-        var priceParent = $('#div');
-        var product= $('.product_id').val();
-        $.ajax({
-            url: "{{url('admin/fetch-subcategory')}}",
-            type: "POST",
-            async: true,
-            data: {
-                product_id: product,
-                category_id: idproduct,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function (data) {
-                $(priceParent).html('');
-                $(priceParent).html(data.options);
+            if (city_id) {
+                $.get('{{url('/')}}/locations/districts/' + city_id, function (data) {
+                    let distOptions = '<option value="">@lang("main.choose")</option>';
+                    data.forEach(dist => {
+                        distOptions += `<option value="${dist.id}">${dist.name_ar}</option>`;
+                    });
+                    $('#district_select').html(distOptions);
+                });
             }
         });
-    });   
-
-     $("input, textarea").on("input", function() {
-        $(".preview").addClass("highlight-preview"); // Add class on input change
-        
-        let title = $("#pageTitle").val();
-        let url = $("#pageUrl").val();
-        let desc = $("#pageDescription").val();
-
-        $(".preview strong").text(title || "عنوان تجريبي");
-        $("#previewUrl").text(`{{url('/products/')}}/${url}`);
-        $(".preview p:last-child").text(desc || "نص تجريبي");
     });
-    $("input, textarea").on("blur", function() {
-        $(".preview").removeClass("highlight-preview");
+    $(document).ready(function () {
+        function toggleAuctionFields() {
+            if ($('#product_type').val() === 'auction') {
+                $('.auction-fields').show();
+            } else {
+                $('.auction-fields').hide();
+            }
+        }
+        toggleAuctionFields();
+        $('#product_type').on('change', function () {
+            toggleAuctionFields();
+        });
     });
-
 </script>
 @endpush

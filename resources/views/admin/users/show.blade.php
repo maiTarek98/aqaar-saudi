@@ -157,11 +157,21 @@
                             <div class="card statistic mb-3">
                                 <a href="{{route('orders.index',['user_id' => $user->id])}}"  class="card-header">
                                     <h3 class="card-title">@lang('main.vendors.no orders')</h3>
-                                    <b>({{$user->orders->whereNotNull('status')->where('status','!=','pending')->count()}})</b>
+                                    <b>({{$user->orders->whereNotNull('status')->count()}})</b>
                                 </a>
                                 <div class="card-body">
                                     <!-- Small boxes (Stat box) -->
                                     <div class="row row-cols-lg-5 g-3">
+                                        <div class="col">
+                                            <div class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between">
+                                                <span class="info-box-icon">
+                                                    <i class="bi bi-hourglass-split"></i>
+                                                </span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-number">{{$user->orders->where('status','pending')->count()}}</span><span class="info-box-text">@lang('main.vendors.no pending orders')</span>
+                                                </div><!-- /.info-box-content -->
+                                            </div><!-- /.info-box -->
+                                        </div>
                                         <div class="col">
                                             <div class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between">
                                                 <span class="info-box-icon">
@@ -232,7 +242,7 @@
                                                 <th>@lang('main.orders.details')</th>
                                             </thead>
                                             <tbody>
-                                                @forelse($user->orders->whereNotNull('status')->where('status','!=','pending') as $order)
+                                                @forelse($user->orders->whereNotNull('status') as $order)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>
@@ -408,11 +418,21 @@
                     <div class="card statistic mb-3">
                         <a href="{{route('orders.index',['store_id' => $user->store?->id])}}"  class="card-header">
                             <h3 class="card-title">@lang('main.vendors.no orders')</h3>
-                            <b>({{$user->store?->orders->whereNotNull('status')->where('status','!=','pending')->count()}})</b>
+                            <b>({{$user->store?->orders->whereNotNull('status')->count()}})</b>
                         </a>
                         <div class="card-body">
                             <!-- Small boxes (Stat box) -->
-                            <div class="row row-cols-lg-5 g-3">
+                            <div class="row row-cols-lg-4 g-3">
+                                <div class="col">
+                                    <div class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between">
+                                        <span class="info-box-icon">
+                                            <i class="bi bi-hourglass-split"></i>
+                                        </span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-number">{{$user->store?->orders->where('status','pending')->count()}}</span><span class="info-box-text">@lang('main.vendors.no pending orders')</span>
+                                        </div><!-- /.info-box-content -->
+                                    </div><!-- /.info-box -->
+                                </div>
                                 <div class="col">
                                     <div class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between">
                                         <span class="info-box-icon">
@@ -447,7 +467,7 @@
                                 <div class="col">
                                     <div class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between">
                                         <span class="info-box-icon">
-                                            <i class="bi bi-hourglass-bottom"></i>
+                                            <i class="bi bi-arrow-repeat"></i>
                                         </span>
                                         <div class="info-box-content">
                                             <span class="info-box-number">{{$user->store?->orders->where('status','returned')->count()}}</span><span class="info-box-text">@lang('main.vendors.no returned orders')</span>
@@ -577,6 +597,125 @@
                         </div>
                     </div>
             
+            
+            
+            
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"> المسؤولين عن الطلبات داخل المتجر</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="history">
+                                @if($user->subadmins)
+                                <div class="table-responsive">
+                                        <table class="table m-0">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>@lang('main.subadmins.name')</th>
+                                                <th>@lang('main.subadmins.order_count')</th>
+                                                <th>@lang('main.orders.details')</th>
+                                            </thead>
+                                            <tbody>
+
+                                                @forelse($user->subadmins as $subadmin)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        {{$subadmin->name}}
+                                                    </td>
+                                                    <td>
+                                                        {{$subadmin->orders_assigned->count()}}
+                                                    </td>
+                                                    <td>
+                                                      <a href="{{route('users.show',['account_type'=>'subadmins',$subadmin->id])}}" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="عرض التفاصيل"><i class="fa fa-eye mr-0"></i></a>
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <tr>
+                                                    <td class="text-center text-muted" style="font-size: 25px" colspan="7">
+                                                        <i class="fa-regular fa-trash-can" style="
+                                                            font-size: 100px;
+                                                            color: #d3d3d3;
+                                                            display: block;"></i> 
+                                                        {{ trans('main.noSubadmins') }}
+                                                    </td>
+                                                </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
+                                <span>@lang('main.no_transactions_history')</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    
+                    @if($user->account_type == 'subadmins')
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"> سجل العمليات  ({{$user->orders_assigned->count()}})</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="history">
+                                @if($user->orders_assigned)
+                                <div class="table-responsive">
+                                        <table class="table m-0">
+                                            <thead>
+                                                <th>#</th>
+                                                <th>@lang('main.orders.order_no')</th>
+                                                <th>@lang('main.orders.grand_price')</th>
+                                                <th>@lang('main.orders.payment_type')</th>
+                                                <th>@lang('main.orders.payment_transaction')</th>
+                                                <th>@lang('main.orders.created_at')</th>
+                                                <th>@lang('main.orders.details')</th>
+                                            </thead>
+                                            <tbody>
+
+                                                @forelse($user->orders_assigned as $order)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>
+                                                        {{$order->order_no}}
+                                                    </td>
+                                                    <td>
+                                                        {{ $order->grand_total }} @lang('main.egp')
+                                                    </td>
+                                                    <td>
+                                                        {{ __('main.orders.'.$order->payment_type) }}
+                                                    </td>
+                                                    <td>
+                                                        {{ __('main.orders.'.$order->status) }}
+                                                    </td>
+                                                    <td>
+                                                        {{$order->created_at->diffForHumans()}}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('orders.show',$order->id)}}" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="عرض التفاصيل"><i class="fa fa-eye mr-0"></i></a>
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <tr>
+                                                    <td class="text-center text-muted" style="font-size: 25px" colspan="7">
+                                                        <i class="fa-regular fa-trash-can" style="
+                                                            font-size: 100px;
+                                                            color: #d3d3d3;
+                                                            display: block;"></i> 
+                                                        {{ trans('main.noTranscations') }}
+                                                    </td>
+                                                </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @else
+                                <span>@lang('main.no_transactions_history')</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                     @endif
                 </div>
             </div>

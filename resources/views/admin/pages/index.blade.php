@@ -8,7 +8,7 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 {{-- search part --}}
-                @include('admin.partials.breadcrumb', ['currentRoute' => route($model.'.index'), 'newRoute' => route($model.'.create')])
+                @include('admin.partials.breadcrumb')
                 <b>({{$result->total()}})</b>
             </div>
             <div class="content">

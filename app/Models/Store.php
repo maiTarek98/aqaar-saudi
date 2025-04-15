@@ -17,7 +17,9 @@ class Store extends BaseModel implements HasMedia
     protected $guarded = []; 
     protected static function booted()
     {
-        static::addGlobalScope(new StoreScope);
+        if (! auth('api')->check()) {
+            static::addGlobalScope(new StoreScope);
+        }
     }
     public function user() {
        return $this->belongsTo(\App\Models\User::class);

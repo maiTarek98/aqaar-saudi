@@ -157,16 +157,18 @@ h6 {
 }
 
 .info-box .info-box-icon svg * {
-    fill: var(--secondary);
+    fill: var(--main);
 }
-
+.no_data.info-box .info-box-icon svg.stroke * {
+    stroke: rgba(var(--mainOp),.7);
+}
 .info-box .info-box-icon svg.stroke * {
-    stroke: var(--secondary);
+    stroke: var(--main);
     fill: none !important;
 }
 
 .info-box .info-box-icon svg.stroke .fill {
-    fill: var(--secondary) !important
+    fill: var(--main) !important
 }
 
 .navbar-expand .navbar-nav .dropdown-menu .card-body .news .text-con:hover {
@@ -210,6 +212,9 @@ h6 {
 .card-header,
 .card .table-filter {
     border-bottom: 1px solid rgba(var(--mainOp), .075) !important;
+}
+.card-footer {
+    border-top: 1px solid rgba(var(--mainOp), .075) !important;
 }
 .card:has(.selected-filters) .table-filter{
     border: unset !important;

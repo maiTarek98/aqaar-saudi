@@ -9,20 +9,27 @@
             <div class="content-header">
                 {{-- search part --}}
                 @include('admin.partials.breadcrumb')
-                <b>({{$result->total()}})</b>
             </div>
             <div class="content">
                 @include('admin.partials.search_part', ['route' => route($model.'.index')])
-                <div class="mb-3">
-                    @can($model.'-delete')
-                    <div class="btn-group float-end ">
-                        @include('admin.partials.button_group', [
-                        'url' => route($model.'.deleteAll'),
-                        ])
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            المناطق
+                            <b>({{$result->total()}})</b>
+                        </h3>
+                        @can($model.'-delete')
+                        <div class="btn-group">
+                            @include('admin.partials.button_group', [
+                            'url' => route($model.'.deleteAll'),
+                            ])
+                        </div>
+                        @endcan
                     </div>
-                    @endcan
-                    <div id="crud-table-container">
-                        <x-crud-table :result="$result" :fields="$fields" :model="$model" :queryParameters="$queryParameters"/>
+                    <div class="card-body px-0">
+                        <div id="crud-table-container">
+                            <x-crud-table :result="$result" :fields="$fields" :model="$model" :queryParameters="$queryParameters"/>
+                        </div>         
                     </div>         
                 </div>
             </div>

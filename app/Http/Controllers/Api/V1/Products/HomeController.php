@@ -8,11 +8,31 @@ use App\Http\Resources\Api\Home\BrandResource;
 use App\Http\Resources\Api\Home\ProductResource;
 use App\Http\Traits\VendorStoreTrait;
 use App\Models\ProductReview;
+use App\Models\QuestionAnswer;
+use App\Http\Resources\Api\Home\HelpResource;
+use App\Models\Page;
 use Validator;
+use DB;
 class HomeController extends Controller
 {
     use ApiResponses;
     use VendorStoreTrait;
+    
+    public function getPages(Request $request)
+    {
+        $locale = in_array(app()->getLocale(), ['ar', 'en']) ? app()->getLocale() : 'en';
+    
+        $pages = Page::where('status','show')->get();
+        $faqs = QuestionAnswer::get();
+        $collection = [
+            'privacy_policy'    => $pages[0]['content_'.$locale],
+            'return_policy'     => $pages[1]['content_'.$locale],
+            'term_conditions'   => $pages[2]['content_'.$locale],
+            'faqs'              => HelpResource::collection($faqs),
+        ];
+    
+        return $this->successResponse($collection, __('api.get all pages'));
+    }
     public function getCategorys(Request $request)
     {
         $categorys = $this->getCategories();

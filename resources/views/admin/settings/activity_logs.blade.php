@@ -88,7 +88,7 @@
                                         $order = \App\Models\Order::where('id', $value->subject_id)->first();
                                     @endphp
 
-                                    <span>@if($value->event == 'created') created @elseif($value->event == 'updated') updated @endif order with number ({{ $order->order_no }})</span>
+                                    <span>@if($value->event == 'created') created @elseif($value->event == 'updated') updated @endif @if($order) order with number ({{ $order->order_no }}) @endif</span>
                                 </div>
                             </div>
                         </div>

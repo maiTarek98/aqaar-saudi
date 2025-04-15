@@ -1,10 +1,17 @@
 @if($sales['sales']->count() > 0)
     @include('admin.partials.search_part', ['route' => route('reports.index') ,'type' => 'vendors', 'report_period' => $period])
-            <div class="header">
-                <small>إجمالي المبيعات علي المنتحات المباعة بالفعل </small>
-                <p>{{__('main.'.$period)}}</p>
-                <p>{{$sales['sales']->count()}}</p>
-                <table class="table mb-0 tbl-server-info text-center">
+    <div class="card">
+        <div class="card-header">
+            <p class="m-0">
+                <span>
+                    إجمالي المبيعات علي المنتحات المباعة بالفعل
+                    {{__('main.'.$period)}}
+                </span>
+                <span>( {{$sales['sales']->count()}} )</span>
+            </p>
+        </div>
+        <div class="card-body">
+            <table class="table mb-0 tbl-server-info text-center">
                     <thead>
                         <tr>
                             <th>vendor_name</th>
@@ -50,7 +57,8 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
+        </div>
+    </div>
 @else
     <img>
     @lang('main.no recent result')

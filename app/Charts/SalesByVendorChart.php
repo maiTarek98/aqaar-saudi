@@ -33,6 +33,7 @@ class SalesByVendorChart
         return $this->chart->barChart()
             ->setTitle('إجمالي المبيعات لكل متجر')
             ->setXAxis($storeNames)
+            ->setHeight(280)
             ->setDataset([
                 [
                     'name' => 'عدد الطلبات',

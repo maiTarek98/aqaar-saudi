@@ -5,6 +5,7 @@
   </div>
   <div class="offcanvas-body">
     <div>
+        
         <form action="{{ $route }}" method="get" class="filter-form">
             <div class="row g-3 row-cols-1 align-items-end">
                 @if(request()->segment(2) == 'reports' || request()->segment(2) == 'orders')
@@ -73,7 +74,7 @@
                     </select>        
                 </div>
                 @endif
-                @if(request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'pending_vendors' && request()->segment(2) != 'orders' && request()->segment(2) != 'users' && request()->segment(2) != 'roles')
+                @if(request()->segment(2) != 'coupons' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'pending_vendors' && request()->segment(2) != 'orders' && request()->segment(2) != 'users' && request()->segment(2) != 'roles')
                 <div class="col">
                     <label for="status">@lang('main.filterByStatus')</label>
                     <select class="form-select" name="status" id="status">
@@ -83,7 +84,7 @@
                     </select>        
                 </div>
                 @endif
-                @if(request()->segment(2) != 'pages' && request()->segment(2) != 'stores' && request()->segment(2) != 'users' && request()->segment(2) != 'pending_vendors'&& request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'orders' && request()->segment(2) != 'roles')
+                @if(request()->segment(2) != 'coupons' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'pages' && request()->segment(2) != 'stores' && request()->segment(2) != 'users' && request()->segment(2) != 'pending_vendors'&& request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'orders' && request()->segment(2) != 'roles')
                 <div class="col">
                     <label for="in_home">@lang('main.filterByHome')</label>
                     <select class="form-select" name="in_home" id="in_home">
@@ -106,7 +107,7 @@
                 @endif
                 @if(request()->segment(2) != 'reports')
                 <div class="col">
-                    <label for="country_id">@lang('main.searchKeyword')</label>
+                    <label for="country_id">@if(request()->segment(2) == 'coupons') @lang('main.searchByCouponCodeOrText') @else @lang('main.searchKeyword') @endif</label>
                     <input type="text" name="search" value="{{ request()->search }}" class="form-control"
                         placeholder="@lang('main.search')">
                 </div>
@@ -132,6 +133,17 @@
                     <input type="date" name="to_date" id="to_date" value="{{ request()->to_date }}" class="form-control">
                 </div>
                 @endif
+                @endif
+                
+                @if(request()->segment(2) == 'coupons')
+                <div class="col">
+                    <label for="start_date">@lang('main.coupons.start_date')</label>
+                    <input type="date" name="start_date" id="start_date" value="{{ request()->start_date }}" class="form-control">
+                </div>
+                <div class="col">
+                    <label for="end_date">@lang('main.coupons.end_date')</label>
+                    <input type="date" name="end_date" id="end_date" value="{{ request()->end_date }}" class="form-control">
+                </div>
                 @endif
                 <div class="col">
                     <button type="submit" class="btn btn-primary w-100">

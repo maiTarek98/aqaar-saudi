@@ -75,24 +75,25 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->except('_token','admin_id','category_year_id','products_image','document','page_title','page_description','page','page_url');
-        if($request->tags){
-            $data['new_arrival'] =in_array('new_arrival',$request->tags) == true ? 'yes' : 'no';
-            $data['we_choose_for_u'] =in_array('we_choose_for_u',$request->tags) == true ? 'yes' : 'no';
+        if (!empty($request->tags) && is_array($request->tags)) {
+            $tagsArray = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
+            $data['new_arrival'] = in_array('new_arrival', $tagsArray) ? 'yes' : 'no';
+            $data['we_choose_for_u'] = in_array('we_choose_for_u', $tagsArray) ? 'yes' : 'no';
         }
-        $product = Product::create($data);
+        $product = Product::create(\Arr::except($data, ['tags']));
         if(request()->hasFile('products_image') && request()->file('products_image')->isValid())
         {
             $this->convertImageToWebp(request('products_image'),$product,'products_image','products');
         }
 
-        if($request->page_title || $request->page_description){
+        if (!empty($request->page_title) || !empty($request->page_description)) {
             SeoTag::create([
-                'admin_id'          => $request->added_by,
-                'model_name'        => '\App\Models\Product',
-                'model_id'          => $product->id,
-                'page_title'        => $request->page_title,
-                'page_description'  => $request->page_description,                
-                'page_url'          => $request->page_url,
+                'admin_id'         => $request->added_by,
+                'model_name'       => Product::class,
+                'model_id'         => $product->id,
+                'page_title'       => $request->page_title,
+                'page_description' => $request->page_description,
+                'page_url'         => $request->page_url,
             ]);
         }
         if($request->document){
@@ -134,11 +135,12 @@ class ProductController extends Controller
                 'page_url'          => $request->page_url,
             ]);
         }
-        if($request->tags){
-            $data['new_arrival'] =in_array('new_arrival',$request->tags) == true ? 'yes' : 'no';
-            $data['we_choose_for_u'] =in_array('we_choose_for_u',$request->tags) == true ? 'yes' : 'no';
+        if (!empty($request->tags) && is_array($request->tags)) {
+            $tagsArray = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
+            $data['new_arrival'] = in_array('new_arrival', $tagsArray) ? 'yes' : 'no';
+            $data['we_choose_for_u'] = in_array('we_choose_for_u', $tagsArray) ? 'yes' : 'no';
         }
-        $updated = $product->update($data);
+        $updated = $product->update(\Arr::except($data, ['tags']));
         $product->stock = ($request->input('stock')!= null)? 'on': 'off';
         $product->save();
         $document = DB::table('media')->where('model_type','App\Models\Product')->where('collection_name','document')->where('model_id', $product->id)->get();

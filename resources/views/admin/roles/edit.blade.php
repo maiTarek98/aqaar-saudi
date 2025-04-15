@@ -54,7 +54,7 @@
                                     </div>
 
                                     <!-- Accordion for Permissions -->
-                                    <div class="accordion" id="permissionsAccordion">
+                                    <div class="accordion mt-4" id="permissionsAccordion">
                                         @for($i = 0; $i < count(permissionArrayLoop()); $i++)
                                             <div class="accordion-item mb-2 border-0">
                                                 <h2 class="accordion-header bg-light px-3 d-flex align-items-center" id="heading-{{ $i }}">
@@ -85,7 +85,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-10">
-                                        <button type="submit" class="btn btn-success">@lang('main.save')</button>
+                                        <button type="submit" class="btn btn-primary">@lang('main.save')</button>
                                     </div>
 
                                 </form>

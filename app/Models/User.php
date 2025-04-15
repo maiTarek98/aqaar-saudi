@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
     public function scopeForSubadmin($query)
     {
         if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->account_type !== 'admins') {
-            return $query->where('parent_id', Auth::guard('admin')->user()->id);
+            return $query->where('parent_id', Auth::guard('admin')->user()->id)->orWhere('added_by', Auth::guard('admin')->user()->id);
         }
 
         return $query;
@@ -68,7 +68,7 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
 	];
     public function getGravatarAttribute()
     {
-        $hash = md5(strtolower(trim('1ahmedhelal1@gmail.com')));
+        $hash = md5(strtolower(trim('maitarekttt@gmail.com')));
         return "http://www.gravatar.com/avatar/$hash";
     }
 	public function getJWTIdentifier() {
@@ -99,7 +99,7 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
     }
     public function wallet()
     {
-        return $this->hasOne(Wallet::class);
+        return $this->hasOne(\App\Models\Wallet::class,'user_id');
     }
 
     public function generateReferralCode()
@@ -129,6 +129,16 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
 
     public function store() {
       return $this->hasOne(\App\Models\Store::class,'user_id');
+    }
+    public function parent() {
+      return $this->belongsTo(\App\Models\User::class,'parent_id');
+    }
+    
+    public function subadmins() {
+      return $this->hasMany(\App\Models\User::class,'parent_id');
+    }
+    public function orders_assigned() {
+      return $this->hasMany(\App\Models\Order::class,'assign_to');
     }
     public function pending_vendor() {
       return $this->belongsTo(\App\Models\PendingVendor::class,'pending_vendor_id');

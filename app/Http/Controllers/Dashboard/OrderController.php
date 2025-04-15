@@ -7,7 +7,10 @@ use App\Http\Requests\Dashboard\Order\OrderRequest;
 use App\Models\Order;
 use App\Models\ActivityLog;
 use App\Models\ProductCapacity;
+use App\Models\Cart;
+use App\Models\User;
 use App\Models\Product;
+use Notification;
 use Illuminate\Http\Request;
 class OrderController extends Controller
 {
@@ -19,33 +22,27 @@ class OrderController extends Controller
         $this->middleware('permission:orders-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:orders-delete', ['only' => ['destroy']]);
     }
-public function downloadInvoice(Request $request)
-{
-    $invoice = Cart::where('id', $request->id)->first();       
-    view()->share('invoice', $invoice);
-
-    $pdf = null;
-
-    if ($request->type === 'admin') {
-        if ($request->has('download')) {
-            $pdf = PDF::loadView('pdfInvoice')->setOptions(['images' => true]);
-            return $pdf->download('invoice_of_no_' . $request->id . '_' . now() . '.pdf');
+    public function downloadInvoice(Request $request)
+    {
+        $invoice = Order::find($request->id);
+    
+        if (!$invoice) {
+            return abort(404, 'Invoice not found');
         }
-        return view('pdfInvoice');
-    } elseif ($request->type === 'worker') {
+    
         if ($request->has('download')) {
-            $pdf = PDF::loadView('pdfWorkerInvoice')->setOptions([
-              'images' => true
-          ]) ->setOption('no-images', false)
-          ->setOption('enable-local-file-access', true)
-           -> setOption('enable-external-links', true);
-            return $pdf->download('invoice_of_worker_no_' . $request->id . '_' . now() . '.pdf');
+            $pdf = PDF::loadView('pdfInvoice', compact('invoice'))
+                ->setOptions([
+                    'images' => true,
+                    'enable-local-file-access' => true,
+                    'enable-external-links' => true,
+                ]);
+    
+            return $pdf->download('invoice_no_' . $invoice->id . '_' . now()->format('Ymd_His') . '.pdf');
         }
-        return view('pdfWorkerInvoice');
+        return view('pdfInvoice', compact('invoice'));
     }
 
-    return abort(404); // or handle unexpected types
-}
     // public function index(Request $request)
     // {
     //     $per_page = $request->input('per_page', 10);
@@ -102,6 +99,8 @@ public function downloadInvoice(Request $request)
                 $query->where('store_id', $store_id);
             })->when($request->query('user_id'), function($query, $user_id) {
                 $query->where('user_id', $user_id);
+            })->when($request->query('coupon_id'), function($query, $coupon_id) {
+                $query->where('coupon_id', $coupon_id);
             })->orderBy('id', $sortBy);
         if ($per_page === 'all') {
             $result = $res->get(); 
@@ -152,7 +151,8 @@ public function downloadInvoice(Request $request)
     }
     public function changeStatus(Order $order){
         $status = (request('status') == 'on')? 'show' :'hide';
-        $order->update(['status' =>$status]);      
+        $order->update(['status' =>$status]);  
+        
         return redirect()->route('orders.index',['parent_id' => request('parent_id')])->with('success',trans('messages.UpdateSuccessfully'));
 
     }
@@ -192,7 +192,16 @@ public function downloadInvoice(Request $request)
             $order->status = $request->status;
             $order->notes = $request->notes;
             $order->save();
-
+            $admins = User::where('account_type','admins')->where('id','!=',auth('admin')->user()->id)->get();
+            foreach ($admins as $key => $value) {   
+                if($value->hasPermissionTo('orders-list')){
+                    Notification::send($value,new \App\Notifications\NotifyOrderStatusToAdmin($order));
+                }
+            }
+            $user = $order->user;
+            if($user){
+                Notification::send($user,new \App\Notifications\NotifyOrderStatusToAdmin($order));
+            }
             return response()->json([
                 'success' => true,
                 'statusText' => __('main.orders.' . $order->status),
@@ -216,6 +225,10 @@ public function downloadInvoice(Request $request)
         if ($order) {
             $order->notes = $request->add_notes;
             $order->save();
+            $user = $order->user;
+            if($user){
+                Notification::send($user,new \App\Notifications\NotifyOrderNotesToUser($order));
+            }
             return response()->json(['success' => true, 'message' => __('messages.order assignment updated successfully')]);
         }
         return response()->json(['success' => false, 'message' => __('messages.order not found')]);
@@ -264,41 +277,67 @@ public function downloadInvoice(Request $request)
             return response()->json(['options'=>$data,'prices'=> $prices, 'shipping' => $shipping]);
         }
     }
-    
-    public function updateOrder(Cart $order , Request $request){
-        // dd($request->all());
-        $order->orders()->delete();
-        $sum = 0;
-        for($i=0; $i< count($request->product_id); $i++){
-            if($request->product_id[$i] != null){
-            $create_order = Order::create([
-                // 'is_powdered' => ($request->is_powdered[$i])? true: false,
-                'capacity' => $request->capacity_id[$i],
-                'cart_id' => $order->id,
-                'is_powdered' => $request->is_powdered[$i],
-                'product_id' => $request->product_id[$i],
-                'product_price' => $request->price[$i],
-                'qty' => $request->quantity[$i],  //1
-                'total_price' => $request->quantity[$i] * $request->price[$i] ,
-                'user_id' => $order->user_id,
-            ]);
-            $sum += $create_order->total_price;
+    public function applyDiscount(Order $order, Request $request)
+    {
+        if($request->discount > 0){
+            $order->update([
+                    'order_discount' => $request->discount,
+                ]);
+            $user = $order->user;
+            if($user){
+                Notification::send($user,new \App\Notifications\NotifyOrderDiscountUser($order));
             }
         }
-        $update = $order->update([
-            'total_price' => $sum,
-            ]);
-            
-            if($order->user_id){
-            $to_email = $order->user?->email;
-        }else{
-            $to_email = $order->user_address?->email;
-        }
-            $mail=Mail::send('emails.order_updated', ['cart' => $order], function($message) use ($request, $to_email) {
-                 $message->to($to_email);
-                 $message->subject('Order Updates');
-            });
-        return redirect()->back()->with('success',trans('messages.UpdateSuccessfully'));
+        return redirect()->back()->with('success', trans('messages.UpdateSuccessfully'));
     }
+    public function update(Order $order, Request $request)
+    {
+        $sum = 0; 
+        for ($i = 0; $i < count($request->product_id); $i++) {
+            $product_id = $request->product_id[$i] ?? null;
+            $quantity = $request->quantity[$i] ?? 0;
+            $price = $request->price[$i] ?? 0;
+            if ($product_id === null) {
+                continue;
+            }
+            $existingOrder = Cart::where('order_id', $order->id)
+                ->where('product_id', $product_id)
+                ->first();
+    
+            if ($existingOrder) {
+                $existingOrder->update([
+                    'qty' => $quantity,
+                    'total_price' => $quantity * $price,
+                ]);
+                $sum += $existingOrder->total_price;
+            } else {
+                $newOrder = Cart::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product_id,
+                    'price' => $price,
+                    'qty' => $quantity,
+                    'total_price' => $quantity * $price,
+                    'user_id' => $order->user_id,
+                ]);
+                $sum += $newOrder->total_price;
+            }
+        }
+    
+        // $order->update(['total_price' => $sum]);
+        $user = $order->user;
+        if($user){
+            Notification::send($user,new \App\Notifications\NotifyUpdateOrderUser($order));
+        }
+        // إرسال الإشعار عبر البريد الإلكتروني
+        // $to_email = $order->user?->email ?? $order->user_address?->email;
+    
+        // Mail::send('emails.order_updated', ['cart' => $order], function ($message) use ($to_email) {
+        //     $message->to($to_email);
+        //     $message->subject('Order Updates');
+        // });
+    
+        return redirect()->back()->with('success', trans('messages.UpdateSuccessfully'));
+    }
+
     
 }

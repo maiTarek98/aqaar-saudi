@@ -32,8 +32,8 @@ class CategoryChart
                 $salesCounts[] = $data->sales;
             }
         }
-        return $this->chart->pieChart()
-            ->setTitle('المبيعات حسب الفئة')
+        return $this->chart->donutChart()  // تم تغيير هذه السطر إلى donutChart()
+            // ->setTitle('المبيعات حسب الفئة')
             ->setLabels($categoryNames)
             ->setDataset($salesCounts);
     }

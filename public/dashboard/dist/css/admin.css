@@ -254,9 +254,9 @@ body {
   gap: 6px;
   justify-content: end;
 }
-
 ul.pagination .page-link {
   display: flex;
+  gap: 6px;
   align-items: center;
   justify-content: center;
   font-size: .9375rem;
@@ -348,6 +348,12 @@ ul.pagination .page-link {
     aspect-ratio: 1 /1 ;
 }
 
+.select2-container {
+    width: 100% !important;
+}
+.card-header .select2-container {
+    width: fit-content !important;
+}
 .select2-selection__rendered{
   margin: 0 !important;
 }
@@ -363,8 +369,9 @@ ul.pagination .page-link {
 }
 .select2-container .select2-selection--multiple .select2-selection__rendered {
   display: flex !important;
+  flex-wrap: wrap;
   gap: 5px;
-  padding: .5rem;
+  /*padding: .5rem;*/
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   background-color: var(--main) !important;
@@ -372,7 +379,8 @@ ul.pagination .page-link {
   border-radius: var(--btn-border-radius) !important;
   color: var(--white) !important;
   margin: unset !important;
-  padding: 2px 4px 2px 20px !important;
+  padding: 2px 3px 2px 18px !important;
+  font-size: 11px;
 }
 .select2-container--default[dir="rtl"] .select2-selection--multiple .select2-selection__choice__remove {
   border: unset !important;
@@ -965,6 +973,13 @@ mark,
 
 }
 
+.tag {
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: var(--btn-border-radius);
+    background: rgba(var(--mainOp), 0.05);
+}
+
 /* .table td {
   border-top: 2px solid var(--body) !important
 } */
@@ -1006,6 +1021,113 @@ mark,
 .card.statistic .info-box-icon{
   padding: .65rem;
 } 
+
+
+.coupon_card {
+    width: 400px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+    background-color: rgba(var(--mainOp),1);
+    padding: 10px 10px;
+    position: relative;
+    margin: auto;
+    color: var(--white);
+}
+
+.coupon_card::before,
+.coupon_card::after{
+    position: absolute;
+    content: "";
+    height: 36px;
+    width: 36px;
+    inset-inline-end: -20px;
+    border-radius: 40px;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--white);
+}
+
+.coupon_card::after {
+    inset-inline-end:0;
+    inset-inline-start: -20px;
+}
+
+.coupon_card .main {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 18px;
+    align-items: center;
+}
+
+.coupon_card .co-img img {
+    width: 100px;
+    height: 100px;
+    filter: brightness(0) invert(1);
+}
+
+.coupon_card .vertical {
+    border-left: 5px dotted var(--white);
+    height: 130px;
+}
+
+
+.copy-text input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.copy-text button {
+    padding: 4px 10px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+}
+
+.copy-text {
+    position: relative;
+    padding: 4px 8px 4px 4px;
+    background: #fff;
+    border: 1px solid rgba(var(--mainOp), .23);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.copy-text button:before {
+   content: "Copied";
+   position: absolute;
+   top: -38px;
+   inset-inline-end: 0px;
+   padding: 6px 14px;
+   border-radius: 4px;
+   font-size: 14px;
+   z-index: 2;
+   display: none
+}
+
+.copy-text button:after {
+   content: "";
+   position: absolute;
+   top: -12px;
+   inset-inline-end: 12px;
+   width: 10px;
+   height: 10px;
+   transform: rotate(45deg);
+   display: none;
+   z-index: 1
+}
+.copy-text button, .copy-text button:active, .copy-text button:after, .copy-text button:before {
+    background-color: var(--main);
+    color: var(--white);
+}
+.copy-text.active button:after, .copy-text.active button:before{
+    display: block;
+}
+
+
 .customer-details i{
   display: flex;
   align-items: center;
@@ -4704,6 +4826,11 @@ body,
   text-align: center;
   width: 1.6rem;
   fill: var(--white);
+}
+
+.nav-sidebar>.nav-item .nav-icon::before{
+  /*display: block;*/
+  width: 1.6rem;
 }
 
 
@@ -10166,6 +10293,12 @@ i.material-icons {
   z-index: 9
 }
 
+.order-action .dropdown-menu.show {
+    bottom: unset !important;
+    top: -4px !important;
+    transform: translateY(-100%) !important;
+}
+
 .steps ol {
   counter-reset: list;
   list-style: none;
@@ -10238,8 +10371,8 @@ i.material-icons {
 .status-tag.completed {
   --status: 42, 148, 70;
 }
-
 .status-tag.blocked ,
+.status-tag.cancelled ,
 .status-tag.declined {
   --status: 200, 16, 47;
 }
@@ -10301,7 +10434,8 @@ i.material-icons {
   border-radius: 50%;
 }
 
-.status-tag .status-tag__txt {
+.status-tag .status-tag__txt,
+.status-tag i{
   color: RGBA(var(--status), 1);
 }
 
@@ -10325,6 +10459,9 @@ i.material-icons {
 }
 
 
+.modal-body .select2-container {
+    z-index: 1066;
+}
 
 .invoice {
   background: var(--white);

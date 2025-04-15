@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\ApiResponses;
 use Validator;
 use App\Http\Resources\Api\User\FavoriteResource;
+use App\Http\Resources\Api\Home\ProductResource;
 class FavoritesController extends Controller
 {
     use ApiResponses;
@@ -37,7 +38,24 @@ class FavoritesController extends Controller
     {
         $user = auth('api')->user();
         $favorites = $user->wishlists()->with('product')->get();
-        $items = FavoriteResource::collection($favorites);
+        // $items = FavoriteResource::collection($favorites);
+        
+        $products = Product::whereHas('wishlist',function($q) use($user){
+            $q->where('user_id',$user->id);
+        })->paginate(6);
+        $items=[
+            'data' => ProductResource::collection($products),
+            'links' => $products->linkCollection(),
+            'meta' => [
+                    'current_page' => $products->currentPage(),
+                    'from' => $products->firstItem(),
+                    'last_page' => $products->lastPage(),
+                    'path' => $products->path(),
+                    'per_page' => $products->perPage(),
+                    'to' => $products->lastItem(),
+                    'total' => $products->total(),
+            ],
+        ];
         return $this->successResponse($items,__('api.get favorites'));
     }
 }

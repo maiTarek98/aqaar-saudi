@@ -26,6 +26,7 @@ use App\Charts\CategoryChart;
 use App\Charts\SalesChart;
 use App\Charts\SalesByVendorChart;
 use App\Charts\OrdersStatusChart;
+use Spatie\Activitylog\Models\Activity;
 
 class HomeController extends Controller
 {
@@ -145,7 +146,7 @@ class HomeController extends Controller
                 'topBlogs', 'topCustomers', 'latestReviews', 'latestOrders', 'topCoupons', 'latestPendingVendors', 
                 'chart', 'chart2', 'chart3', 'chart4'
             ));
-        } else {
+        } elseif (auth()->user()->account_type == 'vendors') {
             $products = Product::orderByDesc('id')->count();
             $orders = Order::orderByDesc('created_at')->get();
             $totalSpent = Order::where('status', 'completed')->get()->sum('grand_total');
@@ -153,6 +154,46 @@ class HomeController extends Controller
                 $q->where('store_id', auth('admin')->user()->store?->id);
             })->orderByDesc('created_at')->get();
             return view('admin.vendor_home', compact('orders', 'totalSpent', 'latestReviews','products'));
+        }else {
+            $orders = Order::orderByDesc('created_at')->get();
+            $totalSpent = Order::where('status', 'completed')->get()->sum('grand_total');
+            $store = auth()->user()->parent?->store;
+            $reminderHours = [
+                'pending' => $store->reminder_hours_pending,
+                'accepted' => $store->reminder_hours_accepted,
+                'shipped' => $store->reminder_hours_shipped,
+            ];
+        $latest_status_days = 0;
+        
+        $reminders = Order::whereIn('status', ['pending', 'accepted', 'shipped'])
+            ->get()
+            ->filter(function ($order) use ($reminderHours, &$latest_status_days) {
+                $lastStatusChangeActivity = Activity::where('subject_type', 'App\Models\Order')
+                    ->where('subject_id', $order->id)
+                    ->where(function ($q) {
+                        $q->whereRaw("JSON_EXTRACT(properties, '$.attributes.status') = 'accepted'")
+                            ->whereRaw("JSON_EXTRACT(properties, '$.old.status') = 'pending'")
+                            ->orWhere(function ($q2) {
+                                $q2->whereRaw("JSON_EXTRACT(properties, '$.attributes.status') = 'shipped'")
+                                    ->whereRaw("JSON_EXTRACT(properties, '$.old.status') = 'accepted'");
+                            });
+                    })
+                    ->latest()
+                    ->first();
+        
+                if (!$lastStatusChangeActivity) {
+                    return false;
+                }
+        
+                $statusChangeTime = $lastStatusChangeActivity->created_at;
+                $hoursThreshold = $reminderHours[$order->status] ?? null;
+                $latest_status_days = $statusChangeTime->diffInDays(now());
+        
+                if (!$hoursThreshold) return false;
+                return $latest_status_days >= $hoursThreshold;
+            });
+        
+        return view('admin.subadmin_home', compact('orders', 'totalSpent', 'reminders', 'latest_status_days'));
         }
     }
 

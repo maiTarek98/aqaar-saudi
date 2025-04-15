@@ -29,9 +29,20 @@ use App\Http\Controllers\Dashboard\PendingVendorController;
 use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\Dashboard\LocationController;
 use App\Http\Controllers\Dashboard\WalletController;
+use App\Http\Controllers\Dashboard\OrderReturnController;
+
+
+Route::prefix('locations')->group(function () {
+    Route::get('/cities/{governorate_id}', [LocationController::class, 'getCities']);
+    Route::get('/districts/{city_id}', [LocationController::class, 'getDistricts']);
+});
 
 Route::get('/change-language/{lang}', [HomeController::class,'changeLang']);
-
+ // Invoice routes
+        Route::get('/products/{id}/price', function ($id) {
+            $product = \App\Models\Product::find($id);
+            return response()->json(['price' => $product ? $product->realprice : 0]);
+        });
 Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () {
 
     Route::get('/login', [HomeController::class, 'loginPage'])->name('dashboard.login')->middleware('adminGuest');
@@ -53,11 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
             return response()->json(['message' => 'Cache cleared']);
         })->name('cache.clear.vendor_created');
 
-        // Invoice routes
-        Route::get('/api/products/{id}/price', function ($id) {
-            $product = \App\Models\Product::find($id);
-            return response()->json(['price' => $product ? $product->price : 0]);
-        });
+       
         Route::prefix('invoices')->group(function () {
             // Show form to create an invoice
                 Route::post('/invoices/storeTemplate', [InvoiceController::class, 'storeTemplate'])->name('invoices.storeTemplate');
@@ -72,10 +79,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
 
         Route::resource('locations', LocationController::class);
         Route::delete('locationsDeleteAll', [LocationController::class,'deleteAll'])->name('locations.deleteAll');
-        Route::prefix('locations')->group(function () {
-            Route::get('cities/{governorate_id}', [LocationController::class, 'getCities']);
-            Route::get('districts/{city_id}', [LocationController::class, 'getDistricts']);
-        });
 
 
         Route::get('/check-new-messages', [MessageController::class, 'checkNewMessages']);
@@ -119,6 +122,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
         Route::resource('coupons', CouponController::class);
         Route::delete('couponsDeleteAll', [CouponController::class,'deleteAll'])->name('coupons.deleteAll');
         Route::post('change-admin-status/{coupon}', [CouponController::class,'changeAdminStatus'])->name('coupons.changeAdminStatus');
+        Route::post('/coupons/{id}/approve', [CouponController::class, 'approve'])->name('coupons.approve');
+        Route::post('/coupons/{id}/reject', [CouponController::class, 'reject'])->name('coupons.reject');
 
         Route::resource('/categorys', CategoryController::class);
         Route::delete('categorysDeleteAll', [CategoryController::class,'deleteAll'])->name('categorys.deleteAll');
@@ -168,12 +173,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
         
         Route::resource('/orders', OrderController::class);
         Route::delete('ordersDeleteAll', [OrderController::class,'deleteAll'])->name('orders.deleteAll');;
-        Route::get('download-pdf', [OrderController::class,'download_fatora'])->name('download-pdf');
+        Route::get('download-pdf', [OrderController::class,'downloadInvoice'])->name('download-pdf');
         Route::get('print-pdf', [OrderController::class,'print_fatora'])->name('print-pdf');
         Route::post('/ordersDetail/{id}/restore', [OrderController::class, 'restore'])->name('orders.restore');
         Route::post('/orders/update-assign-to', [OrderController::class, 'updateAssignTo'])->name('orders.updateAssignTo');
         Route::post('/orders/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
         Route::post('/orders/update-notes-to-order', [OrderController::class, 'updateNotesToOrder'])->name('orders.updateNotesToOrder');
+        Route::post('/orders/apply-discount/{order}', [OrderController::class, 'applyDiscount'])->name('orders.applyDiscount');
         Route::post('/fetch-shipping', [OrderController::class, 'fetchShipping']);
         Route::post('/fetch-capacitys', [OrderController::class, 'fetchCapacity']);
         Route::post('/fetch-prices', [OrderController::class, 'fetchPrice']);
@@ -185,6 +191,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
         
 
         Route::get('orders/{id}/review', [OrderController::class,'orderReview'])->name('orders.review');
+        Route::post('process/{return}', [OrderReturnController::class,'process'])->name('store.returns.process');
 
         Route::resource('/pages', PageController::class);
         Route::delete('pagesDeleteAll', [PageController::class,'deleteAll'])->name('pages.deleteAll');

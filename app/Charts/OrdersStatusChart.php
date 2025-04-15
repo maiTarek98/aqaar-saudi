@@ -26,9 +26,25 @@ class OrdersStatusChart
             $totals[] = $data->count;
         }                 
 
-        return $this->chart->pieChart()
-            ->setTitle('حالات الطلبات')
+        return $this->chart->donutChart()
+            // ->setTitle('حالات الطلبات')
             ->setLabels($statuses)
-            ->setDataset($totals);
+            ->setDataset($totals)
+            ->setOptions([
+                'plotOptions' => [
+                    'pie' => [
+                        'donut' => [
+                            'size' => '75%' // حجم الفتحة الوسطى
+                        ]
+                    ]
+                ],
+                'legend' => [
+                    'position' => 'bottom', // تحط الليجند تحت لو عايزة
+                    'labels' => [
+                        'colors' => '#333',
+                        'useSeriesColors' => false
+                    ]
+                ]
+            ]);
     }
 }

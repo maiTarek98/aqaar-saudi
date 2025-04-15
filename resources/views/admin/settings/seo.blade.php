@@ -7,53 +7,58 @@
         padding: 10px;
         display: none;
     }
-        /* Custom styling for the tags input */
-        .bootstrap-tagsinput {
-            width: 100%;
-            padding: 8px;
-            border: 2px solid var(--main);
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            min-height: 45px;
-        }
+    /* Custom styling for the tags input */
+    .bootstrap-tagsinput {
+        width: 100%;
+        padding: 8px;
+        border: 2px solid var(--main);
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        min-height: 45px;
+    }
 
-        /* Styling for individual tags */
-        .bootstrap-tagsinput .tag {
-            background-color: var(--main);
-            color: white;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 20px;
-            margin: 3px;
-            display: inline-flex;
-            align-items: center;
-        }
+    /* Styling for individual tags */
+    .bootstrap-tagsinput .tag {
+        background-color: var(--main);
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 20px;
+        margin: 3px;
+        display: inline-flex;
+        align-items: center;
+    }
 
-        /* Remove button inside the tag */
-        .bootstrap-tagsinput .tag [data-role="remove"] {
-            margin-left: 8px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
+    /* Remove button inside the tag */
+    .bootstrap-tagsinput .tag [data-role="remove"] {
+        margin-inline-start: 3px !important;
+        margin-inline-end: 0 !important;
+        cursor: pointer;
+    }
 
-        .bootstrap-tagsinput .tag [data-role="remove"]:hover {
-            color: #ffcccc;
-        }
+    .bootstrap-tagsinput .tag [data-role="remove"]:hover {
+        color: #ffcccc;
+    }
 
-        /* Placeholder styling */
-        input[type="text"]::placeholder {
-            color: #aaa;
-            font-style: italic;
-        }
+    /* Placeholder styling */
+    input[type="text"]::placeholder {
+        color: #aaa;
+        font-style: italic;
+    }
 </style>
 @endpush
 @section('content')
-  <div class="content-wrapper">
-    <div class="content-header">
-        @include('admin.partials.breadcrumb')
-    </div>
-     <div class="container-fluid add-form-list">
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <div>
+                    @include('admin.partials.breadcrumb')
+                </div>
+            </div>
+        </div>
+        <div class="content add-form-list">
          <div class="card my-4">
              <div class="card-header d-flex justify-content-between">
                  <div class="header-title">
@@ -61,10 +66,10 @@
                  </div>
              </div>
              <div class="card-body">
-                <h3>@lang('main.generate sitemap')</h3>
+                <h5>@lang('main.generate sitemap')</h5>
                     <div class="copy-link">
                         <div class="items">
-                            <input type="text" id="copy" class="copy-link-input form-control"value="{{url('/public/sitemap.xml')}}" readonly>
+                            <input type="text" id="copy" class="copy-link-input form-control"value="{{url('/sitemap.xml')}}" readonly>
                         </div>
                     </div>
                     <div class='d-flex align-items-center gap-2 my-3'>
@@ -122,7 +127,8 @@
          </div>
         <!-- Page end  -->
     </div>
-      </div>
+    </div>
+</div>
 @endsection
 @push('custom-js')
  <script>

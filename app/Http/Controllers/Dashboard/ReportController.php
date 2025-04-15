@@ -28,6 +28,9 @@ class ReportController extends Controller
 
     public function index(GeneralSettings $setting, Request $request)
     {
+        if (!in_array(request('type'), ['sales', 'brands', 'vendors','products','users'])) {
+            return redirect(url('admin/reports?type=sales'));
+        }
         return view('admin.reports.index',compact('setting'));
     }
     

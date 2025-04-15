@@ -47,6 +47,11 @@
             <li data-filter="store_id">
                 {{getStore(request('store_id'))->name}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['store_id' => null])}}"><i class="fas fa-times"></i></a></li>    
         @endif
+        
+        @if(request('coupon_id'))
+            <li data-filter="coupon_id">
+                {{__('main.home.coupon')}} {{getCoupon(request('coupon_id'))->coupon_code}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['coupon_id' => null])}}"><i class="fas fa-times"></i></a></li>    
+        @endif
         @if(request('category_id'))
             <li data-filter="category_id">
                 {{getCategory(request('category_id'))->title}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['category_id' => null])}}"><i class="fas fa-times"></i></a></li>    
@@ -85,7 +90,11 @@
             @endif
             <th><input type="checkbox" id="master" class="sub_chk"></th>
             @foreach($fields as $field)
-            <th>{{ ucfirst(__('main.'.$model.'.'.$field)) }}</th>
+                @if ($field === 'price' && request()->segment(2) == 'products')
+                <th>{{ ucfirst(__('main.'.$model.'.'.$field)) }}<small>@lang('main.products.after_discount')</th>
+                @else
+                <th>{{ ucfirst(__('main.'.$model.'.'.$field)) }}</th>
+                @endif
             @endforeach
             @if(request()->segment(3) != 'activity-logs')
             <th>@lang('main.actions')</th>
@@ -128,23 +137,32 @@
                 
                 @elseif ($field === 'storename')
                 <td>{{ $item->store?->name ?? 'N/A' }}</td>
+                
+                
+                @elseif ($field === 'added_by')
+                <td>{{ $item->admin?->store?->name ?? 'كوبون من الإدارة' }}</td>
                 @elseif ($field === 'stock')
                 <td>{{ ($item->stock == 'on')? 'available':'not available' }}</td>
                 @elseif ($field === 'childrens')
 
-                <td><ul>
-            @forelse($item->children as $child)
-                <li>{{ $child }}</li>
-                @empty
-                -
-            @endforelse
-        </ul></td>
+                <td>
+                    <ul class="d-flex align-items-center justify-content-center gap-1">
+                        @forelse($item->children as $child)
+                            <li class="tag">{{ $child }}</li>
+                            @empty
+                            -
+                        @endforelse
+                    </ul>
+                </td>
                 @elseif ($field === 'comments')
                 <td>{{ $item->comments?->count() ?? 'N/A' }}</td>
                 @elseif ($field === 'mobile')
                 <td><a href="tel:+0{{ $item->mobile }}">0{{ $item->mobile }}+</a></td>
                 @elseif ($field === 'products')
                 <td>{{ $item->products?->count() ?? 'N/A' }}</td>
+                @elseif ($field === 'price' && request()->segment(2) == 'products')
+                <td>
+                    {{ $item->real_price}} @lang('main.currency')</td>
                 @elseif ($field === 'price')
                 <td>{{ $item->price}} @lang('main.currency')</td>
                 @elseif ($field === 'role')
@@ -252,7 +270,7 @@
                         <a href="{{ $editUrl }}" class="btn btn-outline-warning btn-sm"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.edit')"><i class="fa fa-edit mr-0"></i></a>
                         @endcan
                         @can($model1.'-delete')
-                            @if(!(request()->segment(2) == 'users' && $item->id == 1)  && !(request()->segment(2) == 'roles' && ($item->id == 1 || $item->id == 3 || $item->id == 4)) )
+                            @if(!(request()->segment(2) == 'users' && $item->id == 1)  && !(request()->segment(2) == 'roles' && ($item->id == 1 || $item->id == 3 || $item->id == 4)) && request()->segment(2) != 'pages' )
                             @if(request('account_type'))
                             {!! Form::open(['method' => 'DELETE', 'route' => [$model.'.destroy',[$item->id,'account_type' => request('account_type')]],'style' => 'display:inline',]) !!}
                             @else

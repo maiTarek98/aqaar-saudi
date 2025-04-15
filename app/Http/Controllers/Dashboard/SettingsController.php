@@ -145,7 +145,7 @@ class SettingsController extends Controller
         $user = auth('admin')->user();
         $users = User::where('account_type','users')->whereNotNull('fcm_id')->get();
 
-        $subadmins = User::where('account_type','subadmins')->whereNotNull('fcm_id')->get();
+        $subadmins = User::where('account_type','vendors')->whereNotNull('fcm_id')->get();
 
         return view('admin.settings.sending_notifications', compact('user','users','subadmins'));
     }

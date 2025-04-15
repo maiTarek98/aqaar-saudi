@@ -27,9 +27,14 @@ class StoreRequest extends FormRequest
         return [
             'added_by' => 'required|exists:users,id',
             'user_id' => 'sometimes|nullable|exists:users,id',
-
+            'orders_return_period' => 'sometimes|nullable|integer',
             'name' => "required|string|min:3|max:255|unique:stores,name,{$storeId}",
             'status' => 'required|in:show,hide',  
+            
+            'reminder_hours_pending' => 'sometimes|nullable|integer',
+            'reminder_hours_accepted' => 'sometimes|nullable|integer',
+            'reminder_hours_shipped' => 'sometimes|nullable|integer',
+
      ]  
         +
          ($this->isMethod('POST') ? $this->store() : $this->update());

@@ -68,7 +68,7 @@
             <div class="card-body">
                 <img src="{{ url('/dashboard') }}/dist/img/phone.png" alt="" width="48">
                 <label for="phone" class="form-label">@lang('main.settings.phone')<span class="text-danger">*</span></label>
-                <input type="text" class="form-control mt-2" id="phone" name="phone" value="{{old('phone',$settings->phone)}}" placeholder="@lang('main.settings.phone')" required>
+                <input type="text" class="form-control mt-2" maxlength="10" id="phone" name="phone" value="{{old('phone',$settings->phone)}}" placeholder="@lang('main.settings.phone')" required>
             </div>
         </div>
     </div>
@@ -164,7 +164,7 @@
         <div class="card basic">
             <div class="card-body">
                 <img src="{{ url('/dashboard') }}/dist/img/whatsapp.png" alt="" width="48">
-                <input type="text" class="form-control mt-2" id="whatsapp_phone" name="whatsapp_phone" value="{{old('whatsapp_phone',$settings->whatsapp_phone)}}" placeholder="@lang('main.settings.whatsapp_phone')">
+                <input type="text" class="form-control mt-2" id="whatsapp_phone" maxlength="10" name="whatsapp_phone" value="{{old('whatsapp_phone',$settings->whatsapp_phone)}}" placeholder="@lang('main.settings.whatsapp_phone')">
             </div>
         </div>
     </div>

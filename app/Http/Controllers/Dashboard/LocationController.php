@@ -20,16 +20,22 @@ public function index(Request $request)
     $per_page = $request->input('per_page', 10);
     $sortBy = $request->input('sortBy', 'ASC');
 
-    $query = Location::with(['children' => function ($query) {
-        $query->select('id', 'name_ar', 'parent_id'); // 🔹 جلب الأعمدة المطلوبة فقط
+    $query = Location::with(['children' => function ($query) use ($searchQuery) {
+        $query->where(function ($qu) use ($searchQuery) {
+            $qu->where('name_' . \App::getLocale(), 'like', '%' . $searchQuery . '%');
+        })->select('id', 'name_ar', 'parent_id');
     }])->where(function ($query) use ($searchQuery) {
-        $query->where('name_' . \App::getLocale(), 'like', '%' . $searchQuery . '%');
-    })->when($request->query('status'), function ($query, $status) {
-        $query->where('status', $status);
-    })->when($request->query('in_home'), function ($query, $in_home) {
-        $query->where('in_home', $in_home);
-    })->whereNull('parent_id')->orderBy('id', $sortBy);
-
+        $query->where('name_' . \App::getLocale(), 'like', '%' . $searchQuery . '%')
+              ->where(function ($q) {
+                  $q->whereNull('parent_id') 
+                    ->orWhereNotNull('parent_id'); 
+              });
+    })->orderBy('id', $sortBy);
+    if($searchQuery){
+        $result = $query->whereNotNull('parent_id')->get();
+    }else{
+        $result = $query->whereNull('parent_id')->get();
+    }
     if ($per_page === 'all') {
         $result = $query->get();
     } else {
@@ -118,22 +124,37 @@ public function index(Request $request)
     public function destroy(Location $location)
     {
         $location->delete();
-        return response()->json(['message' => 'Deleted successfully']);
+        return redirect()->route('locations.index')->with('success',trans('messages.DeleteSuccessfully'));
     }
 
     public function getCities($governorate_id)
     {
-        return Location::where('parent_id', $governorate_id)->where('type', 'city')->get();
+        $cities = Location::where('parent_id', $governorate_id)->where('type', 'city')->get();
+        return response()->json($cities);
     }
+
     public function getDistricts($city_id)
     {
-        return Location::where('parent_id', $city_id)->where('type', 'district')->get();
+        $districts = Location::where('parent_id', $city_id)->where('type', 'district')->get();
+        return response()->json($districts);
     }
 
     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        $locations = Location::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        }
+        $ids = array_filter($ids, fn($id) => is_numeric($id));
+    
+        if (empty($ids)) {
+            return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
+        }
+    
+        Location::whereIn('id', $ids)->delete();
+    
+        return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
+
+
 }

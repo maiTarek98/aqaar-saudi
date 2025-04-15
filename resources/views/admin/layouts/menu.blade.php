@@ -139,8 +139,3 @@
     
 </aside>
 
-<div class="fixed-icon">
-    <a href="{{ url('/admin/videos/how-to-use') }}" class="videos" target="_blank" aria-label="الإنتقال إلى رابط الفيديوهات">
-        <i class="bi bi-collection-play"></i>
-    </a>
-</div>

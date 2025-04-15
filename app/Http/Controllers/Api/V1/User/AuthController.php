@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Resources\Api\User\AuthResource;
+use App\Http\Resources\Api\User\WalletResource;
 use App\Http\Requests\Dashboard\User\StoreUserRequest;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\ActivateAccountRequest;
@@ -44,6 +45,8 @@ class AuthController extends Controller
         }
 
         if ($user->status === 'pending') {
+            $user->mobile_code = $user->activationCode();
+            $user->save();
             return $this->successResponse(new AuthResource($user), __('api.sent sms message'));
         }
         $rememberMe = $request->filled('remember_me') && $request->remember_me;
@@ -323,4 +326,21 @@ class AuthController extends Controller
         return $this->successResponse($userData,__('api.Mobile number updated successfully'));
 
     }
+    
+    public function wallet(Request $request)
+    {
+        $user = auth('api')->user();
+        $wallet = $user->wallet;
+        
+        if (!$wallet) {
+            return $this->errorResponse(__('api.No wallet found.'));
+        }
+        $transactions = $wallet->transactions;
+        $userData = WalletResource::collection($transactions);
+        return $this->successResponse([
+                    'balance' => (double) $wallet->balance,
+                    'transactions' => $userData
+                ],__('api.Wallet data'));
+    }
+        
 }

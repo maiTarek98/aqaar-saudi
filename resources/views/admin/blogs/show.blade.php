@@ -10,53 +10,60 @@
             </div>            
             <!-- Main content -->
             <section class="content">
-                <div class="row g-3">
-                    @if($blog->getFirstMediaUrl('blogs_image','thumb'))
-                    <div class="col-12">
-                        <div class="card border-0 h-100 py-2 px-3">
-                            <label for="email">@lang('main.blogs.blogs_image')</label>
-                            <img loading="lazy" class="cursor-img" data-toggle="modal" data-target="#exampleModal{{ $blog->id }}" id="image" src="{{$blog->getFirstMediaUrl('blogs_image','thumb')}}" alt="@lang('main.NoImageUploaded')" style="aspect-ratio: 15/4; object-fit: contain;object-position: right;">
-                            @include('admin.components.modal_photo', [
-                            'image' => $blog->getFirstMediaUrl('blogs_image','thumb'),
-                            'id' => $blog->id,
-                            ])
-                        </div>
-                    </div>
-                    @endif
-                    <div class="col-12">
-                        <div class="card border-0 d-flex flex-row align-items-center justify-content-between h-100 py-2 px-3">
-                            <label class="m-0"> @lang('main.blogs.status')</label>
-    
-                            <div class="status-tag {{ $blog->status == 'show' ? 'accepted' : 'declined' }}">
-                                <i class="highlight"></i>
-                                <p class="status-tag__txt">{{ $blog->status }}</p>
+                <div class="main-section row g-3">
+                    <div class="sticky-side col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="customer-avatar-section border-bottom pb-3">
+                                    <div class="d-flex align-items-center flex-column">
+                                        @if($blog->getFirstMediaUrl('blogs_image','thumb'))
+                                        <img src="{{$blog->getFirstMediaUrl('blogs_image','thumb')}}" class="img-fluid rounded mb-3" data-toggle="modal" data-target="#exampleModal{{ $blog->id }}" width="" height="" alt="{{ $blog->name }}">
+                                        @include('admin.components.modal_photo', [
+                                        'image' => $blog->getFirstMediaUrl('blogs_image','thumb'),
+                                        'id' => $blog->id,
+                                        ])
+                                         @endif
+                                        <div class="customer-info text-center mb-3">
+                                            <h5 class="mb-1">{{ $blog->name }}</h5>
+                                        </div>
+                                        <div type="button" class="status-tag {{ $blog->status == 'show' ? 'accepted' : 'declined' }} border-0" >
+                                            <i class="highlight"></i>
+                                            <p class="status-tag__txt">{{ $blog->status }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="customer-details py-3">
+                                    <div class="d-flex flex-column gap-2">
+                                        <div class="d-flex gap-2">
+                                            <i class="bi bi-calendar-check"></i>
+                                            <div>
+                                                <small class="fw-bold mb-1"> @lang('main.users.created_at') </small>
+                                                <p class="m-0">{{ $blog->created_at }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-md-6">
-                        <div class="card border-0 h-100 py-2 px-3">
-                            <label> @lang('main.blogs.name')</label>
-                            <span>{{ $blog->name }}</span>
+                    <div class="main-side col-md-8">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h4 class="card-title">@lang('main.blogs.description')</h4>
+                            </div>
+                            <div class="card-body">
+                               <p>{{ $blog->description }}</p> 
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">@lang('main.blogs.content')</h4>
+                            </div>
+                            <div class="card-body">
+                               <p>{{ $blog->content }}</p> 
+                            </div>
                         </div>
                     </div>
-                    
-
-                    <div class="col-md-6">
-                        <div class="card border-0 h-100 py-2 px-3">
-                            <label> @lang('main.blogs.description')</label>
-                            <p>{{ $blog->description }}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <div class="card border-0 h-100 py-2 px-3">
-                            <label> @lang('main.blogs.content')</label>
-                            <p>{{ $blog->content}}</p>
-                        </div>
-                    </div>
-                
-                    
                 </div>
             </section>
         </div><!-- /.container-fluid -->

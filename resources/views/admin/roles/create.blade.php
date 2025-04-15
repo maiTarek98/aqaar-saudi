@@ -93,7 +93,7 @@
 
                                     <!-- Submit Button -->
                                     <div class="form-group mt-4">
-                                        <button type="submit" class="btn btn-success btn-lg">@lang('main.save')</button>
+                                        <button type="submit" class="btn btn-primary">@lang('main.save')</button>
                                     </div>
                                 </form>
                             </div>

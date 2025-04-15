@@ -37,9 +37,9 @@ class FcmNotificationsController extends Controller
 
 			}
 		}
-		if($request->choose_user == 'subadmin'){
+		if($request->choose_user == 'vendor'){
 			foreach($request->user_id as $value){
-		        $user = User::where('account_type','subadmins')->whereNotNull('fcm_id')->where('id', $value)->first();
+		        $user = User::where('account_type','vendors')->whereNotNull('fcm_id')->where('id', $value)->first();
 				array_push($FcmToken, $user->fcm_id);
 			}
         }  

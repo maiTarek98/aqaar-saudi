@@ -1,27 +1,21 @@
 <input type="number" name="added_by" value="{{ id('admin') }}" class="form-control" hidden>
-<div class="col-md-6">                      
-    <div class="form-group">
-        <label class="float-start">@lang('main.pages.link') (@lang('main.en')) <span class="text-danger">*</span></label>
-        <span>{{url('/')}}</span>
-        <input type="text" name="link" value="{{ old('link', $item->link) }}" class="form-control @error('link') is-invalid @enderror" id="link" placeholder="" required>
-        <div class="help-block with-errors"></div>
+<div class="row g-3"> 
+   
+    <div class="col-md-6">                      
+        <div class="form-group">
+            <label class="float-start">@lang('main.pages.title') (@lang('main.ar')) <span class="text-danger">*</span></label>
+            <input type="text" name="title_ar" value="{{ old('title_ar', $item->title_ar) }}" class="form-control @error('title_ar') is-invalid @enderror" id="title_ar" placeholder="" required>
+            <div class="help-block with-errors"></div>
+        </div>
     </div>
-</div>
-<div class="col-md-6">                      
-    <div class="form-group">
-        <label class="float-start">@lang('main.pages.title') (@lang('main.ar')) <span class="text-danger">*</span></label>
-        <input type="text" name="title_ar" value="{{ old('title_ar', $item->title_ar) }}" class="form-control @error('title_ar') is-invalid @enderror" id="title_ar" placeholder="" required>
-        <div class="help-block with-errors"></div>
+    <div class="col-md-6">                      
+        <div class="form-group">
+            <label class="float-start">@lang('main.pages.title') (@lang('main.en')) <span class="text-danger">*</span></label>
+            <input type="text" name="title_en" value="{{ old('title_en', $item->title_en) }}" class="form-control @error('title_en') is-invalid @enderror" id="title_en" placeholder="" required>
+            <div class="help-block with-errors"></div>
+        </div>
     </div>
-</div>
-<div class="col-md-6">                      
-    <div class="form-group">
-        <label class="float-start">@lang('main.pages.title') (@lang('main.en')) <span class="text-danger">*</span></label>
-        <input type="text" name="title_en" value="{{ old('title_en', $item->title_en) }}" class="form-control @error('title_en') is-invalid @enderror" id="title_en" placeholder="" required>
-        <div class="help-block with-errors"></div>
-    </div>
-</div>
-<div class="col-md-12">                      
+    <div class="col-md-12">                      
     <div class="form-group">
         <label class="float-right">@lang('main.pages.content') (@lang('main.ar'))</label>
         <textarea type="text" name="content_ar" class="form-control @error('content_ar') is-invalid @enderror" id="content_ar">{{ old('content_ar', $item->content_ar) }}</textarea>

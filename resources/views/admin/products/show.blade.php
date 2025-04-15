@@ -30,7 +30,7 @@
                               @if($product->getFirstMediaUrl('products_image','thumb'))
                               <img src="{{$product->getFirstMediaUrl('products_image','thumb')}}" class="img-fluid rounded-circle mb-3" width="120" alt="product">
                               @else
-                              <img src="{{ url('/dashboard') }}/dist/img/box.png" class="img-fluid rounded-circle mb-3" alt="@lang('main.users.NoOfferImage')">
+                              <img src="{{ url('/dashboard') }}/dist/img/no-photo.png" class="img-fluid rounded-circle mb-3" alt="@lang('main.users.NoOfferImage')">
                               @endif
                               <div class="customer-info text-center mb-2">
                                  <h5 class="mb-1">{{$product->name}}</h5>

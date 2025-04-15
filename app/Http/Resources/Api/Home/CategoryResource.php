@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Api\Home;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Models\Gate;
 class CategoryResource extends JsonResource
 {
     public function toArray($request)

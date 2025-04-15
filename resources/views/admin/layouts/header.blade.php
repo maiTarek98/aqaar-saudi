@@ -59,8 +59,16 @@
     <link rel="stylesheet" href="{{ url('/dashboard') }}/dist/css/admin.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('/dashboard') }}/dist/css/custom.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
+        <div class="fixed-icon">
+            <a href="{{ url('/admin/videos/how-to-use') }}" class="videos" target="_blank" aria-label="الإنتقال إلى رابط الفيديوهات">
+                <i class="bi bi-collection-play"></i>
+            </a>
+        </div>

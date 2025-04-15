@@ -81,16 +81,21 @@ function searchColorByName($name) {
         return "Color not found!";
     }
 }
-
 function status_requests_trans($status){
-  if($status == '0'){
-            $status = trans('main.pending');
-        }elseif($status == '1'){
-            $status = trans('main.accepted');
-        }elseif($status == '2'){
-            $status = trans('main.completed');
+  if($status == 'pending'){
+            $status = trans('main.orders.pending');
+        }elseif($status == 'accepted'){
+            $status = trans('main.orders.accepted');
+        }elseif($status == 'completed'){
+            $status = trans('main.orders.completed');
+        }elseif($status == 'shipped'){
+            $status = trans('main.orders.shipped');
+        }elseif($status == 'return'){
+            $status = trans('main.orders.return');
+        }elseif($status == 'cancelled'){
+            $status = trans('main.orders.cancelled');
         }else{
-            $status = trans('main.declined');
+            $status = trans('main.orders.declined');
         }
 
   return $status;
@@ -242,21 +247,21 @@ function getMenuData() {
         'admins' => 'bi bi-person-gear',
         'users' => 'bi bi-people',
         'vendors' => 'bi bi-person-badge',
-        // 'subadmins' => 'bi bi-person-gear',
+        'subadmins' => 'bi bi-person-gear',
         'pending_vendors' => 'bi bi-hourglass-split',
         'stores' => 'bi bi-shop',
-        // 'settings' => 'bi bi-gear',
+        'settings' => 'bi bi-gear',
         // 'pages' => 'bi bi-file-richtext',
         'categorys' => 'bi bi-ui-checks-grid',
         'brands' => 'bi bi-tags',
         'products' => 'bi bi-box-seam',
-        // 'reports' => 'bi bi-file-earmark-bar-graph',
-        // 'blogs' => 'bi bi-newspaper',
-        // 'orders' => 'bi bi-cart2',
-        // 'coupons' => 'bi bi-ticket',
+        'reports' => 'bi bi-file-earmark-bar-graph',
+        'blogs' => 'bi bi-newspaper',
+        'orders' => 'bi bi-cart2',
+        'coupons' => 'bi bi-ticket',
         // 'contacts' => 'bi bi-chat-text',
         // 'subscribers' => 'bi bi--envelope',
-        // 'locations' => 'bi bi-pin-map',
+        'locations' => 'bi bi-pin-map',
     ];
 }
 
@@ -265,7 +270,11 @@ function permissionArrayLoop() {
 }
 
 function iconMenuLoop() {
-    return getMenuData();
+    $data =getMenuData();
+    if(auth()->user()->account_type == 'admins'){
+        unset($data['subadmins']);
+    }
+    return $data;
 }
 
  function shorten_URL ($longUrl) {
@@ -315,7 +324,7 @@ function getSubAdmins($roleId){
   else if($roleId == 3){
     $roleId = 3; // order employee
   }
-  $users = \App\Models\User::whereHas('roles', function ($query) use ($roleId) {
+  $users = \App\Models\User::where('added_by',auth('admin')->user()->id)->whereHas('roles', function ($query) use ($roleId) {
               $query->where('id', $roleId);
           })->get();
 
@@ -325,7 +334,10 @@ function getStore($storeId){
   $store = \App\Models\Store::where('id', $storeId)->first();
   return $store;
 }
-
+function getCoupon($couponId){ 
+  $coupon = \App\Models\Coupon::where('id', $couponId)->first();
+  return $coupon;
+}
 
 function getCategory($categoryId){ 
   $category = \App\Models\Category::where('id', $categoryId)->first();
@@ -353,6 +365,132 @@ function priceOfCapacity($product_id, $amount)
 }
 
 
+// function applyCoupon($coupon, $cart){ 
+//     dd($cart);
+//     $couponProductIds = $coupon->products->pluck('id')->toArray();
+//     $cartProductIds = $cart->pluck('product_id')->toArray();
+//     $cartTotalPrice = $cart->sum('total_price');
+//     $cartTotalPriceAfterDiscount=0;
+//     $productsCouponNotApplied = 0;
+//     $cartBrandIds = \App\Models\Brand::whereHas('products',function($q) use($cartProductIds){
+//         $q->whereIn('id',$cartProductIds);
+//     })->pluck('id')->toArray();
+//     if(count($couponProductIds) > 0){
+//         $hasCouponProduct = !empty(array_intersect($cartProductIds, $couponProductIds));
+//         $productsCouponApplied = $cart->filter(function($cartItem) use ($couponProductIds) {
+//             return in_array($cartItem->product_id, $couponProductIds);
+//         });
+//         $productsCouponNotApplied = $cart->filter(function($cartItem) use ($couponProductIds) {
+//             return !in_array($cartItem->product_id, $couponProductIds);
+//         });
+//         $cartTotalPrice = $productsCouponApplied->sum('total_price');
+//     }elseif($coupon->coupon_discount->brand_id != null){
+//         $hasCouponProduct = !empty(in_array($coupon->coupon_discount->brand_id,$cartBrandIds ));
+//         $productsCouponApplied = $cart->filter(function($cartItem) use ($coupon) {
+//             return $cartItem->product->brand_id == $coupon->coupon_discount->brand_id;
+//         });
+//         $productsCouponNotApplied = $cart->filter(function($cartItem) use ($coupon) {
+//             return $cartItem->product->brand_id != $coupon->coupon_discount->brand_id;
+//         });
+//         $cartTotalPrice =$productsCouponApplied->sum('total_price');
+//     }elseif($coupon->coupon_discount->category_id != null){
+//         $hasCouponProduct = !empty(in_array($coupon->coupon_discount->category_id,$cartBrandIds ));
+//         $productsCouponApplied = $cart->filter(function($cartItem) use ($coupon) {
+//             return $cartItem->product->category_id == $coupon->coupon_discount->category_id;
+//         });
+//         $productsCouponNotApplied = $cart->filter(function($cartItem) use ($coupon) {
+//             return $cartItem->product->category_id != $coupon->coupon_discount->category_id;
+//         });
+//         $cartTotalPrice =$productsCouponApplied->sum('total_price');
+//     }
+    
+//     if ($hasCouponProduct) {
+//         if($coupon->coupon_discount){
+//             if($coupon->coupon_discount->discount_type == 'percentage'){
+//                 $cartTotalPriceAfterDiscount= $cartTotalPrice - ($cartTotalPrice* $coupon->coupon_discount->discount_value/100) + ($productsCouponNotApplied->sum('total_price'));
+//             }
+//             else if($coupon->coupon_discount->discount_type == 'fixed'){
+//                 $cartTotalPriceAfterDiscount = $cartTotalPrice - $coupon->coupon_discount->discount_value + ($productsCouponNotApplied->sum('total_price'));
+//             }
+//         }
+//         return ['coupon_applied' => 'yes', 'price_after_coupon' => round($cartTotalPriceAfterDiscount,2)]; //done coupon applied
+//     } else {
+//         return ['coupon_applied' => 'no', 'price_after_coupon' => round($cartTotalPriceAfterDiscount,2)]; //not found product inside coupons
+//     }
+// }
 
+function applyCoupon($coupon, $cart)
+{
+    $couponProductIds = $coupon->products->pluck('id')->toArray();
+    $cartProductIds = collect($cart)->pluck('product_id')->filter()->toArray(); 
+    $cartTotalPrice = 0;
+    $cartTotalPriceAfterDiscount = 0;
+
+    $productsCouponApplied = collect();
+    $productsCouponNotApplied = collect();
+    $products = \App\Models\Product::query();
+    if($coupon->admin?->store?->name != null){
+        $products = $products->where('store_id', $coupon->admin?->store?->id);
+    }
+    $products = $products->whereIn('id', $cartProductIds)->with('brand', 'category')->get()->keyBy('id');
+    foreach ($cart as $item) {
+        if (!isset($item['product_id']) || !isset($item['qty'])) {
+            continue;
+        }
+
+        $product = $products[$item['product_id']] ?? null;
+        if (!$product) continue;
+
+        $itemTotal = $product->realprice * $item['qty'];
+        $item['total_price'] = $itemTotal;
+        $item['product'] = $product;
+        
+        if (!empty($couponProductIds)) {
+            if (in_array($product->id, $couponProductIds)) {
+                $productsCouponApplied->push($item);
+            } else {
+                $productsCouponNotApplied->push($item);
+            }
+        } elseif ($coupon->coupon_discount->brand_id) {
+            if ($product->brand_id == $coupon->coupon_discount->brand_id) {
+                $productsCouponApplied->push($item);
+            } else {
+                $productsCouponNotApplied->push($item);
+            }
+        } elseif ($coupon->coupon_discount->category_id) {
+            if ($product->category_id == $coupon->coupon_discount->category_id) {
+                $productsCouponApplied->push($item);
+            } else {
+                $productsCouponNotApplied->push($item);
+            }
+        }
+    }
+
+    $hasCouponProduct = $productsCouponApplied->isNotEmpty();
+    $cartTotalPrice = $productsCouponApplied->sum('total_price');
+    if ($hasCouponProduct) {
+        if ($coupon->coupon_discount) {
+            if ($coupon->coupon_discount->discount_type == 'percentage') {
+                $cartTotalPriceAfterDiscount = $cartTotalPrice - ($cartTotalPrice * $coupon->coupon_discount->discount_value / 100)
+                    + $productsCouponNotApplied->sum('total_price');
+            } elseif ($coupon->coupon_discount->discount_type == 'fixed') {
+                $cartTotalPriceAfterDiscount = $cartTotalPrice - $coupon->coupon_discount->discount_value
+                    + $productsCouponNotApplied->sum('total_price');
+            }
+        }
+
+        return [
+            'price_before_coupon' => round($productsCouponNotApplied->sum('total_price')+ $productsCouponApplied->sum('total_price'),2),
+            'coupon_applied' => 'yes',
+            'price_after_coupon' => round($cartTotalPriceAfterDiscount, 2)
+        ];
+    } else {
+        return [
+            'price_before_coupon' => round($productsCouponNotApplied->sum('total_price')+ $productsCouponApplied->sum('total_price'),2),
+            'coupon_applied' => 'no',
+            'price_after_coupon' => round($cartTotalPriceAfterDiscount, 2)
+        ];
+    }
+}
 
 ?>

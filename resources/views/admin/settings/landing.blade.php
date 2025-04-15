@@ -1,10 +1,10 @@
 @extends('admin.index')
 @section('content')
-  <div class="content-wrapper">
-    <div class="content-header">
-        @include('admin.partials.breadcrumb')
-    </div>
-     <div class="container-fluid add-form-list">
+ <div class="content-wrapper">
+    <div class="container-fluid add-form-list">
+        <div class="content-header">
+            @include('admin.partials.breadcrumb')
+        </div>
          <div class="card">
              <div class="card-header d-flex justify-content-between">
                  <div class="header-title">

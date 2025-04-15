@@ -28,7 +28,9 @@ class Coupon extends BaseModel
 
     protected static function booted()
     {
-        static::addGlobalScope(new CouponScope);
+        if (! auth('api')->check()) {
+            static::addGlobalScope(new CouponScope);
+        }
     }
     public function admin() {
        return $this->belongsTo(\App\Models\User::class,'added_by');
@@ -37,6 +39,10 @@ class Coupon extends BaseModel
     public function products()
     {
         return $this->belongsToMany(\App\Models\Product::class, 'coupon_product');
+    }
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class, 'coupon_id');
     }
 
     public function coupon_discount()
@@ -48,4 +54,14 @@ class Coupon extends BaseModel
     {
         return $this->hasOne(\App\Models\CouponCondition::class);
     }
+    
+    public function coupon_avaliablity()
+    {
+        $check = false;
+        if($this->start_date <= now() && $this->end_date >= now()){
+            $check = true;
+        }
+        return $check;
+    }
+    
 }
