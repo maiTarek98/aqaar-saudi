@@ -8,7 +8,7 @@
     <div class="col-lg-4">
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@lang('main.products.product_prices')</h3>
+                <h3 class="card-title">@lang('main.products.product_values')</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-sm p-0 px-1 btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                 </div>
@@ -36,18 +36,10 @@
                             </div>
                         </div>
                     </div>
-                        
+                 
                     <div class="col-md-12">                      
                         <div class="form-group">
-                            <label>@lang('main.products.product_price')<span class="text-danger">*</span><small>(@lang('main.products.prices with tax'))</small></label>
-                            <input type="text" name="price" id="price" value="{{ old('price', $product->price) }}" class="form-control @error('price') is-invalid @enderror" id="price" placeholder="" required>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12">                      
-                        <div class="form-group">
-                            <label>@lang('main.products.product_status') <span class="text-danger">*</span></label>
+                            <label>@lang('main.products.status') <span class="text-danger">*</span></label>
                             <select name="status" class="form-select">
                                 <option value="pending" {{ $product->status == 'pending' ? 'selected' : '' }}>@lang('main.products.pending')</option>
                                 <option value="shared_onsite" {{ $product->status == 'shared_onsite' ? 'selected' : '' }}>@lang('main.products.shared_onsite')</option>
@@ -66,26 +58,12 @@
                             </select>
                         </div>
                     </div> 
-                    <div class="col-md-12">  
-                        <hr class="mt-0">                    
-                        <div class="form-group">
-                            <div class="d-flex align-items-center justify-content-between gap-2">
-                                <label>@lang('main.products.stock') <span class="text-danger">*</span></label>
-                                <input type="checkbox" class="cm-toggle" id="" name="stock" @if($product->stock == 'on') checked="" @endif>     
-                            </div>
-                            <div class="help-block with-errors"></div>
-                        </div>
-                    </div> 
-                    
                 </div>
-
-
-
             </div>
         </div>  
         <div class="card">
             <div class="card-header d-flex justify-content-between">
-                <h3 class="card-title">@lang('main.products.product_descriptions')</h3>
+                <h3 class="card-title">@lang('main.products.product_address')</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-sm p-0 px-1 btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                 </div>
@@ -138,7 +116,7 @@
                         </div>
                     <div class="col-md-12">                      
                         <div class="form-group">
-                            <label>@lang('main.products.map_location') (@lang('main.ar'))</label>
+                            <label>@lang('main.products.map_location')</label>
                             <textarea type="text" name="map_location" class="form-control @error('map_location') is-invalid @enderror" id="map_location">{{ old('map_location', $product->map_location) }}</textarea>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -210,7 +188,15 @@
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                <div class="col-md-6">                      
+
+                <div class="col-md-4 investment-fields">                      
+                    <div class="form-group">
+                        <label>@lang('main.products.amount_investment')<span class="text-danger">*</span></label>
+                        <input type="text" name="amount" value="{{ old('amount', $product->product_offer?->amount) }}" class="form-control @error('amount') is-invalid @enderror" id="amount">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="col-md-12">                      
                     <div class="form-group">
                         <label>@lang('main.products.title')<span class="text-danger">*</span></label>
                         <input type="text" name="title" value="{{ old('title', $product->title) }}" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="" required>
@@ -224,21 +210,7 @@
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-                
-                <div class="col-md-6">                      
-                    <div class="form-group">
-                        <label>@lang('main.products.product_sku') </label>
-                        <input type="text" name="sku" value="{{ old('sku', $product->sku) }}" class="form-control @error('sku') is-invalid @enderror" id="sku" placeholder="" required>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
-                <div class="col-md-6">                      
-                    <div class="form-group">
-                        <label>@lang('main.products.product_barcode') </label>
-                        <input type="text" name="barcode" value="{{ old('barcode', $product->barcode) }}" class="form-control @error('barcode') is-invalid @enderror" id="barcode" placeholder="" required>
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </div>
+               
             </div>
         </div>
         <div class="card my-3">
@@ -301,6 +273,28 @@
                 <div class="row g-3">
                     <div class="col-md-6">                      
                         <div class="form-group">
+                            <label>@lang('main.products.plan_number')<span class="text-danger">*</span></label>
+                            <input type="text" name="plan_number" value="{{ old('plan_number', $product->plan_number) }}" class="form-control @error('plan_number') is-invalid @enderror" id="plan_number" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.plot_number')<span class="text-danger">*</span></label>
+                            <input type="text" name="plot_number" value="{{ old('plot_number', $product->plot_number) }}" class="form-control @error('plot_number') is-invalid @enderror" id="plot_number" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.area')<span class="text-danger">*</span></label>
+                            <input type="text" name="area" value="{{ old('area', $product->area) }}" class="form-control @error('area') is-invalid @enderror" id="area" placeholder="" required>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">                      
+                        <div class="form-group">
                             <label>@lang('main.products.area_after_development')<span class="text-danger">*</span></label>
                             <input type="text" name="area_after_development" value="{{ old('area_after_development', $product->area_after_development) }}" class="form-control @error('area_after_development') is-invalid @enderror" id="area_after_development" placeholder="" required>
                             <div class="help-block with-errors"></div>
@@ -329,6 +323,42 @@
                     </div>
                     <div class="col-md-6">                      
                         <div class="form-group">
+                            <label>@lang('main.products.status') <span class="text-danger">*</span></label>
+                            <select name="status" class="form-select">
+                                <option value="owner" {{ $product->status == 'owner' ? 'selected' : '' }}>@lang('main.products.owner')</option>
+                                <option value="agent" {{ $product->status == 'agent' ? 'selected' : '' }}>@lang('main.products.agent')</option>
+                                <option value="co-owner" {{ $product->status == 'co-owner' ? 'selected' : '' }}>@lang('main.products.co-owner')</option>
+                                <option value="other" {{ $product->status == 'other' ? 'selected' : '' }}>@lang('main.products.other')</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.product_type') <span class="text-danger">*</span></label>
+                            <select name="product_type" class="form-select">
+                                <option value="residential" {{ $product->product_type == 'residential' ? 'selected' : '' }}>@lang('main.products.residential')</option>
+                                <option value="commercial" {{ $product->product_type == 'commercial' ? 'selected' : '' }}>@lang('main.products.commercial')</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.owner_type') <span class="text-danger">*</span></label>
+                            <select name="owner_type" class="form-select">
+                                <option value="individual" {{ $product->owner_type == 'individual' ? 'selected' : '' }}>@lang('main.products.individual')</option>
+                                <option value="company" {{ $product->owner_type == 'company' ? 'selected' : '' }}>@lang('main.products.company')</option>
+                                <option value="other" {{ $product->owner_type == 'other' ? 'selected' : '' }}>@lang('main.products.other')</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div> 
+                    <div class="col-md-6">                      
+                        <div class="form-group">
                             <label>@lang('main.products.remaining_lease_years')<span class="text-danger">*</span></label>
                             <input type="text" name="remaining_lease_years" value="{{ old('remaining_lease_years', $product->remaining_lease_years) }}" class="form-control @error('remaining_lease_years') is-invalid @enderror" id="remaining_lease_years" placeholder="" required>
                             <div class="help-block with-errors"></div>
@@ -348,6 +378,16 @@
                             <div class="d-flex align-items-center justify-content-between gap-2">
                                 <label>@lang('main.products.has_planning_diagram') <span class="text-danger">*</span></label>
                                 <input type="checkbox" class="cm-toggle" id="" name="has_planning_diagram" @if($product->has_planning_diagram == 'on') checked="" @endif>     
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">  
+                        <hr class="mt-0">                    
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <label>@lang('main.products.has_survey_decision') <span class="text-danger">*</span></label>
+                                <input type="checkbox" class="cm-toggle" id="" name="has_survey_decision" @if($product->has_survey_decision == 'on') checked="" @endif>     
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -392,6 +432,17 @@
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
+
+                    <div class="col-md-12">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.penalty_type') <span class="text-danger">*</span></label>
+                            <select name="penalty_type" class="form-select">
+                                <option value="cash" {{ $product->penalty_type == 'cash' ? 'selected' : '' }}>@lang('main.products.cash')</option>
+                                <option value="installment" {{ $product->penalty_type == 'installment' ? 'selected' : '' }}>@lang('main.products.installment')</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div> 
                     <div class="col-md-4">  
                         <hr class="mt-0">                    
                         <div class="form-group">
@@ -441,7 +492,7 @@
                     </div>
                     <div class="col-md-12">                      
                         <div class="form-group">
-                            <label>@lang('main.products.additional_info') (@lang('main.en'))</label>
+                            <label>@lang('main.products.additional_info')</label>
                             <textarea type="text" name="additional_info" class="form-control @error('additional_info') is-invalid @enderror" id="additional_info">{{ old('additional_info', $product->additional_info) }}</textarea>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -490,16 +541,21 @@
         });
     });
     $(document).ready(function () {
-        function toggleAuctionFields() {
+        function toggleFields() {
             if ($('#product_type').val() === 'auction') {
                 $('.auction-fields').show();
+                $('.investment-fields').hide();
+            }else if($('#product_type').val() === 'investment') {
+                $('.investment-fields').show();
+                $('.auction-fields').hide();
             } else {
                 $('.auction-fields').hide();
+                $('.investment-fields').hide();
             }
         }
-        toggleAuctionFields();
+        toggleFields();
         $('#product_type').on('change', function () {
-            toggleAuctionFields();
+            toggleFields();
         });
     });
 </script>

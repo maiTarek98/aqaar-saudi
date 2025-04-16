@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Scopes\ProductScope;
+    use Illuminate\Support\Str;
 
 class Product extends BaseModel implements HasMedia
 {
@@ -16,6 +17,24 @@ class Product extends BaseModel implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use SoftDeletes;
+
+
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($property) {
+            if (!$property->listing_number) {
+                $lastId = Property::max('id') + 1;
+                $year = now()->format('Y');
+                $type = strtoupper(Str::slug($property->type));
+                $property->listing_number = "{$type}-{$lastId}-{$year}";
+            }
+        });
+    }
+
     public function coupon()
     {
         return $this->belongsToMany(\App\Models\Coupon::class, 'coupon_product');

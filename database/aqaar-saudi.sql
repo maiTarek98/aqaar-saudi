@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2025 at 04:48 PM
+-- Generation Time: Apr 16, 2025 at 05:02 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -825,7 +825,7 @@ CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `added_by` bigint(20) UNSIGNED DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `listing_number` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `qr_code` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -848,7 +848,7 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `added_by`, `title`, `code`, `qr_code`, `price`, `description`, `map_location`, `category_id`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`) VALUES
+INSERT INTO `products` (`id`, `added_by`, `title`, `listing_number`, `qr_code`, `price`, `description`, `map_location`, `category_id`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`) VALUES
 (7, 1, 'غسول لاروش', 'gm-0002', '10.00', '1200.00', 'Id rerum anim repell', 'Dolore dolore volupt', 20, 22, '', 0, '2024-07-26 16:28:19', '2025-03-05 08:53:54', 11, NULL, NULL, NULL, 14, 'sale'),
 (8, 1, 'زيت الروزماري', 'Ratione sit nesciunt', '29.00', '929.00', 'نبذه كبيره عن زيت الروزماري', 'نبذه كبيره عن زيت الروزماري', 28, 22, '', NULL, '2024-07-26 16:29:23', '2025-02-20 08:54:20', 23, NULL, NULL, NULL, 8, 'sale'),
 (9, 1, 'سيروم لاروش للبشرة', 'gm-0001', '27.00', '1222.00', 'Nisi beatae ab omnis', 'Quae repellendus Fu', 78, 22, '', NULL, '2024-08-03 16:45:58', '2025-02-20 09:03:29', 1, '0000-00-00 00:00:00', NULL, NULL, 14, 'sale'),
@@ -877,6 +877,9 @@ CREATE TABLE `product_features` (
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `plan_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `plot_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `area` decimal(8,2) DEFAULT NULL,
   `area_after_development` decimal(8,2) NOT NULL,
   `valuation` decimal(8,2) NOT NULL,
   `valuation_date` date NOT NULL,
@@ -884,8 +887,10 @@ CREATE TABLE `product_features` (
   `has_electronic_deed` tinyint(4) NOT NULL,
   `has_real_estate_market` tinyint(4) NOT NULL,
   `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `has_survey_decision` tinyint(4) NOT NULL,
   `has_mortgage` tinyint(4) NOT NULL,
   `has_penalties` tinyint(4) NOT NULL,
+  `penalty_type` enum('cash','installment') COLLATE utf8mb4_unicode_ci NOT NULL,
   `valuation_type` tinyint(4) NOT NULL,
   `accepts_mortgage` tinyint(4) NOT NULL,
   `usufruct_lease` tinyint(4) NOT NULL,
@@ -893,7 +898,10 @@ CREATE TABLE `product_features` (
   `annual_rent` decimal(15,2) NOT NULL,
   `remaining_lease_years` int(20) NOT NULL,
   `license_number` int(20) NOT NULL,
-  `additional_info` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `additional_info` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `represented_by` enum('owner','agent','co-owner','other') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_type` enum('residential','commercial') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owner_type` enum('other','company','individual') COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1494,7 +1502,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `email`, `mobile`, `country_code`, `mobile_code`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `mobile_verified_at`, `provider`, `provider_id`, `fcm_id`, `parent_id`, `last_login`, `user_type`, `id_number`, `agency_number`) VALUES
-(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-15 12:42:32', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-15 12:42:32', 'owner', '', NULL),
+(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-16 13:04:21', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-16 13:04:21', 'owner', '', NULL),
 (2, 1, 'admins', '[\"admin\"]', 'mohamed ahmmed', 'mohamed@admin.com', '1232142232', NULL, NULL, NULL, '$2y$10$6zhGKUsUSf8XoNyLIJS66eZo06LQHMka/HqD95tAlxLtemJGOCTQm', NULL, '2025-01-19 11:54:48', '2025-03-09 09:13:58', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
 (3, 1, 'subadmins', '[\"order employee\"]', 'yasser ahmed', 'yasser@admin.com', NULL, NULL, NULL, NULL, '$2y$10$pwyYu1W5JVTOhf29Jy7qCu7KcOYomfz7nTb4r9mckP/6ZQx3UJN4G', NULL, '2025-01-19 11:57:02', '2025-01-19 12:37:15', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
 (25, 1, 'users', '[\"user\"]', 'wessam sakr', 'wessam@user.com', '1097980291', '20', NULL, NULL, '$2y$10$cY8DuxeFlcyAqVjPzSbA8eqd4RZ.iJAGKMVHqN3y.4APAnvPu4Kxe', NULL, '2024-08-02 16:54:36', '2025-02-20 11:15:23', 'accepted', NULL, NULL, NULL, 'ffghjkl', NULL, NULL, 'owner', '', NULL),
