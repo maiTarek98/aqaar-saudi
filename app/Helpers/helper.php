@@ -246,21 +246,14 @@ function getMenuData() {
         'roles' => 'bi bi-shield-lock',
         'admins' => 'bi bi-person-gear',
         'users' => 'bi bi-people',
-        'vendors' => 'bi bi-person-badge',
-        'subadmins' => 'bi bi-person-gear',
-        'pending_vendors' => 'bi bi-hourglass-split',
-        'stores' => 'bi bi-shop',
+        // 'vendors' => 'bi bi-person-badge',
         'settings' => 'bi bi-gear',
-        // 'pages' => 'bi bi-file-richtext',
-        'categorys' => 'bi bi-ui-checks-grid',
-        'brands' => 'bi bi-tags',
+        'pages' => 'bi bi-file-richtext',
         'products' => 'bi bi-box-seam',
         'reports' => 'bi bi-file-earmark-bar-graph',
         'blogs' => 'bi bi-newspaper',
-        'orders' => 'bi bi-cart2',
-        'coupons' => 'bi bi-ticket',
-        // 'contacts' => 'bi bi-chat-text',
-        // 'subscribers' => 'bi bi--envelope',
+        'contacts' => 'bi bi-chat-text',
+        'subscribers' => 'bi bi-envelope',
         'locations' => 'bi bi-pin-map',
     ];
 }
@@ -329,6 +322,14 @@ function getSubAdmins($roleId){
           })->get();
 
   return $users;
+}
+function getArea($areaId){ 
+  $area = \App\Models\Location::where('type','governorate')->where('id', $areaId)->first();
+  return $area;
+}
+function getGovernorates(){ 
+  $area = \App\Models\Location::where('type','governorate')->get();
+  return $area;
 }
 function getStore($storeId){ 
   $store = \App\Models\Store::where('id', $storeId)->first();

@@ -14,7 +14,7 @@ use App\Models\Banner;
 use App\Models\About;
 use App\Models\Job;
 use App\Models\Contact;
-use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Response;
 use Validator;
@@ -27,56 +27,7 @@ use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller {
     use UploadImageTrait;
-    public function vendorRegisteration(){
-        $urlPrevious = url()->current();
-        session()->put('url.intended', $urlPrevious);
-        return view('site.vendor-registeration');
-    }
-    public function storeVendor(Request $request)
-    {
-        // Validate request
-        $validated = $request->validate([
-            'full_name' => 'required|string|min:3|max:255',
-            'shipping_address' => 'required|string|min:3|max:700',
-            'brand_name' => 'required|string|min:3|max:255',
-            'commercial_registration_no' => 'nullable|string|min:6|max:15',
-            'connected_mobile' => 'nullable|numeric|digits:10',
-            'tax_no' => 'nullable|string|max:50',
-            'mobile' => 'required|numeric|digits:10',
-            'another_mobile' => 'nullable|numeric|digits:10',
-            // 'bank_account_no' => 'nullable|string|min:10|max:20|required_without:vodafone_cash_mobile',
-            // 'vodafone_cash_mobile' => 'nullable|numeric|digits:10|required_without:bank_account_no',
-            'email' => 'required|email',
-            'tax_image' => 'sometimes|nullable|array',
-            'tax_image.*' => 'mimes:png,jpeg,jpg,webp|max:51200',
-            'commercial_registration_image' => 'sometimes|nullable|mimes:png,jpeg,jpg,webp|max:51200',
-
-        ]);
-
-        // Save data to the database
-        $store_vendor = PendingVendor::create(collect($validated)->except(['commercial_registration_image', 'tax_image'])->toArray());
-        if(request()->hasFile('commercial_registration_image'))
-        {
-            $this->convertImageToWebp(request('commercial_registration_image'),$store_vendor,'commercial_registration_image','pending_vendors');
-        }
-        if(request()->hasFile('tax_image'))
-        {
-            foreach($request->file('tax_image') as $image){
-                $this->convertImageToWebp($image,$store_vendor,'tax_image','pending_vendors');
-            }
-        }
-        if($store_vendor){
-            $admins = User::where('account_type','admins')->get();
-            foreach ($admins as $key => $value) {   
-                if($value->hasPermissionTo('pending_vendors-list')){
-                    Notification::send($value,new \App\Notifications\NotifyAdminNewVendors($store_vendor));
-                }
-            }
-        }
-        return response()->json(['message' => 'Data saved successfully'], 200);
-    }
-
-
+   
     public function appFeatures(){
         $urlPrevious = url()->current();
         session()->put('url.intended', $urlPrevious);
@@ -85,10 +36,10 @@ class HomeController extends Controller {
     public function home(){
         $urlPrevious = url()->current();
         session()->put('url.intended', $urlPrevious);
-        $brands = Brand::where('in_home','yes')->where('status','show')->get();
+        $propertys = Product::where('in_home','yes')->where('status','shared_onsite')->get();
         $blogs = Blog::where('in_home','yes')->where('status','show')->get();
 
-        return view('site.home',compact('brands','blogs'));
+        return view('site.home',compact('propertys','blogs'));
     }
 
 	public function terms(){

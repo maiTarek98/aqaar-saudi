@@ -14,6 +14,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class ProductController extends Controller
 {
     use UploadImageTrait;
@@ -32,26 +33,32 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $searchQuery = trim($request->query('search'));
+        $searchNumber = trim($request->query('listing_number'));
         $per_page = $request->input('per_page', 10);
         $sortBy = $request->input('sortBy', 'ASC');
         $query = Product::where(function ($query) use ($searchQuery) {
-            $query->where('name_'.\App::getLocale(), 'like', '%' . $searchQuery . '%')->orWhere('overview_'.\App::getLocale(), 'like', '%' . $searchQuery . '%')->orWhere('description_'.\App::getLocale(), 'like', '%' . $searchQuery . '%');
-        })->when($request->query('category_id'), function($query, $category_id) {
-                $query->where('category_id', $category_id);
-            })->when($request->query('store_id'), function($query, $store_id) {
-                $query->where('store_id', $store_id);
-            })->when($request->query('status'), function($query, $status) {
+            $query->where('title', 'like', '%' . $searchQuery . '%')->orWhere('description', 'like', '%' . $searchQuery . '%');
+        })->where(function ($query) use ($searchNumber) {
+            $query->where('listing_number', 'like', '%' . $searchNumber . '%');
+        })->when($request->query('status'), function($query, $status) {
                 $query->where('status', $status);
+        })->when($request->query('area_id'), function($query, $governorate_id) {
+                $query->whereHas('area.parent.parent', function($q) use($governorate_id) {
+                    $q->where('id', $governorate_id)
+                      ->where('type', 'governorate');
+                });
+        })->when($request->query('type'), function($query, $type) {
+                $query->where('type', $type);
             })->when($request->query('in_home'), function($query, $in_home) {
-                $query->where('is_in_home', $in_home);
-            })->orderBy('order', $sortBy);
+                $query->where('in_home', $in_home);
+            })->orderBy('id', $sortBy);
         if ($per_page === 'all') {
             $result = $query->get(); 
         } else {
             $result = $query->paginate((int) $per_page);
             $result->withQueryString();
         }
-        $fields = ['id','products_image','name_'.\App::getLocale(),'stock','price', 'status','created_at'];
+        $fields = ['id','title','type','price', 'property_status','created_at'];
         $model = 'products';
         $queryParameters = $request->query(); // Get query parameters
         if ($request->ajax()) {
@@ -74,40 +81,69 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $data = $request->except('_token','admin_id','category_year_id','products_image','document','page_title','page_description','page','page_url');
-        if (!empty($request->tags) && is_array($request->tags)) {
-            $tagsArray = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
-            $data['new_arrival'] = in_array('new_arrival', $tagsArray) ? 'yes' : 'no';
-            $data['we_choose_for_u'] = in_array('we_choose_for_u', $tagsArray) ? 'yes' : 'no';
-        }
-        $product = Product::create(\Arr::except($data, ['tags']));
+        $product = Product::create([
+            'added_by' => auth()->id(),
+            'title' => $request->title,
+            'price' => $request->price_.$request->type,
+            'description' => $request->description,
+            'owner_id' => $request->owner_id,
+            'status' => 'pending',
+            'type' => $request->type,
+            'product_for' => $request->product_for,
+            'area_id' => $request->district_id,
+            'is_private' => $request->boolean('is_private'),
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date
+        ]);
+        $product->feature()->create([
+            'plan_number' => $request->plan_number,
+            'plot_number' => $request->plot_number,
+            'area' => $request->area,
+            'area_after_development' => $request->area_after_development,
+            'valuation' => $request->valuation,
+            'valuation_date' => $request->valuation_date,
+            'has_planning_diagram' => $request->boolean('has_planning_diagram'),
+            'has_electronic_deed' => $request->boolean('has_electronic_deed'),
+            'has_real_estate_market' => $request->boolean('has_real_estate_market'),
+            'has_survey_decision' => $request->boolean('has_survey_decision'),
+            'penalty_type' => $request->penalty_type,
+            'valuation_type' => $request->valuation_type,
+            'has_penalties' => $request->boolean('has_penalties'),
+            'has_mortgage' => $request->boolean('has_mortgage'),
+            'accepts_mortgage' => $request->boolean('accepts_mortgage'),
+            'usufruct_lease' => $request->boolean('usufruct_lease'),
+            'is_rented' => $request->boolean('is_rented'),
+            'annual_rent' => $request->annual_rent,
+            'remaining_lease_years' => $request->remaining_lease_years,
+            'license_number' => $request->license_number,
+            'additional_info' => $request->additional_info,
+            'represented_by' => $request->represented_by,
+            'product_type' => $request->product_type,
+            'owner_type' => $request->owner_type,
+        ]);
         if(request()->hasFile('products_image') && request()->file('products_image')->isValid())
         {
             $this->convertImageToWebp(request('products_image'),$product,'products_image','products');
-        }
-
-        if (!empty($request->page_title) || !empty($request->page_description)) {
-            SeoTag::create([
-                'admin_id'         => $request->added_by,
-                'model_name'       => Product::class,
-                'model_id'         => $product->id,
-                'page_title'       => $request->page_title,
-                'page_description' => $request->page_description,
-                'page_url'         => $request->page_url,
-            ]);
         }
         if($request->document){
             foreach ($request->document as $file) {
                 $product->addMedia( $file)->toMediaCollection('document','products_images');
             }
         }
-
+        $listingNumber = $product->listing_number;
+        $url = route('property.show', $listingNumber);
+        $qrFileName = 'qr_' . $product->id . '.png';
+        $qrImage = QrCode::format('png')->size(300)->generate($url);
+        Storage::disk('public')->put("qr_codes/{$qrFileName}", $qrImage);
+        $product->update([
+            'qr_code' => "qr_codes/{$qrFileName}"
+        ]);
         return redirect()->route('products.index',['page'=> $this->currentPage])->with('success',trans('messages.AddSuccessfully'));
     }
 
     public function show(Product $product)
     {
-        $product->load(['product_reviews','wishlist','wishlist.user','carts.order', 'customers','customerOrders.user']);
+        $product->load(['feature','offers']);
         return view('admin.products.show', compact('product'));
     }
 
@@ -120,41 +156,63 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request,Product $product)
     {
-        $data = $request->except('_token','category_year_id','products_image','document','page_title','tags','page_description','page','page_url');
-       // dd($data);
+        $product->update([
+            'added_by' => auth()->id(),
+            'title' => $request->title,
+            'price' => ($request->type == 'auction')?$request->price_auction:$request->price_investment,
+            'description' => $request->description,
+            'owner_id' => $request->owner_id,
+            'status' => 'pending',
+            'type' => $request->type,
+            'product_for' => $request->product_for,
+            'area_id' => $request->district_id,
+            'is_private' => $request->boolean('is_private'),
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date
+        ]);
+        $product->feature()->update([
+            'plan_number' => $request->plan_number,
+            'plot_number' => $request->plot_number,
+            'area' => $request->area,
+            'area_after_development' => $request->area_after_development,
+            'valuation' => $request->valuation,
+            'valuation_date' => $request->valuation_date,
+            'has_planning_diagram' => $request->boolean('has_planning_diagram'),
+            'has_electronic_deed' => $request->boolean('has_electronic_deed'),
+            'has_real_estate_market' => $request->boolean('has_real_estate_market'),
+            'has_survey_decision' => $request->boolean('has_survey_decision'),
+            'penalty_type' => $request->penalty_type,
+            'valuation_type' => $request->valuation_type,
+            'has_penalties' => $request->boolean('has_penalties'),
+            'has_mortgage' => $request->boolean('has_mortgage'),
+            'accepts_mortgage' => $request->boolean('accepts_mortgage'),
+            'usufruct_lease' => $request->boolean('usufruct_lease'),
+            'is_rented' => $request->boolean('is_rented'),
+            'annual_rent' => $request->annual_rent,
+            'remaining_lease_years' => $request->remaining_lease_years,
+            'license_number' => $request->license_number,
+            'additional_info' => $request->additional_info,
+            'represented_by' => $request->represented_by,
+            'product_type' => $request->product_type,
+            'owner_type' => $request->owner_type,
+        ]);
         if(request()->hasFile('products_image') && request()->file('products_image')->isValid())
         {
             $product->clearMediaCollection('products_image'); 
             $this->convertImageToWebp(request('products_image'),$product,'products_image','products');
         } 
-        if($request->page_title || $request->page_description){
-            SeoTag::where('model_name','\App\Models\Product')->where('model_id',$product->id)->update([
-                'admin_id'          => $request->added_by,
-                'page_title'        => $request->page_title,
-                'page_description'  => $request->page_description,
-                'page_url'          => $request->page_url,
-            ]);
-        }
-        if (!empty($request->tags) && is_array($request->tags)) {
-            $tagsArray = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
-            $data['new_arrival'] = in_array('new_arrival', $tagsArray) ? 'yes' : 'no';
-            $data['we_choose_for_u'] = in_array('we_choose_for_u', $tagsArray) ? 'yes' : 'no';
-        }
-        $updated = $product->update(\Arr::except($data, ['tags']));
-        $product->stock = ($request->input('stock')!= null)? 'on': 'off';
         $product->save();
         $document = DB::table('media')->where('model_type','App\Models\Product')->where('collection_name','document')->where('model_id', $product->id)->get();
 
         $media = $document->pluck('file_name')->toArray();
         if($request->document){
-        foreach ($request->document as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $product->addMedia( $file)->toMediaCollection('document','products_images');
+            foreach ($request->document as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $product->addMedia( $file)->toMediaCollection('document','products_images');
+                }
             }
         }
-        }
-
-        return redirect()->route('products.index',['page'=> $this->currentPage])->with('success',trans('messages.UpdateSuccessfully'));
+        return redirect()->back()->with('success',trans('messages.UpdateSuccessfully'));
     }
 
     public function destroy(Product $product)
@@ -234,12 +292,7 @@ public function storeMedia(Request $request)
     public function changeStatus(Product $product){
         $status = request('status');
         $product->update(['status' =>$status]); 
-        if( $status == 'show'){
-            return response()->json(['success' => true, 'message' => trans('messages.ShowSuccessfully')]);
-
-        }else{
-            return response()->json(['success' => false, 'message' => trans('messages.HideSuccessfully')]);
-        } 
+        return response()->json(['success' => true, 'message' => trans('messages.UpdateSuccessfully')]);
     }
 
      public function productWishlists()

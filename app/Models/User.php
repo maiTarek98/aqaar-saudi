@@ -251,17 +251,17 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
     }
 
 
-    public function getVendorTotalOrdersBalance($type){
-        $completed_orders = \App\Models\Order::query();
-        if($type == 'cash'){
-            $completed_orders = $completed_orders->where('payment_type','cash');
-        }elseif($type == 'online'){
-            $completed_orders = $completed_orders->where('payment_type','!=','cash');
-        }
-        $completed_orders = $completed_orders->where('status','completed')->where('store_id', $this->store?->id)->get();
-        $total = $completed_orders->sum(function ($order) {
-            return $order->grand_total;
-        });
-        return round($total,2) ?? 0;
-    }
+    // public function getVendorTotalOrdersBalance($type){
+    //     $completed_orders = \App\Models\Order::query();
+    //     if($type == 'cash'){
+    //         $completed_orders = $completed_orders->where('payment_type','cash');
+    //     }elseif($type == 'online'){
+    //         $completed_orders = $completed_orders->where('payment_type','!=','cash');
+    //     }
+    //     $completed_orders = $completed_orders->where('status','completed')->where('store_id', $this->store?->id)->get();
+    //     $total = $completed_orders->sum(function ($order) {
+    //         return $order->grand_total;
+    //     });
+    //     return round($total,2) ?? 0;
+    // }
 }

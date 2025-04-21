@@ -1,50 +1,85 @@
 @extends('site.index')
 @section('title', trans('site.login') )
 @section('content')
-<main class="login py-5 p-md-5">
-        <div class="container-fluid">
-            <a class="navbar-brand m-0" href="{{route('home')}}">
-                <img loading="lazy" src="{{url('/storage/'.app(App\Models\GeneralSettings::class)->favicon)}}" alt="{{app(App\Models\GeneralSettings::class)->site_name}}" />
-            </a>
-            <div class="login-form">
-                <img src="{{url('site')}}/images/svg_car.svg" alt="">
-                <p class="welcome">@lang('site.hello again')</p>
-                <p class="login_type">@lang('site.sign in')</p>
-                <form method="post">
+ <section class="login">
+      <div class="row align-items-center g-0">
+        <div class="col-md-5">
+          <div class="container-fluid">
+            <div class="py-4">
+              <div class="login-logo">
+                <img src="images/logo.png" alt="" />
+              </div>
+
+              <h5 class="fw-bold fs-4 my-5 secondary">تسجيل دخول</h5>
+
+              <form method="post">
                 @csrf
-                    <div class="row gy-4 justify-content-center ">
-                        <div class="col-md-6">
-                            <label for="phone_num">@lang('site.mobile')</label>
-                            <div class="input-group">
-                                <span class="input-group-text" id="phone_num">+966</span>
-                                <input type="text" name="mobile" value="{{old('mobile')}}" class="form-control"  aria-label="Username" aria-describedby="phone_num">
-                            </div>
-                            <small class="text-danger mobile"></small> 
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label for="">@lang('site.password')</label>
-                            <div class="input-group">
-                                <input type="password" name="password" class="form-control">
-                                <button type="button" class="input-group-text" id="basic-addon2">
-                                    <i class="pass bi bi-eye-slash"></i>
-                                </button>
-                            </div>
-                            <small class="text-danger password d-block"></small>
-                            <a href="{{route('site.forget')}}" class="forgot">@lang('site.forget password')</a>
-                        </div>
-                        <div class="col-auto">
-                            <div class="loading-indicator">
-                                <p>Loading...</p>  <!-- Optional: you can use a spinner here -->
-                                <button type="submit" class="d-block main-btn px-5 send-login-form"> @lang('site.signin')</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <p class="login_replace"> @lang('site.do not have account') <a href="{{route('register')}}">@lang('site.new registeration')</a> </p>
+                <div class="form-group mb-4">
+                  <label for=""> رقم الهاتف <span class="text-danger">*</span></label>
+                  <input type="text" name="mobile" value="{{old('mobile')}}" class="form-control" id="InputPhone" aria-label="Username" aria-describedby="phone_num">
+                  <small class="text-danger mobile"></small> 
+                </div>
+                <div class="form-group mb-4">
+                  <label for="">كلمة المرور <span class="text-danger">*</span></label>
+                  <div class="input-group border mb-3">
+                    <input
+                      type="password" name="password"
+                      class="form-control"
+                      id="InputPassword"
+                      placeholder="كلمة المرور"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="input-group-text fs-4 pass"
+                      title="show pass"
+                      aria-label="اظهار كلمة المرور"
+                    >
+                      <i class="bi bi-lock"></i>
+                    </button>
+                    <small class="text-danger password d-block"></small>
+                  </div>
+
+                  <a
+                    href="forgot-pass.html"
+                    class="text-decoration-underline"
+                    aria-label="هل نسيت كلمة المرور؟ الذهاب لاعادة التعيين"
+                  >
+                    هل نسيت كلمة المرور؟
+                  </a>
+                </div>
+                <div class="loading-indicator">
+                    <p>Loading...</p> 
+                <!-- ارسال -->
+                    <button
+                      type="submit"
+                      class="btn main-outline-btn w-100 mb-3 send-login-form" 
+                      aria-label="ارسال نموذج تسجيل الدخول "
+                    >
+                      دخول
+                    </button>
+                </div>
+                <p class="fw-semibold text-center">
+                  ليس لديك حساب؟
+                  <a
+                    href="register.html"
+                    class="main fw-bold px-1"
+                    aria-label="الذهاب الى صفحة انشاء حساب جديد في حالة اذا لم يكن لديك حساب مسبق"
+                  >
+                    إنشاء حساب جديد
+                  </a>
+                </p>
+              </form>
             </div>
+          </div>
         </div>
-    </main>
+        <div class="col-md-7">
+          <div class="login-img">
+            <img src="{{url('site')}}/images/login.webp" class="w-100" alt="login bg image" />
+          </div>
+        </div>
+      </div>
+    </section>
 @endsection
 @push('custom-js')
 <script type="text/javascript">

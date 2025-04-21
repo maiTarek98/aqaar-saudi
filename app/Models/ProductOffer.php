@@ -16,9 +16,6 @@ class ProductOffer extends Model
        return $this->belongsTo(\App\Models\User::class);
     }
 
-    public function capacity() {
-       return $this->belongsTo(\App\Models\Capacity::class);
-    }
 
     public function product() {
        return $this->belongsTo(\App\Models\Product::class);

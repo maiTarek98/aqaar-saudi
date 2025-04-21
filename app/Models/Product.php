@@ -27,7 +27,7 @@ class Product extends BaseModel implements HasMedia
 
         static::creating(function ($property) {
             if (!$property->listing_number) {
-                $lastId = Property::max('id') + 1;
+                $lastId = Product::max('id') + 1;
                 $year = now()->format('Y');
                 $type = strtoupper(Str::slug($property->type));
                 $property->listing_number = "{$type}-{$lastId}-{$year}";
@@ -85,59 +85,34 @@ class Product extends BaseModel implements HasMedia
          }
     }
     protected $guarded = [];
-     public function getNameAttribute()
-    {
-        $lang = App::getLocale();
-        $column = "name_" . $lang;
-        return $this->{$column};
-    }
 
-   public function getDescriptionAttribute()
-    {
-        $lang = App::getLocale();
-        $column = "description_" . $lang;
-        return $this->{$column};
-    }
-     public function getOverviewAttribute()
-    {
-        $lang = App::getLocale();
-        $column = "overview_" . $lang;
-        return $this->{$column};
-    }
-   public function getMoreInformationAttribute()
-    {
-        $lang = App::getLocale();
-        $column = "more_information_" . $lang;
-        return $this->{$column};
-    }
     public function admin() {
        return $this->belongsTo(\App\Models\User::class);
     }
 
-     public function store() {
-       return $this->belongsTo(\App\Models\Store::class);
+     public function area() {
+       return $this->belongsTo(\App\Models\Location::class,'area_id');
     }
 
-     public function brand() {
-       return $this->belongsTo(\App\Models\Brand::class);
+     public function owner() {
+       return $this->belongsTo(\App\Models\User::class,'owner_id');
     }
-    public function orders() {
-       return $this->hasMany(\App\Models\Order::class);
+    public function feature() {
+       return $this->hasOne(\App\Models\ProductFeature::class);
     }
-    public function product_coupons() {
-       return $this->hasMany(\App\Models\ProductCoupon::class);
+    public function offers() {
+       return $this->hasMany(\App\Models\ProductOffer::class);
     }
-   public function wishlist() {
-       return $this->hasMany(\App\Models\Wishlist::class);
+   public function letters() {
+       return $this->hasMany(\App\Models\ProductLetter::class);
+    }
+    public function verifications() {
+       return $this->hasMany(\App\Models\ProductVerification::class);
     }
     public function wishlistedUsers()
     {
         return $this->hasManyThrough(User::class, Wishlist::class, 'product_id', 'id', 'id', 'user_id');
     }
-      public function product_reviews() {
-       return $this->hasMany(\App\Models\ProductReview::class,'product_id');
-    }
-
 
     public function soldCount()
     {
@@ -163,16 +138,6 @@ class Product extends BaseModel implements HasMedia
             ->groupBy('orders.user_id');
     }
 
-    public function averageRating()
-    {
-        return $this->product_reviews()->avg('star');
-    }
-    public function updateAverageRating()
-    {
-        $this->update([
-            'avg_rate' => $this->averageRating() ?? 0, 
-        ]);
-    }
     public function product_years() {
        return $this->hasMany(\App\Models\ProductYear::class,'category_year_id');
     }
@@ -217,19 +182,6 @@ class Product extends BaseModel implements HasMedia
       return $real_price;
     }
 
-    public function getReviewAttribute()
-    {
-        $count = ProductReview::where('product_id',$this->id)->count();
-        return $count;
-    }
-   public function product_capacities() {
-       return $this->hasMany(\App\Models\ProductCapacity::class,'product_id');
-    }
-    public function getFavoriteAttribute()
-    {
-        $count = Wishlist::where('product_id',$this->id)->count();
-        return $count;
-    }
    public function checkHasCoupon()
    {
       $coupon = \App\Models\ProductCoupon::whereHas('coupon',function($q){

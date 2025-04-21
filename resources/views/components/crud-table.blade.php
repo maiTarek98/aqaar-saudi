@@ -47,7 +47,10 @@
             <li data-filter="store_id">
                 {{getStore(request('store_id'))->name}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['store_id' => null])}}"><i class="fas fa-times"></i></a></li>    
         @endif
-        
+        @if(request('area_id'))
+            <li data-filter="area_id">
+                {{getArea(request('area_id'))->name}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['area_id' => null])}}"><i class="fas fa-times"></i></a></li>    
+        @endif
         @if(request('coupon_id'))
             <li data-filter="coupon_id">
                 {{__('main.home.coupon')}} {{getCoupon(request('coupon_id'))->coupon_code}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['coupon_id' => null])}}"><i class="fas fa-times"></i></a></li>    
@@ -59,6 +62,11 @@
         @if(request('is_viewed'))
             <li data-filter="is_viewed">
                 {{__('main.is_viewed-'.request('is_viewed'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['is_viewed' => null])}}"><i class="fas fa-times"></i></a></li>    
+        @endif
+
+        @if(request('type'))
+            <li data-filter="type">
+                {{__('main.products.'.request('type'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['type' => null])}}"><i class="fas fa-times"></i></a></li>    
         @endif
         @if(request('from_date'))
             <li data-filter="from_date">
@@ -85,13 +93,13 @@
     <table class="data-table table mb-0 tbl-server-info text-center" id="">
         <thead class="bg-white text-uppercase">
         <tr>
-            @if(request()->segment(2) == 'categorys' ||request()->segment(2) == 'products' )
+            @if(request()->segment(2) == 'categorys'  )
             <th><i class="fa fa-sort text-muted"></i></th>
             @endif
             <th><input type="checkbox" id="master" class="sub_chk"></th>
             @foreach($fields as $field)
                 @if ($field === 'price' && request()->segment(2) == 'products')
-                <th>{{ ucfirst(__('main.'.$model.'.'.$field)) }}<small>@lang('main.products.after_discount')</th>
+                <th>{{ ucfirst(__('main.'.$model.'.'.$field)) }}</th>
                 @else
                 <th>{{ ucfirst(__('main.'.$model.'.'.$field)) }}</th>
                 @endif
@@ -101,10 +109,10 @@
             @endif
         </tr>
         </thead>
-        <tbody @if(request()->segment(2) == 'categorys' ||request()->segment(2) == 'products' ) id="tablecontents" @endif>
+        <tbody @if(request()->segment(2) == 'categorys' ) id="tablecontents" @endif>
             @forelse($result as $item)
             <tr class="row1" data-id="{{ $item->id }}">
-                @if(request()->segment(2) == 'categorys' ||request()->segment(2) == 'products' )
+                @if(request()->segment(2) == 'categorys' )
                 <td><i class="fa fa-sort text-muted"></i></td>
                 @endif
                 @if(!(request()->segment(2) == 'users' && $item->id == 1))
@@ -154,6 +162,14 @@
                         @endforelse
                     </ul>
                 </td>
+                @elseif ($field === 'title' && request()->segment(2) == 'products')
+                <td>
+                    {{$item->title}} - {{$item->listing_number}}
+                </td>
+                @elseif ($field === 'type' && request()->segment(2) == 'products')
+                <td>
+                    {{__('main.products.'.$item->type)}}
+                </td>
                 @elseif ($field === 'comments')
                 <td>{{ $item->comments?->count() ?? 'N/A' }}</td>
                 @elseif ($field === 'mobile')
@@ -175,14 +191,24 @@
                         @endif</td>
                 @elseif (($field === 'status' || $field === 'is_viewed') && request()->segment(2) != 'orders' && request()->segment(2) != 'pending_vendors'&& request()->segment(2) != 'locations')
                 <td>
+
                     <form method="post" action="{{route($model.'.changeStatus',[$item->id, 'parent_id' => request('parent_id')])}}"> @csrf
                     <input type="checkbox" class="cm-toggle status-checkbox" data-url="{{route($model.'.changeStatus',$item->id)}}" data-id="{{ $item->id }}" id="customSwitch-{{$item->id}}" name="status" @if($item->status == 'show' || $item->is_viewed == 'yes') checked="" @endif>
                     {{--<label class="" for="customSwitch-{{$item->id}}"></label>--}}
                     </form>  
                 </td>
-                @elseif ($field === 'status' && request()->segment(2) == 'pending_vendors')
+                @elseif ($field === 'property_status' && request()->segment(2) == 'products')
                 <td>
-                    {{ __('main.pending_vendors.'.$item->status)}}
+                    
+                    <form method="post" action=""> @csrf
+                            <select name="status" class="form-select status-select" data-id="{{ $item->id }}" data-url="{{ route($model.'.changeStatus', [$item->id, 'parent_id' => request('parent_id')]) }}">
+                                <option value="pending" {{ $item->status == 'pending' ? 'selected' : '' }}>@lang('main.products.pending')</option>
+                                <option value="shared_onsite" {{ $item->status == 'shared_onsite' ? 'selected' : '' }}>@lang('main.products.shared_onsite')</option>
+                                <option value="approved" {{ $item->status == 'approved' ? 'selected' : '' }}>@lang('main.products.approved')</option>
+                                <option value="rejected" {{ $item->status == 'rejected' ? 'selected' : '' }}>@lang('main.products.rejected')</option>
+                                <option value="closed" {{ $item->status == 'closed' ? 'selected' : '' }}>@lang('main.products.closed')</option>
+                            </select>
+                    </form> 
                 </td>
                 @elseif($field === 'status')
                 <td>

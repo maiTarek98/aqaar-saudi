@@ -24,6 +24,8 @@
     $buttonText = $isEditOrCreate ? __('main.showAll') : __('main.addNew');
     if(request()->segment(2) == 'contacts'|| request()->segment(2) == 'settings'|| request()->segment(2) == 'pages'){
         $buttonRoute = null;
+    }elseif(request()->segment(2) == 'stores' && auth('admin')->user()->account_type == 'vendors'){
+        $buttonRoute = null;
     }else{
         if(request('account_type')){
             $buttonRoute = $isEditOrCreate ? route("$entity.index",['account_type' => request('account_type')]) : route("$entity.create",['account_type' => request('account_type')]);
@@ -57,7 +59,7 @@
                         <a href="{{ $item['url'] }}" class="fs-6 fw-bold">
                             {{ $key == 0
                                 ? __('main.'.lcfirst($item['name']).'.'.lcfirst($item['name'])) 
-                                : $item['name']
+                                : ((request()->segment(2) == 'settings') ? __('main.'.$item['name']) : $item['name'])
                             }}
                         </a>
                         @endif
@@ -71,7 +73,11 @@
                         } elseif (($segmentCount == 3 && $segments[2] == 'create') || ($segmentCount == 4 && $segments[3] == 'edit')) {
                             $translatedName = __('main.'.$itemName);
                         } else {
-                            $translatedName = $itemName;
+                            if(request()->segment(2) == 'settings'){
+                                $translatedName = __('main.'.$itemName);
+                            }else{
+                                $translatedName = $itemName;
+                            }
                         }
                     @endphp
                         {{ $translatedName}}

@@ -81,7 +81,7 @@ class UserController extends Controller
             $result = $result->paginate((int) $per_page);
             $result->withQueryString();
         }
-        $fields = ['id', 'name', 'mobile', 'email', 'role'];
+        $fields = ['id', 'name', 'mobile', 'email', 'user_type'];
         $model = 'users';
 
         if ($request->ajax()) {

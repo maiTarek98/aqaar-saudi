@@ -42,7 +42,8 @@ use App\Http\Controllers\Payment\StripeController;
 
 Route::group(['middleware' => ['csp','lang']], function () {
 
- 
+     Route::get('/property',[HomeController::class,'propertyShow'])->name('property.show');
+
         Route::view('/payment', 'site.stripe')->name('site.payment');
 
         Route::post('create-payment-intent', [StripeController::class, 'createSubscription']);
@@ -53,7 +54,6 @@ Route::group(['middleware' => ['csp','lang']], function () {
     //     return redirect('admin/dashboard');})->name('home');
     Route::get('/term-conditions',[HomeController::class,'terms'])->name('terms');
     Route::get('/about-us',[HomeController::class,'aboutUs'])->name('aboutus');
-    Route::get('/booking-test',[HomeController::class,'bookTest'])->name('bookTest');
 
     Route::get('/sell-car-form',[CarController::class,'sellCar'])->name('sellCar');
     Route::post('/sellTempForm',[CarController::class,'sellTempForm'])->name('sellTempForm');
@@ -79,11 +79,9 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::post('/jobs-store',[HomeController::class,'storeJob'])->name('storeJob');
 
 
-        Route::get('/cars',[ProductController::class,'products'])->name('cars');
-        Route::get('/cars/{q}',[ProductController::class,'productSingle'])->name('cars.single');
-        Route::post('/cars/filter', [ProductController::class,'product_filter'])->name('product.filter');
-        Route::get('/cars/inspection-report/{car_no}', [ProductController::class,'product_report'])->name('product.report');
-
+        Route::get('/properties',[ProductController::class,'products'])->name('products');
+        Route::get('/propertys/{q}',[ProductController::class,'productSingle'])->name('propertys.single');
+        Route::post('/propertys/filter', [ProductController::class,'product_filter'])->name('product.filter');
 
         Route::get('/workshops',[WorkshopController::class,'workshops'])->name('workshops');
         Route::get('/workshops/{q}',[WorkshopController::class,'workshopSingle'])->name('workshops.single');

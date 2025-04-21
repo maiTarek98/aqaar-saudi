@@ -31,50 +31,8 @@
                     </select>        
                 </div>
                 @endif
-                @if(request()->segment(2) == 'products')
-                <div class="col">
-                    <label for="store_id">@lang('main.store_name')</label>
-                    <select class="form-select" name="store_id" id="store_id">
-                        <option value="" hidden>@lang('main.store_name')</option>
-                        @foreach(\App\Models\Store::get() as $store)
-                        <option value="{{$store->id}}" @if($store->id == request()->store_id) selected @endif>{{$store->name}}</option>
-                        @endforeach
-                    </select>        
-                </div>
-
-                <div class="col">
-                    <label for="subcategory_id">@lang('main.category_name')</label>
-                    <select class="form-select" name="category_id" id="category_id">
-                        <option value="" hidden>@lang('main.category_name')</option>
-                        @foreach((new class { use \App\Http\Traits\VendorStoreTrait; })->getCategories() as $category)
-                        <option value="{{$category->id}}" @if($category->id == request()->category_id) selected @endif>{{$category->title}}</option>
-                        @endforeach
-                    </select>        
-                </div>
-        
-                {{--<div class="col">
-                    <label for="subcategory_id">@lang('main.subcategory_name')</label>
-                    <select class="form-select" name="subcategory_id" id="subcategory_id">
-                        <option value="" hidden>@lang('main.subcategory_name')</option>
-                        @foreach(\App\Models\Category::whereNotNull('parent_id')->get() as $subcategory)
-                        <option value="{{$subcategory->id}}" @if($subcategory->id == request()->subcategory_id) selected @endif>{{$subcategory->title}}</option>
-                        @endforeach
-                    </select>        
-                </div> --}}
-                
-                @endif
-                
-                 @if(request()->segment(2) == 'pending_vendors')
-                <div class="col">
-                    <label for="status">@lang('main.filterByVendorStatus')</label>
-                    <select class="form-select" name="status" id="status">
-                        <option value="" hidden>@lang('main.filterBy')</option>
-                        <option @if('pending' == request()->status) selected @endif value="pending">@lang('main.pending_vendors.pending')</option>
-                        <option @if('accepted' == request()->status) selected @endif value="accepted">@lang('main.pending_vendors.accepted')</option>
-                    </select>        
-                </div>
-                @endif
-                @if(request()->segment(2) != 'coupons' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'pending_vendors' && request()->segment(2) != 'orders' && request()->segment(2) != 'users' && request()->segment(2) != 'roles')
+              
+                @if(request()->segment(2) != 'products' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'pending_vendors' && request()->segment(2) != 'orders' && request()->segment(2) != 'users' && request()->segment(2) != 'roles')
                 <div class="col">
                     <label for="status">@lang('main.filterByStatus')</label>
                     <select class="form-select" name="status" id="status">
@@ -94,7 +52,41 @@
                     </select>        
                 </div>
                 @endif
-                
+                @if(request()->segment(2) == 'products')
+                <div class="col">
+                    <label for="status">@lang('main.filterByProductStatus')</label>
+                    <select class="form-select" name="status" id="status">
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>@lang('main.products.pending')</option>
+                        <option value="shared_onsite" {{ request('status') == 'shared_onsite' ? 'selected' : '' }}>@lang('main.products.shared_onsite')</option>
+                        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>@lang('main.products.approved')</option>
+                        <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>@lang('main.products.rejected')</option>
+                        <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>@lang('main.products.closed')</option>
+                    </select>        
+                </div>
+                <div class="col">
+                    <label for="listing_number">@lang('main.searchByProductCode') </label>
+                    <input type="text" name="listing_number" value="{{ request()->listing_number }}" class="form-control"
+                        placeholder="@lang('main.products.listing_number')">
+                </div>
+                <div class="col">
+                    <label for="area_id">@lang('main.product_type')</label>
+                    <select name="type" id="product_type" class="form-select">
+                        <option value="">@lang('main.choose')</option>
+                        <option value="auction" @if('auction' == old('type', request('type')) selected @endif >@lang('main.products.auction')</option>
+                        <option value="shared" @if('shared' == old('type', request('type')) selected @endif >@lang('main.products.shared')</option>
+                        <option value="investment" @if('investment' == old('type', request('type')) selected @endif >@lang('main.products.investment')</option>
+                    </select>       
+                </div>
+                <div class="col">
+                    <label for="area_id">@lang('main.area_name')</label>
+                    <select class="form-select" name="area_id" id="area_id">
+                        <option value="" hidden>@lang('main.area_name')</option>
+                        @foreach(\App\Models\Location::where('type','governorate')->get() as $area)
+                        <option value="{{$area->id}}" @if($area->id == request()->area_id) selected @endif>{{$area->name}}</option>
+                        @endforeach
+                    </select>        
+                </div>
+                @endif
                 @if(request()->segment(2) == 'contacts' )
                 <div class="col">
                     <label for="is_viewed">@lang('main.filterByViewes')</label>

@@ -44,8 +44,8 @@ class UpdateSettingRequest extends FormRequest
                 'linkedin_link' => 'required|url',
                 'youtube_link' => 'required|url',
                 'snapchat_link' => 'required|url',
-                'ios_link' => 'required|url',
-                'android_link' => 'required|url',
+                // 'ios_link' => 'required|url',
+                // 'android_link' => 'required|url',
             ];
         }elseif(request('q') == 'bank_data'){
              $rules = [

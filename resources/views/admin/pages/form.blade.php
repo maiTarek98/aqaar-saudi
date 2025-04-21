@@ -1,4 +1,4 @@
-<input type="number" name="added_by" value="{{ id('admin') }}" class="form-control" hidden>
+<input type="number" name="admin_id" value="{{ id('admin') }}" class="form-control" hidden>
 <div class="row g-3"> 
    
     <div class="col-md-6">                      

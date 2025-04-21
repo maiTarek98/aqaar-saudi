@@ -219,6 +219,32 @@
                 }
             });
         }); 
+        $(document).on('change', '.status-select', function () {
+            let select = $(this);
+            let itemId = select.data('id');
+            let url = select.data('url');
+            let selectedStatus = select.val();
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    id: itemId,
+                    status: selectedStatus,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                    alert('An error occurred while updating the status.');
+                }
+            });
+        });
 
         // update Date Time
         function updateDateTime() {

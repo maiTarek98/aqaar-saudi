@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Coupon;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Wishlist;
-use App\Models\Reservation;
-use App\Models\SellCar;
-use App\Models\Admin;
-use App\Models\Car;
+use App\Models\UserAddress;
+use App\Models\TempCart;
+use App\Models\Shipping;
+use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Response;
 use Session;
@@ -28,171 +30,67 @@ use App\Http\Traits\UploadImageTrait;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Notification;
 class UserController extends Controller {
-	use UploadImageTrait;
-	public function userAddress(User $user) {
+    use UploadImageTrait;
+    public function userAddress(User $user) {
         if(!$user){
             return back();
         }
         return view('site.user_address', compact('user'));
     }
 
-     public function register(){
-        $urlPrevious = url()->current();
-        session()->put('url.intended', $urlPrevious);
+    public function register() {
         return view('site.auth.register');
     }
-    public function login(){
-        $urlPrevious = url()->current();
-        session()->put('url.intended', $urlPrevious);
+    public function login() {
         return view('site.auth.login');
     }
-  public function clientSignup(Request $request)
-    {
+     public function clientSignup(Request $request) {
         $rules = [
-            'identifier' => 'required',
+            'name' => 'required|string|min:2|max:150',
+            'password' => 'required|min:6|string|confirmed',
+            'mobile' => 'required|numeric|digits:10|unique:users,mobile',
+            'user_type' => 'required|string|in:owner,co-owner,agent,other',
+            'id_number' => 'required|numeric',
         ];
-          $validator = Validator::make($request->all(), $rules);
+        $account_type = 'users';
+        $mobile =preg_replace('/\s+/','',ltrim($request->mobile,0));
+        $validator = Validator::make($request->except('_token'), $rules);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->getMessageBag()->toArray()]);
-        }
-        // Check if the request is for email or mobile registration
-        $isEmailRegistration = filter_var($request->input('identifier'), FILTER_VALIDATE_EMAIL);
-        if ( $request->isEmail == true) {
-            // Handle email-based registration
-            return $this->handleEmailRegistration($request);
+            return response()->json(array(
+                'errors' => $validator->getMessageBag()->toArray()
+            ));
         } else {
-            // Handle phone number registration
-            return $this->handlePhoneRegistration($request);
-        }
-    }
-private function handlePhoneRegistration($request)
-{
-    if ($user = User::where('account_type', 'user')
-                    ->whereNotNull('mobile_verified_at')
-                    ->where('mobile', $request->identifier)
-                    ->first()) {
-        // Password recovery flow for phone numbers
-        $otp = rand(1000,9999); // Generate a dynamic OTP
-        session()->put('forget_mobile', $user->mobile);
-        $user->update(['code' => $otp]);
+            $data = $request->except("_token", "_method",'password_confirmation');
+            $data['status'] = 'accepted';
+            $user_store = User::create($data+ ['account_type' => $account_type]);
+            Auth::guard('web')->login($user_store);
+                session()->forget('store_address');
+                session()->forget('address_guest');
 
-        // Send OTP to mobile via SMS (implement SMS logic here)
-        // Example: SMS::send($user->mobile, "Your OTP is: $otp");
-
-        return response()->json(['data' => 0]);
-    }
-
-    // Handle new phone number registration
-    $rules = [
-        'identifier' => 'required|numeric|unique:users,mobile|digits:9',
-    ];
-
-    $validator = Validator::make($request->all(), $rules);
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->getMessageBag()->toArray()]);
-    }
-
-    $country_code = '966';
-    $mobile = preg_replace('/\s+/', '', ltrim($request->identifier, '0'));
-    $data = [
-        'account_status' => 'pending',
-        'mobile' => $mobile,
-        'code' => rand(1000,9999),
-        'account_type' => 'user',
-        'mobile_code' => $country_code,
-        'country_id' => 1,
-        'get_from' => 'web',
-    ];
-
-    $user = User::create($data);
-    session()->put('register_mobile', $user->mobile);
-
-    // Send OTP to mobile (implement SMS logic here)
-    // Example: SMS::send($user->mobile, "Your OTP is: {$data['code']}");
-
-    return response()->json(['data' => 1]);
-}
-
-// Function to handle email-based registration
-private function handleEmailRegistration($request)
-{
-    if ($user = User::where('account_type', 'user')
-                    ->whereNotNull('email_verified_at')
-                    ->where('email', $request->identifier)
-                    ->first()) {
-        // Password recovery flow for emails
-        $otp = rand(1000,9999); // Generate a dynamic OTP
-        session()->put('forget_email', $user->email);
-            session()->forget('register_email');
-
-        $user->update(['code' => $otp]);
-        
-        if(url()->previous() != url('register')){
-        // Send OTP to email (implement email logic here)
-        try {
-           $to_email = $user->email;
-           $mail=Mail::send('emails.activate_account', ['email' => $to_email, 'code' => $otp], function($message) use ($request, $to_email) {
-           $message->to($to_email);
-           $message->subject('activate account');
-        });
-        } catch (\Swift_TransportException $e) {
-            \Log::error('Mail sending failed: ' . $e->getMessage());
-        } catch (\Exception $e) {
-            \Log::error('General error during mail sending: ' . $e->getMessage());
-        }
-        }
-        return response()->json(['data' => 0]);
-    }elseif(url()->previous() == url('register')){
-
-    // Handle new email registration
-    $rules = [
-        'identifier' => 'required|email:rfc,dns|unique:users,email',
-    ];
-
-    $validator = Validator::make($request->all(), $rules);
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->getMessageBag()->toArray()]);
-    }
-
-    $data = [
-        'account_status' => 'pending',
-        'email' => $request->identifier,
-        'code' => rand(1000,9999),
-        'account_type' => 'user',
-        'get_from' => 'web',
-    ];
-        $user = User::create($data);
-
-    $otp =$user->code;
-            // Send OTP to email (implement email logic here)
-        try {
-           $to_email = $user->email;
-           $mail=Mail::send('emails.activate_account', ['email' => $to_email, 'code' => $otp], function($message) use ($request, $to_email) {
-           $message->to($to_email);
-           $message->subject('activate account');
-        });
-        } catch (\Swift_TransportException $e) {
-            \Log::error('Mail sending failed: ' . $e->getMessage());
-        } catch (\Exception $e) {
-            \Log::error('General error during mail sending: ' . $e->getMessage());
+        $admins = User::whereIn('account_type',['admin'])->get();
+        foreach ($admins as $key => $value) {   
+            if($value->hasPermissionTo('user-list')){
+                // Notification::send($value,new \App\Notifications\NotifyUserCreatedNotification($user_store));
+            }
         }
 
-    session()->put('register_email', $user->email);
-    session()->forget('forget_email');
-    return response()->json(['data' => 1]);
+          // if(session()->get('url.intended') != null)
+          //       {
+          //           $data = session()->get('url.intended');
+          //       }else{
+          //           $data = route('home');
+          //       }
+        $response_data = 1;
+        return response()->json(array('data' => $response_data));
+            
+        }
     }
-    else{
-    return response()->json(['data' => 5]);
-        
-    }
-}
-
 
 
       public function clientSignin(Request $request) {
         $rules = [
             'password' => 'required|min:6|string',
-            'mobile' => 'required|numeric',
+            'mobile' => 'required|numeric|digits:10',
         ];
         $validator = Validator::make($request->except('_token'), $rules);
         if ($validator->fails()) {
@@ -200,23 +98,20 @@ private function handleEmailRegistration($request)
                 'errors' => $validator->getMessageBag()->toArray()
             ));
         } else {
-        $user = User::where('account_type','user')->where('mobile',  $request->mobile)->first();
+        $user = User::where('mobile',  $request->mobile)->first();
         $remember_me = ($request->remember_me == true)? true : false; 
         if($user){
-            if (($user->mobile_status == 'pending' && $user->mobile_code !=null) || $user->email_status == 'pending' && $user->code !=null) {
-                $response_data = 5;
+        if($user->status == 'accepted'){
+            if (Auth::guard('web')->attempt(['mobile' => $request->mobile ,'password'=> $request->password, 'account_type' => 'users'], $remember_me)) {
+                
+                // auth('web')->user()->has_cart();
+                $response_data = 1;
             }else{
-                if($user->account_status == 'active'){
-                    if (Auth::guard('web')->attempt(['mobile' => $request->mobile ,'password'=> $request->password, 'account_type' => 'user'], $remember_me)) {
-                        
-                        $response_data = 1;
-                    }else{
-                        $response_data = 2;                
-                    }
-                }else{
-                            $response_data = 4;
-                }            
+                $response_data = 2;                
             }
+        }else{
+                    $response_data = 4;
+        }            
         }else{
             $response_data = 3;
         }
@@ -226,247 +121,36 @@ private function handleEmailRegistration($request)
     }
  
 
-public function continueRegisterationForm(Request $request)
-{
-    // Determine if the identifier is an email or a mobile number
-    $isEmailRegistration = filter_var($request->input('identifier'), FILTER_VALIDATE_EMAIL);
-
-    // Define validation rules based on the type of identifier
-    $rules = [
-        'password' => 'required|min:6|string|confirmed',
-        'name' => 'required|string|min:2|max:100',
-        'city_id' => 'required|integer',
-        'agree' => 'required|accepted',
-        'identifier' => $isEmailRegistration
-            ? 'required|email:rfc,dns|unique:users,email'
-            : 'required|numeric|unique:users,mobile|digits:9',
-    ];
-
-    // Validate the request
-    $validator = Validator::make($request->except('_token'), $rules);
-    if ($validator->fails()) {
-        return response()->json([
-            'errors' => $validator->getMessageBag()->toArray(),
-        ]);
-    }
-
-    // Determine the session key based on registration type
-    $sessionKey = (!$isEmailRegistration) ? 'register_email' : 'register_mobile';
-    $identifier = session()->get($sessionKey);
-    // Retrieve the user based on the identifier
-    $user = User::where('account_type', 'user')
-        ->whereNotNull((!$isEmailRegistration) ? 'email_verified_at' : 'mobile_verified_at')
-        ->where((!$isEmailRegistration) ? 'email' : 'mobile', $identifier)
-        ->first();
-
-    if (!$user) {
-        return response()->json([
-            'data' => 3, // User not found
-        ]);
-    }
-
-    if (($user->mobile_status == 'pending' && $user->mobile_code !=null) || $user->email_status == 'pending' && $user->code !=null) {
-        return response()->json([
-            'data' => 5, // Account is pending verification
-        ]);
-    }
-
-    if ($user->mobile_status == 'active' || $user->email_status == 'active') {
-        // Log in the user and update their profile
-        Auth::guard('web')->login($user);
-        $user->update([
-            'country_id' => 1,
-            'city_id' => $request->city_id,
-            'mobile' => $request->identifier,
-            'name' => $request->name,
-            'password' => bcrypt($request->password),
-            'account_status' => 'active',
-        ]);
-
-        // Forget the session key used for registration
-        session()->forget($sessionKey);
-
-        return response()->json([
-            'data' => 1, // Registration successful
-        ]);
-    }
-
-    return response()->json([
-        'data' => 4, // Undefined issue
-    ]);
-}
-
-public function sendOtp(Request $request)
-{
-    // Check OTP cooldown
-    if (session()->has('otp_cooldown') && time() < session()->get('otp_cooldown')) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Please wait before requesting a new OTP.'
-        ]);
-    }
-
-    // Generate OTP
-    $otp = rand(1000,9999); // Generate a random OTP (update rand(1000,9999) with this for production)
-
-    // Check if session contains mobile or email data
-    $user = null;
-    if (session()->has('register_mobile')) {
-        $mobile = session()->get('register_mobile');
-        $user = User::where('account_type', 'user')
-            ->where('mobile_status', 'pending')
-            ->whereNull('mobile_verified_at')
-            ->where('mobile', $mobile)
-            ->first();
-    } elseif (session()->has('forget_mobile')) {
-        $mobile = session()->get('forget_mobile');
-        $user = User::where('account_type', 'user')
-            ->whereNotNull('mobile_verified_at')
-            ->where('mobile', $mobile)
-            ->first();
-    } elseif (session()->has('register_email')) {
-        $email = session()->get('register_email');
-        $user = User::where('account_type', 'user')
-            ->whereNull('email_verified_at')
-            ->where('email', $email)
-            ->first();
-    } elseif (session()->has('forget_email')) {
-        $email = session()->get('forget_email');
-        $user = User::where('account_type', 'user')
-            ->whereNotNull('email_verified_at')
-            ->where('email', $email)
-            ->first();
-    }
-
-    // If no user found, return an error
-    if (!$user) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Unable to find user or session expired.'
-        ]);
-    }
-
-    // Update the user's OTP
-    $user->update(['code' => $otp]);
-
-    // Send OTP
-    if (isset($mobile)) {
-        // Logic to send OTP via SMS
-        // Example: SMS::send($mobile, "Your OTP is: $otp");
-    } elseif (isset($email)) {
-        // Logic to send OTP via Email
-        // Example: Mail::to($email)->send(new OTPMail($otp));
-
-        try {
-           $to_email = $email;
-           $mail=Mail::send('emails.activate_account', ['email' => $to_email, 'code' => $otp], function($message) use ($request, $to_email) {
-           $message->to($to_email);
-           $message->subject('activate account');
-        });
-        } catch (\Swift_TransportException $e) {
-            \Log::error('Mail sending failed: ' . $e->getMessage());
-        } catch (\Exception $e) {
-            \Log::error('General error during mail sending: ' . $e->getMessage());
-        }
-        
-    }
-
-    // Set the cooldown period (30 seconds)
-    session()->put('otp_cooldown', time() + 30);
-
-    return response()->json([
-        'success' => true,
-        'message' => trans("site.OTP sent successfully")
-    ]);
-}
-public function checkCodeActivate(Request $request)
-{
-    $userCode = $request->input('code');
-    $userIdentifier = $request->input('identifier'); // Can be mobile or email
-    $user = null;
-// dd(session()->has('forget_email'));
-    // Determine if the session is for "forget" or "register" and fetch user accordingly
-    if (session()->has('forget_mobile')) {
-        $mobile = session()->get('forget_mobile');
-        $user = User::where('account_type', 'user')
-            ->whereNotNull('mobile_verified_at')
-            ->where('mobile', $mobile)
-            ->where('movile_code', $userCode)
-            ->first();
-    } elseif (session()->has('forget_email')) {
-        $email = session()->get('forget_email');
-        $user = User::where('account_type', 'user')
-            ->whereNotNull('email_verified_at')
-            ->where('email', $email)
-            ->where('code', $userCode)
-            ->first();
-    } elseif (session()->has('register_mobile')) {
-        $mobile = session()->get('register_mobile');
-        $user = User::where('account_type', 'user')
-            ->whereNull('mobile_verified_at')
-            ->where('account_status', 'pending')
-            ->where('mobile_status', 'pending')
-            ->where('mobile', $mobile)
-            ->where('movile_code', $userCode)
-            ->first();
-    } elseif (session()->has('register_email')) {
-        $email = session()->get('register_email');
-
-        $user = User::where('account_type', 'user')
-            ->whereNull('email_verified_at')
-            ->where('account_status', 'pending')
-            ->where('email', $email)
-            ->where('code', $userCode)
-            ->first();
-    }
-
-    // If user is found, activate and clear OTP
-    if ($user) {
-        if (isset($user->mobile)) {
-            $user->update([
-                'mobile_verified_at' => now(),
-                'code' => $userCode,
-                'mobile_status' => 'active',
-            ]);
-        } elseif (isset($user->email)) {
-            $user->update([
-                'email_verified_at' => now(),
-                'code' => $userCode,
-                'email_status' => 'active',
-            ]);
-        }
-
-        return response()->json(['data' => 1, 'message' => 'Activation successful.']);
-    }
-
-    // If no user found or code invalid
-    return response()->json(['data' => 0, 'message' => 'Invalid code or identifier.']);
-}
-
     public function profile() {
-		$user = auth('web')->user();
-		return view('site.profile', compact('user'));
-	}
-	public function update_profile(Request $request)
+        $user = auth('web')->user();
+        return view('site.profile', compact('user'));
+    }
+    public function update_profile(Request $request)
     {
         $data = User::where('id',Auth::guard('web')->user()->id)->first();
           $rules = [
-            'name' => 'required|string|min:2|max:45',
-            'email' => 'required|email:rfc,dns|unique:users,email,'.$data->id,
-            'mobile' => 'required|numeric|digits:9|unique:users,mobile,'.$data->id,
-            'city_id' => 'required|integer',
+            'photo_profile' => 'sometimes|nullable|image',
+            'first_name' => 'required|string|min:2|max:25',
+            'last_name' => 'required|string|min:2|max:25',
+            'email' => 'required|email|unique:users,email,'.$data->id,
+            'mobile' => 'required|numeric|unique:users,mobile,'.$data->id,
         ];
-        $mobile =preg_replace('/\s+/','',ltrim($request->mobile,0));
+                $mobile =preg_replace('/\s+/','',ltrim($request->mobile,0));
         $validator = Validator::make($request->except('_token','mobile')+['mobile'=>$mobile ], $rules);
 
             // $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(array(
 
-                'errors' => $validator->getMessageBag()->toArray(),
+                'errors' => $validator->errors()->all(),
             ));
         } else {
-          $name = $request->name;  
+            if(request()->hasFile('photo_profile') && request()->file('photo_profile')->isValid()){
+            $data->clearMediaCollection('photo_profile');
+            $this->convertImageToWebp($request->photo_profile,$data,'photo_profile','users');
+        }
+            // dd($request->all());
+          $name = $request->first_name. ' ' . $request->last_name;  
          $data->update($request->except('_token','first_name','photo_profile','last_name','mobile') + ['mobile' => $mobile ,'name' => $name]);
          if($data){
 
@@ -483,14 +167,13 @@ public function checkCodeActivate(Request $request)
           $rules = [
             'photo_profile' => 'required|image',
         ];
-       if( $file = $request->file('photo_profile') ) {
-            $path = 'users';
-            $url = $this->uploadImg($file , $path);
-            $request->photo_profile = 'storage'.$url;
-        }else{
-            $request->photo_profile ='images/avatar.png';
+        
+            
+        if(request()->hasFile('photo_profile') && request()->file('photo_profile')->isValid()){
+            $data->clearMediaCollection('photo_profile');
+            $this->convertImageToWebp($request->photo_profile,$data,'photo_profile','users');
         }
-        $data->update(['photo_profile' => $request->photo_profile]);
+        
          if($data){
             return back()->with('success',trans('messages.UpdateSuccessfully'));;
         }else{
@@ -499,105 +182,68 @@ public function checkCodeActivate(Request $request)
         
     }
     public function changePassword(){
-        $user = auth('web')->user();
-        return view('site.change-password', compact('user'));
+        return view('site.change-password');
     }
-    public function notifications(){
-        $user = auth('web')->user();
-        auth('web')->user()->unreadNotifications->markAsRead();
-        return view('site.notifications', compact('user'));
-    }
+
     public function update_password_profile(Request $request)
-{
-    $data = null;
+    {
+        $data = User::where('id',Auth::guard('web')->user()->id)->first();
+        if(Hash::check($request->current_password ,$data->password))
+        { 
+        $rules = [
+            'current_password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+        ];
+            $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(array(
 
-    // Check if it's a password reset via mobile or email
-    if (session()->has('forget_mobile')) {
-        $identifier = session()->get('forget_mobile');
-        $data = User::where('account_type', 'user')
-            ->whereNotNull('mobile_verified_at')
-            ->where('mobile', $identifier)
-            ->first();
-    } elseif (session()->has('forget_email')) {
-        $identifier = session()->get('forget_email');
-        $data = User::where('account_type', 'user')
-            ->whereNotNull('email_verified_at')
-            ->where('email', $identifier)
-            ->first();
-    } else {
-        // If not resetting password, fetch the authenticated user
-        $data = Auth::guard('web')->user();
-    }
-
-    // If user not found, return an error
-    if (!$data) {
-        return response()->json([
-            'errors' => $validator->getMessageBag()->toArray(),
-        ]);
-    
-    }
-
-    // Define validation rules
-    $rules = [
-        'password' => 'required|string|min:6|confirmed',
-    ];
-    if (auth('web')->check() && (!$request->has('forget_mobile') && !$request->has('forget_email'))) {
-        $rules['current_password'] = 'required|string|min:6';
-    }
-
-    // Validate request
-    $validator = Validator::make($request->all(), $rules);
-    if ($validator->fails()) {
-        return response()->json([
-            'errors' => $validator->getMessageBag()->toArray(),
-        ]);
-    
-    }
-
-    // For authenticated users, verify current password
-    if (auth('web')->check() && (!$request->has('forget_mobile') && !$request->has('forget_email'))) {
-        if (!Hash::check($request->current_password, $data->password)) {
-            // return response()->json([
-            //     'success' => false,
-            //     'message' => 'Current password is incorrect.'
-            // ]);
-                return response()->json(['data' => 3, 'message' => 'Current password is incorrect.']);
- 
+                'errors' => $validator->errors()->all(),
+            ));
+        } else {
+         $data->update($request->except('_token','current_password','password_confirmation'));
+            if($data){
+                return 1;
+            }else{
+                return 2;
+                }
+            }
+        }else
+        {
+            return 3;
         }
     }
 
-    // Update password
-    $data->update([
-        'password' => Hash::make($request->password),
-    ]);
-
-    // Handle session and authentication after successful password update
-    if (session()->has('forget_mobile') || session()->has('forget_email')) {
-        Auth::guard('web')->login($data);
-        session()->forget(['forget_mobile', 'forget_email']);
-    }
-
-     return response()->json(['data' => 1, 'message' => 'Password updated successfully.']);
-
-}
-
-
     public function favorites()
     {
-        $user = auth('web')->user();
         $favorites = auth('web')->user()->user_favorites;
-        return view('site.favorites', compact('favorites','user'));
+        return view('site.favorites', compact('favorites'));
     }
-	public function ads() {
-        $user = auth('web')->user();
-        return view('site.ads', compact('user'));
+    public function orders() {
+        return view('site.orders');
     }
-
-    public function usercars() {
-        $user = auth('web')->user();
-        return view('site.usercars', compact('user'));
+    public function cart() {
+        if(auth('web')->check()){
+            $user = auth('web')->user();
+            $order = $user->has_cart();
+            $orders = Cart::where('order_id', $order)->get();
+            return view('site.cart', compact('user','orders'));
+        }else{
+            $orders = TempCart::where('user_ip',request()->ip())->get();
+            return view('site.cart', compact('orders'));
+        }
     }
-     
+    public function pay() {
+        if(auth('web')->check()){
+            $user = auth('web')->user();
+            $order = $user->has_cart();
+            $orders = Cart::where('order_id', $order)->get();
+            return view('site.pay', compact('user','orders'));
+        }else{
+            $orders = TempCart::where('user_ip',request()->ip())->get();
+            return view('site.pay', compact('orders'));
+        }
+    }
     public function changeStatus(Request $request, Cart $order)
     {
         $cart =$order->update(['status' => $request->status]);
@@ -609,10 +255,110 @@ public function checkCodeActivate(Request $request)
                 }
         return back()->with('success',trans('messages.OrderCanceledSuccessfully'));
     }
+    public function completeOrder(Request $request)
+    {
+        // dd(        session()->get('address_guest'));
+        if(auth('web')->check()){
+            $user = auth('web')->user();
+           $userOrder =  Order::where('user_id', $user->id)->where('status','pending')->first();
+        }else{
+            if(getPendingTempOrders(request()->ip())->count() > 0){
+                $userOrder = Order::create([
+                    'type' => 'current',
+                ]);
+                foreach (getPendingTempOrders(request()->ip()) as $key => $value) {
+                    Cart::create([
+                        'order_id' => $userOrder->id,
+                        'product_id' => $value->product_id,
+                        'qty' => $value->qty,
+                        'price' => $value->price,
+                        'total_price' => $value->price * $value->qty,
+                    ]);
+                    $value->delete();
+                }
+               
+            }
+        }
+
+                if(session()->has('store_address') )
+                {
+                    $address_id =  session()->get('store_address');
+                }
+                else if(session()->has('address_guest'))
+                {
+                    $address_id =  session()->get('address_guest');
+                }
+                $userOrder->update([
+                    'coupon_id' => (session()->has('coupon'))? session()->get('coupon')['coupon_id'] :null,
+                    'user_address_id' => $address_id,
+                    'delivery_price' => calcShippingCost(),
+                    'payment_type' => $request->payment_type,
+                    'status' => 'accepted',
+                ]);
+    
+        // ProcessCart::dispatch($cart)
+        //             ->delay(Carbon::now()->addSeconds(10));
+        // if($cart){
+        //     // if($cart->status == 'accepted'){
+        //             foreach($cart->orders as $value){
+        //                 $qty_product = Product::where('id',$value->product_id)->first();
+        //                 // $qty_product->decrement('stock', $value->qty);
+        //             }
+        //         // }
+        //     $admins = User::whereIn('account_type',['admin'])->get();
+        //     foreach ($admins as $key => $value) {   
+        //         if($value->hasPermissionTo('order-list')){
+        //             Notification::send($value,new \App\Notifications\NotifyOrderCreatedNotification($cart));
+        //         }
+        //     }
+        // }
+        if($userOrder->user_id){
+            $email = $userOrder->user?->email;
+        }elseif($userOrder->user_address_id){
+            $email = $userOrder->user_address?->email;
+        }else{
+            $email = null;
+        }
+        session()->forget('store_address');
+        session()->forget('address_guest');
+        session()->forget('coupon');
+        session()->forget('cart_guest');
+        if($email != null){
+        try {
+            Mail::send('emails.order_received', ['email' => $email, 'cart' => $userOrder], function ($message) use ($email) {
+                    $message->to($email);
+                    $message->subject('Your Elhenawy order has been received!');
+        
+            });
+            // $sender_email = 'Elhenawyco16@gmail.com';
+            Mail::send('emails.admin_received', ['email' => $sender_email, 'cart' => $userOrder], function ($message) use ($sender_email) {
+                    $message->to($sender_email);
+                    $message->subject('New order has been created!');
+        
+            });
+        } catch (\Exception $e) {
+        return response()->json(1);
+            // throw new HttpException(500, $e->getMessage());
+        }
+        }
+        return response()->json(1);
+    }
+    
      public function ulogout() {
         if(Auth::check()){
+            // $oldCart = Session::has('cart') ? Session::get('cart') : null;
+            // if($oldCart){
+            //     if (count($oldCart->items) > 0) {
+            //         Session::forget('cart');
+            //         $data = 0;
+            //     }
+            // }
+        session()->forget('store_address');
+        session()->forget('address_guest');
+        session()->forget('coupon');
+        session()->forget('cart_guest');
             auth('web')->logout();
-            session()->flush();
+
         }
         return redirect()->route('home');
     }
@@ -625,88 +371,285 @@ public function checkCodeActivate(Request $request)
     {
         $user = Auth::guard('web')->user();
         $data[0] = 0;
-        $count_click = Wishlist::with('user','car')->where('user_id',$user->id)->where('car_id',$id)->get()->count();
+        $count_click = Wishlist::with('user','product')->where('user_id',$user->id)->where('product_id',$id)->get()->count();
         if($count_click > 0)
         {
-            Wishlist::with('user','car')->where('user_id',$user->id)->where('car_id',$id)->delete();
+            Wishlist::with('user','product')->where('user_id',$user->id)->where('product_id',$id)->delete();
             return response()->json($data);
         }
         $wish = new Wishlist();
         $wish->user_id = $user->id;
-        $wish->car_id = $id;
+        $wish->product_id = $id;
         $wish->save();
         $data[0] = 1;
         return response()->json($data);
     }
-
-    public function addCart(Request $request ,$id)
+    public function updateAddress(Request $request)
     {
-        $car = Car::where('id', $id)->where('status','show')->first();
-        $rules = [];    
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json(array(
-                'success' => false,
-                'errors' => $validator->getMessageBag()->toArray(),
-            ));
-        } else {
-            $price_of_car = $car->realprice;
-            $admins = Admin::get();
-            if(auth('web')->check()){
-                $existingReservation = Reservation::where('car_id', $request->id)->where('status', 'pending')->first();
-                if (!$existingReservation) {
-                    $firstUserReservation = Reservation::create([
-                        'car_id' => $request->id,
-                        'user_id' => auth('web')->user()->id,
-                        'status' => 'pending',
-                    ]);
-                    foreach ($admins as $key => $value) {   
-                        if($value->hasPermissionTo('car-list')){
-                            Notification::send($value,new \App\Notifications\NotifyNewCarReservation($firstUserReservation));
-                        }
-                    }                    
-                    $create_order = $firstUserReservation;
-                } else {
-                    if($existingReservation->user_id == auth('web')->user()->id){
-                        $create_order = 2; //already reserved
-                        return response()->json($create_order);
-                    }else{
-                        $exist = Reservation::where('car_id', $request->id)->where('user_id', auth('web')->user()->id)->where('status', 'waiting')->first();
-                        if($exist){
-                            $create_order = 2; //already reserved
-                            return response()->json($create_order);
-                        }
-                        $waitingUserReservation = Reservation::create([
-                            'car_id' => $request->id,
-                            'user_id' => auth('web')->user()->id,
-                            'status' => 'waiting',
-                        ]);
-                    }
-                    foreach ($admins as $key => $value) {   
-                        if($value->hasPermissionTo('car-list')){
-                            Notification::send($value,new \App\Notifications\NotifyNewCarReservation($waitingUserReservation));
-                        }
-                    }
-                    $create_order = $waitingUserReservation;
-                }
-                return response()->json($create_order);
-            }
-        }
-    }   
 
-    public function trackOrders(Request $request)
+        $zone = Shipping::findOrFail($request->zone_id);
+        $data = $request->except('_token');
+        $upd_address = UserAddress::where('id', $request->id)->update([
+            'street_name' => $request->street_name,
+            'country_name' => $request->country_name,
+            'city_name' => $zone->city_name,
+            'zone_id' => $zone->id,
+            'delivery_price' => $zone->cost,
+            'govern_name' => $request->govern_name,
+            'building_no' => $request->building_no,
+            'main_address' => $request->main_address,
+            'username' => $request->username,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+        ]);
+
+        return response()->json($upd_address);
+    }
+    public function fetchProduct(Request $request)
+    {
+         if($request->ajax()){
+            $product_id = $request->product_id;
+            $product = Product::where("id",$product_id)->first();
+             $shareComponent = \Share::page(route('product-single',slug($product->name)), 
+                                    $product->name)
+                                ->facebook()
+                                ->whatsapp(); 
+            $data = view('site.includes.ajax-modal',compact('product','product_id','shareComponent'))->render();
+            return response()->json(['options'=>$data,'product'=> $product,'product_id' => $product_id ,'shareComponent' => $shareComponent]);
+        }
+
+    }
+
+    public function fetchAddress(Request $request)
+    {
+         if($request->ajax()){
+            $address_id = $request->id;
+            $address = UserAddress::where("id",$address_id)->first();
+            $data = view('site.includes.ajax-address-modal',compact('address','address_id'))->render();
+            return response()->json(['options'=>$data,'address'=> $address,'address_id' => $address_id]);
+        }
+
+    }
+
+    public function fetchCapacity(Request $request){
+        if($request->ajax()){
+            $capacity = explode('-',$request->capacity); 
+            $price_capacity = ProductCapacity::where('product_id',$capacity[0])->where('amount', $capacity[1])->first()->amount;
+            $price_after_capacity = round(priceOfCapacity($capacity[0], $capacity[1])['current_price'],2);
+            $price_after_offer = round(priceOfCapacity($capacity[0], $capacity[1])['offer_coupon'],2);
+            return response()->json(['capacity' => $price_capacity, 'price_after_capacity'=>$price_after_capacity,'price_after_offer'=> $price_after_offer]);
+
+        }
+
+    }
+
+      public function updateCart(Request $request){
+        if(auth('web')->check()){
+       $data =  Cart::where('user_id', auth('web')->user()->id)->where('id', $request->cart)->first();
+        $update = $data->update([
+            'qty' => $request->qty,
+            'total_price' => $request->price * $request->qty,
+        ]);
+        }else{
+       $data =  TempCart::where('user_ip', request()->ip())->where('id', $request->cart)->first();
+        $update = $data->update([
+            'qty' => $request->qty,
+        ]);
+        }       
+        return response()->json($data);
+    }
+
+    public function removecart($id, Request $request)
     {
         if(auth('web')->check()){
-            $ad = SellCar::where('user_id',auth('web')->user()->id)->where('request_no',$request->sell_car)->first();
-            if($ad){
-                return view('site.track-ads',compact('ad'));
-            }else{
-                return redirect()->back();
-            }
+            $order_item = Order::with('user','product')->where('user_id', auth('web')->user()->id)->findOrFail($id);
+            $order_item->delete();
+            $data[0] = getTotalPricePendingOrders(auth('web')->user()->id);
+            $data[1] = getTotalPendingOrders(auth('web')->user()->id);
+                    $this->apply_coupon($request);
+            return response()->json($data);
+        }else{
+            $session  = session()->get('cart_guest');
+        session()->pull('cart_guest.'.$id);
+
+            unset($session[$id]);
+            $session1  = session()->get('cart_guest');
+             $sum = 0;
+foreach ($session1 as $item)
+    $sum += $item['total_price']; 
+
+            $data[0] = $sum;
+            $data[1] = count($session1);
+                                        $this->apply_sessioncoupon($request);
+                                        dd($data);
+            return response()->json($data);
+        }
+    
+    }
+    public function trackOrders()
+    {
+        if(auth('web')->check()){
+            if(request('order_no') != null || request('email') != null){
+                $order = Cart::where('order_no', request('order_no'))->where('status','!=','pending')->whereHas('user',function($q){
+                    $q->where('email', request('email'));
+                })->first();
+                
+                return view('site.track-status-orders',compact('order'));    
+            } 
+            return view('site.track-orders');
         }
         else{
             abort(401);
         }
     }
-  
+    public function cart_tx()
+    {
+        if(auth('web')->check()){
+            $user = auth('web')->user();
+            $order = $user->has_cart();
+            $orders = Cart::where('order_id', $order)->get();
+            return view('site.includes.cart-tx', compact('user','orders'));
+        }else{
+            $orders = TempCart::where('user_ip',request()->ip())->get();
+            return view('site.includes.cart-tx', compact('orders'));
+        }
+    }
+    
+     public function cart_data(Order $cart)
+    {            
+        if(auth('web')->check()){
+            $user = auth('web')->user();
+            $orders= Cart::where('id',$cart->cart_id)->get();
+            return view('site.includes.cart-data',compact('orders','user'));
+        }else{
+            $session = Session::get('cart_guest');
+            return view('site.includes.cartsession-data',compact('session'));
+
+        }
+        
+    }
+
+    public function store_address(Request $request){
+       if($request->user_address_id != null){
+            $address = $request->user_address_id;
+            $address = UserAddress::findOrFail($address);
+            $zone = Shipping::findOrFail($address->zone_id);
+            UserAddress::where('id', $address->id)->update(['zone_id' => $zone->id, 'delivery_price' => $zone->cost]);
+            session()->put('store_address', $address->id);
+                    return response()->json($address);
+
+        }else{
+        $rules = [
+            'country_name' => 'required|min:2|max:1200|string',
+            // 'city_name' => 'required|min:2|max:1200|string',
+            'street_name' => 'required|min:1|max:1200|string',
+            'govern_name' => 'required|min:1|max:1200|string',
+            'building_no' => 'required|numeric',
+            'main_address' => 'required|min:1|max:2200|string',
+            'zone_id' => 'required|numeric',
+        ];
+        $validator = Validator::make($request->except('_token'), $rules);
+        if ($validator->fails()) {
+            return response()->json(array(
+                'errors' => $validator->getMessageBag()->toArray()
+            ));
+        } else {
+        $data= $request->except('_token');
+        if(auth('web')->check()){
+        if($request->user_address_id != null){
+            $address = $request->user_address_id;
+            $address = UserAddress::findOrFail($address);
+            $zone = Shipping::findOrFail($address->zone_id);
+            UserAddress::where('id', $address->id)->update(['zone_id' => $zone->id, 'delivery_price' => $zone->cost]);
+
+            session()->put('store_address', $address->id);
+        }else{
+            $zone = Shipping::findOrFail($data['zone_id']);
+            $data['city_name'] = $zone->city_name;
+            $address = UserAddress::create($data + ['user_id' => auth('web')->user()->id , 'zone_id' => $zone->id, 'delivery_price' => $zone->cost]);
+            session()->put('store_address', $address->id);
+        }
+        }else{
+            $zone = Shipping::findOrFail($data['zone_id']);
+            $data['city_name'] = $zone->city_name;
+            $address = UserAddress::create($data + ['user_id' => null , 'zone_id' => $zone->id, 'delivery_price' => $zone->cost , 'user_ip' => request()->ip()]);
+            session()->put('address_guest', $address->id);
+        }
+        return response()->json($address);
+    }
+}
+    }
+
+    public function loadUserAddress()
+    {
+        if(auth('web')->check()){
+            $user = auth('web')->user();
+            return view('site.includes.user-address', compact('user'));
+        }else{
+            return view('site.includes.user-address');
+        }
+    }
+
+    public function apply_coupon(Request $request){
+        if(session()->has('coupon')){
+            $get_coupon = Coupon::where('id',session()->get('coupon')['coupon_id'])->first();
+        }else{
+            $get_coupon = Coupon::where('from_date','<',now())->where('to_date','>=',now())->where('coupon_code', $request->coupon_code)->where('no_used','>',0)->first();
+        }        // dd($get_coupon);
+            if(!$get_coupon){
+                $data = 1;
+                return response()->json($data);  
+            }else{
+                // dd($get_coupon->discount_type);
+                if($get_coupon->discount_type == 'percent'){
+                    if(auth('web')->check()){
+                        $price_before_discount =getPendingOrders(auth('web')->user()->id)->sum('total_price') ; 
+                        $price_after_discount= getPendingOrders(auth('web')->user()->id)->sum('total_price') - ((getPendingOrders(auth('web')->user()->id)->sum('total_price') * $get_coupon->discount)/ 100);
+                    }else{
+                        $price_before_discount =getPendingTempOrders(request()->ip())->sum(function($t){ 
+                            return $t->qty * $t->price; }) ;
+
+                        $price_after_discount= getPendingTempOrders(request()->ip())->sum(function($t){ 
+                            return $t->qty * $t->price; }) - ((getPendingTempOrders(request()->ip())->sum(function($t){ 
+                            return $t->qty * $t->price; }) * $get_coupon->discount)/ 100);
+                    }
+                }elseif($get_coupon->discount_type == 'pound'){
+
+                    if(auth('web')->check()){
+                        $price_before_discount =getPendingOrders(auth('web')->user()->id)->sum('total_price') ; 
+                        $price_after_discount= getPendingOrders(auth('web')->user()->id)->sum('total_price') - $get_coupon->discount;
+                    }else{
+                        $price_before_discount =getPendingTempOrders(request()->ip())->sum(function($t){ 
+                            return $t->qty * $t->price; }) ;
+
+                        $price_after_discount= getPendingTempOrders(request()->ip())->sum(function($t){ 
+                            return $t->qty * $t->price; }) - $get_coupon->discount;
+                    }
+                }
+
+                $arr = [
+                    'coupon_id' => $get_coupon->id,
+                    'coupon_code' => $get_coupon->coupon_code,
+                    'price_after_discount' => $price_after_discount,
+                    'total_price' =>$price_before_discount,
+                ];
+                session()->put('coupon',$arr);
+                $data = $arr;   
+                return response()->json($data);  
+            }
+    }
+
+
+    public function orderDetails(Request $request){
+       $order= Order::where('order_no',$request->order_no)->first();
+        if(!$order){
+            return redirect('/');
+        }
+        return view('site.order_details',compact('order'));
+    }
+    public function orderSearch(Request $request){
+       
+        return view('site.order_search');
+    }
+
 }

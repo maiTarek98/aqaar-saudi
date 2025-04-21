@@ -18,10 +18,12 @@
         "laravel/ui": "^4.2",
         "laravelcollective/html": "^6.3",
         "nesbot/carbon": "^2.65",
+        "simplesoftwareio/simple-qrcode": "*",
         "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-medialibrary": "10.0.7",
         "spatie/laravel-permission": "^5.8",
         "spatie/laravel-settings": "^2.6",
+        "spatie/laravel-sitemap": "*",
         "tymon/jwt-auth": "^1.0.0-beta.3@dev",
         "yedincisenol/dynamic-links": "^2.0"
     },

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ar" @if(App::getLocale() == 'en') dir="ltr" @else dir="rtl" @endif>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title') </title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{url('/storage/'.app(App\Models\GeneralSettings::class)->favicon)}}" sizes="65x65" />
     @include('site.includes.meta-section')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- font awesome cdn link  -->
     <link
@@ -17,20 +17,25 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    
-    <!-- Bootstrap link  -->
-    @if(App::getLocale() == 'en')
-    <link rel="stylesheet" href="{{url('site')}}/css/bootstrap.min.css" />
-    @else
-    <link rel="stylesheet" href="{{url('site')}}/css/bootstrap.rtl.min.css" id="bootstrap-style" />
-    @endif
 
-    <link rel="stylesheet" href="{{url('site')}}/css/bootstrap-icons.min.css">
+    <!-- Bootstrap link  -->
+    <link
+      rel="stylesheet"
+      href="{{url('site')}}/css/bootstrap.rtl.min.css"
+      id="bootstrap-style"
+    />
+    <link rel="stylesheet" href="{{url('site')}}/css/bootstrap-icons.min.css" />
 
     <!-- owl-carousel link -->
     <link rel="stylesheet" href="{{url('site')}}/css/owl.theme.default.min.css" />
     <link rel="stylesheet" href="{{url('site')}}/css/owl.carousel.min.css" />
-    @stack('custom-css')
+
+    <!-- nice select link -->
+    <link rel="stylesheet" href="{{url('site')}}/css/nice-select.css" />
+
+    <!-- fancybox link -->
+    <link rel="stylesheet" href="{{url('site')}}/css/jquery.fancybox.min.css" />
+
     <!-- custom css file link  -->
     <link rel="stylesheet" href="{{url('site')}}/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
@@ -39,14 +44,6 @@
         color:red;
         font-weight:bolder;
     }
-</style>
-
   </head>
 
   <body>
-    <!-- go to up -->
-    <div class="fixed-icon" id="scrollUp">
-      <a href="#" aria-label="go to page up">
-        <i class="fa-solid fa-chevron-up"></i>
-      </a>
-    </div>

@@ -170,25 +170,7 @@
     </div>
 </div>
 <hr>
-<h2 class="my-3 fs-6 fw-bold">تحميل التطبيق</h2>
-<div class="row g-2 g-md-3 row-cols-2 row-cols-lg-4 mb-3">
-    <div class="col">
-        <div class="card basic">
-            <div class="card-body">
-                <img src="{{ url('/dashboard') }}/dist/img/app-store.png" alt="" width="48">
-                <input type="text" class="form-control mt-2" id="ios_link" name="ios_link" placeholder="@lang('main.settings.ios_link')" value="{{old('ios_link',$social_settings->ios_link)}}">
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card basic">
-            <div class="card-body">
-                <img src="{{ url('/dashboard') }}/dist/img/google-play.png" alt="" width="48">
-                <input type="text" class="form-control mt-2" id="android_link" name="android_link" placeholder="@lang('main.settings.android_link')" value="{{old('android_link',$social_settings->android_link)}}">
-            </div>
-        </div>
-    </div>
-</div>
+
 @endif 
 @if(request('q') == 'bank_data')
 <!-- Bank account -->

@@ -1,131 +1,159 @@
-<div class="header-hero-wrapper @if(\Request::route()->getName() == 'home') home @endif">
-      <header>
-        <nav class="navbar main-nav navbar-expand-lg top-0">
-          <div class="container-fluid">
-            <a class="navbar-brand m-0" href="{{route('home')}}">
-              <img loading="lazy" src="{{url('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" alt="{{app(App\Models\GeneralSettings::class)->site_name()}}" />
-            </a>
-            <div
-              class="collapse navbar-collapse justify-content-between align-items-center"
-              id="navbarSupportedContent"
-            >
-              <!-- روابط القائمة -->
-              <ul class="navbar-nav gap-lg-5 mb-0">
-                <li class="nav-item">
-                  <a
-                    class="nav-link {{ (Request::is('/') ? 'active' : '') }}"
-                    href="{{route('home')}}"
-                    aria-label="الذهاب إلى الصفحة الرئيسية"
-                    >@lang('site.home')</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {{ (Request::is('about-us') ? 'active' : '') }}"
-                    href="{{route('aboutus')}}"
-                    aria-label="الذهاب إلى صفحة من نحن"
-                    >@lang('site.aboutus')</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                  class="nav-link {{ (Request::is('app-features') ? 'active' : '') }}"
-                  href="{{route('appFeatures')}}"
-                  aria-label="الذهاب إلى صفحة مميزات التطيبق"
-                  >@lang('site.features')</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {{ (Request::is('blogs') ? 'active' : '') }}"
-                    href="{{route('blogs')}}"
-                    aria-label="الذهاب إلى صفحة المدونة"
-                    >@lang('site.blogs')</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {{ (Request::is('contact-us') ? 'active' : '') }}"
-                    href="{{route('contactus')}}"
-                    aria-label="الذهاب إلى صفحة تواصل معنا"
-                    >@lang('site.contactus')</a
-                  >
-                </li>
-              </ul>
-              <ul class="d-flex flex-lg-row flex-column align-items-lg-center gap-lg-4 gap-3 mt-3 my-lg-0">
-                <li>
-                  @if(App::getLocale() == 'ar')
-                    <a href="{{url('/change-language/en')}}" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
-                        <span id="lang-text">English</span>
-                      </a>
-                  @endif
-                  @if(App::getLocale() == 'en')
-                    <a href="{{url('/change-language/ar')}}" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
-                        <span id="lang-text">العربية</span>
-                      </a>
-                  @endif
-                </li>
-                <li>
-                  <a href="{{route('vendorRegisteration')}}" class="main-btn" aria-label="قم بالتسجيل معنا كتاجر">
-                    <span>@lang('site.vendorRegisteration')</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          </div>
-        </nav>
-      </header>
-      @if(\Request::route()->getName() == 'home')
-      <!-- hero section -->
-      <section class="heroSec">
-        <div class="container-fluid text-white">
-          <div class="row justify-content-lg-start justify-content-end">
-            <div class="col-lg-6">
-              <div class="hero-content">
-                @if(app(App\Models\LandingSettings::class)->banner_title())
-                <h1 class="fw-bold">{{app(App\Models\LandingSettings::class)->banner_title()}}</h1>
-                @endif
-
-                @if(app(App\Models\LandingSettings::class)->banner_text())
-                <p class="fs-5 my-4 lh-lg">
-                  {{app(App\Models\LandingSettings::class)->banner_text()}}
-                </p>
-                @endif
-                <div class="apps-btns d-flex align-items-center gap-1">
-                  @include('site.includes.social-f-section')
-                </div>
-              </div>
-            </div>
-            @if(app(App\Models\LandingSettings::class)->banner_image)
-            <div class="col-lg-6 col-md-8">
-              <img
-                loading="lazy"
-                src="{{url('storage/'.app(App\Models\LandingSettings::class)->banner_image)}}"
-                alt="{{app(App\Models\LandingSettings::class)->banner_title()}}"
-                class="hero-image w-100"
-              />
-            </div>
-            @endif
+<header>
+      <!-- الشريط العلوي -->
+      <nav class="navbar top-nav">
+        <div class="container-fluid">
+          <div
+            class="helper-links w-100 d-flex align-items-center justify-content-between py-2"
+          >
+            <ul class="helper-pages m-0 d-flex gap-2 align-items-center">
+              <li class="d-md-block d-none">
+                <a href="system.html" aria-label="الذهاب إلى  شرح اليات نظام">
+                  <span>شرح اليات نظام</span>
+                </a>
+              </li>
+              <li class="d-md-block d-none">
+                <a href="policy.html" aria-label="الذهاب إلى سياسة الخصوصية">
+                  <span>سياسة الخصوصية</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
+                  <i class="bi bi-globe"></i>
+                  <span id="lang-text">EN</span>
+                </a>
+              </li>
+            </ul>
+            <ul class="helper-pages m-0 d-flex align-items-center">
+              @guest('web')
+              <li>
+                <a
+                  class="secondary"
+                  href="register.html"
+                  aria-label="إنشاء حساب جديد"
+                >
+                  <i class="bi bi-box-arrow-in-left"></i>
+                  <span>إنشاء حساب</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="secondary"
+                  href="login.html"
+                  aria-label="تسجيل الدخول"
+                >
+                  <i class="bi bi-person"></i>
+                  <span>تسجيل دخول</span>
+                </a>
+              </li>
+              @endguest
+              @auth('web')
+              <!-- if auth -->
+              <li>
+                <a
+                  class="secondary"
+                  href="profile.html"
+                  aria-label="الاشعارات"
+                >
+                  <i class="bi bi-bell"></i>
+                  <span>الاشعارات</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  class="secondary"
+                  href="profile.html"
+                  aria-label="الملف الشخصي"
+                >
+                  <i class="bi bi-person"></i>
+                  <span>الملف الشخصي</span>
+                </a>
+              </li>
+              @endauth
+            </ul>
           </div>
         </div>
-      </section>
-      @else
-      <!-- breadcrumb -->
-        @if(\Request::route()->getName() == 'site.blogs.show')
-          @include('site.includes.breadcrumb-section',['title' =>$blog->name])
-        @else
-          @include('site.includes.breadcrumb-section',['title' =>__('site.'.\Request::route()->getName())])
-        @endif
-      @endif
-    </div>
+      </nav>
+      <!-- القائمة الرئيسية -->
+      <nav class="navbar main-nav navbar-expand-lg top-0">
+        <div class="container-fluid">
+          <a class="navbar-brand m-0" href="index.html">
+            <img src="images/logo.png" alt="Saudi Real Estate Logo" />
+          </a>
+          <div
+            class="collapse navbar-collapse justify-content-between align-items-center"
+            id="navbarSupportedContent"
+          >
+            <!-- روابط القائمة -->
+            <ul class="navbar-nav gap-xl-3 mb-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  href="index.html"
+                  aria-label="الذهاب إلى الصفحة الرئيسية"
+                  >الرئيسية</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="about.html"
+                  aria-label="الذهاب إلى صفحة من نحن"
+                  >من نحن</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="estates.html"
+                  aria-label="الذهاب إلى صفحة العقارات"
+                  >العقارات</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="blogs.html"
+                  aria-label="الذهاب إلى صفحة المدونة"
+                  >المدونة</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="contact.html"
+                  aria-label="الذهاب إلى صفحة تواصل معنا"
+                  >تواصل معنا</a
+                >
+              </li>
+            </ul>
+            <!-- مربع البحث -->
+            <div class="search-box">
+              <form action="" method="GET">
+                <input
+                  type="search"
+                  name="reference_number"
+                  class="form-control"
+                  placeholder="بحث بكود العقار"
+                  aria-label="بحث بكود العقار"
+                  required
+                />
+                <button type="submit">
+                  <i class="bi bi-search"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+    </header>

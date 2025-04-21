@@ -1,94 +1,172 @@
-<!-- footer section -->
+@if(\Request::route()->getName() != 'site.signin' && \Request::route()->getName() != 'login' && \Request::route()->getName() != 'register' && \Request::route()->getName() != 'site.otp' && \Request::route()->getName() != 'site.continue_registeration' && \Request::route()->getName() != 'site.forget' && \Request::route()->getName() != 'site.forget.otp' && \Request::route()->getName() != 'site.changePassword') 
+ <!-- footer section -->
     <footer>
       <!-- روابط الفوتر -->
-      <div class="footer-links">
-        <div class="container-fluid d-flex flex-column gap-4">
-          <div class="footer-images">
-            <img loading="lazy" class="img-fluid" src="{{url('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" alt="{{app(App\Models\GeneralSettings::class)->site_name()}}" />
-          </div>
-          <nav class="navbarnavbar-expand-lg top-0">
-            <ul class="d-flex gap-lg-5 flex-wrap gap-4 justify-content-center mb-0">
-              <li class="nav-item">
-                <a
-                  class="nav-link {{ (Request::is('/') ? 'active' : '') }}"
-                  href="{{route('home')}}"
-                  aria-label="الذهاب إلى الصفحة الرئيسية"
-                  >@lang('site.home')</a
+      <div class="footer-links bg-card py-4">
+        <div class="container-fluid">
+          <div class="row justify-content-between">
+            <!-- الشركة -->
+            <div class="col-12 col-lg-3">
+              <div class="footer-info">
+                <img
+                  src="images/logo.png"
+                  alt="شعار الشركة"
+                  class="img-fluid"
+                />
+                <p>
+                  نحن منصة إلكترونية متخصصة في عرض العقارات داخل المملكة، نقدم حلولاً ذكية ومبتكرة للبحث عن عقارات للبيع أو الإيجار بما يتناسب مع احتياجاتك وطموحاتك
+                </p>
+              </div>
+            </div>
+
+            <!-- خريطة الموقع -->
+            <div class="col-6 col-md-3 col-lg-auto mt-3">
+              <h4>خريطة الموقع</h4>
+              <ul class="list-unstyled">
+                <li>
+                  <a
+                    href="index.html"
+                    class="active"
+                    aria-label="الانتقال إلى الصفحة الرئيسية"
+                    >الرئيسية</a
+                  >
+                </li>
+                <li>
+                  <a href="about.html" aria-label="الانتقال إلى صفحة من نحن"
+                    >من نحن</a
+                  >
+                </li>
+                <li>
+                  <a href="blogs.html" aria-label="الانتقال إلى صفحة المدونة"
+                    >المدونة</a
+                  >
+                </li>
+                <li>
+                  <a href="contact.html" aria-label="الانتقال إلى اتصل بنا"
+                    >اتصل بنا</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- روابط سريعة -->
+            <div class="col-6 col-md-3 col-lg-auto mt-3">
+              <h4>روابط سريعة</h4>
+              <ul class="list-unstyled">
+                <li>
+                  <a
+                    href="policy.html"
+                    aria-label="الانتقال إلى صفحة سياسة الخصوصية"
+                    >سياسة الخصوصية</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="terms.html"
+                    aria-label="الانتقال إلى صفحة الشروط والأحكام"
+                    > الشروط والأحكام</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="system.html"
+                    aria-label="الانتقال إلى صفحة شرح اليات نظام"
+                    >شرح اليات نظام</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="paid-servics.html"
+                    aria-label="الانتقال إلى صفحة المصداقية والخدمات المدفوعة"
+                    >المصداقية والخدمات المدفوعة</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- الاشتراك وتحديثات العقارات -->
+            <div class="col-12 col-md-5 col-lg-3 mt-3">
+              <h4>اشترك لتلقي تحديثات العقارات</h4>
+              <form action="">
+                <div class="input-group border my-3">
+                  <input
+                    type="email"
+                    class="form-control border-0"
+                    placeholder="البريد الإلكتروني"
+                    aria-label="إدخال البريد الإلكتروني"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="main-btn ms-auto mb-4"
+                  aria-label="إرسال البريد الإلكتروني"
                 >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link {{ (Request::is('about-us') ? 'active' : '') }}"
-                  href="{{route('aboutus')}}"
-                  aria-label="الذهاب إلى صفحة من نحن"
-                  >@lang('site.aboutus')</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                class="nav-link {{ (Request::is('app-features') ? 'active' : '') }}"
-                href="{{route('appFeatures')}}"
-                aria-label="الذهاب إلى صفحة مميزات التطيبق"
-                >@lang('site.features')</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link {{ (Request::is('blogs') ? 'active' : '') }}"
-                  href="{{route('blogs')}}"
-                  aria-label="الذهاب إلى صفحة المدونة"
-                  >@lang('site.blogs')</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link {{ (Request::is('contact-us') ? 'active' : '') }}"
-                  href="{{route('contactus')}}"
-                  aria-label="الذهاب إلى صفحة تواصل معنا"
-                  >@lang('site.contactus')</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link {{ (Request::is('vendor-registeration') ? 'active' : '') }}"
-                  href="{{route('vendorRegisteration')}}"
-                  aria-label="الذهاب إلى صفحة طلب تسجيل كتاجر"
-                  >@lang('site.add vendor')</a
-                >
-              </li>
-            </ul>
-          </nav>
-          <div class="apps-btns d-flex align-items-center justify-content-center gap-1">
-            @include('site.includes.social-f-section')
+                  إرسال
+                </button>
+              </form>
+
+
+              <!-- وسائل التواصل الاجتماعي -->
+               <h4>تابعنا</h4>
+              <div
+                class="social d-flex justify-content-lg-start justify-content-center gap-3"
+              >
+                <a href="#" target="_blank" aria-label="رابط إلى تويتر">
+                  <i class="fa-brands fa-x-twitter"></i>
+                </a>
+                <a href="#" target="_blank" aria-label="رابط إلى فيسبوك">
+                  <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="#" target="_blank" aria-label="رابط إلى لينكد إن">
+                  <i class="fa-brands fa-linkedin-in"></i>
+                </a>
+                <a href="#" target="_blank" aria-label="رابط إلى سناب شات">
+                  <i class="fa-brands fa-snapchat"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    
+
       <!-- الفوتر الفرعي -->
       <div class="sub-footer py-2">
         <p class="text-center mb-0">
-          <a href="https://smartvision4p.com" target="_blank" class="d-flex align-items-center gap-2 justify-content-center text-white text-decoration-none" aria-label="رابط إلى موقع شركة سمارت فيجن">
-            <span>@lang('site.site rights')</span>
-            <img loading="lazy" src="{{url('site')}}/images/smart-logo.svg" alt="شعار سمارت فيجن">
+          <a
+            href="https://smartvision4p.com"
+            target="_blank"
+            class="d-flex align-items-center gap-2 justify-content-center text-white text-decoration-none"
+            aria-label="رابط إلى موقع شركة سمارت فيجن"
+          >
+            <span>تصميم وبرمجة شركة سمارت فيجن للبرمجيات</span>
+            <img src="images/smart-logo.svg" alt="شعار سمارت فيجن" />
           </a>
         </p>
       </div>
     </footer>
-    
+@endif
+
     <!-- jQuery script -->
     <script src="{{url('site')}}/js/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
     @stack('custom-js')
+
     <!-- owl-carousel script -->
     <script src="{{url('site')}}/js/owl.carousel.min.js"></script>
 
     <!-- bootstrap script -->
     <script src="{{url('site')}}/js/bootstrap.min.js"></script>
 
+    <!-- nice select script -->
+    <script src="{{url('site')}}/js/jquery.nice-select.min.js"></script>
+
+    <!-- fancybox script -->
+    <script src="{{url('site')}}/js/jquery.fancybox.min.js"></script>
+
     <!-- custom js file link  -->
     <script src="{{url('site')}}/js/script.js"></script>
-
     <script>
       function changeLanguage(lang) {
         window.location = '{{ url('/change-language') }}/' + lang;
@@ -121,11 +199,21 @@
             toastr.success('{{ Session::get('success') }}');
         @endif
             });
-            
-            
-    </script>
-    
-    
+    document.addEventListener('DOMContentLoaded', function () {
+        let userTypeSelect = document.querySelector('[name="user_type"]');
+        let agencyWrapper = document.getElementById('agency_number_wrapper');
+        function toggleAgencyField() {
+            if (userTypeSelect.value === 'agent') {
+                agencyWrapper.style.display = 'block';
+            } else {
+                agencyWrapper.style.display = 'none';
+            }
+        }
+        toggleAgencyField();
+        userTypeSelect.addEventListener('change', toggleAgencyField);
+    });
+</script>
+
 <script>
 $(document).ready(function() {
     $.ajaxSetup({
