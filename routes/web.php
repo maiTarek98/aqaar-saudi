@@ -34,7 +34,7 @@ Route::get('/storage-link', function () {
 
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\ProductController;
-use App\Http\Controllers\Site\WorkshopController;
+use App\Http\Controllers\Site\PropertyController;
 use App\Http\Controllers\Site\UserController;
 use App\Http\Controllers\Site\CarController;
 use App\Http\Controllers\Site\MessageController;
@@ -82,10 +82,6 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::get('/properties',[ProductController::class,'products'])->name('products');
         Route::get('/propertys/{q}',[ProductController::class,'productSingle'])->name('propertys.single');
         Route::post('/propertys/filter', [ProductController::class,'product_filter'])->name('product.filter');
-
-        Route::get('/workshops',[WorkshopController::class,'workshops'])->name('workshops');
-        Route::get('/workshops/{q}',[WorkshopController::class,'workshopSingle'])->name('workshops.single');
-        Route::post('/workshops/filter', [WorkshopController::class,'workshop_filter'])->name('workshop.filter');
         Route::view('/forget', 'site.auth.forget')->name('site.forget');
         
         Route::get('/forget-otp', function () {
@@ -160,7 +156,10 @@ Route::group(['middleware' => ['csp','lang']], function () {
 
 
         Route::get('/profile',[UserController::class,'profile'])->name('profile');
-        Route::get('/profile/{user}/user-address',[UserController::class,'userAddress'])->name('user-address');
+        Route::get('/profile/{user}/add-property',[PropertyController::class,'addProperty'])->name('addProperty');
+
+        Route::post('/profile/{user}/store-property',[PropertyController::class,'storeProperty'])->name('storeProperty');
+
         Route::post('profile-update', [UserController::class,'update_profile'])->name('edit-profile');
         Route::post('photo-update', [UserController::class,'update_photo'])->name('edit-photo');
         Route::get('/change-password',[UserController::class,'changePassword'])->name('change-password'); 

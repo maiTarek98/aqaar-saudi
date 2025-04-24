@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\Category\ProductRequest;
+use App\Http\Requests\Dashboard\Category\ProductRequest; 
 use App\Http\Traits\UploadImageTrait;
 use App\Models\Product;
 use App\Models\ProductReview;
@@ -138,7 +138,7 @@ class ProductController extends Controller
         $product->update([
             'qr_code' => "qr_codes/{$qrFileName}"
         ]);
-        return redirect()->route('products.index',['page'=> $this->currentPage])->with('success',trans('messages.AddSuccessfully'));
+        return redirect()->back()->with('success',trans('messages.AddSuccessfully'));
     }
 
     public function show(Product $product)

@@ -126,40 +126,50 @@ class UserController extends Controller {
         return view('site.profile', compact('user'));
     }
     public function update_profile(Request $request)
-    {
-        $data = User::where('id',Auth::guard('web')->user()->id)->first();
-          $rules = [
-            'photo_profile' => 'sometimes|nullable|image',
-            'first_name' => 'required|string|min:2|max:25',
-            'last_name' => 'required|string|min:2|max:25',
-            'email' => 'required|email|unique:users,email,'.$data->id,
-            'mobile' => 'required|numeric|unique:users,mobile,'.$data->id,
-        ];
-                $mobile =preg_replace('/\s+/','',ltrim($request->mobile,0));
-        $validator = Validator::make($request->except('_token','mobile')+['mobile'=>$mobile ], $rules);
+{
+    $user = Auth::guard('web')->user();
 
-            // $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json(array(
+    $rules = [
+        'name' => 'required|string|min:2|max:45',
+        'mobile' => 'required|numeric|unique:users,mobile,' . $user->id,
+        'id_number' => 'sometimes|nullable|integer',
+        'agent_number' => 'sometimes|nullable|integer',
+        'photo_profile' => 'sometimes|nullable|image|max:2040',
+    ];
 
-                'errors' => $validator->errors()->all(),
-            ));
-        } else {
-            if(request()->hasFile('photo_profile') && request()->file('photo_profile')->isValid()){
-            $data->clearMediaCollection('photo_profile');
-            $this->convertImageToWebp($request->photo_profile,$data,'photo_profile','users');
-        }
-            // dd($request->all());
-          $name = $request->first_name. ' ' . $request->last_name;  
-         $data->update($request->except('_token','first_name','photo_profile','last_name','mobile') + ['mobile' => $mobile ,'name' => $name]);
-         if($data){
+    $mobile = preg_replace('/\s+/', '', ltrim($request->mobile, 0));
+    $validator = Validator::make(
+        $request->except('_token', 'mobile') + ['mobile' => $mobile],
+        $rules
+    );
 
-            return response()->json($data);
-        }else{
-            return 2;
-            }
-        }
+    if ($validator->fails()) {
+        return response()->json([
+            'errors' => $validator->errors() // هنا الفرق الأساسي
+        ]);
     }
+
+    $data = $request->except('_token', 'photo_profile', 'mobile');
+    $data['mobile'] = $mobile;
+    $data['name'] = $request->name;
+
+    if ($file = $request->file('photo_profile')) {
+        $path = 'users';
+        $url = $this->uploadImg($file, $path);
+        $data['photo_profile'] = 'storage' . $url;
+    }
+
+    $updated = $user->update($data);
+
+    if ($updated) {
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    return response()->json(2);
+}
+
     
     public function update_photo(Request $request)
     {

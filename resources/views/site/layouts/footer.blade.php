@@ -254,7 +254,91 @@ $(document).ready(function() {
             }
         });
     });
+   $(document).on('submit', '#updateForm', function (e) {
+    e.preventDefault();
+    var $form = $(this);
+    var $button = $form.find('button.submit-btn');
     
+    $button.prop('disabled', true);
+
+    $.ajax({
+        method: "POST",
+        url: $form.prop('action'),
+        data: new FormData(this),
+        dataType: 'JSON',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            $('.text-danger').text(''); 
+
+            if (data.errors) {
+                $.each(data.errors, function (key, messages) {
+                    $('#' + key + '_error').text(messages[0]);  
+                });
+            } else if (data.success) {
+                toastr.success('@lang('site.updated-done')');
+            } else {
+                toastr.error('@lang('site.error')');
+            }
+
+            $button.prop('disabled', false);
+        },
+        error: function (xhr) {
+            toastr.error('@lang('site.error')');
+            $button.prop('disabled', false);
+        }
+    });
+});
+
+        $(document).on('submit', '#updatePassword', function (e) {
+          e.preventDefault();
+          var $this = $(this).parent();
+          $.ajax({
+            method: "POST",
+            url: $(this).prop('action'),
+            data: new FormData(this),
+            dataType: 'JSON',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+              if ((data.errors)) {
+                // console.log(data.errors)
+                // $('#current_password_error').text(data.errors[0])
+                $('#password_error').text(data.errors[0])
+                $('#password_confirmation_error').text(data.errors[1])
+              }
+              else if (data == 1) {
+                $(".print-pass-error-msg").fadeOut();
+                $this.find('button.submit-btn').prop('disabled', false);
+                Toast.fire({
+                  icon: 'success',
+                  title: '@lang('site.updated-done')',
+                })
+                // location.reload();
+    
+              }
+              else if (data == 2) {
+                $this.find('button.submit-btn').prop('disabled', false);
+                Toast.fire({
+                  icon: 'error',
+                  title: '@lang('site.error')',
+                })
+    
+              }
+              else if (data == 3) {
+                $this.find('button.submit-btn').prop('disabled', false);
+                Toast.fire({
+                  icon: 'error',
+                  title: '@lang('site.error_in_current_pass')',
+                })
+              }
+    
+            }
+          });
+        });
+
     
     $(document).ajaxStart(function () {
         $('.spinner-border').show();

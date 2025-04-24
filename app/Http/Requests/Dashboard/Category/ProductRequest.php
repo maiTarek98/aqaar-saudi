@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return [ 
             'added_by'              => 'required|numeric|exists:users,id',
             'product_for'           => 'required|string|in:rent,sale',
             'owner_id '             => 'sometimes|nullable|numeric|exists:users,id',

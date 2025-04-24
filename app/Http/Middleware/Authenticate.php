@@ -22,7 +22,7 @@ class Authenticate extends Middleware
             if(auth('admin')->check()){
                 return route('dashboard');
             }else{
-                return route('site.signin');
+                return route('login');
             }
         }else{
             try {

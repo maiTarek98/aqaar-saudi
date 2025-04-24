@@ -22,77 +22,11 @@ $(document).ready(function () {
     $('#bootstrap-style').attr('href', $('html').attr('lang') === 'en' ? 'css/bootstrap.min.css' : 'css/bootstrap.rtl.min.css');
   });
 
-  const circle = document.querySelector('.center');
-  const Outer = document.querySelector('.outerCircle');
-
-  document.addEventListener('mousemove', (e) => {
-    circle.style.top = `${e.clientY}px`;
-    circle.style.left = `${e.clientX}px`;
-    Outer.style.top = `${e.clientY}px`;
-    Outer.style.left = `${e.clientX}px`;
-  });
-
-  document.addEventListener('click', () => {
-    Outer.classList.add('click');
-    setTimeout(() => {
-      Outer.classList.remove('click');
-    }, 300)
-  });
-
-  const Elements = [
-    "BUTTON",
-    "A",
-    "INPUT",
-    "SELECT"
-  ]
-  document.addEventListener('mouseover', (e) => {
-    if (Elements.includes(e.target.tagName)) {
-      Outer.classList.add('hover');
-    } else {
-      Outer.classList.remove('hover');
-    }
-  });
-
   // Scroll to the top of the page
   window.addEventListener('scroll', () => {
     document.getElementById('scrollUp').style.display = window.scrollY > 300 ? 'block' : 'none';
   });
 
-  // change input by purpose
-  $('input[name="purpose"]').change(function () {
-    if ($(this).attr("id") == "land") {
-      $(".project").hide();
-    } else $(".project").show();
-  });
-
-  // counter
-  window.addEventListener("scroll", function () {
-    if ($(".counters").length > 0) {
-      var counters = document.querySelectorAll(".counter");
-      var counterStart = counters[0].offsetTop - 500;
-      var speed = 200;
-      if (this.document.documentElement.scrollTop > counterStart) {
-        counters.forEach((counter) => {
-          var upTo = function () {
-            var target = Number(counter.getAttribute("data-target"));
-            var count = Number(counter.innerText);
-            var inc = Math.ceil(target / speed);
-            setTimeout(upTo, 300);
-
-            if (count < target) {
-              counter.innerText = '+' + count + inc;
-            } else counter.innerText = '+' + target;
-          };
-          upTo();
-        });
-      }
-    }
-  });
-
-  // toggle fav
-  $(".fav").click(function () {
-    $(this).find("i").toggleClass("fa-solid fa-regular");
-  });
 
   // toggle password type
   $('.pass').click(function () {
@@ -298,6 +232,76 @@ $(document).ready(function () {
     $(".slider-two .owl-next").trigger("click");
   });
 
+
+  function ImgUpload() {
+    var imgWrap = "";
+    var imgArray = [];
+
+    $('.upload__inputfile').each(function () {
+      $(this).on('change', function (e) {
+        imgWrap = $(this).closest('.upload__box').find('.upload__img-wrap');
+        var maxLength = $(this).attr('data-max_length');
+
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        var iterator = 0;
+        filesArr.forEach(function (f, index) {
+
+          if (!f.type.match('image.*')) {
+            return;
+          }
+
+          if (imgArray.length > maxLength) {
+            return false
+          } else {
+            var len = 0;
+            for (var i = 0; i < imgArray.length; i++) {
+              if (imgArray[i] !== undefined) {
+                len++;
+              }
+            }
+            if (len > maxLength) {
+              return false;
+            } else {
+              imgArray.push(f);
+
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                var html = `
+                <div class='upload__img-box'>
+                  <div data-number='${$(".upload__img-close").length}'  data-file='${f.name}'  class='img-bg'>
+                  <img src="${e.target.result}">
+                  <div class='upload__img-close'></div>
+                  </div>
+                </div>`;
+                imgWrap.append(html);
+                iterator++;
+              }
+              reader.readAsDataURL(f);
+            }
+          }
+        });
+      });
+    });
+
+    $('body').on('click', ".upload__img-close", function (e) {
+      var file = $(this).parent().data("file");
+      for (var i = 0; i < imgArray.length; i++) {
+        if (imgArray[i].name === file) {
+          imgArray.splice(i, 1);
+          break;
+        }
+      }
+      $(this).parent().parent().remove();
+    });
+  }
+  ImgUpload();
+
+
+  $('#addVideo').click(function () {
+    $('#videos-link').show()
+    // $(this).hide()
+  });
 
   // carousels
   $(".owl-carousel").owlCarousel({
