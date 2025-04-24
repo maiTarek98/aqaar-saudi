@@ -76,8 +76,9 @@
       <!-- القائمة الرئيسية -->
       <nav class="navbar main-nav navbar-expand-lg top-0">
         <div class="container-fluid">
-          <a class="navbar-brand m-0" href="index.html">
-            <img src="images/logo.png" alt="Saudi Real Estate Logo" />
+          <a class="navbar-brand m-0" href="{{route('home')}}">
+            <img loading="lazy" src="{{ url('/storage/' . app(App\Models\GeneralSettings::class)->logo) }}"
+                alt="{{ app(App\Models\GeneralSettings::class)->site_name() }}" />
           </a>
           <div
             class="collapse navbar-collapse justify-content-between align-items-center"

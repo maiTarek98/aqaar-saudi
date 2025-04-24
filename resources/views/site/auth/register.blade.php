@@ -8,7 +8,7 @@
           <div class="container-fluid">
             <div class="py-4">
               <div class="login-logo">
-                <img loading="lazy" src="{{ url('/storage/' . app(App\Models\GeneralSettings::class)->favicon) }}"
+                <img loading="lazy" src="{{ url('/storage/' . app(App\Models\GeneralSettings::class)->logo) }}"
                 alt="{{ app(App\Models\GeneralSettings::class)->site_name() }}" />
 
               </div>

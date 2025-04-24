@@ -63,11 +63,11 @@
                         name="product_for"
                         type="radio"
                         class="btn-check"
-                        id="sale"
-                        value="sale"
+                        id="rent"
+                        value="rent"
                         autocomplete="off"
                       />
-                      <label class="btn" for="sale">
+                      <label class="btn" for="rent">
                         <img src="{{url('site')}}/images/2.svg" alt="" />
                         <span>ايجار</span>
                       </label>
@@ -169,7 +169,7 @@
                   <div class="builder-options w-75">
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>plan_number <span class="text-danger">*</span></h5>
+                        <h5>plan_number <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="plan_number" value="{{old('plan_number')}}"
@@ -180,7 +180,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>plot_number <span class="text-danger">*</span></h5>
+                        <h5>plot_number <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="plot_number" value="{{old('plot_number')}}"
@@ -191,7 +191,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>area <span class="text-danger">*</span></h5>
+                        <h5>area <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="area" value="{{old('area')}}"
@@ -202,7 +202,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>area_after_development <span class="text-danger">*</span></h5>
+                        <h5>area_after_development <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="area_after_development" value="{{old('area_after_development')}}"
@@ -213,7 +213,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>valuation <span class="text-danger">*</span></h5>
+                        <h5>valuation <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="valuation" value="{{old('valuation')}}"
@@ -225,7 +225,7 @@
 
                     <div class="builder-option">
                       <div class="builder-option-name">
-                            <h5>valuation_date <span class="text-danger">*</span></h5>
+                            <h5>valuation_date <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="valuation_date" value="{{old('valuation_date')}}"           type="date"
@@ -236,7 +236,7 @@
     
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>has_planning_diagram<span class="text-danger">*</span></h5>
+                        <h5>has_planning_diagram<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -266,7 +266,7 @@
 
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>has_electronic_deed<span class="text-danger">*</span></h5>
+                        <h5>has_electronic_deed<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -295,7 +295,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>has_real_estate_market<span class="text-danger">*</span></h5>
+                        <h5>has_real_estate_market<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -324,7 +324,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>has_survey_decision<span class="text-danger">*</span></h5>
+                        <h5>has_survey_decision<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -353,7 +353,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>has_mortgage<span class="text-danger">*</span></h5>
+                        <h5>has_mortgage<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -382,7 +382,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>has_penalties<span class="text-danger">*</span></h5>
+                        <h5>has_penalties<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -411,7 +411,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>accepts_mortgage<span class="text-danger">*</span></h5>
+                        <h5>accepts_mortgage<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -440,7 +440,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>usufruct_lease<span class="text-danger">*</span></h5>
+                        <h5>usufruct_lease<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -469,7 +469,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>is_rented<span class="text-danger">*</span></h5>
+                        <h5>is_rented<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -498,7 +498,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>annual_rent <span class="text-danger">*</span></h5>
+                        <h5>annual_rent <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="annual_rent" value="{{old('annual_rent')}}"
@@ -509,7 +509,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>remaining_lease_years <span class="text-danger">*</span></h5>
+                        <h5>remaining_lease_years <span class="text-info">@lang('main.optional')</span></h5>
                       </div>
                       <input
                         name="remaining_lease_years" value="{{old('remaining_lease_years')}}"
@@ -520,7 +520,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>penalty_type<span class="text-danger">*</span></h5>
+                        <h5>penalty_type<span class="text-info">@lang('main.optional')</span></h5>
                       </div>
     
                       <input
@@ -798,7 +798,7 @@
                             <div class="builder-option">
                               <div class="builder-option-name">
                                 <h5>
-                                  الوصف الكامل للعقار <span class="text-danger">*</span>
+                                  الوصف الكامل للعقار <span class="text-info">@lang('main.optional')</span>
                                 </h5>
                               </div>
                               <textarea

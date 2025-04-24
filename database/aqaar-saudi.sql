@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2025 at 05:02 PM
+-- Generation Time: Apr 24, 2025 at 05:02 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -105,8 +105,8 @@ CREATE TABLE `blogs` (
 --
 
 INSERT INTO `blogs` (`id`, `added_by`, `name_ar`, `name_en`, `description_ar`, `description_en`, `content_ar`, `content_en`, `meta_tags_ar`, `meta_tags_en`, `meta_description_ar`, `meta_description_en`, `status`, `created_at`, `updated_at`, `in_home`, `views`) VALUES
-(10, 1, 'Colette Moore', 'Jayme Snow', 'Deserunt nihil ullam', 'Veniam dolores quia', NULL, NULL, 'Est error quos vel', 'Non ea dolor necessi', 'Lorem sint accusamu', 'Laudantium nemo ad', 'show', '2025-01-24 21:23:05', '2025-02-09 09:35:18', 'no', 6),
-(11, 1, 'Jescie Mcintyre', 'Zena Ingram', 'Doloribus dolorum re', 'Dolorem deleniti ea', 'dcfvghjkl;', NULL, NULL, NULL, NULL, NULL, 'show', '2025-01-24 21:25:25', '2025-02-09 08:05:12', 'yes', 8),
+(10, 1, 'Colette Moore', 'Jayme Snow', 'Deserunt nihil ullam', 'Veniam dolores quia', 'gghh', 'hnmk', 'Est error quos vel', 'Non ea dolor necessi', 'Lorem sint accusamu', 'Laudantium nemo ad', 'show', '2025-01-24 21:23:05', '2025-04-21 15:55:02', 'no', 10),
+(11, 1, 'Jescie Mcintyre', 'Zena Ingram', 'Doloribus dolorum re', 'Dolorem deleniti ea', 'dcfvghjkl;', NULL, NULL, NULL, NULL, NULL, 'hide', '2025-01-24 21:25:25', '2025-04-20 11:40:20', 'yes', 8),
 (12, 1, 'أفضل طريقة لاستخدام تطبيق العناية بالبشرة', 'Zena Iqqngram', 'تعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرة', 'Dolorem deleniti ea', 'تعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرةتعرفي على كيفية تحقيق أقصى استفادة من تطبيق العناية بالبشرة. خطوات بسيطة لتخصيص روتينك اليومي ومتابعة تقدمك نحو بشرة صحية ونضرة', NULL, NULL, NULL, NULL, NULL, 'show', '2025-01-24 21:26:48', '2025-02-09 09:05:00', 'no', 10);
 
 -- --------------------------------------------------------
@@ -426,7 +426,10 @@ INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, 
 (452, 'App\\Models\\Product', 7, '428235a2-3240-4b8a-8165-a1f8e558c88d', 'document', 'sep', 'sep.png', 'image/png', 'products_images', 'products_images', 1690, '[]', '[]', '[]', '[]', 76, '2025-02-20 14:29:31', '2025-02-20 14:29:31'),
 (453, 'App\\Models\\Product', 7, 'ecef9882-5016-4834-b595-abe109e96ac2', 'document', 'wes', 'wes.jpg', 'image/jpeg', 'products_images', 'products_images', 7511, '[]', '[]', '[]', '[]', 77, '2025-02-20 14:29:32', '2025-02-20 14:29:32'),
 (457, 'App\\Models\\User', 70, '9418b95b-d041-4d14-9f72-8f28f5857f17', 'photo_profile', 'photo_profile-1740568870', 'photo_profile-1740568870.webp', 'image/webp', 'users', 'users', 9616, '[]', '[]', '[]', '[]', 78, '2025-02-26 11:21:10', '2025-02-26 11:21:10'),
-(458, 'App\\Models\\User', 1, 'ee381641-1a1c-4dad-9643-b558b28e5aae', 'photo_profile', 'photo_profile-1741511304', 'photo_profile-1741511304.jpg', 'image/webp', 'users', 'users', 4388, '[]', '[]', '[]', '[]', 79, '2025-03-09 09:08:48', '2025-03-09 09:08:48');
+(458, 'App\\Models\\User', 1, 'ee381641-1a1c-4dad-9643-b558b28e5aae', 'photo_profile', 'photo_profile-1741511304', 'photo_profile-1741511304.jpg', 'image/webp', 'users', 'users', 4388, '[]', '[]', '[]', '[]', 79, '2025-03-09 09:08:48', '2025-03-09 09:08:48'),
+(459, 'App\\Models\\Product', 1, 'ecab98f4-e095-4789-ab50-fc257d8ad2ac', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 80, '2025-04-20 19:22:54', '2025-04-20 19:22:54'),
+(460, 'App\\Models\\Product', 1, '51e09257-25f7-4483-8e63-936790d0282e', 'document', 'aboutt', 'aboutt.png', 'image/png', 'products_images', 'products_images', 187275, '[]', '[]', '[]', '[]', 81, '2025-04-20 19:22:54', '2025-04-20 19:22:54'),
+(461, 'App\\Models\\Product', 1, '49184589-f22c-410b-a585-1b7c9dbf600a', 'products_image', 'products_image-1745243029', 'products_image-1745243029.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 82, '2025-04-21 13:44:02', '2025-04-21 13:44:02');
 
 -- --------------------------------------------------------
 
@@ -668,8 +671,9 @@ CREATE TABLE `pages` (
 
 INSERT INTO `pages` (`id`, `admin_id`, `title_ar`, `title_en`, `status`, `created_at`, `updated_at`, `content_ar`, `content_en`, `link`) VALUES
 (1, 1, 'سياسة الخصوصية', 'privacy policy', 'show', '2024-07-25 13:40:50', '2024-08-24 11:35:48', 'الاتةنسمو', 'hvshbmklc,', 'privacy-policy'),
-(2, 1, 'سياسة الإرجاع', 'سياسة الإرجاع', 'show', '2024-08-17 13:14:27', '2024-09-07 18:26:17', 'سياسة الإرجاعسياسة الإرجاع', 'سياسة الإرجاع', 'return-policy'),
-(3, 1, 'الشروط والأحكام', 'الشروط والأحكام', 'hide', '2024-08-17 13:14:54', '2025-01-22 09:09:34', 'الشروط والأحكامالشروط والأحكام', 'الشروط والأحكام', 'term-conditions');
+(2, 1, 'شرح آليات النظام', 'شرح آليات النظام', 'show', '2024-08-17 13:14:27', '2025-04-20 17:39:12', 'شرح آليات النظام', 'شرح آليات النظام', 'return-policy'),
+(3, 1, 'الشروط والأحكام', 'الشروط والأحكام', 'hide', '2024-08-17 13:14:54', '2025-01-22 09:09:34', 'الشروط والأحكامالشروط والأحكام', 'الشروط والأحكام', 'term-conditions'),
+(4, 1, 'المصداقية والخدمات المدفوعة', 'المصداقية والخدمات المدفوعة', 'show', '2025-04-20 17:38:30', '2025-04-20 17:38:30', 'المصداقية والخدمات المدفوعة', 'المصداقية والخدمات المدفوعة', NULL);
 
 -- --------------------------------------------------------
 
@@ -741,25 +745,9 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (29, 'vendors-edit', 'admin', NULL, NULL, NULL),
 (30, 'vendors-delete', 'admin', NULL, NULL, NULL),
 (49, 'settings-list', 'admin', NULL, NULL, NULL),
-(50, 'gallery-create', 'admin', '2024-07-24 10:12:54', NULL, NULL),
-(51, 'gallery-list', 'admin', NULL, NULL, NULL),
-(52, 'gallery-edit', 'admin', NULL, NULL, NULL),
-(54, 'gallery-delete', 'admin', NULL, NULL, NULL),
 (85, 'home-list', 'admin', NULL, NULL, NULL),
-(90, 'categorys-create', 'admin', NULL, NULL, NULL),
-(91, 'categorys-list', 'admin', NULL, NULL, NULL),
-(92, 'categorys-edit', 'admin', NULL, NULL, NULL),
-(93, 'categorys-delete', 'admin', NULL, NULL, NULL),
 (95, 'about-list', 'admin', NULL, NULL, NULL),
 (96, 'about-edit', 'admin', NULL, NULL, NULL),
-(98, 'coupons-create', 'admin', NULL, NULL, NULL),
-(99, 'coupons-list', 'admin', NULL, NULL, NULL),
-(100, 'coupons-edit', 'admin', NULL, NULL, NULL),
-(101, 'coupons-delete', 'admin', NULL, NULL, NULL),
-(106, 'banner-create', 'admin', NULL, NULL, NULL),
-(107, 'banner-list', 'admin', NULL, NULL, NULL),
-(108, 'banner-edit', 'admin', NULL, NULL, NULL),
-(109, 'banner-delete', 'admin', NULL, NULL, NULL),
 (118, 'contacts-list', 'admin', NULL, NULL, NULL),
 (119, 'contacts-delete', 'admin', NULL, NULL, NULL),
 (120, 'reports-list', 'admin', NULL, NULL, NULL),
@@ -775,18 +763,6 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (152, 'orders-edit', 'admin', NULL, NULL, NULL),
 (153, 'orders-delete', 'admin', NULL, NULL, NULL),
 (154, 'orders-assign', 'admin', NULL, NULL, NULL),
-(155, 'brands-create', 'admin', NULL, NULL, NULL),
-(156, 'brands-list', 'admin', NULL, NULL, NULL),
-(157, 'brands-edit', 'admin', NULL, NULL, NULL),
-(158, 'brands-delete', 'admin', NULL, NULL, NULL),
-(159, 'pending_vendors-list', 'admin', NULL, NULL, NULL),
-(160, 'pending_vendors-create', 'admin', NULL, NULL, NULL),
-(161, 'pending_vendors-edit', 'admin', NULL, NULL, NULL),
-(162, 'pending_vendors-delete', 'admin', NULL, NULL, NULL),
-(163, 'stores-create', 'admin', NULL, NULL, NULL),
-(164, 'stores-list', 'admin', NULL, NULL, NULL),
-(165, 'stores-edit', 'admin', NULL, NULL, NULL),
-(166, 'stores-delete', 'admin', NULL, NULL, NULL),
 (167, 'subadmins-create', 'admin', '2024-07-24 10:12:54', NULL, NULL),
 (168, 'subadmins-list', 'admin', NULL, NULL, NULL),
 (169, 'subadmins-edit', 'admin', NULL, NULL, NULL),
@@ -830,7 +806,6 @@ CREATE TABLE `products` (
   `price` decimal(15,2) DEFAULT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `map_location` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_id` bigint(20) UNSIGNED DEFAULT NULL,
   `owner_id` bigint(20) UNSIGNED DEFAULT NULL,
   `status` enum('pending','shared_onsite','approved','rejected','closed') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_private` tinyint(1) DEFAULT NULL,
@@ -841,30 +816,20 @@ CREATE TABLE `products` (
   `type` enum('auction','shared','investment') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `area_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `product_for` enum('sale','rent') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ايجار ولا بيع'
+  `product_for` enum('sale','rent') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ايجار ولا بيع',
+  `link_video` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `in_home` enum('yes','no') COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول المنتجات';
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `added_by`, `title`, `listing_number`, `qr_code`, `price`, `description`, `map_location`, `category_id`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`) VALUES
-(7, 1, 'غسول لاروش', 'gm-0002', '10.00', '1200.00', 'Id rerum anim repell', 'Dolore dolore volupt', 20, 22, '', 0, '2024-07-26 16:28:19', '2025-03-05 08:53:54', 11, NULL, NULL, NULL, 14, 'sale'),
-(8, 1, 'زيت الروزماري', 'Ratione sit nesciunt', '29.00', '929.00', 'نبذه كبيره عن زيت الروزماري', 'نبذه كبيره عن زيت الروزماري', 28, 22, '', NULL, '2024-07-26 16:29:23', '2025-02-20 08:54:20', 23, NULL, NULL, NULL, 8, 'sale'),
-(9, 1, 'سيروم لاروش للبشرة', 'gm-0001', '27.00', '1222.00', 'Nisi beatae ab omnis', 'Quae repellendus Fu', 78, 22, '', NULL, '2024-08-03 16:45:58', '2025-02-20 09:03:29', 1, '0000-00-00 00:00:00', NULL, NULL, 14, 'sale'),
-(10, 1, 'زيت الأرجان للشعر', 'In perferendis cumqu', '10.00', '737.00', 'زيت الأرجان للشعر', 'زيت الأرجان للشعر', 19, 19, '', NULL, '2024-08-03 16:55:08', '2025-02-20 08:59:59', 1, NULL, NULL, NULL, 8, 'sale'),
-(11, 1, 'زيت شجرة الشاي', 'In perferendis cumqu', '10.00', '737.00', 'Ut voluptatem dolor', 'Sed consequat Dolor', 28, 19, '', NULL, '2024-08-03 16:56:14', '2025-02-20 08:57:39', 2, NULL, NULL, NULL, 8, 'sale'),
-(12, 1, 'لوشن للشعر', 'gm-0003', '140.00', '673.00', 'Tempora et delectus', 'Nostrum proident se', 19, 19, '', NULL, '2024-08-03 16:57:38', '2025-02-20 09:06:48', 0, NULL, NULL, NULL, 14, 'sale'),
-(13, 1, 'شامبو للشعر', 'Fuga Et voluptas el', '10.00', '455.00', 'Tempora et delectus', 'Nostrum proident se', 19, 19, '', NULL, '2024-08-03 16:57:57', '2025-02-20 09:07:40', 6, NULL, NULL, NULL, 14, 'sale'),
-(14, 1, 'Amanda liquid blusher', 'gm-000134', '0.00', '673.00', 'Tempora et delectus', 'Nostrum proident se', 78, 19, '', NULL, '2024-08-03 16:58:14', '2025-02-20 09:08:39', 2, NULL, NULL, NULL, 14, 'sale'),
-(15, 1, 'شامبو إيفا', 'gm-0005', '2.00', '150.00', 'Tempora et delectus', 'Nostrum proident se', 19, 19, '', NULL, '2024-08-03 16:58:27', '2025-02-20 09:11:15', 61, NULL, NULL, NULL, 14, 'sale'),
-(16, 1, 'body cream', 'Fuga Et voluptas el', '0.00', '150.00', 'Tempora et delectus', 'Nostrum proident se', 21, 19, '', NULL, '2024-08-03 16:58:40', '2025-02-20 09:23:14', 0, NULL, NULL, NULL, 14, 'sale'),
-(19, 1, 'كريم للوجه', 'Fuga Et voluptas el', '340.00', '673.00', 'Tempora et delectus', 'Nostrum proident se', 78, NULL, '', NULL, '2024-08-03 16:59:07', '2025-02-20 09:25:38', 0, NULL, NULL, NULL, 14, 'sale'),
-(20, 1, 'النجوم السديمية 11587 دفتر ملاحظات صغير لبيتوليا', 'Nulla eos atque vol', '278.00', '758.00', 'Modi odit qui velit', 'Voluptatem mollitia', 21, NULL, '', NULL, '2024-08-06 08:07:43', '2025-01-19 11:28:57', 39, NULL, NULL, '2025-01-19 11:28:57', NULL, 'sale'),
-(21, 1, 'شنطة مدرسية للبنات', 'Nulla eos atque vol', '278.00', '758.00', 'Modi odit qui velit', 'Voluptatem mollitia', 21, NULL, '', NULL, '2024-08-06 08:08:47', '2025-01-19 11:25:53', 46, '0000-00-00 00:00:00', NULL, '2025-01-19 11:25:53', NULL, 'sale'),
-(25, 1, 'جل الصبار للبشرة', 'Fuga Et voluptas el', '340.00', '673.00', 'Tempora et delectus', 'Nostrum proident se', 21, NULL, '', NULL, '2025-01-28 13:41:59', '2025-02-20 09:23:52', 0, NULL, NULL, NULL, 11, 'sale'),
-(26, 1, 'age perfect night cream', 'Fuga Et voluptas el', '15.00', '1273.00', 'Tempora et delectus', 'Nostrum proident se', 78, NULL, '', NULL, '2025-01-28 13:49:29', '2025-02-20 09:20:13', 0, NULL, NULL, NULL, 12, 'sale'),
-(27, 1, 'makeup remover', 'Fuga Et voluptas el', '10.00', '673.00', 'Tempora et delectus', 'Nostrum proident se', 10, NULL, '', NULL, '2025-01-28 13:50:18', '2025-02-20 09:12:37', 0, NULL, NULL, NULL, 15, 'sale');
+INSERT INTO `products` (`id`, `added_by`, `title`, `listing_number`, `qr_code`, `price`, `description`, `map_location`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`, `link_video`, `start_date`, `end_date`, `in_home`) VALUES
+(1, 1, 'ggggggggggggggg', 'AUCTION-42-2025', NULL, '1112.00', '2222222erfggg', 'https://www.google.com', NULL, 'shared_onsite', 1, '2025-04-19 22:54:01', '2025-04-21 13:43:47', 0, NULL, 'auction', NULL, 5, 'sale', 'https://www.vide.come', '2025-04-01', '2025-04-09', 'yes'),
+(43, 77, 'fffffffffffffff', 'AUCTION-2-2025', NULL, '0.00', 'ffffgs', NULL, NULL, 'pending', 0, '2025-04-23 20:51:59', '2025-04-23 20:51:59', 0, NULL, 'auction', NULL, NULL, 'sale', NULL, '2025-04-23', '2025-05-02', NULL);
 
 -- --------------------------------------------------------
 
@@ -877,32 +842,39 @@ CREATE TABLE `product_features` (
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `plan_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `plot_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `plan_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `plot_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `area` decimal(8,2) DEFAULT NULL,
-  `area_after_development` decimal(8,2) NOT NULL,
-  `valuation` decimal(8,2) NOT NULL,
-  `valuation_date` date NOT NULL,
-  `has_planning_diagram` tinyint(4) NOT NULL,
-  `has_electronic_deed` tinyint(4) NOT NULL,
-  `has_real_estate_market` tinyint(4) NOT NULL,
-  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `has_survey_decision` tinyint(4) NOT NULL,
-  `has_mortgage` tinyint(4) NOT NULL,
-  `has_penalties` tinyint(4) NOT NULL,
-  `penalty_type` enum('cash','installment') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `valuation_type` tinyint(4) NOT NULL,
-  `accepts_mortgage` tinyint(4) NOT NULL,
-  `usufruct_lease` tinyint(4) NOT NULL,
-  `is_rented` tinyint(4) NOT NULL,
-  `annual_rent` decimal(15,2) NOT NULL,
-  `remaining_lease_years` int(20) NOT NULL,
-  `license_number` int(20) NOT NULL,
+  `area_after_development` decimal(8,2) DEFAULT NULL,
+  `valuation` decimal(8,2) DEFAULT NULL,
+  `valuation_date` date DEFAULT NULL,
+  `has_planning_diagram` tinyint(4) DEFAULT NULL,
+  `has_electronic_deed` tinyint(4) DEFAULT NULL,
+  `has_real_estate_market` tinyint(4) DEFAULT NULL,
+  `has_survey_decision` tinyint(4) DEFAULT NULL,
+  `has_mortgage` tinyint(4) DEFAULT NULL,
+  `has_penalties` tinyint(4) DEFAULT NULL,
+  `penalty_type` enum('cash','installment') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `valuation_type` tinyint(4) DEFAULT NULL,
+  `accepts_mortgage` tinyint(4) DEFAULT NULL,
+  `usufruct_lease` tinyint(4) DEFAULT NULL,
+  `is_rented` tinyint(4) DEFAULT NULL,
+  `annual_rent` decimal(15,2) DEFAULT NULL,
+  `remaining_lease_years` int(20) DEFAULT NULL,
+  `license_number` int(30) DEFAULT NULL,
   `additional_info` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `represented_by` enum('owner','agent','co-owner','other') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_type` enum('residential','commercial') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner_type` enum('other','company','individual') COLLATE utf8mb4_unicode_ci NOT NULL
+  `product_type` enum('residential','commercial') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `owner_type` enum('other','company','individual') COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_features`
+--
+
+INSERT INTO `product_features` (`id`, `product_id`, `created_at`, `updated_at`, `plan_number`, `plot_number`, `area`, `area_after_development`, `valuation`, `valuation_date`, `has_planning_diagram`, `has_electronic_deed`, `has_real_estate_market`, `has_survey_decision`, `has_mortgage`, `has_penalties`, `penalty_type`, `valuation_type`, `accepts_mortgage`, `usufruct_lease`, `is_rented`, `annual_rent`, `remaining_lease_years`, `license_number`, `additional_info`, `represented_by`, `product_type`, `owner_type`) VALUES
+(10, 1, '2025-04-19 22:54:01', '2025-04-21 13:43:48', '444', '333', '333.00', '234.00', '22.00', '2025-04-01', 0, 0, 0, 0, 0, 0, 'cash', 1, 0, 1, 0, '2234.00', 222, 3222, 'fgbhtgyju', 'owner', 'residential', 'individual'),
+(11, 43, '2025-04-23 20:52:00', '2025-04-23 20:52:00', '284', '333', '1111.00', NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'residential', NULL);
 
 -- --------------------------------------------------------
 
@@ -935,9 +907,7 @@ CREATE TABLE `product_offers` (
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
   `status` enum('decline','approve') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `start_date` timestamp NULL DEFAULT NULL,
-  `end_date` timestamp NULL DEFAULT NULL
+  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -969,7 +939,7 @@ CREATE TABLE `product_verifications` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
   `group_number` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `method` enum('qr','link','code') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `verified_at` timestamp NULL DEFAULT NULL,
   `via_user_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1118,6 +1088,10 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (19, 6),
 (20, 1),
 (20, 2),
+(23, 1),
+(24, 1),
+(25, 1),
+(26, 1),
 (27, 1),
 (28, 1),
 (29, 1),
@@ -1126,27 +1100,19 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (49, 1),
 (49, 6),
 (85, 6),
-(90, 1),
 (90, 2),
 (90, 6),
-(91, 1),
 (91, 2),
 (91, 6),
-(92, 1),
 (92, 2),
 (92, 6),
-(93, 1),
 (93, 6),
-(98, 1),
 (98, 4),
 (98, 6),
-(99, 1),
 (99, 4),
 (99, 6),
-(100, 1),
 (100, 4),
 (100, 6),
-(101, 1),
 (101, 4),
 (101, 6),
 (106, 6),
@@ -1163,56 +1129,37 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (120, 6),
 (121, 5),
 (121, 6),
+(122, 1),
 (122, 5),
 (122, 6),
+(123, 1),
 (123, 5),
 (123, 6),
 (124, 6),
 (125, 6),
-(150, 1),
 (150, 2),
 (150, 4),
 (151, 0),
-(151, 1),
 (151, 2),
 (151, 3),
 (151, 4),
 (152, 0),
-(152, 1),
 (152, 2),
 (152, 3),
 (152, 4),
-(153, 1),
 (153, 2),
 (153, 4),
-(154, 1),
 (154, 2),
 (154, 4),
-(155, 1),
 (155, 4),
-(156, 1),
 (156, 4),
-(157, 1),
 (157, 4),
-(158, 1),
 (158, 4),
-(159, 1),
-(160, 1),
-(161, 1),
-(162, 1),
-(163, 1),
-(164, 1),
 (164, 4),
-(165, 1),
 (165, 4),
-(166, 1),
-(167, 1),
 (167, 4),
-(168, 1),
 (168, 4),
-(169, 1),
 (169, 4),
-(170, 1),
 (170, 4),
 (171, 1),
 (172, 1),
@@ -1276,40 +1223,40 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `group`, `name`, `locked`, `payload`, `created_at`, `updated_at`) VALUES
-(1, 'general', 'site_name_ar', 0, '\"Lumora\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(2, 'general', 'site_name_en', 0, '\"Lumora\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(3, 'general', 'site_active', 0, 'true', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(4, 'general', 'logo', 0, '\"\\/uploadedImages\\/\\/settings-1738835852.svg\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(5, 'general', 'email', 0, '\"info@email.com\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(6, 'general', 'address_ar', 0, '\"\\u0645\\u0635\\u0631\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(7, 'general', 'address_en', 0, '\"Egypt\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
+(1, 'general', 'site_name_ar', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\"', '2024-12-08 09:28:24', '2025-04-24 11:33:53'),
+(2, 'general', 'site_name_en', 0, '\"Aqarat Saudi\"', '2024-12-08 09:28:24', '2025-04-24 11:33:54'),
+(3, 'general', 'site_active', 0, 'true', '2024-12-08 09:28:24', '2025-04-24 11:33:54'),
+(4, 'general', 'logo', 0, '\"\\/uploadedImages\\/\\/settings-1745494430.png\"', '2024-12-08 09:28:24', '2025-04-24 11:33:54'),
+(5, 'general', 'email', 0, '\"info@email.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
+(6, 'general', 'address_ar', 0, '\"\\u0645\\u0635\\u0631\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
+(7, 'general', 'address_en', 0, '\"Egypt\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
 (8, 'general', 'facebook_link', 0, '\"https:\\/\\/www.facebook.com\"', '2024-12-08 09:28:24', '2024-12-08 09:28:24'),
-(9, 'general', 'base_logo', 0, '\"https:\\/\\/www.google.com\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(10, 'general', 'favicon', 0, '\"\\/uploadedImages\\/\\/settings-1738833866.svg\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(11, 'general', 'phone', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(12, 'general', 'whatsapp_phone', 0, '\"1123333332\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(16, 'seo', 'meta_title_ar', 0, '\"\\u0644\\u0627\\u0645\\u0648\\u0631 - \\u0633\\u0647\\u0648\\u0644\\u0629 \\u0627\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0641\\u064a \\u0645\\u062a\\u0646\\u0627\\u0648\\u0644 \\u064a\\u062f\\u0643\"', '2024-12-08 09:44:07', '2025-02-06 21:17:12'),
-(17, 'seo', 'meta_title_en', 0, '\"\\u0644\\u0627\\u0645\\u0648\\u0631 - \\u0633\\u0647\\u0648\\u0644\\u0629 \\u0627\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0641\\u064a \\u0645\\u062a\\u0646\\u0627\\u0648\\u0644 \\u064a\\u062f\\u0643\"', '2024-12-08 09:44:07', '2025-02-06 21:17:12'),
-(18, 'seo', 'meta_description_ar', 0, '\"\\u0627\\u0643\\u062a\\u0634\\u0641 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u062a\\u0633\\u0648\\u0642 \\u0641\\u0631\\u064a\\u062f\\u0629 \\u0645\\u0639 \\u062a\\u0637\\u0628\\u064a\\u0642 \\u0644\\u0627\\u0645\\u0648\\u0631! \\u0627\\u062d\\u0635\\u0644 \\u0639\\u0644\\u0649 \\u0623\\u062d\\u062f\\u062b \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0631\\u0648\\u0636 \\u0627\\u0644\\u0645\\u0645\\u064a\\u0632\\u0629 \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0631\\u0627\\u062d\\u0629 \\u0645\\u0646 \\u062e\\u0644\\u0627\\u0644 \\u0648\\u0627\\u062c\\u0647\\u0629 \\u0645\\u0635\\u0645\\u0645\\u0629 \\u062e\\u0635\\u064a\\u0635\\u064b\\u0627 \\u0644\\u062a\\u0644\\u0628\\u064a\\u0629 \\u0627\\u062d\\u062a\\u064a\\u0627\\u062c\\u0627\\u062a\\u0643. \\u0627\\u0628\\u062f\\u0623 \\u0631\\u062d\\u0644\\u062a\\u0643 \\u0627\\u0644\\u0622\\u0646\"', '2024-12-08 09:44:07', '2025-02-06 21:17:12'),
-(19, 'seo', 'meta_description_en', 0, '\"\\u0627\\u0643\\u062a\\u0634\\u0641 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u062a\\u0633\\u0648\\u0642 \\u0641\\u0631\\u064a\\u062f\\u0629 \\u0645\\u0639 \\u062a\\u0637\\u0628\\u064a\\u0642 \\u0644\\u0627\\u0645\\u0648\\u0631! \\u0627\\u062d\\u0635\\u0644 \\u0639\\u0644\\u0649 \\u0623\\u062d\\u062f\\u062b \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0631\\u0648\\u0636 \\u0627\\u0644\\u0645\\u0645\\u064a\\u0632\\u0629 \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0631\\u0627\\u062d\\u0629 \\u0645\\u0646 \\u062e\\u0644\\u0627\\u0644 \\u0648\\u0627\\u062c\\u0647\\u0629 \\u0645\\u0635\\u0645\\u0645\\u0629 \\u062e\\u0635\\u064a\\u0635\\u064b\\u0627 \\u0644\\u062a\\u0644\\u0628\\u064a\\u0629 \\u0627\\u062d\\u062a\\u064a\\u0627\\u062c\\u0627\\u062a\\u0643. \\u0627\\u0628\\u062f\\u0623 \\u0631\\u062d\\u0644\\u062a\\u0643 \\u0627\\u0644\\u0622\\u0646\"', '2024-12-08 09:44:07', '2025-02-06 21:17:12'),
-(20, 'seo', 'keywords', 0, '\"\\u0645\\u0648\\u0642\\u0639 \\u0625\\u0644\\u0643\\u062a\\u0631\\u0648\\u0646\\u064a,\\u062a\\u0637\\u0628\\u064a\\u0642,\\u062a\\u062c\\u0645\\u064a\\u0644,\\u0639\\u0646\\u0627\\u064a\\u0629 \\u0628\\u0627\\u0644\\u0628\\u0634\\u0631\\u0629,\\u0639\\u0646\\u0627\\u064a\\u0629 \\u0628\\u0627\\u0644\\u0634\\u0639\\u0631,\\u0630\\u0647\\u0628,\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0644\\u0644\\u0628\\u0634\\u0631\\u0629,\\u062a\\u0637\\u0628\\u064a\\u0642 \\u0625\\u0644\\u0643\\u062a\\u0631\\u0648\\u0646\\u064a,\\u0628\\u0634\\u0631\\u0629 \\u0632\\u062c\\u0627\\u062c\\u064a\\u0629,\\u0639\\u0646\\u0627\\u064a\\u0629 \\u0628\\u0627\\u0644\\u0623\\u0638\\u0627\\u0641\\u0631\"', '2024-12-08 09:44:07', '2025-02-06 21:17:12'),
-(30, 'social', 'facebook_link', 0, '\"https:\\/\\/www.facebook.com\"', '2024-12-08 10:35:20', '2025-02-06 19:52:52'),
-(31, 'social', 'whatsapp_link', 0, '\"Spatie\"', '2024-12-08 10:35:20', '2025-02-06 19:52:52'),
-(32, 'social', 'twitter_link', 0, '\"https:\\/\\/www.twitter.com\\/\"', '2024-12-08 10:35:20', '2025-02-06 19:52:52'),
-(33, 'social', 'instagram_link', 0, '\"https:\\/\\/www.instagram.com\\/\"', '2024-12-08 10:35:20', '2025-02-06 19:52:52'),
-(34, 'social', 'tiktok_link', 0, '\"https:\\/\\/www.tiktok.com\\/\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(35, 'social', 'linkedin_link', 0, '\"https:\\/\\/www.facebook.com\\/\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(36, 'social', 'snapchat_link', 0, '\"https:\\/\\/www.snapchat.com\\/\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(37, 'social', 'youtube_link', 0, '\"https:\\/\\/www.youtube.com\\/\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(38, 'social', 'google_link', 0, '\"info@email.com\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(39, 'social', 'android_link', 0, '\"https:\\/\\/www.facebook.com\\/\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(40, 'social', 'ios_link', 0, '\"https:\\/\\/www.facebook.com\\/\"', '2024-12-08 10:35:21', '2025-02-06 19:52:52'),
-(41, 'general', 'bank_account_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(42, 'general', 'instapay_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(43, 'general', 'vodafone_cash_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(44, 'general', 'iban_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(45, 'general', 'bank_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
-(46, 'general', 'bank_account_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-02-06 19:52:52'),
+(9, 'general', 'base_logo', 0, '\"https:\\/\\/www.google.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
+(10, 'general', 'favicon', 0, '\"\\/uploadedImages\\/\\/settings-1745169904.png\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
+(11, 'general', 'phone', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
+(12, 'general', 'whatsapp_phone', 0, '\"1123333332\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
+(16, 'seo', 'meta_title_ar', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629 - \\u0633\\u0647\\u0648\\u0644\\u0629 \\u0627\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0641\\u064a \\u0645\\u062a\\u0646\\u0627\\u0648\\u0644 \\u064a\\u062f\\u0643\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
+(17, 'seo', 'meta_title_en', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629 - \\u0633\\u0647\\u0648\\u0644\\u0629 \\u0627\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0641\\u064a \\u0645\\u062a\\u0646\\u0627\\u0648\\u0644 \\u064a\\u062f\\u0643\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
+(18, 'seo', 'meta_description_ar', 0, '\"\\u0627\\u0643\\u062a\\u0634\\u0641 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u062a\\u0633\\u0648\\u0642 \\u0641\\u0631\\u064a\\u062f\\u0629 \\u0645\\u0639 \\u062a\\u0637\\u0628\\u064a\\u0642 \\u0644\\u0627\\u0645\\u0648\\u0631! \\u0627\\u062d\\u0635\\u0644 \\u0639\\u0644\\u0649 \\u0623\\u062d\\u062f\\u062b \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0631\\u0648\\u0636 \\u0627\\u0644\\u0645\\u0645\\u064a\\u0632\\u0629 \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0631\\u0627\\u062d\\u0629 \\u0645\\u0646 \\u062e\\u0644\\u0627\\u0644 \\u0648\\u0627\\u062c\\u0647\\u0629 \\u0645\\u0635\\u0645\\u0645\\u0629 \\u062e\\u0635\\u064a\\u0635\\u064b\\u0627 \\u0644\\u062a\\u0644\\u0628\\u064a\\u0629 \\u0627\\u062d\\u062a\\u064a\\u0627\\u062c\\u0627\\u062a\\u0643. \\u0627\\u0628\\u062f\\u0623 \\u0631\\u062d\\u0644\\u062a\\u0643 \\u0627\\u0644\\u0622\\u0646\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
+(19, 'seo', 'meta_description_en', 0, '\"\\u0627\\u0643\\u062a\\u0634\\u0641 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u062a\\u0633\\u0648\\u0642 \\u0641\\u0631\\u064a\\u062f\\u0629 \\u0645\\u0639 \\u062a\\u0637\\u0628\\u064a\\u0642 \\u0644\\u0627\\u0645\\u0648\\u0631! \\u0627\\u062d\\u0635\\u0644 \\u0639\\u0644\\u0649 \\u0623\\u062d\\u062f\\u062b \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0631\\u0648\\u0636 \\u0627\\u0644\\u0645\\u0645\\u064a\\u0632\\u0629 \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0631\\u0627\\u062d\\u0629 \\u0645\\u0646 \\u062e\\u0644\\u0627\\u0644 \\u0648\\u0627\\u062c\\u0647\\u0629 \\u0645\\u0635\\u0645\\u0645\\u0629 \\u062e\\u0635\\u064a\\u0635\\u064b\\u0627 \\u0644\\u062a\\u0644\\u0628\\u064a\\u0629 \\u0627\\u062d\\u062a\\u064a\\u0627\\u062c\\u0627\\u062a\\u0643. \\u0627\\u0628\\u062f\\u0623 \\u0631\\u062d\\u0644\\u062a\\u0643 \\u0627\\u0644\\u0622\\u0646\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
+(20, 'seo', 'keywords', 0, '\"\\u0645\\u0648\\u0642\\u0639 \\u0625\\u0644\\u0643\\u062a\\u0631\\u0648\\u0646\\u064a,\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
+(30, 'social', 'facebook_link', 0, '\"https:\\/\\/www.facebook.com\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
+(31, 'social', 'whatsapp_link', 0, '\"Spatie\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
+(32, 'social', 'twitter_link', 0, '\"https:\\/\\/www.twitter.com\\/\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
+(33, 'social', 'instagram_link', 0, '\"https:\\/\\/www.instagram.com\\/\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
+(34, 'social', 'tiktok_link', 0, '\"https:\\/\\/www.tiktok.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(35, 'social', 'linkedin_link', 0, '\"https:\\/\\/www.facebook.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(36, 'social', 'snapchat_link', 0, '\"https:\\/\\/www.snapchat.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(37, 'social', 'youtube_link', 0, '\"https:\\/\\/www.youtube.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(38, 'social', 'google_link', 0, '\"info@email.com\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(39, 'social', 'android_link', 0, 'null', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(40, 'social', 'ios_link', 0, 'null', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
+(41, 'general', 'bank_account_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
+(42, 'general', 'instapay_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
+(43, 'general', 'vodafone_cash_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
+(44, 'general', 'iban_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 11:33:57'),
+(45, 'general', 'bank_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:57'),
+(46, 'general', 'bank_account_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
 (47, 'landing', 'about_title_ar', 0, '\"\\u0639\\u0646 \\u0627\\u0644\\u062a\\u0637\\u0628\\u064a\\u0642\"', '2024-12-08 09:28:24', '2025-02-06 15:07:53'),
 (48, 'landing', 'about_title_en', 0, '\"\\u0639\\u0646 \\u0627\\u0644\\u062a\\u0637\\u0628\\u064a\\u0642\"', '2024-12-08 09:28:24', '2025-02-06 15:07:53'),
 (49, 'landing', 'about_image', 0, '\"\\/uploadedImages\\/\\/settings-1738839952.png\"', '2024-12-08 09:28:24', '2025-02-06 15:07:53'),
@@ -1502,7 +1449,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `email`, `mobile`, `country_code`, `mobile_code`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `mobile_verified_at`, `provider`, `provider_id`, `fcm_id`, `parent_id`, `last_login`, `user_type`, `id_number`, `agency_number`) VALUES
-(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-16 13:04:21', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-16 13:04:21', 'owner', '', NULL),
+(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-24 08:18:31', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-24 08:18:31', 'owner', '', NULL),
 (2, 1, 'admins', '[\"admin\"]', 'mohamed ahmmed', 'mohamed@admin.com', '1232142232', NULL, NULL, NULL, '$2y$10$6zhGKUsUSf8XoNyLIJS66eZo06LQHMka/HqD95tAlxLtemJGOCTQm', NULL, '2025-01-19 11:54:48', '2025-03-09 09:13:58', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
 (3, 1, 'subadmins', '[\"order employee\"]', 'yasser ahmed', 'yasser@admin.com', NULL, NULL, NULL, NULL, '$2y$10$pwyYu1W5JVTOhf29Jy7qCu7KcOYomfz7nTb4r9mckP/6ZQx3UJN4G', NULL, '2025-01-19 11:57:02', '2025-01-19 12:37:15', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
 (25, 1, 'users', '[\"user\"]', 'wessam sakr', 'wessam@user.com', '1097980291', '20', NULL, NULL, '$2y$10$cY8DuxeFlcyAqVjPzSbA8eqd4RZ.iJAGKMVHqN3y.4APAnvPu4Kxe', NULL, '2024-08-02 16:54:36', '2025-02-20 11:15:23', 'accepted', NULL, NULL, NULL, 'ffghjkl', NULL, NULL, 'owner', '', NULL),
@@ -1534,7 +1481,9 @@ INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `em
 (73, NULL, 'users', NULL, 'ahmed', NULL, '1097979793', NULL, NULL, NULL, '$2y$10$V3.B95JsXCVJUQDAJiHeAucWykKOuhKBzznYZA3yHVXytxQdBbnBW', NULL, '2025-02-23 13:20:49', '2025-02-23 13:20:49', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
 (74, NULL, 'users', NULL, 'ahmed', NULL, '1097979792', NULL, 1234, NULL, '$2y$10$4AH8H7PGdYSeNnT9cUpOAua5OmAxqUiUXFiZw0CNwSncmDJ1E2sJO', NULL, '2025-02-23 13:22:38', '2025-02-23 13:22:38', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
 (75, 1, 'users', '[\"user\"]', 'ashraf12', 'ashraf12@user.com', '1097987033', NULL, NULL, NULL, '$2y$10$bsqiDzKFk230yHp97VNEpe3Fr6hbzXfsPQoG.A.YMqpCbtggaNJZ6', NULL, '2025-03-09 09:27:13', '2025-03-09 09:27:37', 'accepted', NULL, NULL, NULL, NULL, NULL, '2025-03-09 09:27:37', 'owner', '', NULL),
-(76, 1, 'vendors', '[\"vendor\"]', 'Akeem Pugh', 'zybyxosoci@mailinator.com', '1888282828', NULL, NULL, NULL, '$2y$10$1MbeoxQd0qcCT8Rw1A7SCuIyb3h46fXolpZ77CnU7jY/WHtp0MhoO', NULL, '2025-03-09 11:03:22', '2025-03-09 11:03:22', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL);
+(76, 1, 'vendors', '[\"vendor\"]', 'Akeem Pugh', 'zybyxosoci@mailinator.com', '1888282828', NULL, NULL, NULL, '$2y$10$1MbeoxQd0qcCT8Rw1A7SCuIyb3h46fXolpZ77CnU7jY/WHtp0MhoO', NULL, '2025-03-09 11:03:22', '2025-03-09 11:03:22', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
+(77, NULL, 'users', NULL, 'lllllllllllll', NULL, '1010101010', '20', NULL, NULL, '$2y$10$lWcUV9hMCcrlJ09PQ7dMiuOXxDgRiAf8TgYUN3OIFAIrXsq1DrAvu', NULL, '2025-04-20 16:29:44', '2025-04-23 13:57:16', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'agent', '22222222222', 2147483647),
+(78, NULL, 'users', NULL, 'أبو طاحون', NULL, '1112342232', NULL, NULL, NULL, '$2y$10$C5cFxJxTIr3idVyOxVDcuuDQe8x5yKcpiFmeF5/o2NVaf3MFuRv1a', NULL, '2025-04-21 12:22:21', '2025-04-21 12:22:21', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '1122333333', NULL);
 
 -- --------------------------------------------------------
 
@@ -1751,7 +1700,6 @@ ALTER TABLE `personal_access_tokens`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD KEY `categories_admin_id_foreign` (`added_by`),
-  ADD KEY `category_id` (`category_id`),
   ADD KEY `subcategory_id` (`owner_id`),
   ADD KEY `store_id` (`area_id`);
 
@@ -1945,7 +1893,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=459;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=462;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1963,7 +1911,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1981,13 +1929,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `product_features`
 --
 ALTER TABLE `product_features`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `product_letters`
@@ -2047,7 +1995,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
