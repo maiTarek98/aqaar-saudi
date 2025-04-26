@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Category\ProductRequest; 
 use App\Http\Traits\UploadImageTrait;
 use App\Models\Product;
-use App\Models\ProductReview;
-use App\Models\Wishlist;
-use App\Models\SeoTag;
-use App\Models\ProductYear;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
+use Notification;        
+use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class ProductController extends Controller
 {
@@ -130,15 +129,36 @@ class ProductController extends Controller
                 $product->addMedia( $file)->toMediaCollection('document','products_images');
             }
         }
+
         $listingNumber = $product->listing_number;
-        $url = route('property.show', $listingNumber);
+        $token = Str::uuid(); 
+        $secureUrl = route('property.verify.link', ['token' => $token]);
+        DB::table('property_access_links')->insert([
+            'product_id' => $product->id,
+            'token' => $token,
+            'verification_level' => 2, 
+            'created_at' => now(),
+            'source_user_id' => auth()->id(),
+        ]);
         $qrFileName = 'qr_' . $product->id . '.png';
-        $qrImage = QrCode::format('png')->size(300)->generate($url);
+        $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
         Storage::disk('public')->put("qr_codes/{$qrFileName}", $qrImage);
         $product->update([
             'qr_code' => "qr_codes/{$qrFileName}"
         ]);
-        return redirect()->back()->with('success',trans('messages.AddSuccessfully'));
+
+        $admins = User::where('account_type','admins')->where('id','!=',$product->added_by)->get();
+        foreach ($admins as $key => $value) {   
+            if($value->hasPermissionTo('products-list')){
+                Notification::send($value,new \App\Notifications\NotifyNewProductToAdmin($product));
+            }
+        }
+        if(auth()->user()->account_type == 'admins'){
+            return redirect()->back()->with('success',trans('messages.AddSuccessfully'));
+        }else{
+            $arr  = ['user'=> $product->added_by,'code'=>$product->listing_number];
+            return $arr;
+        }
     }
 
     public function show(Product $product)
@@ -156,13 +176,18 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request,Product $product)
     {
+        if(request()->hasFile('products_image') && request()->file('products_image')->isValid())
+        {
+            $product->clearMediaCollection('products_image'); 
+            $this->convertImageToWebp(request('products_image'),$product,'products_image','products');
+        } 
         $product->update([
             'added_by' => auth()->id(),
             'title' => $request->title,
             'price' => ($request->type == 'auction')?$request->price_auction:$request->price_investment,
             'description' => $request->description,
             'owner_id' => $request->owner_id,
-            'status' => 'pending',
+            'status' => $request->status,
             'type' => $request->type,
             'product_for' => $request->product_for,
             'area_id' => $request->district_id,
@@ -196,11 +221,7 @@ class ProductController extends Controller
             'product_type' => $request->product_type,
             'owner_type' => $request->owner_type,
         ]);
-        if(request()->hasFile('products_image') && request()->file('products_image')->isValid())
-        {
-            $product->clearMediaCollection('products_image'); 
-            $this->convertImageToWebp(request('products_image'),$product,'products_image','products');
-        } 
+        
         $product->save();
         $document = DB::table('media')->where('model_type','App\Models\Product')->where('collection_name','document')->where('model_id', $product->id)->get();
 

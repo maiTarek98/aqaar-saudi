@@ -19,12 +19,12 @@
                 </a>
   
                 <!-- بطاقتي -->
-                <a href="p_cards.html" class="nav-link">
+                <a href="{{route('userCard',auth('web')->user()->id)}}" class="nav-link">
                   بطاقتي
                 </a>
 
                 <!-- إضافة عقار -->
-                <a href="p_addEstate.html" class="nav-link">
+                <a href="{{route('addProperty',auth('web')->user()->id)}}" class="nav-link">
                   إضافة عقار
                 </a>
 
@@ -37,7 +37,8 @@
               <!--profile log out button -->
                 <form method="post" action="{{route('ulogout')}}">
                 @csrf
-                    <button class="log-out btn d-block w-100 mt-1 fs-5">      
+                    <button class="log-out btn d-block w-100 mt-1 fs-5">  
+                    <i class="bi bi-box-arrow-right"></i>    
                     @lang('site.logout')
                     </button>
                 </form>

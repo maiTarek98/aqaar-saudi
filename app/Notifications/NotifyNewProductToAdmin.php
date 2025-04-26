@@ -6,13 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Order;
-use App\Http\Traits\FcmFirebase;
+use App\Models\Product;
 
-class NotifyOrderNotesToUser extends Notification
+class NotifyNewProductToAdmin extends Notification
 {
     use Queueable;
-    use FcmFirebase;
 
     /**
      * Create a new notification instance.
@@ -20,9 +18,7 @@ class NotifyOrderNotesToUser extends Notification
      * @return void
      */
     private $msg;
-    private $body_data;
-    
-    public function __construct(Order $msg)
+    public function __construct(Product $msg)
     {
         $this->msg=$msg;
     }
@@ -37,28 +33,20 @@ class NotifyOrderNotesToUser extends Notification
         return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toDatabase($notifiable)
+ 
+     public function toDatabase($notifiable)
     {
         $tokens = [];
         $types  = [];
         
          $this->body_data = [
-                'title'     =>  'لديك إشعار جديد خاص بالطلبات',
-                'text'      =>  'تم إضافة إلي الطلب رقم '. $this->msg->order_no .' ملاحظة : '. $this->msg->notes ,
-                'redirect'  => 'orders',
+                'title'     =>  'لديك إشعار جديد خاص بإضافة عقار جديد',
+                'text'      =>  'تم إضافة عقار جديد  '.$this->msg->title .' ونوع النظام '. __('main.products.'.$this->msg->type) ,
+                'redirect'  => 'products/'.$this->msg->id,
                 'data'      => [ 
-                    'notification_type' => 3,
-                    'order_id'          => $this->msg->id,
-                    'order_no'          => $this->msg->order_no,
-                    'user_name'         => $this->msg->user->name,
-                    'store_name'        => $this->msg->store->name,
-                    'status'            => $this->msg->status,
+                    'notification_type'     => 3,
+                    'product_id'            => $this->msg->id,
+                    'listing_number'        => $this->msg->listing_number,
                     ],
                 'created_at' => $this->msg->created_at,
             ];    
@@ -82,5 +70,8 @@ class NotifyOrderNotesToUser extends Notification
      */
     public function toArray($notifiable)
     {
+        return [
+            //
+        ];
     }
 }

@@ -19,6 +19,19 @@ class Product extends BaseModel implements HasMedia
     use SoftDeletes;
 
 
+    public function generateListingNumber()
+    {
+        $year = date('Y');
+        $accountTypeMap = [
+            'auction' => 'AUC11',
+            'investment' => 'INV12',
+            'shared' => 'SHA13',
+        ];
+
+        $typeCode = $accountTypeMap[$this->type] ?? '0';
+
+        return $typeCode . $year;
+    }
 
 
     protected static function boot()
@@ -28,9 +41,7 @@ class Product extends BaseModel implements HasMedia
         static::creating(function ($property) {
             if (!$property->listing_number) {
                 $lastId = Product::max('id') + 1;
-                $year = now()->format('Y');
-                $type = strtoupper(Str::slug($property->type));
-                $property->listing_number = "{$type}-{$lastId}-{$year}";
+                $property->listing_number = $property->generateListingNumber().$lastId;
             }
         });
     }
@@ -38,6 +49,15 @@ class Product extends BaseModel implements HasMedia
     public function coupon()
     {
         return $this->belongsToMany(\App\Models\Coupon::class, 'coupon_product');
+    }
+
+    public function access_links()
+    {
+        return $this->hasMany(PropertyAccessLink::class);
+    }
+    public function investments()
+    {
+        return $this->hasMany(ProductInvestment::class);
     }
     protected static function booted()
     {
@@ -87,7 +107,7 @@ class Product extends BaseModel implements HasMedia
     protected $guarded = [];
 
     public function admin() {
-       return $this->belongsTo(\App\Models\User::class);
+       return $this->belongsTo(\App\Models\User::class,'added_by');
     }
 
      public function area() {

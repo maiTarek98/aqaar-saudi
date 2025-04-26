@@ -14,6 +14,8 @@
 
               <form method="post">
                 @csrf
+                <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
+
                 <div class="form-group mb-4">
                   <label for=""> رقم الهاتف <span class="text-danger">*</span></label>
                   <input type="text" name="mobile" value="{{old('mobile')}}" class="form-control" id="InputPhone" aria-label="Username" aria-describedby="phone_num">
@@ -96,10 +98,11 @@
             var _token = $("input[name='_token']").val();
             var mobile = $("input[name='mobile']").val();
             var password = $("input[name='password']").val();
+            var redirect_to = $("input[name='redirect_to']").val();
             $.ajax({
                 url: "{{ route('clientSignin') }}",
                 type:'POST',
-                data: {_token:_token, mobile:mobile, password:password},
+                data: {_token:_token, mobile:mobile, password:password, redirect_to: redirect_to},
                 beforeSend: function() {
                     submitButton.prop("disabled", true);
                     $(".loading-indicator p").show(); // Show loading indicator
@@ -130,9 +133,7 @@
                         //                   $(".cart-order").load('{{url('/')}}/cart');
                         // }else{
                          setTimeout(function() {
-                        
-                    location.reload();
-
+                            window.location.href = data.redirect; // إعادة التوجيه
                             }, 2000); // 2 second
                        // }
                           

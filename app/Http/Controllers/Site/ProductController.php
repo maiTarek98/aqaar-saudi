@@ -136,48 +136,21 @@ class ProductController extends Controller {
 		// }
 		//end
 
-		return redirect()->route('products',$search_url.$cat_url.$subcat_url.$cat_year_url.$from_price.$to_price);
+		return redirect()->route('propertys',$search_url.$cat_url.$subcat_url.$cat_year_url.$from_price.$to_price);
 	}
 
-	public function productsingle($q){
+	public function productsingle($listing_number){
         $urlPrevious = url()->current();
         session()->put('url.intended', $urlPrevious);
-        // Find the position of '-no-'
-		$position = strpos($q, '-no-');
-		if ($position !== false) {
-		    // Cut the q up to (but not including) the found position
-		    $modifiedq = substr($q, 0, $position);
-		} else {
-		    // If '-no-' is not found, keep the original q
-		    $modifiedq = $q;
-		}
-		// Optional: Trim any trailing spaces
-		$modifiedq =removeSlug(trim($modifiedq));
-
-        $property = Product::where('title_en',$modifiedq)->where('status','show')->first(); 
+        $property = Product::where('listing_number',$listing_number)->first(); 
         if(!$property){
             return back();
         }   
-                $this->trackView($property);
-
-          $property_report_date =(! $property->car_report->isEmpty())?$property->car_report[0]->created_at : null;
-          $property_report_date_hijri = Hijri::DateIndicDigits('j F Y', $property_report_date);
-// $property_report_date_hijri = null;
-        return view('site.car-single',compact('car','car_report_date_hijri'));
+        if($property->type == 'investment'){
+        	return view('site.product-investment',compact('property'));
+    	}
     }
-public function product_report($property_no){
-        $urlPrevious = url()->current();
-        session()->put('url.intended', $urlPrevious);
-        $property = Product::where('request_no',$property_no)->where('status','show')->first(); 
-        if(!$property){
-            return back();
-        }   
-        $reports = InspectionReport::has('childs')->whereNull('parent_id')->get();
-         $property_report_date =(! $property->car_report->isEmpty())?$property->car_report[0]->created_at : null;
-          $property_report_date_hijri = Hijri::DateIndicDigits('j F Y', $property_report_date);
-// $property_report_date_hijri= null;
-        return view('site.car-report',compact('car','reports','car_report_date_hijri'));
-      }
+
      public function storeComment($product_id, Request $request)
     {
 		$rules = [

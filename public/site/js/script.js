@@ -303,6 +303,39 @@ $(document).ready(function () {
     // $(this).hide()
   });
 
+  // نخفي كل الحقول في البداية
+  $('#acution, #share').hide();
+
+  $('#selling-system').on('change', function () {
+    var selected = $(this).val();
+
+    // نخفي الكل الأول
+    $('#acution, #share').hide();
+
+    // نظهر اللي تم اختياره فقط
+    if (selected === 'auction') {
+      $('#acution').show();
+    } else if (selected === 'share') {
+      $('#share').show();
+    }
+    // لو فيه اختيار تالت "خاص" مثلاً ومفيهوش حقول، خلاص مش هنعمل حاجة
+  });
+
+  // share copy link
+  if ($('.copy-text').length > 0) {
+    let copyText = document.querySelector(".copy-text");
+    copyText.querySelector("button").addEventListener("click", function () {
+      let input = copyText.querySelector("input.text");
+      input.select();
+      document.execCommand("copy");
+      copyText.classList.add("active");
+      window.getSelection().removeAllRanges();
+      setTimeout(function () {
+        copyText.classList.remove("active");
+      }, 2500);
+    });
+  }
+
   // carousels
   $(".owl-carousel").owlCarousel({
     margin: 22,

@@ -27,6 +27,22 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
 		'password',
 		'remember_token',
 	];
+
+    public function generateCardCode()
+    {
+        $year = date('Y');
+        $accountTypeMap = [
+            'owner' => '1',
+            'agent' => '2',
+            'co-owner' => '3',
+            'other' => '4',
+        ];
+
+        $typeCode = $accountTypeMap[$this->user_type] ?? '0';
+
+        return $year . $typeCode . $this->id;
+    }
+
    
     protected static function booted()
     {

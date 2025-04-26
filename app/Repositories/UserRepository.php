@@ -92,6 +92,7 @@ return $users;
         }elseif($user->hasRole(4)){
             $account_type = 'vendors';
         }
+        $user->card_code = $user->generateCardCode();
         $user->save();
 
         $request = request();

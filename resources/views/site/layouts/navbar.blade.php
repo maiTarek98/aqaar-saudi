@@ -28,7 +28,7 @@
               <li>
                 <a
                   class="secondary"
-                  href="register.html"
+                  href="{{route('register')}}"
                   aria-label="إنشاء حساب جديد"
                 >
                   <i class="bi bi-box-arrow-in-left"></i>
@@ -38,7 +38,7 @@
               <li>
                 <a
                   class="secondary"
-                  href="login.html"
+                  href="{{route('login')}}"
                   aria-label="تسجيل الدخول"
                 >
                   <i class="bi bi-person"></i>
@@ -51,7 +51,7 @@
               <li>
                 <a
                   class="secondary"
-                  href="profile.html"
+                  href="#"
                   aria-label="الاشعارات"
                 >
                   <i class="bi bi-bell"></i>
@@ -61,7 +61,7 @@
               <li>
                 <a
                   class="secondary"
-                  href="profile.html"
+                  href="{{route('profile')}}"
                   aria-label="الملف الشخصي"
                 >
                   <i class="bi bi-person"></i>
@@ -89,7 +89,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link active"
-                  href="index.html"
+                  href="{{route('home')}}"
                   aria-label="الذهاب إلى الصفحة الرئيسية"
                   >الرئيسية</a
                 >
@@ -97,7 +97,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="about.html"
+                  href="{{route('aboutus')}}"
                   aria-label="الذهاب إلى صفحة من نحن"
                   >من نحن</a
                 >
@@ -105,7 +105,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="estates.html"
+                  href="{{route('propertys')}}"
                   aria-label="الذهاب إلى صفحة العقارات"
                   >العقارات</a
                 >
@@ -113,7 +113,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="blogs.html"
+                  href="{{route('blogs')}}"
                   aria-label="الذهاب إلى صفحة المدونة"
                   >المدونة</a
                 >
@@ -121,7 +121,7 @@
               <li class="nav-item">
                 <a
                   class="nav-link"
-                  href="contact.html"
+                  href="{{route('contactus')}}"
                   aria-label="الذهاب إلى صفحة تواصل معنا"
                   >تواصل معنا</a
                 >

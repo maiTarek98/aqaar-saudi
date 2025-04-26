@@ -73,13 +73,13 @@
             </a>
           </div>
           <div class="col-lg-6">
-            <img src="images/about.png" class="w-100" alt="" />
+            <img src="{{url('site')}}/images/about.png" class="w-100" alt="" />
           </div>
         </div>
 
         <div class="row align-items-center gy-3 gx-md-5">
           <div class="col-lg-6">
-            <img src="images/why.png" class="w-100" alt="" />
+            <img src="{{url('site')}}/images/why.png" class="w-100" alt="" />
           </div>
           <div class="col-lg-6">
             <div class="section-title">
@@ -115,7 +115,7 @@
           <div class="col-lg-4">
             <div class="feature">
               <div class="feature-icon">
-                <img src="images/step1.png" alt="" />
+                <img src="{{url('site')}}/images/step1.png" alt="" />
               </div>
               <div class="feature-content">
                 <h3 class="fs-6 fw-bold main my-3">راحة وموثوقية في كل خطوة</h3>
@@ -128,7 +128,7 @@
           <div class="col-lg-4">
             <div class="feature">
               <div class="feature-icon">
-                <img src="images/step2.png" alt="" />
+                <img src="{{url('site')}}/images/step2.png" alt="" />
               </div>
               <div class="feature-content">
                 <h3 class="fs-6 fw-bold main my-3">استثمر بأمان وسهولة</h3>
@@ -141,7 +141,7 @@
           <div class="col-lg-4">
             <div class="feature">
               <div class="feature-icon">
-                <img src="images/step3.png" alt="" />
+                <img src="{{url('site')}}/images/step3.png" alt="" />
               </div>
               <div class="feature-content">
                 <h3 class="fs-6 fw-bold main my-3">عقارات تناسب كل الأذواق</h3>
@@ -178,7 +178,7 @@
               <!-- estate img -->
               <div class="estate-img">
                 <img
-                  src="images/Image.png"
+                  src="{{url('site')}}/images/Image.png"
                   class="card-img-top"
                   alt="estate name"
                 />
@@ -218,7 +218,7 @@
               <!-- estate img -->
               <div class="estate-img">
                 <img
-                  src="images/Image-1.png"
+                  src="{{url('site')}}/images/Image-1.png"
                   class="card-img-top"
                   alt="estate name"
                 />
@@ -259,7 +259,7 @@
               <!-- estate img -->
               <div class="estate-img">
                 <img
-                  src="images/Image-2.png"
+                  src="{{url('site')}}/images/Image-2.png"
                   class="card-img-top"
                   alt="estate name"
                 />
@@ -300,7 +300,7 @@
               <!-- estate img -->
               <div class="estate-img">
                 <img
-                  src="images/Image.png"
+                  src="{{url('site')}}/images/Image.png"
                   class="card-img-top"
                   alt="estate name"
                 />
@@ -340,7 +340,7 @@
               <!-- estate img -->
               <div class="estate-img">
                 <img
-                  src="images/Image-1.png"
+                  src="{{url('site')}}/images/Image-1.png"
                   class="card-img-top"
                   alt="estate name"
                 />
@@ -381,7 +381,7 @@
               <!-- estate img -->
               <div class="estate-img">
                 <img
-                  src="images/Image-2.png"
+                  src="{{url('site')}}/images/Image-2.png"
                   class="card-img-top"
                   alt="estate name"
                 />
@@ -445,7 +445,7 @@
               </div>
             </div>
             <div class="discover-img col-lg-6">
-              <img src="images/new-ads.png" class="w-100" alt="">
+              <img src="{{url('site')}}/images/new-ads.png" class="w-100" alt="">
             </div>
           </div>
         </div>
@@ -472,7 +472,7 @@
               <!-- blog img -->
               <div class="blog-img">
                 <img
-                  src="images/Image.png"
+                  src="{{url('site')}}/images/Image.png"
                   class="card-img-top"
                   alt="blog name"
                 />
@@ -500,7 +500,7 @@
               <!-- blog img -->
               <div class="blog-img">
                 <img
-                  src="images/Image.png"
+                  src="{{url('site')}}/images/Image.png"
                   class="card-img-top"
                   alt="blog name"
                 />
@@ -528,7 +528,7 @@
               <!-- blog img -->
               <div class="blog-img">
                 <img
-                  src="images/Image.png"
+                  src="{{url('site')}}/images/Image.png"
                   class="card-img-top"
                   alt="blog name"
                 />

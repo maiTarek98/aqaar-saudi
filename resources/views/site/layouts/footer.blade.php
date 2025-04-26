@@ -25,24 +25,24 @@
               <ul class="list-unstyled">
                 <li>
                   <a
-                    href="index.html"
+                    href="{{route('home')}}"
                     class="active"
                     aria-label="الانتقال إلى الصفحة الرئيسية"
                     >الرئيسية</a
                   >
                 </li>
                 <li>
-                  <a href="about.html" aria-label="الانتقال إلى صفحة من نحن"
+                  <a href="{{route('aboutus')}}" aria-label="الانتقال إلى صفحة من نحن"
                     >من نحن</a
                   >
                 </li>
                 <li>
-                  <a href="blogs.html" aria-label="الانتقال إلى صفحة المدونة"
+                  <a href="{{route('blogs')}}" aria-label="الانتقال إلى صفحة المدونة"
                     >المدونة</a
                   >
                 </li>
                 <li>
-                  <a href="contact.html" aria-label="الانتقال إلى اتصل بنا"
+                  <a href="{{route('contactus')}}" aria-label="الانتقال إلى اتصل بنا"
                     >اتصل بنا</a
                   >
                 </li>

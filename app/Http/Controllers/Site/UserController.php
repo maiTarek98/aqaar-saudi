@@ -63,6 +63,9 @@ class UserController extends Controller {
             $data = $request->except("_token", "_method",'password_confirmation');
             $data['status'] = 'accepted';
             $user_store = User::create($data+ ['account_type' => $account_type]);
+            $user_store->card_code = $user_store->generateCardCode();
+            $user_store->save();
+
             Auth::guard('web')->login($user_store);
                 session()->forget('store_address');
                 session()->forget('address_guest');
@@ -115,12 +118,16 @@ class UserController extends Controller {
         }else{
             $response_data = 3;
         }
-                return response()->json(array('data' => $response_data));
+        $redirectTo = ($request->redirect_to)?$request->redirect_to:route('home'); 
+        return response()->json(array('data' => $response_data, 'redirect' => $redirectTo));
 
         }
     }
  
-
+  public function notifications () {
+        $user = auth('web')->user();
+        return view('site.notifications', compact('user'));
+    }
     public function profile() {
         $user = auth('web')->user();
         return view('site.profile', compact('user'));

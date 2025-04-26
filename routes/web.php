@@ -35,8 +35,9 @@ Route::get('/storage-link', function () {
 use App\Http\Controllers\Site\HomeController;
 use App\Http\Controllers\Site\ProductController;
 use App\Http\Controllers\Site\PropertyController;
+use App\Http\Controllers\Site\PropertyVerificationController;
 use App\Http\Controllers\Site\UserController;
-use App\Http\Controllers\Site\CarController;
+use App\Http\Controllers\Site\PropertyInvestmentController;
 use App\Http\Controllers\Site\MessageController;
 use App\Http\Controllers\Payment\StripeController;
 
@@ -54,7 +55,7 @@ Route::group(['middleware' => ['csp','lang']], function () {
     //     return redirect('admin/dashboard');})->name('home');
     Route::get('/term-conditions',[HomeController::class,'terms'])->name('terms');
     Route::get('/about-us',[HomeController::class,'aboutUs'])->name('aboutus');
-
+ 
     Route::get('/sell-car-form',[CarController::class,'sellCar'])->name('sellCar');
     Route::post('/sellTempForm',[CarController::class,'sellTempForm'])->name('sellTempForm');
     Route::post('/sellMobileVerify',[CarController::class,'sellMobileVerify'])->name('sellMobileVerify');
@@ -79,7 +80,7 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::post('/jobs-store',[HomeController::class,'storeJob'])->name('storeJob');
 
 
-        Route::get('/properties',[ProductController::class,'products'])->name('products');
+        Route::get('/properties',[ProductController::class,'products'])->name('propertys');
         Route::get('/propertys/{q}',[ProductController::class,'productSingle'])->name('propertys.single');
         Route::post('/propertys/filter', [ProductController::class,'product_filter'])->name('product.filter');
         Route::view('/forget', 'site.auth.forget')->name('site.forget');
@@ -159,6 +160,12 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::get('/profile/{user}/add-property',[PropertyController::class,'addProperty'])->name('addProperty');
 
         Route::post('/profile/{user}/store-property',[PropertyController::class,'storeProperty'])->name('storeProperty');
+        Route::get('/profile/{user}/property/{code}',[PropertyController::class,'linkProperty'])->name('linkProperty');
+
+        Route::get('/profile/{user}/card',[PropertyController::class,'userCard'])->name('userCard');
+        Route::get('/verify-property/{token}', [PropertyVerificationController::class, 'verify'])->name('property.verify.link');
+        Route::get('/property/{listing_number}', [PropertyVerificationController::class, 'show'])->name('property.show');
+        Route::post('/properties/{property}/invest', [PropertyInvestmentController::class, 'store'])->name('property.invest');
 
         Route::post('profile-update', [UserController::class,'update_profile'])->name('edit-profile');
         Route::post('photo-update', [UserController::class,'update_photo'])->name('edit-photo');

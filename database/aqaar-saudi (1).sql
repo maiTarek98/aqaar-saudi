@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2025 at 05:02 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Apr 26, 2025 at 11:50 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,7 @@ CREATE TABLE `activity_log` (
   `batch_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -51,15 +51,15 @@ CREATE TABLE `activity_log` (
 CREATE TABLE `banners` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `admin_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_ar` varchar(255) NOT NULL,
+  `title_en` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `text_ar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `text_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description_ar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description_en` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('show','hide') COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `text_ar` varchar(255) DEFAULT NULL,
+  `text_en` varchar(255) DEFAULT NULL,
+  `description_ar` text DEFAULT NULL,
+  `description_en` text DEFAULT NULL,
+  `status` enum('show','hide') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول البرنات فالهوم';
 
 --
@@ -83,20 +83,20 @@ INSERT INTO `banners` (`id`, `admin_id`, `title_ar`, `title_en`, `created_at`, `
 CREATE TABLE `blogs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `added_by` bigint(20) UNSIGNED NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description_ar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description_en` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content_ar` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content_en` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_tags_ar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_tags_en` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description_ar` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description_en` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('show','hide') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name_ar` varchar(255) NOT NULL,
+  `name_en` varchar(255) DEFAULT NULL,
+  `description_ar` text DEFAULT NULL,
+  `description_en` text DEFAULT NULL,
+  `content_ar` longtext DEFAULT NULL,
+  `content_en` longtext DEFAULT NULL,
+  `meta_tags_ar` text DEFAULT NULL,
+  `meta_tags_en` text DEFAULT NULL,
+  `meta_description_ar` text DEFAULT NULL,
+  `meta_description_en` text DEFAULT NULL,
+  `status` enum('show','hide') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `in_home` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
+  `in_home` enum('yes','no') NOT NULL DEFAULT 'no',
   `views` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -120,7 +120,7 @@ CREATE TABLE `blog_comments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `blog_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -132,15 +132,15 @@ CREATE TABLE `blog_comments` (
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `added_by` bigint(20) UNSIGNED NOT NULL,
-  `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_ar` varchar(255) NOT NULL,
+  `title_en` varchar(255) DEFAULT NULL,
   `parent_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `status` enum('show','hide') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('show','hide') DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `type` enum('shop','consultation') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('shop','consultation') DEFAULT NULL,
   `order` int(11) DEFAULT NULL,
-  `in_home` enum('yes','no') COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `in_home` enum('yes','no') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول التصنيفات';
 
 --
@@ -163,13 +163,13 @@ INSERT INTO `categories` (`id`, `added_by`, `title_ar`, `title_en`, `parent_id`,
 
 CREATE TABLE `contacts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `message` text NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `is_viewed` enum('yes','no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no',
-  `mobile` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `is_viewed` enum('yes','no') NOT NULL DEFAULT 'no',
+  `mobile` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -219,7 +219,7 @@ INSERT INTO `contacts` (`id`, `name`, `email`, `message`, `created_at`, `updated
 
 CREATE TABLE `contact_replies` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `admin_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -257,11 +257,11 @@ INSERT INTO `contact_replies` (`id`, `body`, `created_at`, `updated_at`, `admin_
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -274,8 +274,8 @@ CREATE TABLE `failed_jobs` (
 CREATE TABLE `general_notifies` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `body` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `body` longtext DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول سيارات كبار المستخدمين ';
@@ -304,11 +304,11 @@ INSERT INTO `general_notifies` (`id`, `user_id`, `title`, `body`, `created_at`, 
 
 CREATE TABLE `locations` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name_ar` varchar(255) NOT NULL,
+  `name_en` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `type` enum('governorate','city','district') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('governorate','city','district') DEFAULT NULL,
   `parent_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول البرنات فالهوم';
 
@@ -317,14 +317,18 @@ CREATE TABLE `locations` (
 --
 
 INSERT INTO `locations` (`id`, `name_ar`, `name_en`, `created_at`, `updated_at`, `type`, `parent_id`) VALUES
-(1, 'الدقهلية', 'الدقهلية', '2025-02-25 12:23:31', '2025-02-25 12:44:31', 'governorate', NULL),
-(2, 'المنصورة', 'المنصورة', '2025-02-25 12:23:57', '2025-02-25 12:23:57', 'city', 1),
-(3, 'طلخا', 'طلخا', '2025-02-25 12:24:35', '2025-02-25 12:24:35', 'city', 1),
-(4, 'ميت غمر', 'ميت غمر', '2025-02-25 12:24:49', '2025-02-25 12:24:49', 'city', 1),
-(5, 'تلبانة', 'تلبانة', '2025-02-25 12:25:04', '2025-02-25 12:25:04', 'district', 2),
-(6, 'دكرنس', 'دكرنس', '2025-02-25 12:25:37', '2025-02-25 12:25:37', 'city', 1),
-(7, 'السنبلاوين', 'السنبلاوين', '2025-02-25 12:25:44', '2025-02-25 12:25:44', 'city', 1),
-(8, 'القاهرة', 'القاهرة', '2025-02-25 12:27:16', '2025-02-25 12:27:16', 'governorate', NULL);
+(1, 'منطقة الرياض', 'منطقة الرياض', '2025-02-25 12:23:31', '2025-02-25 12:44:31', 'governorate', NULL),
+(2, 'الرياض	', 'الرياض	', '2025-02-25 12:23:57', '2025-02-25 12:23:57', 'city', 1),
+(3, 'الدرعية', 'الدرعية', '2025-02-25 12:24:35', '2025-02-25 12:24:35', 'city', 1),
+(4, 'الخرج	', 'الخرج	', '2025-02-25 12:24:49', '2025-02-25 12:24:49', 'city', 1),
+(5, 'مركز الحائر', 'مركز الحائر', '2025-02-25 12:25:04', '2025-02-25 12:25:04', 'district', 2),
+(6, 'الزلفي	', 'الزلفي	', '2025-02-25 12:25:37', '2025-02-25 12:25:37', 'city', 1),
+(7, 'الشقراء', 'الشقراء', '2025-02-25 12:25:44', '2025-02-25 12:25:44', 'city', 1),
+(8, 'منطقة مكة المكرمة', 'منطقة مكة المكرمة', '2025-02-25 12:27:16', '2025-02-25 12:27:16', 'governorate', NULL),
+(19, 'مكة المكرمة	', 'مكة المكرمة	', '2025-02-25 12:25:44', '2025-02-25 12:25:44', 'city', 8),
+(20, 'جدة', 'جدة', '2025-02-25 12:25:44', '2025-02-25 12:25:44', 'city', 8),
+(21, 'مركز الشواق', 'مركز الشواق', '2025-02-25 12:25:04', '2025-02-25 12:25:04', 'district', 19),
+(22, 'مركز السعدية', 'مركز السعدية', '2025-02-25 12:25:04', '2025-02-25 12:25:04', 'district', 19);
 
 -- --------------------------------------------------------
 
@@ -334,15 +338,15 @@ INSERT INTO `locations` (`id`, `name_ar`, `name_en`, `created_at`, `updated_at`,
 
 CREATE TABLE `media` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `collection_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mime_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `conversions_disk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uuid` char(36) DEFAULT NULL,
+  `collection_name` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `mime_type` varchar(255) DEFAULT NULL,
+  `disk` varchar(255) NOT NULL,
+  `conversions_disk` varchar(255) DEFAULT NULL,
   `size` bigint(20) UNSIGNED NOT NULL,
   `manipulations` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `custom_properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -429,7 +433,53 @@ INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, 
 (458, 'App\\Models\\User', 1, 'ee381641-1a1c-4dad-9643-b558b28e5aae', 'photo_profile', 'photo_profile-1741511304', 'photo_profile-1741511304.jpg', 'image/webp', 'users', 'users', 4388, '[]', '[]', '[]', '[]', 79, '2025-03-09 09:08:48', '2025-03-09 09:08:48'),
 (459, 'App\\Models\\Product', 1, 'ecab98f4-e095-4789-ab50-fc257d8ad2ac', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 80, '2025-04-20 19:22:54', '2025-04-20 19:22:54'),
 (460, 'App\\Models\\Product', 1, '51e09257-25f7-4483-8e63-936790d0282e', 'document', 'aboutt', 'aboutt.png', 'image/png', 'products_images', 'products_images', 187275, '[]', '[]', '[]', '[]', 81, '2025-04-20 19:22:54', '2025-04-20 19:22:54'),
-(461, 'App\\Models\\Product', 1, '49184589-f22c-410b-a585-1b7c9dbf600a', 'products_image', 'products_image-1745243029', 'products_image-1745243029.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 82, '2025-04-21 13:44:02', '2025-04-21 13:44:02');
+(462, 'App\\Models\\Product', 44, '6a6b0ca3-6f15-4101-8fa3-7f70c20782d5', 'products_image', 'products_image-1745542802', 'products_image-1745542802.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 83, '2025-04-25 01:00:08', '2025-04-25 01:00:08'),
+(463, 'App\\Models\\Product', 44, 'c2579617-0a8e-49dc-9f93-3ef23b89b7dd', 'document', 'background', 'background.png', 'image/png', 'products_images', 'products_images', 2418456, '[]', '[]', '[]', '[]', 84, '2025-04-25 01:00:09', '2025-04-25 01:00:09'),
+(464, 'App\\Models\\Product', 44, '63dda9bd-35e8-402a-aa7e-e212a8d665ed', 'document', 'build', 'build.png', 'image/png', 'products_images', 'products_images', 333077, '[]', '[]', '[]', '[]', 85, '2025-04-25 01:00:09', '2025-04-25 01:00:09'),
+(465, 'App\\Models\\Product', 45, '93584520-cd96-4080-ad36-467cfb150b10', 'products_image', 'products_image-1745542923', 'products_image-1745542923.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 86, '2025-04-25 01:02:04', '2025-04-25 01:02:04'),
+(466, 'App\\Models\\Product', 45, '0b92f1ca-157c-4a24-8d67-adf5f27c1bda', 'document', 'background', 'background.png', 'image/png', 'products_images', 'products_images', 2418456, '[]', '[]', '[]', '[]', 87, '2025-04-25 01:02:04', '2025-04-25 01:02:04'),
+(467, 'App\\Models\\Product', 45, '0d949518-0aa7-48aa-8fde-3f8c325beff3', 'document', 'build', 'build.png', 'image/png', 'products_images', 'products_images', 333077, '[]', '[]', '[]', '[]', 88, '2025-04-25 01:02:04', '2025-04-25 01:02:04'),
+(468, 'App\\Models\\Product', 46, 'b4a398dd-18bd-4f5c-b7da-cbce21f764d3', 'products_image', 'products_image-1745544419', 'products_image-1745544419.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 89, '2025-04-25 01:27:00', '2025-04-25 01:27:00'),
+(469, 'App\\Models\\Product', 46, '15026249-0bf6-4adc-bab0-40685a9dd900', 'document', 'background', 'background.png', 'image/png', 'products_images', 'products_images', 2418456, '[]', '[]', '[]', '[]', 90, '2025-04-25 01:27:00', '2025-04-25 01:27:00'),
+(470, 'App\\Models\\Product', 46, 'c6e7b629-6c06-467f-bc13-7c4111c1cee4', 'document', 'build', 'build.png', 'image/png', 'products_images', 'products_images', 333077, '[]', '[]', '[]', '[]', 91, '2025-04-25 01:27:00', '2025-04-25 01:27:00'),
+(471, 'App\\Models\\Product', 47, 'd0f118d7-7fbe-40d4-b0a8-4eac4831861b', 'products_image', 'products_image-1745592176', 'products_image-1745592176.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 92, '2025-04-25 14:42:56', '2025-04-25 14:42:56'),
+(472, 'App\\Models\\Product', 47, '0af576e4-f1ed-4ead-9ba9-7347e5dab462', 'document', 'build', 'build.png', 'image/png', 'products_images', 'products_images', 333077, '[]', '[]', '[]', '[]', 93, '2025-04-25 14:42:56', '2025-04-25 14:42:56'),
+(473, 'App\\Models\\Product', 47, '6262fab4-6d01-42c9-8250-dd3fce3616df', 'document', 'Dubai-Marina-1', 'Dubai-Marina-1.png', 'image/png', 'products_images', 'products_images', 359774, '[]', '[]', '[]', '[]', 94, '2025-04-25 14:42:56', '2025-04-25 14:42:56'),
+(474, 'App\\Models\\Product', 48, '2106dc59-f191-4458-8416-46c13f2b54d2', 'products_image', 'products_image-1745592738', 'products_image-1745592738.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 95, '2025-04-25 14:52:19', '2025-04-25 14:52:19'),
+(475, 'App\\Models\\Product', 48, 'e1677daf-87f2-436c-89a3-02c6ba9a6ae3', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 96, '2025-04-25 14:52:19', '2025-04-25 14:52:19'),
+(476, 'App\\Models\\Product', 49, 'dfebe5ac-6bb2-43bc-bb5f-7ac51e76471c', 'products_image', 'products_image-1745592786', 'products_image-1745592786.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 97, '2025-04-25 14:53:06', '2025-04-25 14:53:06'),
+(477, 'App\\Models\\Product', 49, '5ae31cac-0b7d-4e51-8661-05601963158a', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 98, '2025-04-25 14:53:06', '2025-04-25 14:53:06'),
+(478, 'App\\Models\\Product', 50, '23b8d9b1-0c0e-4575-9cdc-fbd99ca6cacf', 'products_image', 'products_image-1745592832', 'products_image-1745592832.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 99, '2025-04-25 14:53:52', '2025-04-25 14:53:52'),
+(479, 'App\\Models\\Product', 50, '4f336a99-2ed0-401c-b49a-787a712937e2', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 100, '2025-04-25 14:53:52', '2025-04-25 14:53:52'),
+(480, 'App\\Models\\Product', 51, '54ad3568-0275-4f7c-9a9c-56a973e5ad44', 'products_image', 'products_image-1745592852', 'products_image-1745592852.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 101, '2025-04-25 14:54:12', '2025-04-25 14:54:12'),
+(481, 'App\\Models\\Product', 51, 'bce480b0-1f4b-4385-b760-ba9064ad731c', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 102, '2025-04-25 14:54:13', '2025-04-25 14:54:13'),
+(482, 'App\\Models\\Product', 52, '28143db6-ae3c-4650-aee7-5e5265d3960e', 'products_image', 'products_image-1745592867', 'products_image-1745592867.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 103, '2025-04-25 14:54:27', '2025-04-25 14:54:27'),
+(483, 'App\\Models\\Product', 52, '6e006c4a-7f2a-4142-b2c3-1ac6c96f5132', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 104, '2025-04-25 14:54:28', '2025-04-25 14:54:28'),
+(484, 'App\\Models\\Product', 53, 'c30f42db-e2d5-4c37-ab70-3860c40eddc4', 'products_image', 'products_image-1745592878', 'products_image-1745592878.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 105, '2025-04-25 14:54:38', '2025-04-25 14:54:38'),
+(485, 'App\\Models\\Product', 53, '1eb45e74-9b55-481a-9e29-de226ea49e6d', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 106, '2025-04-25 14:54:38', '2025-04-25 14:54:38'),
+(486, 'App\\Models\\Product', 54, '33b798c2-893c-4b68-9b38-e70ba646c4db', 'products_image', 'products_image-1745592888', 'products_image-1745592888.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 107, '2025-04-25 14:54:48', '2025-04-25 14:54:48'),
+(487, 'App\\Models\\Product', 54, '48f33a1c-a401-419c-a7b5-73ccac91fca0', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 108, '2025-04-25 14:54:48', '2025-04-25 14:54:48'),
+(488, 'App\\Models\\Product', 55, '46f8dd3a-1919-49cd-84a6-d909d33b7b43', 'products_image', 'products_image-1745592914', 'products_image-1745592914.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 109, '2025-04-25 14:55:14', '2025-04-25 14:55:14'),
+(489, 'App\\Models\\Product', 55, 'a816093a-82e7-46f9-adcd-4fa70e07fb56', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 110, '2025-04-25 14:55:14', '2025-04-25 14:55:14'),
+(490, 'App\\Models\\Product', 56, 'f55727e8-57e9-443b-b027-368c7cb4cbc3', 'products_image', 'products_image-1745592958', 'products_image-1745592958.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 111, '2025-04-25 14:55:58', '2025-04-25 14:55:58'),
+(491, 'App\\Models\\Product', 56, '80aa7f01-7ae4-4df1-82f9-7557df24fc15', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 112, '2025-04-25 14:55:58', '2025-04-25 14:55:58'),
+(492, 'App\\Models\\Product', 57, 'ff7e50df-9fe8-4cec-ba9a-ba275d7213d0', 'products_image', 'products_image-1745592983', 'products_image-1745592983.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 113, '2025-04-25 14:56:23', '2025-04-25 14:56:23'),
+(493, 'App\\Models\\Product', 57, 'a75de141-c548-4bc4-b95a-2ccffe929d6d', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 114, '2025-04-25 14:56:23', '2025-04-25 14:56:23'),
+(494, 'App\\Models\\Product', 58, '66bed763-4536-4199-85c8-6fad6896b8c7', 'products_image', 'products_image-1745592992', 'products_image-1745592992.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 115, '2025-04-25 14:56:32', '2025-04-25 14:56:32'),
+(495, 'App\\Models\\Product', 58, '5ed7ec39-3e3a-432c-9309-d8b4ca90a205', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 116, '2025-04-25 14:56:32', '2025-04-25 14:56:32'),
+(496, 'App\\Models\\Product', 59, 'c600da69-999a-4da6-a779-13ff34cc2071', 'products_image', 'products_image-1745593078', 'products_image-1745593078.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 117, '2025-04-25 14:57:58', '2025-04-25 14:57:58'),
+(497, 'App\\Models\\Product', 59, 'a38504b9-41de-4448-aa5a-9dce7476d7d5', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 118, '2025-04-25 14:57:58', '2025-04-25 14:57:58'),
+(498, 'App\\Models\\Product', 60, 'dff599bd-d323-46bb-9679-1d904792c537', 'products_image', 'products_image-1745593092', 'products_image-1745593092.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 119, '2025-04-25 14:58:13', '2025-04-25 14:58:13'),
+(499, 'App\\Models\\Product', 60, '0167e9fb-92a0-4834-9c95-a13c88b4c9fb', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 120, '2025-04-25 14:58:13', '2025-04-25 14:58:13'),
+(500, 'App\\Models\\Product', 61, '0242bed5-cfcd-4b5b-a3cc-05e56ff2b74f', 'products_image', 'products_image-1745593104', 'products_image-1745593104.webp', 'image/webp', 'products', 'products', 21342, '[]', '[]', '[]', '[]', 121, '2025-04-25 14:58:24', '2025-04-25 14:58:24'),
+(501, 'App\\Models\\Product', 61, '81f1351c-7ace-43e0-a4cc-51cbc1d89c79', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 122, '2025-04-25 14:58:24', '2025-04-25 14:58:24'),
+(502, 'App\\Models\\Product', 62, '5ece4fa3-566b-47dc-a496-680e702080ea', 'products_image', 'products_image-1745622677', 'products_image-1745622677.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 123, '2025-04-25 23:11:19', '2025-04-25 23:11:19'),
+(503, 'App\\Models\\Product', 62, '87db770a-d221-4c15-aef4-07974fbe807b', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 124, '2025-04-25 23:11:20', '2025-04-25 23:11:20'),
+(504, 'App\\Models\\Product', 63, 'fab8a922-b19a-4b9b-a61a-964f24d93602', 'products_image', 'products_image-1745622757', 'products_image-1745622757.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 125, '2025-04-25 23:12:37', '2025-04-25 23:12:37'),
+(505, 'App\\Models\\Product', 63, '8159c7f2-7bd4-4d84-82dd-d58ecd7ddad7', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 126, '2025-04-25 23:12:37', '2025-04-25 23:12:37'),
+(506, 'App\\Models\\Product', 64, 'a1fe3ab1-8026-47d1-a119-a1db54579e88', 'products_image', 'products_image-1745622868', 'products_image-1745622868.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 127, '2025-04-25 23:14:28', '2025-04-25 23:14:28'),
+(507, 'App\\Models\\Product', 64, '4e991203-0e41-4274-b562-ab971dfa0fa2', 'document', 'about', 'about.png', 'image/png', 'products_images', 'products_images', 261578, '[]', '[]', '[]', '[]', 128, '2025-04-25 23:14:29', '2025-04-25 23:14:29'),
+(510, 'App\\Models\\Product', 1, '892e55d8-e0a6-49a7-a405-d6891cece0bc', 'products_image', 'products_image-1745693964', 'products_image-1745693964.webp', 'image/webp', 'products', 'products', 44850, '[]', '[]', '[]', '[]', 129, '2025-04-26 18:59:24', '2025-04-26 18:59:24');
 
 -- --------------------------------------------------------
 
@@ -439,7 +489,7 @@ INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, 
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -486,7 +536,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `model_has_permissions` (
   `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -498,7 +548,7 @@ CREATE TABLE `model_has_permissions` (
 
 CREATE TABLE `model_has_roles` (
   `role_id` bigint(20) UNSIGNED NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) NOT NULL,
   `model_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -560,11 +610,11 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `notifiable_type` varchar(255) NOT NULL,
   `notifiable_id` bigint(20) UNSIGNED NOT NULL,
-  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -575,35 +625,81 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
+('02a6542a-faae-47e8-861a-b432e32d8c5b', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/58\",\"data\":{\"notification_type\":3,\"product_id\":58,\"listing_number\":\"AUC11202558\"},\"created_at\":\"2025-04-25T14:56:32.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:56:33', '2025-04-25 15:04:05'),
+('13eb3121-4969-429c-ae80-bc22dded4f08', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/59\",\"data\":{\"notification_type\":3,\"product_id\":59,\"listing_number\":\"AUC11202559\"},\"created_at\":\"2025-04-25T14:57:58.000000Z\"}', NULL, '2025-04-25 14:57:59', '2025-04-25 14:57:59'),
+('176dc086-8211-48dc-8aab-129b1853c83a', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/49\",\"data\":{\"notification_type\":3,\"product_id\":49,\"listing_number\":\"AUC11202548\"},\"created_at\":\"2025-04-25T14:53:06.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:53:09', '2025-04-25 15:04:05'),
 ('1a649797-eaa8-48f1-a654-acc3bb9d05fc', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Gisela Shaw\",\"redirect\":\"pending_vendors\\/10\",\"data\":[],\"created_at\":\"2025-01-24T20:16:59.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 20:17:00', '2025-01-24 20:22:28'),
+('2059f7f7-99f1-487b-8180-135ff0f219a4', 'App\\Notifications\\InvestmentCompletedNotification', 'App\\Models\\User', 77, '{\"title\":\"\\u0627\\u0643\\u062a\\u0645\\u0644 \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631\",\"body\":\"\\u062a\\u0645 \\u0627\\u0643\\u062a\\u0645\\u0627\\u0644 \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631 \\u0641\\u064a \\u0627\\u0644\\u0639\\u0642\\u0627\\u0631 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0634\\u0627\\u0631\\u0643 \\u0628\\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629. \\u0634\\u0643\\u0631\\u064b\\u0627 \\u0644\\u0645\\u0634\\u0627\\u0631\\u0643\\u062a\\u0643!\"}', NULL, '2025-04-26 21:04:14', '2025-04-26 21:04:14'),
+('26d9cebb-7a50-4529-a7ab-21ef10fc34ac', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  Dolor cillum consequ \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u0634\\u0627\\u0631\\u0643\\u0629\",\"redirect\":\"products\\/64\",\"data\":{\"notification_type\":3,\"product_id\":64,\"listing_number\":\"SHA13202564\"},\"created_at\":\"2025-04-25T23:14:28.000000Z\"}', NULL, '2025-04-25 23:14:33', '2025-04-25 23:14:33'),
 ('26f298b7-fe80-4cba-acf0-eea2382d5b6d', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Julian Davis\",\"redirect\":\"pending_vendors\\/6\",\"data\":[],\"created_at\":\"2025-01-24T20:03:59.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 20:03:59', '2025-01-24 20:22:28'),
 ('2a245e8d-8bc7-4431-a5e1-ab2200a62bfa', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   xcfvgbhnjk\",\"redirect\":\"contacts\\/#td-30\",\"data\":{\"id\":30,\"name\":\"xcfvgbhnjk\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-03T12:34:42.000000Z\"}', NULL, '2025-02-03 12:34:43', '2025-02-03 12:34:43'),
+('3245c40f-313a-423d-a1e1-f5c22362f600', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/60\",\"data\":{\"notification_type\":3,\"product_id\":60,\"listing_number\":\"AUC11202560\"},\"created_at\":\"2025-04-25T14:58:12.000000Z\"}', NULL, '2025-04-25 14:58:14', '2025-04-25 14:58:14'),
+('3b76439a-0eee-4961-b633-ad7a698e4370', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/58\",\"data\":{\"notification_type\":3,\"product_id\":58,\"listing_number\":\"AUC11202558\"},\"created_at\":\"2025-04-25T14:56:32.000000Z\"}', NULL, '2025-04-25 14:56:33', '2025-04-25 14:56:33'),
+('3e271eb1-9794-4db8-a5cc-15f812f387d7', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/49\",\"data\":{\"notification_type\":3,\"product_id\":49,\"listing_number\":\"AUC11202548\"},\"created_at\":\"2025-04-25T14:53:06.000000Z\"}', NULL, '2025-04-25 14:53:09', '2025-04-25 14:53:09'),
 ('45e0dfa7-1bba-4bbb-a52c-ffcfc4a03daf', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Imani Hubbard\",\"redirect\":\"pending_vendors\\/2\",\"data\":[],\"created_at\":\"2025-01-23T22:47:13.000000Z\"}', '2025-01-23 22:47:45', '2025-01-23 22:47:13', '2025-01-23 22:47:45'),
+('4a894f68-da1b-4f8f-b56d-aa50aff96d5a', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/52\",\"data\":{\"notification_type\":3,\"product_id\":52,\"listing_number\":\"AUC11202552\"},\"created_at\":\"2025-04-25T14:54:27.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:54:28', '2025-04-25 15:04:05'),
+('4bb7b2d5-369b-4bb3-a36d-62611f9fe7ab', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/57\",\"data\":{\"notification_type\":3,\"product_id\":57,\"listing_number\":\"AUC11202557\"},\"created_at\":\"2025-04-25T14:56:23.000000Z\"}', NULL, '2025-04-25 14:56:24', '2025-04-25 14:56:24'),
+('4e38e8b8-0c7c-49fa-b0e7-e4601fe5ca8b', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/52\",\"data\":{\"notification_type\":3,\"product_id\":52,\"listing_number\":\"AUC11202552\"},\"created_at\":\"2025-04-25T14:54:27.000000Z\"}', NULL, '2025-04-25 14:54:28', '2025-04-25 14:54:28'),
 ('510b9e3a-75f0-4f68-b0b2-6f5a0ffa9d52', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Abdullah\",\"redirect\":\"pending_vendors\\/13\",\"data\":[],\"created_at\":\"2025-02-06T12:36:18.000000Z\"}', '2025-02-06 12:36:41', '2025-02-06 12:36:18', '2025-02-06 12:36:41'),
+('5280e480-aa73-4537-bd8f-cc6d88277e33', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/49\",\"data\":{\"notification_type\":3,\"product_id\":49,\"listing_number\":\"AUC11202548\"},\"created_at\":\"2025-04-25T14:53:06.000000Z\"}', NULL, '2025-04-25 14:53:09', '2025-04-25 14:53:09'),
+('53c5c2f6-1f42-4f97-a752-e564a96bee98', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/55\",\"data\":{\"notification_type\":3,\"product_id\":55,\"listing_number\":\"AUC11202555\"},\"created_at\":\"2025-04-25T14:55:14.000000Z\"}', NULL, '2025-04-25 14:55:15', '2025-04-25 14:55:15'),
+('547c49a3-4afa-4db0-b357-36178d25b770', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/51\",\"data\":{\"notification_type\":3,\"product_id\":51,\"listing_number\":\"AUC11202551\"},\"created_at\":\"2025-04-25T14:54:12.000000Z\"}', NULL, '2025-04-25 14:54:13', '2025-04-25 14:54:13'),
 ('5918c690-34b6-43dc-a393-0491b1f11068', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   Abdullah Ashraf\",\"redirect\":\"contacts\\/#td-31\",\"data\":{\"id\":31,\"name\":\"Abdullah Ashraf\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-06T11:25:55.000000Z\"}', '2025-02-06 11:29:08', '2025-02-06 11:25:55', '2025-02-06 11:29:08'),
+('595bda78-0858-4ed5-a222-fb3679e09afe', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/50\",\"data\":{\"notification_type\":3,\"product_id\":50,\"listing_number\":\"AUC11202550\"},\"created_at\":\"2025-04-25T14:53:52.000000Z\"}', NULL, '2025-04-25 14:53:53', '2025-04-25 14:53:53'),
 ('5a97e480-64d6-4357-8e90-f9586e4595c0', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  mai tarek\",\"redirect\":\"pending_vendors\\/8\",\"data\":[],\"created_at\":\"2025-01-24T20:08:10.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 20:08:11', '2025-01-24 20:22:28'),
+('5c5b609d-27f9-48df-b95a-de058cdc6498', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  Dolor cillum consequ \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u0634\\u0627\\u0631\\u0643\\u0629\",\"redirect\":\"products\\/64\",\"data\":{\"notification_type\":3,\"product_id\":64,\"listing_number\":\"SHA13202564\"},\"created_at\":\"2025-04-25T23:14:28.000000Z\"}', NULL, '2025-04-25 23:14:33', '2025-04-25 23:14:33'),
+('5d547688-e4bb-4fe1-bd8a-66780d93fc67', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/51\",\"data\":{\"notification_type\":3,\"product_id\":51,\"listing_number\":\"AUC11202551\"},\"created_at\":\"2025-04-25T14:54:12.000000Z\"}', NULL, '2025-04-25 14:54:13', '2025-04-25 14:54:13'),
+('5e2da0b7-fc98-4341-8af3-62ce3480db65', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/61\",\"data\":{\"notification_type\":3,\"product_id\":61,\"listing_number\":\"AUC11202561\"},\"created_at\":\"2025-04-25T14:58:24.000000Z\"}', NULL, '2025-04-25 14:58:25', '2025-04-25 14:58:25'),
+('62585155-bbd5-462f-b47d-3d05604f0bc1', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/54\",\"data\":{\"notification_type\":3,\"product_id\":54,\"listing_number\":\"AUC11202554\"},\"created_at\":\"2025-04-25T14:54:48.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:54:49', '2025-04-25 15:04:05'),
+('6732b9c0-371c-40b8-84bf-3ddc1d5a3ed6', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/61\",\"data\":{\"notification_type\":3,\"product_id\":61,\"listing_number\":\"AUC11202561\"},\"created_at\":\"2025-04-25T14:58:24.000000Z\"}', NULL, '2025-04-25 14:58:25', '2025-04-25 14:58:25'),
+('70048689-0325-4c0d-a6c2-b226be0edd28', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/56\",\"data\":{\"notification_type\":3,\"product_id\":56,\"listing_number\":\"AUC11202556\"},\"created_at\":\"2025-04-25T14:55:58.000000Z\"}', NULL, '2025-04-25 14:55:59', '2025-04-25 14:55:59'),
+('71a79135-0d29-4511-b715-02d50b46e892', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/60\",\"data\":{\"notification_type\":3,\"product_id\":60,\"listing_number\":\"AUC11202560\"},\"created_at\":\"2025-04-25T14:58:12.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:58:14', '2025-04-25 15:04:05'),
+('748b206a-298a-4ea5-aa35-8f068b4a5a8c', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/50\",\"data\":{\"notification_type\":3,\"product_id\":50,\"listing_number\":\"AUC11202550\"},\"created_at\":\"2025-04-25T14:53:52.000000Z\"}', NULL, '2025-04-25 14:53:53', '2025-04-25 14:53:53'),
+('780e2954-8f59-4d57-91ba-f454f017da14', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/57\",\"data\":{\"notification_type\":3,\"product_id\":57,\"listing_number\":\"AUC11202557\"},\"created_at\":\"2025-04-25T14:56:23.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:56:24', '2025-04-25 15:04:05'),
+('78dfb28c-0326-4b4a-84ff-64b646b76ff2', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/53\",\"data\":{\"notification_type\":3,\"product_id\":53,\"listing_number\":\"AUC11202553\"},\"created_at\":\"2025-04-25T14:54:38.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:54:39', '2025-04-25 15:04:05'),
 ('79ac571d-2dac-4a9a-bed6-d4c9d1f1f827', 'App\\Notifications\\NotifyVendorStatusCoupon', 'App\\Models\\User', 70, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0643\\u0648\\u0628\\u0648\\u0646\\u0627\\u062a\",\"text\":\"\\u062a\\u0645 \\u062a\\u063a\\u064a\\u064a\\u0631 \\u062d\\u0627\\u0644\\u0629 \\u0627\\u0644\\u0643\\u0648\\u0628\\u0648\\u0646    xcvfbhn \\u0625\\u0644\\u064a main.coupons.approve\",\"redirect\":\"coupons\\/45\",\"data\":[],\"created_at\":\"2025-01-25T20:22:18.000000Z\"}', '2025-02-02 12:49:05', '2025-02-02 12:48:54', '2025-02-02 12:49:05'),
+('7c09bfc8-83d0-4d1a-b879-69114aa90538', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/58\",\"data\":{\"notification_type\":3,\"product_id\":58,\"listing_number\":\"AUC11202558\"},\"created_at\":\"2025-04-25T14:56:32.000000Z\"}', NULL, '2025-04-25 14:56:33', '2025-04-25 14:56:33'),
+('7caa422d-1da9-4f07-8bd6-aac0e93b4981', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/53\",\"data\":{\"notification_type\":3,\"product_id\":53,\"listing_number\":\"AUC11202553\"},\"created_at\":\"2025-04-25T14:54:38.000000Z\"}', NULL, '2025-04-25 14:54:39', '2025-04-25 14:54:39'),
 ('7d6c4717-68fc-4263-94d4-660acbc2df9d', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   xcfvgbhnjk\",\"redirect\":\"contacts\\/#td-30\",\"data\":{\"id\":30,\"name\":\"xcfvgbhnjk\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-03T12:34:42.000000Z\"}', '2025-02-06 11:29:08', '2025-02-03 12:34:43', '2025-02-06 11:29:08'),
 ('7e3cd302-cefc-4fd0-834a-c7f5f132fb78', 'App\\Notifications\\NotifySubscriberNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0646\\u0634\\u0631\\u0629 \\u0627\\u0644\\u0628\\u0631\\u064a\\u062f\\u064a\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   maitar2ekt3tt22@gmail.com\",\"redirect\":\"contacts\\/#td-5\",\"created_at\":\"2024-08-16T22:25:38.000000Z\",\"data\":{\"notification_type\":2,\"id\":5}}', '2025-01-23 22:47:46', '2024-08-16 22:25:38', '2025-01-23 22:47:46'),
+('84d098aa-2e3a-44cd-81f2-364a048d25db', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/53\",\"data\":{\"notification_type\":3,\"product_id\":53,\"listing_number\":\"AUC11202553\"},\"created_at\":\"2025-04-25T14:54:38.000000Z\"}', NULL, '2025-04-25 14:54:39', '2025-04-25 14:54:39'),
 ('85f5ada3-99ba-4df6-9e59-aff1ba4ead82', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   Abdullah Ashraf\",\"redirect\":\"contacts\\/#td-32\",\"data\":{\"id\":32,\"name\":\"Abdullah Ashraf\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-06T12:40:38.000000Z\"}', '2025-02-06 12:40:46', '2025-02-06 12:40:38', '2025-02-06 12:40:46'),
+('86fd5774-10b9-49cb-8177-18661d384beb', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/54\",\"data\":{\"notification_type\":3,\"product_id\":54,\"listing_number\":\"AUC11202554\"},\"created_at\":\"2025-04-25T14:54:48.000000Z\"}', NULL, '2025-04-25 14:54:49', '2025-04-25 14:54:49'),
+('8855e546-e56e-4399-aba5-c4689aa7758d', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/56\",\"data\":{\"notification_type\":3,\"product_id\":56,\"listing_number\":\"AUC11202556\"},\"created_at\":\"2025-04-25T14:55:58.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:55:59', '2025-04-25 15:04:05'),
 ('8a4d09be-659b-41be-928c-faba53ada3b5', 'App\\Notifications\\NotifySubscriberNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0646\\u0634\\u0631\\u0629 \\u0627\\u0644\\u0628\\u0631\\u064a\\u062f\\u064a\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   jjudy@yahoo.com\",\"redirect\":\"contacts\\/#td-9\",\"created_at\":\"2024-08-22T20:44:04.000000Z\",\"data\":{\"notification_type\":2,\"id\":9}}', '2025-01-23 22:47:45', '2024-08-22 20:44:04', '2025-01-23 22:47:45'),
+('8a8045bf-99bf-4bb2-bdea-edd490f39e5b', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/59\",\"data\":{\"notification_type\":3,\"product_id\":59,\"listing_number\":\"AUC11202559\"},\"created_at\":\"2025-04-25T14:57:58.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:57:59', '2025-04-25 15:04:05'),
+('95ab720e-7edb-48ad-b5db-7d49a63d1787', 'App\\Notifications\\NewInvestmentNotification', 'App\\Models\\User', 77, '{\"title\":\"\\u0645\\u0634\\u0627\\u0631\\u0643\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629\",\"body\":\"\\u062a\\u0645\\u062a \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0645\\u0634\\u0627\\u0631\\u0643\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \\u0628\\u0645\\u0628\\u0644\\u063a 9,999,000 \\u0631\\u064a\\u0627\\u0644 \\u0641\\u064a \\u0627\\u0644\\u0639\\u0642\\u0627\\u0631 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0634\\u0627\\u0631\\u0643 \\u0628\\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629\"}', NULL, '2025-04-26 21:04:13', '2025-04-26 21:04:13'),
+('995d3f98-f5c8-4842-8999-e6de530ffdd2', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/61\",\"data\":{\"notification_type\":3,\"product_id\":61,\"listing_number\":\"AUC11202561\"},\"created_at\":\"2025-04-25T14:58:24.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:58:25', '2025-04-25 15:04:05'),
 ('998157e1-68e4-44c2-83ca-45e690498639', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   \\u0639\\u0644\\u0649\",\"redirect\":\"contacts\\/#td-33\",\"data\":{\"id\":33,\"name\":\"\\u0639\\u0644\\u0649\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-06T13:05:59.000000Z\"}', NULL, '2025-02-06 13:05:59', '2025-02-06 13:05:59'),
 ('9aecfc83-8d2b-4bbc-be7d-6bdad25ba3fa', 'App\\Notifications\\NotifySubscriberNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0646\\u0634\\u0631\\u0629 \\u0627\\u0644\\u0628\\u0631\\u064a\\u062f\\u064a\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   d@yahoo.com\",\"redirect\":\"contacts\\/#td-10\",\"created_at\":\"2024-08-22T20:53:14.000000Z\",\"data\":{\"notification_type\":2,\"id\":10}}', '2025-01-23 22:47:45', '2024-08-22 20:53:14', '2025-01-23 22:47:45'),
 ('9af5d8c7-a788-466f-b86b-15f5e837b693', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Victoria Flores\",\"redirect\":\"pending_vendors\\/7\",\"data\":[],\"created_at\":\"2025-01-24T20:07:17.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 20:07:17', '2025-01-24 20:22:28'),
 ('9d0604db-17bc-4f76-b3ec-4aa6a6e013e3', 'App\\Notifications\\NotifyAdminNewVendorCoupon', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628hg;,f,khj\",\"text\":\"\\u0644\\u0642\\u062f \\u0623\\u0636\\u0627\\u0641 \\u0627\\u0644\\u062a\\u0627\\u062c\\u0631   mai tarek \\u0643\\u0648\\u0628\\u0648\\u0646 \\u062e\\u0635\\u0645 \\u062c\\u062f\\u064a\\u062f \\u0628\\u0627\\u0633\\u0645 fggvfd\",\"redirect\":\"coupons\\/44\",\"data\":[],\"created_at\":\"2025-01-25T15:55:34.000000Z\"}', '2025-01-25 15:55:44', '2025-01-25 15:55:38', '2025-01-25 15:55:44'),
+('9dfa3360-4f87-42bb-a9f5-09638aca106f', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/57\",\"data\":{\"notification_type\":3,\"product_id\":57,\"listing_number\":\"AUC11202557\"},\"created_at\":\"2025-04-25T14:56:23.000000Z\"}', NULL, '2025-04-25 14:56:24', '2025-04-25 14:56:24'),
+('9f59879a-71d7-46a2-a9c4-f8475f480cb3', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/54\",\"data\":{\"notification_type\":3,\"product_id\":54,\"listing_number\":\"AUC11202554\"},\"created_at\":\"2025-04-25T14:54:48.000000Z\"}', NULL, '2025-04-25 14:54:50', '2025-04-25 14:54:50'),
 ('a359c251-ab9a-43e7-ab67-da0df3b083bf', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   Abdullah Ashraf\",\"redirect\":\"contacts\\/#td-31\",\"data\":{\"id\":31,\"name\":\"Abdullah Ashraf\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-06T11:25:55.000000Z\"}', NULL, '2025-02-06 11:25:55', '2025-02-06 11:25:55'),
 ('a726e8c5-dbd7-4724-af88-4e98ceb599cb', 'App\\Notifications\\NotifySubscriberNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0646\\u0634\\u0631\\u0629 \\u0627\\u0644\\u0628\\u0631\\u064a\\u062f\\u064a\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   m@y.co\",\"redirect\":\"contacts\\/#td-7\",\"created_at\":\"2024-08-22T20:32:24.000000Z\",\"data\":{\"notification_type\":2,\"id\":7}}', '2025-01-23 22:47:46', '2024-08-22 20:32:24', '2025-01-23 22:47:46'),
 ('aaf6fc08-98b0-4e8e-9db8-6fc8f60a2fa6', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Hyatt Frye\",\"redirect\":\"pending_vendors\\/3\",\"data\":[],\"created_at\":\"2025-01-24T19:55:29.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 19:55:30', '2025-01-24 20:22:28'),
+('b22b0ecd-8ef2-4fa0-8249-61abfc1f99f8', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/52\",\"data\":{\"notification_type\":3,\"product_id\":52,\"listing_number\":\"AUC11202552\"},\"created_at\":\"2025-04-25T14:54:27.000000Z\"}', NULL, '2025-04-25 14:54:28', '2025-04-25 14:54:28'),
 ('b8829d55-56da-4fb7-9c19-770fc7a7f789', 'App\\Notifications\\NotifyVendorStatusCoupon', 'App\\Models\\User', 32, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0643\\u0648\\u0628\\u0648\\u0646\\u0627\\u062a\",\"text\":\"\\u062a\\u0645 \\u062a\\u063a\\u064a\\u064a\\u0631 \\u062d\\u0627\\u0644\\u0629 \\u0627\\u0644\\u0643\\u0648\\u0628\\u0648\\u0646    xcvfbhn \\u0625\\u0644\\u064a main.coupons.approve\",\"redirect\":\"coupons\\/45\",\"data\":[],\"created_at\":\"2025-01-25T20:22:18.000000Z\"}', '2025-01-25 20:42:22', '2025-01-25 20:42:14', '2025-01-25 20:42:22'),
 ('bce78963-b2a6-4d37-95f8-22de0bd197cb', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   \\u0639\\u0644\\u0649\",\"redirect\":\"contacts\\/#td-33\",\"data\":{\"id\":33,\"name\":\"\\u0639\\u0644\\u0649\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-06T13:05:59.000000Z\"}', '2025-02-06 15:43:55', '2025-02-06 13:05:59', '2025-02-06 13:07:18'),
+('bf35c5f5-eb66-489d-a9dc-bc0863b6abbc', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/50\",\"data\":{\"notification_type\":3,\"product_id\":50,\"listing_number\":\"AUC11202550\"},\"created_at\":\"2025-04-25T14:53:52.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:53:53', '2025-04-25 15:04:05');
+INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
 ('c007c6d8-1c1c-4b84-9ea6-95bb53f5459f', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Abdullah\",\"redirect\":\"pending_vendors\\/14\",\"data\":[],\"created_at\":\"2025-02-06T13:31:06.000000Z\"}', '2025-02-06 15:15:39', '2025-02-06 13:31:06', '2025-02-06 15:15:39'),
+('c02081f6-cf18-4ce1-8a33-68d220e2aada', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/51\",\"data\":{\"notification_type\":3,\"product_id\":51,\"listing_number\":\"AUC11202551\"},\"created_at\":\"2025-04-25T14:54:12.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:54:13', '2025-04-25 15:04:05'),
+('c2707d32-ba52-427c-a24c-398eb51c20c3', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/55\",\"data\":{\"notification_type\":3,\"product_id\":55,\"listing_number\":\"AUC11202555\"},\"created_at\":\"2025-04-25T14:55:14.000000Z\"}', NULL, '2025-04-25 14:55:15', '2025-04-25 14:55:15'),
 ('c5a2eb08-efbf-4771-bade-0f9a41d5c748', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Akeem Pugh\",\"redirect\":\"pending_vendors\\/5\",\"data\":[],\"created_at\":\"2025-01-24T20:00:50.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 20:00:51', '2025-01-24 20:22:28'),
+('d2305b2d-40fe-48fb-be36-6eecb4d84a4f', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/55\",\"data\":{\"notification_type\":3,\"product_id\":55,\"listing_number\":\"AUC11202555\"},\"created_at\":\"2025-04-25T14:55:14.000000Z\"}', '2025-04-25 15:04:05', '2025-04-25 14:55:15', '2025-04-25 15:04:05'),
+('d3132b08-ebec-48fc-8830-6507a862e4ef', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/59\",\"data\":{\"notification_type\":3,\"product_id\":59,\"listing_number\":\"AUC11202559\"},\"created_at\":\"2025-04-25T14:57:58.000000Z\"}', NULL, '2025-04-25 14:57:59', '2025-04-25 14:57:59'),
+('d5a8d31e-ecd1-4218-af86-a39f675bc403', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  Dolor cillum consequ \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u0634\\u0627\\u0631\\u0643\\u0629\",\"redirect\":\"products\\/64\",\"data\":{\"notification_type\":3,\"product_id\":64,\"listing_number\":\"SHA13202564\"},\"created_at\":\"2025-04-25T23:14:28.000000Z\"}', NULL, '2025-04-25 23:14:33', '2025-04-25 23:14:33'),
 ('d934d109-44f3-403f-9808-5132b4a9e769', 'App\\Notifications\\NotifySubscriberNotification', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0627\\u0644\\u0646\\u0634\\u0631\\u0629 \\u0627\\u0644\\u0628\\u0631\\u064a\\u062f\\u064a\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   v@ya.com\",\"redirect\":\"contacts\\/#td-6\",\"created_at\":\"2024-08-22T20:29:06.000000Z\",\"data\":{\"notification_type\":2,\"id\":6}}', '2025-01-23 22:47:46', '2024-08-22 20:29:08', '2025-01-23 22:47:46'),
 ('e4fcf50f-691c-43bf-8689-e08e2181a35f', 'App\\Notifications\\NotifyContactUsNotification', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u0648\\u062c\\u0648\\u062f \\u0631\\u0633\\u0627\\u0644\\u0629 \\u062c\\u062f\\u064a\\u062f\\u0629 \",\"text\":\"\\u062a\\u0645 \\u0625\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0633\\u0627\\u0644\\u0629 \\u0645\\u0646   Abdullah Ashraf\",\"redirect\":\"contacts\\/#td-32\",\"data\":{\"id\":32,\"name\":\"Abdullah Ashraf\",\"account_type\":\"admins\",\"notification_type\":8},\"created_at\":\"2025-02-06T12:40:38.000000Z\"}', NULL, '2025-02-06 12:40:38', '2025-02-06 12:40:38'),
 ('e68a6fb6-33b3-4af0-a93e-a9d9245cfd22', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Winter Holder\",\"redirect\":\"pending_vendors\\/11\",\"data\":[],\"created_at\":\"2025-02-03T13:08:23.000000Z\"}', '2025-02-06 11:29:08', '2025-02-03 13:08:29', '2025-02-06 11:29:08'),
+('e748af72-6dbf-4f1f-9c83-4127dd65dec8', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/56\",\"data\":{\"notification_type\":3,\"product_id\":56,\"listing_number\":\"AUC11202556\"},\"created_at\":\"2025-04-25T14:55:58.000000Z\"}', NULL, '2025-04-25 14:55:59', '2025-04-25 14:55:59'),
 ('e8806b4c-8167-41d9-8569-cea63bb6eba1', 'App\\Notifications\\NotifyAdminNewVendorCoupon', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628hg;,f,khj\",\"text\":\"\\u0644\\u0642\\u062f \\u0623\\u0636\\u0627\\u0641 \\u0627\\u0644\\u062a\\u0627\\u062c\\u0631   mai tarek \\u0643\\u0648\\u0628\\u0648\\u0646 \\u062e\\u0635\\u0645 \\u062c\\u062f\\u064a\\u062f \\u0628\\u0627\\u0633\\u0645 xcvfbhn\",\"redirect\":\"coupons\\/45\",\"data\":[],\"created_at\":\"2025-01-25T20:22:18.000000Z\"}', '2025-02-06 11:29:08', '2025-01-25 20:22:23', '2025-02-06 11:29:08'),
 ('ebd68921-ed4f-444b-aba2-22e153de8b1a', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Mohammad Nielsen\",\"redirect\":\"pending_vendors\\/4\",\"data\":[],\"created_at\":\"2025-01-24T19:57:38.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 19:57:38', '2025-01-24 20:22:28'),
-('f312896e-eec4-44a4-a3ec-425d622141f4', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Abdullah Elgazzar\",\"redirect\":\"pending_vendors\\/12\",\"data\":[],\"created_at\":\"2025-02-06T12:17:01.000000Z\"}', '2025-02-06 12:19:29', '2025-02-06 12:17:01', '2025-02-06 12:19:29');
+('eed334f9-e675-43ed-b240-1332e5c9f6df', 'App\\Notifications\\InvestmentCompletedNotification', 'App\\Models\\User', 79, '{\"title\":\"\\u0627\\u0643\\u062a\\u0645\\u0644 \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631\",\"body\":\"\\u062a\\u0645 \\u0627\\u0643\\u062a\\u0645\\u0627\\u0644 \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631 \\u0641\\u064a \\u0627\\u0644\\u0639\\u0642\\u0627\\u0631 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0634\\u0627\\u0631\\u0643 \\u0628\\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629. \\u0634\\u0643\\u0631\\u064b\\u0627 \\u0644\\u0645\\u0634\\u0627\\u0631\\u0643\\u062a\\u0643!\"}', NULL, '2025-04-26 21:04:14', '2025-04-26 21:04:14'),
+('f312896e-eec4-44a4-a3ec-425d622141f4', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Abdullah Elgazzar\",\"redirect\":\"pending_vendors\\/12\",\"data\":[],\"created_at\":\"2025-02-06T12:17:01.000000Z\"}', '2025-02-06 12:19:29', '2025-02-06 12:17:01', '2025-02-06 12:19:29'),
+('f463de13-85e4-473e-8de2-f8c8186d3c36', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 2, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/60\",\"data\":{\"notification_type\":3,\"product_id\":60,\"listing_number\":\"AUC11202560\"},\"created_at\":\"2025-04-25T14:58:12.000000Z\"}', NULL, '2025-04-25 14:58:14', '2025-04-25 14:58:14');
 
 -- --------------------------------------------------------
 
@@ -617,16 +713,16 @@ CREATE TABLE `orders` (
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `order_no` bigint(6) UNSIGNED ZEROFILL DEFAULT NULL,
   `store_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `status` enum('pending','accepted','shipped','completed','declined','return') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` enum('pending','accepted','shipped','completed','declined','return') NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `user_address_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `payment_type` enum('online','cash','v_cash','instapay','bank_transfer') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_type` enum('online','cash','v_cash','instapay','bank_transfer') DEFAULT NULL,
   `delivery_price` double(8,2) DEFAULT NULL,
   `order_date` timestamp NULL DEFAULT NULL,
   `coupon_id` bigint(20) UNSIGNED DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -655,14 +751,14 @@ INSERT INTO `orders` (`id`, `assign_to`, `user_id`, `order_no`, `store_id`, `sta
 CREATE TABLE `pages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `title_ar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('show','hide') COLLATE utf8mb4_unicode_ci DEFAULT 'hide',
+  `title_ar` varchar(255) NOT NULL,
+  `title_en` varchar(255) DEFAULT NULL,
+  `status` enum('show','hide') DEFAULT 'hide',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `content_ar` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content_en` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `content_ar` longtext DEFAULT NULL,
+  `content_en` longtext DEFAULT NULL,
+  `link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول التصنيفات';
 
 --
@@ -682,8 +778,8 @@ INSERT INTO `pages` (`id`, `admin_id`, `title_ar`, `title_en`, `status`, `create
 --
 
 CREATE TABLE `password_resets` (
-  `mobile` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(30) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -702,8 +798,8 @@ INSERT INTO `password_resets` (`mobile`, `token`, `created_at`) VALUES
 
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `admin_id` bigint(20) UNSIGNED DEFAULT NULL
@@ -780,11 +876,11 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -800,36 +896,45 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `added_by` bigint(20) UNSIGNED DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `listing_number` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `qr_code` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `listing_number` varchar(20) DEFAULT NULL,
+  `qr_code` text DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `map_location` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext DEFAULT NULL,
+  `map_location` longtext DEFAULT NULL,
   `owner_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `status` enum('pending','shared_onsite','approved','rejected','closed') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('pending','shared_onsite','approved','rejected','closed') DEFAULT NULL,
   `is_private` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `views` int(11) NOT NULL DEFAULT 0,
   `approved_at` timestamp NULL DEFAULT NULL,
-  `type` enum('auction','shared','investment') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('auction','shared','investment') DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `area_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `product_for` enum('sale','rent') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ايجار ولا بيع',
-  `link_video` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_for` enum('sale','rent') NOT NULL COMMENT 'ايجار ولا بيع',
+  `link_video` text DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `in_home` enum('yes','no') COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `in_home` enum('yes','no') DEFAULT NULL,
+  `investment_collected` decimal(15,2) NOT NULL DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول المنتجات';
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `added_by`, `title`, `listing_number`, `qr_code`, `price`, `description`, `map_location`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`, `link_video`, `start_date`, `end_date`, `in_home`) VALUES
-(1, 1, 'ggggggggggggggg', 'AUCTION-42-2025', NULL, '1112.00', '2222222erfggg', 'https://www.google.com', NULL, 'shared_onsite', 1, '2025-04-19 22:54:01', '2025-04-21 13:43:47', 0, NULL, 'auction', NULL, 5, 'sale', 'https://www.vide.come', '2025-04-01', '2025-04-09', 'yes'),
-(43, 77, 'fffffffffffffff', 'AUCTION-2-2025', NULL, '0.00', 'ffffgs', NULL, NULL, 'pending', 0, '2025-04-23 20:51:59', '2025-04-23 20:51:59', 0, NULL, 'auction', NULL, NULL, 'sale', NULL, '2025-04-23', '2025-05-02', NULL);
+INSERT INTO `products` (`id`, `added_by`, `title`, `listing_number`, `qr_code`, `price`, `description`, `map_location`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`, `link_video`, `start_date`, `end_date`, `in_home`, `investment_collected`) VALUES
+(1, 1, 'ggggggggggggggg', 'AUCTION-42-2025', NULL, 1112.00, '2222222erfggg', 'https://www.google.com', NULL, 'shared_onsite', 1, '2025-04-19 22:54:01', '2025-04-26 19:07:11', 0, NULL, 'auction', NULL, 5, 'sale', 'https://www.vide.come', '2025-04-01', '2025-04-09', 'yes', 0.00),
+(43, 77, 'fffffffffffffff', 'AUCTION-2-2025', NULL, 0.00, 'ffffgs', NULL, NULL, 'pending', 0, '2025-04-23 20:51:59', '2025-04-23 20:51:59', 0, NULL, 'auction', NULL, NULL, 'sale', NULL, '2025-04-23', '2025-05-02', NULL, 0.00),
+(44, 77, 'Quisquam sint accusa', 'SHA132025', NULL, 0.00, 'Beatae atque nulla q', NULL, NULL, 'pending', 0, '2025-04-25 01:00:02', '2025-04-25 01:00:02', 0, NULL, 'shared', NULL, NULL, 'sale', NULL, NULL, NULL, NULL, 0.00),
+(45, 77, 'Quisquam sint accusa', 'SHA13202545', NULL, 0.00, 'Beatae atque nulla q', NULL, NULL, 'pending', 0, '2025-04-25 01:02:03', '2025-04-25 01:02:03', 0, NULL, 'shared', NULL, NULL, 'sale', NULL, NULL, NULL, NULL, 0.00),
+(46, 77, 'Quisquam sint accusa', 'SHA13202546', NULL, 0.00, 'Beatae atque nulla q', NULL, NULL, 'pending', 0, '2025-04-25 01:26:59', '2025-04-25 01:26:59', 0, NULL, 'shared', NULL, NULL, 'sale', NULL, NULL, NULL, NULL, 0.00),
+(47, 77, 'عقار متشارك بالمزايدة', 'INV12202547', 'qr_codes/qr_47.png', 10000000.00, 'Itaque anim tempor i', NULL, NULL, 'pending', 0, '2025-04-25 14:42:56', '2025-04-26 21:04:13', 0, NULL, 'investment', NULL, 5, 'sale', NULL, NULL, NULL, NULL, 10000000.00),
+(49, 77, 'عقار متزايد', 'AUC11202548', 'qr_codes/qr_49.png', 0.00, 'Doloribus dignissimo', NULL, NULL, 'pending', 0, '2025-04-25 14:53:06', '2025-04-25 14:53:07', 0, NULL, 'auction', NULL, 5, 'sale', NULL, '2025-04-25', '2025-05-09', NULL, 0.00),
+(62, 77, 'Dolor cillum consequ', 'SHA13202550', NULL, 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:11:17', '2025-04-25 23:11:17', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00),
+(63, 77, 'Dolor cillum consequ', 'SHA13202563', NULL, 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:12:37', '2025-04-25 23:12:37', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00),
+(64, 77, 'Dolor cillum consequ', 'SHA13202564', 'qr_codes/qr_64.png', 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:14:28', '2025-04-25 23:14:32', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00);
 
 -- --------------------------------------------------------
 
@@ -842,8 +947,8 @@ CREATE TABLE `product_features` (
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `plan_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `plot_number` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `plan_number` varchar(50) DEFAULT NULL,
+  `plot_number` varchar(50) DEFAULT NULL,
   `area` decimal(8,2) DEFAULT NULL,
   `area_after_development` decimal(8,2) DEFAULT NULL,
   `valuation` decimal(8,2) DEFAULT NULL,
@@ -854,7 +959,7 @@ CREATE TABLE `product_features` (
   `has_survey_decision` tinyint(4) DEFAULT NULL,
   `has_mortgage` tinyint(4) DEFAULT NULL,
   `has_penalties` tinyint(4) DEFAULT NULL,
-  `penalty_type` enum('cash','installment') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `penalty_type` enum('cash','installment') DEFAULT NULL,
   `valuation_type` tinyint(4) DEFAULT NULL,
   `accepts_mortgage` tinyint(4) DEFAULT NULL,
   `usufruct_lease` tinyint(4) DEFAULT NULL,
@@ -862,10 +967,10 @@ CREATE TABLE `product_features` (
   `annual_rent` decimal(15,2) DEFAULT NULL,
   `remaining_lease_years` int(20) DEFAULT NULL,
   `license_number` int(30) DEFAULT NULL,
-  `additional_info` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `represented_by` enum('owner','agent','co-owner','other') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_type` enum('residential','commercial') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `owner_type` enum('other','company','individual') COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `additional_info` text DEFAULT NULL,
+  `represented_by` enum('owner','agent','co-owner','other') DEFAULT NULL,
+  `product_type` enum('residential','commercial') DEFAULT NULL,
+  `owner_type` enum('other','company','individual') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -873,8 +978,40 @@ CREATE TABLE `product_features` (
 --
 
 INSERT INTO `product_features` (`id`, `product_id`, `created_at`, `updated_at`, `plan_number`, `plot_number`, `area`, `area_after_development`, `valuation`, `valuation_date`, `has_planning_diagram`, `has_electronic_deed`, `has_real_estate_market`, `has_survey_decision`, `has_mortgage`, `has_penalties`, `penalty_type`, `valuation_type`, `accepts_mortgage`, `usufruct_lease`, `is_rented`, `annual_rent`, `remaining_lease_years`, `license_number`, `additional_info`, `represented_by`, `product_type`, `owner_type`) VALUES
-(10, 1, '2025-04-19 22:54:01', '2025-04-21 13:43:48', '444', '333', '333.00', '234.00', '22.00', '2025-04-01', 0, 0, 0, 0, 0, 0, 'cash', 1, 0, 1, 0, '2234.00', 222, 3222, 'fgbhtgyju', 'owner', 'residential', 'individual'),
-(11, 43, '2025-04-23 20:52:00', '2025-04-23 20:52:00', '284', '333', '1111.00', NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'residential', NULL);
+(10, 1, '2025-04-19 22:54:01', '2025-04-26 19:07:11', '444', '333', 333.00, 234.00, 22.00, '2025-04-01', 0, 0, 0, 0, 0, 0, 'cash', 1, 0, 1, 0, 2234.00, 222, 3222, 'fgbhtgyju', 'owner', 'residential', 'individual'),
+(11, 43, '2025-04-23 20:52:00', '2025-04-23 20:52:00', '284', '333', 1111.00, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 'residential', NULL),
+(12, 44, '2025-04-25 01:00:02', '2025-04-25 01:00:02', '907', '652', 999.00, 999.00, 72.00, '2010-09-01', 1, 1, 0, 0, 0, 1, 'cash', NULL, 0, 1, 0, 52.00, 2000, 889, 'Veniam unde volupta', 'agent', 'commercial', NULL),
+(13, 45, '2025-04-25 01:02:03', '2025-04-25 01:02:03', '907', '652', 999.00, 999.00, 72.00, '2010-09-01', 1, 1, 0, 0, 0, 1, 'cash', NULL, 0, 1, 0, 52.00, 2000, 889, 'Veniam unde volupta', 'agent', 'commercial', NULL),
+(14, 46, '2025-04-25 01:26:59', '2025-04-25 01:26:59', '907', '652', 999.00, 999.00, 72.00, '2010-09-01', 1, 1, 0, 0, 0, 1, 'cash', NULL, 0, 1, 0, 52.00, 2000, 889, 'Veniam unde volupta', 'agent', 'commercial', NULL),
+(15, 47, '2025-04-25 14:42:56', '2025-04-25 14:42:56', '428', '425', 66.00, 50.00, 69.00, '1977-02-14', 0, 0, 1, 0, 1, 0, 'installment', NULL, 0, 0, 1, 88.00, 1986, 502, 'Non inventore molest', 'agent', 'residential', NULL),
+(17, 49, '2025-04-25 14:53:06', '2025-04-25 14:53:06', '44', '726', 11111.00, 999999.99, 9.00, '2008-01-09', 0, 1, 1, 1, 0, 0, 'cash', NULL, 0, 0, 1, 10.00, 1999, 532, 'Quia non et aut sint', 'agent', 'commercial', NULL),
+(30, 62, '2025-04-25 23:11:17', '2025-04-25 23:11:17', '632', '662', 9999.00, 44.00, 28.00, '2004-11-18', 1, 1, 0, 0, 0, 1, 'cash', NULL, 1, 1, 1, 7.00, 2011, 562, 'Aliquip magna ut com', 'agent', 'residential', NULL),
+(31, 63, '2025-04-25 23:12:37', '2025-04-25 23:12:37', '632', '662', 9999.00, 44.00, 28.00, '2004-11-18', 1, 1, 0, 0, 0, 1, 'cash', NULL, 1, 1, 1, 7.00, 2011, 562, 'Aliquip magna ut com', 'agent', 'residential', NULL),
+(32, 64, '2025-04-25 23:14:28', '2025-04-25 23:14:28', '632', '662', 9999.00, 44.00, 28.00, '2004-11-18', 1, 1, 0, 0, 0, 1, 'cash', NULL, 1, 1, 1, 7.00, 2011, 562, 'Aliquip magna ut com', 'agent', 'residential', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_investments`
+--
+
+CREATE TABLE `product_investments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `group_number` varchar(100) DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `product_id` bigint(20) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_investments`
+--
+
+INSERT INTO `product_investments` (`id`, `created_at`, `updated_at`, `amount`, `group_number`, `user_id`, `product_id`) VALUES
+(1, '2025-04-26 19:53:33', '2025-04-26 19:53:33', 1000.00, NULL, 77, 47),
+(4, '2025-04-26 21:04:13', '2025-04-26 21:04:13', 9999000.00, NULL, 79, 47);
 
 -- --------------------------------------------------------
 
@@ -887,8 +1024,8 @@ CREATE TABLE `product_letters` (
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
   `sender_id` bigint(20) UNSIGNED NOT NULL,
   `receiver_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('approve','decline') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text DEFAULT NULL,
+  `status` enum('approve','decline') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -906,24 +1043,8 @@ CREATE TABLE `product_offers` (
   `amount` decimal(15,2) NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `status` enum('decline','approve') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_participants`
---
-
-CREATE TABLE `product_participants` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `amount` decimal(8,2) NOT NULL,
-  `group_number` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `product_id` bigint(20) UNSIGNED DEFAULT NULL
+  `status` enum('decline','approve') NOT NULL,
+  `message` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -938,11 +1059,51 @@ CREATE TABLE `product_verifications` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `product_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `group_number` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `method` enum('qr','link','code') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `group_number` varchar(100) DEFAULT NULL,
+  `method` enum('qr','link','code') DEFAULT NULL,
   `verified_at` timestamp NULL DEFAULT NULL,
-  `via_user_id` bigint(20) UNSIGNED DEFAULT NULL
+  `via_user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `verification_level` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_verifications`
+--
+
+INSERT INTO `product_verifications` (`id`, `user_id`, `created_at`, `updated_at`, `product_id`, `group_number`, `method`, `verified_at`, `via_user_id`, `verification_level`) VALUES
+(7, 77, '2025-04-25 23:36:11', '2025-04-25 23:36:11', NULL, NULL, 'link', NULL, NULL, '3'),
+(8, 77, '2025-04-25 23:44:06', '2025-04-25 23:44:06', 64, NULL, 'link', NULL, NULL, '3');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `property_access_links`
+--
+
+CREATE TABLE `property_access_links` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `source_user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `token` text DEFAULT NULL,
+  `current_level` int(20) NOT NULL DEFAULT 2,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `property_access_links`
+--
+
+INSERT INTO `property_access_links` (`id`, `product_id`, `source_user_id`, `token`, `current_level`, `created_at`, `updated_at`) VALUES
+(10, 1, NULL, '444', 2, '2025-04-19 22:54:01', '2025-04-21 13:43:48'),
+(11, 43, NULL, '284', 2, '2025-04-23 20:52:00', '2025-04-23 20:52:00'),
+(12, 44, NULL, '907', 2, '2025-04-25 01:00:02', '2025-04-25 01:00:02'),
+(13, 45, NULL, '907', 2, '2025-04-25 01:02:03', '2025-04-25 01:02:03'),
+(14, 46, NULL, '907', 2, '2025-04-25 01:26:59', '2025-04-25 01:26:59'),
+(15, 47, NULL, '428', 2, '2025-04-25 14:42:56', '2025-04-25 14:42:56'),
+(17, 49, NULL, '44', 2, '2025-04-25 14:53:06', '2025-04-25 14:53:06'),
+(18, 64, NULL, '70d8a1db-0756-4b29-95d4-1ff2d9493855', 2, '2025-04-25 23:14:29', NULL),
+(19, 64, 77, 'ed9d60ce-704d-47ea-81e2-72f801ad60f6', 3, '2025-04-25 23:44:06', '2025-04-25 23:44:06');
 
 -- --------------------------------------------------------
 
@@ -953,7 +1114,7 @@ CREATE TABLE `product_verifications` (
 CREATE TABLE `referrals` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `referral_code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `referral_code` varchar(50) NOT NULL,
   `points` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -996,8 +1157,8 @@ INSERT INTO `referral_logs` (`id`, `referrer_id`, `referred_user_id`, `points_aw
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1175,13 +1336,13 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 CREATE TABLE `seo_tags` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `page_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `page_description` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `page_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `page_title` text NOT NULL,
+  `page_description` longtext DEFAULT NULL,
+  `page_url` text DEFAULT NULL,
+  `keywords` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `model_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_name` varchar(255) NOT NULL,
   `model_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول التصنيفات';
 
@@ -1216,47 +1377,47 @@ CREATE TABLE `settings` (
   `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`id`, `group`, `name`, `locked`, `payload`, `created_at`, `updated_at`) VALUES
-(1, 'general', 'site_name_ar', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\"', '2024-12-08 09:28:24', '2025-04-24 11:33:53'),
-(2, 'general', 'site_name_en', 0, '\"Aqarat Saudi\"', '2024-12-08 09:28:24', '2025-04-24 11:33:54'),
-(3, 'general', 'site_active', 0, 'true', '2024-12-08 09:28:24', '2025-04-24 11:33:54'),
-(4, 'general', 'logo', 0, '\"\\/uploadedImages\\/\\/settings-1745494430.png\"', '2024-12-08 09:28:24', '2025-04-24 11:33:54'),
-(5, 'general', 'email', 0, '\"info@email.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
-(6, 'general', 'address_ar', 0, '\"\\u0645\\u0635\\u0631\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
-(7, 'general', 'address_en', 0, '\"Egypt\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
+(1, 'general', 'site_name_ar', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(2, 'general', 'site_name_en', 0, '\"Aqarat Saudi\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(3, 'general', 'site_active', 0, 'true', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(4, 'general', 'logo', 0, '\"\\/uploadedImages\\/\\/settings-1745531571.png\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(5, 'general', 'email', 0, '\"info@email.com\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(6, 'general', 'address_ar', 0, '\"\\u0645\\u0635\\u0631\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(7, 'general', 'address_en', 0, '\"Egypt\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
 (8, 'general', 'facebook_link', 0, '\"https:\\/\\/www.facebook.com\"', '2024-12-08 09:28:24', '2024-12-08 09:28:24'),
-(9, 'general', 'base_logo', 0, '\"https:\\/\\/www.google.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
-(10, 'general', 'favicon', 0, '\"\\/uploadedImages\\/\\/settings-1745169904.png\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
-(11, 'general', 'phone', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
-(12, 'general', 'whatsapp_phone', 0, '\"1123333332\"', '2024-12-08 09:28:24', '2025-04-24 11:33:55'),
+(9, 'general', 'base_logo', 0, '\"https:\\/\\/www.google.com\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(10, 'general', 'favicon', 0, '\"\\/uploadedImages\\/\\/settings-1745531571.png\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(11, 'general', 'phone', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(12, 'general', 'whatsapp_phone', 0, '\"1123333332\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
 (16, 'seo', 'meta_title_ar', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629 - \\u0633\\u0647\\u0648\\u0644\\u0629 \\u0627\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0641\\u064a \\u0645\\u062a\\u0646\\u0627\\u0648\\u0644 \\u064a\\u062f\\u0643\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
 (17, 'seo', 'meta_title_en', 0, '\"\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629 - \\u0633\\u0647\\u0648\\u0644\\u0629 \\u0627\\u0644\\u062a\\u0633\\u0648\\u0642 \\u0641\\u064a \\u0645\\u062a\\u0646\\u0627\\u0648\\u0644 \\u064a\\u062f\\u0643\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
 (18, 'seo', 'meta_description_ar', 0, '\"\\u0627\\u0643\\u062a\\u0634\\u0641 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u062a\\u0633\\u0648\\u0642 \\u0641\\u0631\\u064a\\u062f\\u0629 \\u0645\\u0639 \\u062a\\u0637\\u0628\\u064a\\u0642 \\u0644\\u0627\\u0645\\u0648\\u0631! \\u0627\\u062d\\u0635\\u0644 \\u0639\\u0644\\u0649 \\u0623\\u062d\\u062f\\u062b \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0631\\u0648\\u0636 \\u0627\\u0644\\u0645\\u0645\\u064a\\u0632\\u0629 \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0631\\u0627\\u062d\\u0629 \\u0645\\u0646 \\u062e\\u0644\\u0627\\u0644 \\u0648\\u0627\\u062c\\u0647\\u0629 \\u0645\\u0635\\u0645\\u0645\\u0629 \\u062e\\u0635\\u064a\\u0635\\u064b\\u0627 \\u0644\\u062a\\u0644\\u0628\\u064a\\u0629 \\u0627\\u062d\\u062a\\u064a\\u0627\\u062c\\u0627\\u062a\\u0643. \\u0627\\u0628\\u062f\\u0623 \\u0631\\u062d\\u0644\\u062a\\u0643 \\u0627\\u0644\\u0622\\u0646\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
 (19, 'seo', 'meta_description_en', 0, '\"\\u0627\\u0643\\u062a\\u0634\\u0641 \\u062a\\u062c\\u0631\\u0628\\u0629 \\u062a\\u0633\\u0648\\u0642 \\u0641\\u0631\\u064a\\u062f\\u0629 \\u0645\\u0639 \\u062a\\u0637\\u0628\\u064a\\u0642 \\u0644\\u0627\\u0645\\u0648\\u0631! \\u0627\\u062d\\u0635\\u0644 \\u0639\\u0644\\u0649 \\u0623\\u062d\\u062f\\u062b \\u0627\\u0644\\u0645\\u0646\\u062a\\u062c\\u0627\\u062a \\u0648\\u0627\\u0644\\u0639\\u0631\\u0648\\u0636 \\u0627\\u0644\\u0645\\u0645\\u064a\\u0632\\u0629 \\u0628\\u0633\\u0647\\u0648\\u0644\\u0629 \\u0648\\u0631\\u0627\\u062d\\u0629 \\u0645\\u0646 \\u062e\\u0644\\u0627\\u0644 \\u0648\\u0627\\u062c\\u0647\\u0629 \\u0645\\u0635\\u0645\\u0645\\u0629 \\u062e\\u0635\\u064a\\u0635\\u064b\\u0627 \\u0644\\u062a\\u0644\\u0628\\u064a\\u0629 \\u0627\\u062d\\u062a\\u064a\\u0627\\u062c\\u0627\\u062a\\u0643. \\u0627\\u0628\\u062f\\u0623 \\u0631\\u062d\\u0644\\u062a\\u0643 \\u0627\\u0644\\u0622\\u0646\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
 (20, 'seo', 'keywords', 0, '\"\\u0645\\u0648\\u0642\\u0639 \\u0625\\u0644\\u0643\\u062a\\u0631\\u0648\\u0646\\u064a,\\u0639\\u0642\\u0627\\u0631\\u0627\\u062a \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\"', '2024-12-08 09:44:07', '2025-04-20 17:30:54'),
-(30, 'social', 'facebook_link', 0, '\"https:\\/\\/www.facebook.com\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
-(31, 'social', 'whatsapp_link', 0, '\"Spatie\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
-(32, 'social', 'twitter_link', 0, '\"https:\\/\\/www.twitter.com\\/\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
-(33, 'social', 'instagram_link', 0, '\"https:\\/\\/www.instagram.com\\/\"', '2024-12-08 10:35:20', '2025-04-24 11:33:57'),
-(34, 'social', 'tiktok_link', 0, '\"https:\\/\\/www.tiktok.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(35, 'social', 'linkedin_link', 0, '\"https:\\/\\/www.facebook.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(36, 'social', 'snapchat_link', 0, '\"https:\\/\\/www.snapchat.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(37, 'social', 'youtube_link', 0, '\"https:\\/\\/www.youtube.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(38, 'social', 'google_link', 0, '\"info@email.com\"', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(39, 'social', 'android_link', 0, 'null', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(40, 'social', 'ios_link', 0, 'null', '2024-12-08 10:35:21', '2025-04-24 11:33:57'),
-(41, 'general', 'bank_account_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
-(42, 'general', 'instapay_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
-(43, 'general', 'vodafone_cash_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
-(44, 'general', 'iban_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 11:33:57'),
-(45, 'general', 'bank_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:57'),
-(46, 'general', 'bank_account_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 11:33:56'),
+(30, 'social', 'facebook_link', 0, '\"https:\\/\\/www.facebook.com\"', '2024-12-08 10:35:20', '2025-04-24 21:52:51'),
+(31, 'social', 'whatsapp_link', 0, '\"Spatie\"', '2024-12-08 10:35:20', '2025-04-24 21:52:51'),
+(32, 'social', 'twitter_link', 0, '\"https:\\/\\/www.twitter.com\\/\"', '2024-12-08 10:35:20', '2025-04-24 21:52:51'),
+(33, 'social', 'instagram_link', 0, '\"https:\\/\\/www.instagram.com\\/\"', '2024-12-08 10:35:20', '2025-04-24 21:52:51'),
+(34, 'social', 'tiktok_link', 0, '\"https:\\/\\/www.tiktok.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(35, 'social', 'linkedin_link', 0, '\"https:\\/\\/www.facebook.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(36, 'social', 'snapchat_link', 0, '\"https:\\/\\/www.snapchat.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(37, 'social', 'youtube_link', 0, '\"https:\\/\\/www.youtube.com\\/\"', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(38, 'social', 'google_link', 0, '\"info@email.com\"', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(39, 'social', 'android_link', 0, 'null', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(40, 'social', 'ios_link', 0, 'null', '2024-12-08 10:35:21', '2025-04-24 21:52:51'),
+(41, 'general', 'bank_account_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(42, 'general', 'instapay_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(43, 'general', 'vodafone_cash_number', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(44, 'general', 'iban_number', 0, '\"96658033832\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(45, 'general', 'bank_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
+(46, 'general', 'bank_account_name', 0, '\"https:\\/\\/www.twitter.com\"', '2024-12-08 09:28:24', '2025-04-24 21:52:51'),
 (47, 'landing', 'about_title_ar', 0, '\"\\u0639\\u0646 \\u0627\\u0644\\u062a\\u0637\\u0628\\u064a\\u0642\"', '2024-12-08 09:28:24', '2025-02-06 15:07:53'),
 (48, 'landing', 'about_title_en', 0, '\"\\u0639\\u0646 \\u0627\\u0644\\u062a\\u0637\\u0628\\u064a\\u0642\"', '2024-12-08 09:28:24', '2025-02-06 15:07:53'),
 (49, 'landing', 'about_image', 0, '\"\\/uploadedImages\\/\\/settings-1738839952.png\"', '2024-12-08 09:28:24', '2025-02-06 15:07:53'),
@@ -1282,12 +1443,12 @@ INSERT INTO `settings` (`id`, `group`, `name`, `locked`, `payload`, `created_at`
 CREATE TABLE `shippings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `admin_id` bigint(20) UNSIGNED NOT NULL,
-  `zone_id` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `zone_id` varchar(20) DEFAULT NULL,
+  `city_name` varchar(255) NOT NULL,
   `cost` decimal(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('show','hide') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'show'
+  `status` enum('show','hide') NOT NULL DEFAULT 'show'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1295,74 +1456,74 @@ CREATE TABLE `shippings` (
 --
 
 INSERT INTO `shippings` (`id`, `admin_id`, `zone_id`, `city_name`, `cost`, `created_at`, `updated_at`, `status`) VALUES
-(1, 1, '1', 'القاهرة', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(2, 1, '1', 'الأسكندرية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(3, 1, '1', 'القاهرة الجديدة', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(4, 1, '1', 'الرحاب', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(5, 1, '1', 'حلوان', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(6, 1, '1', 'الجيزة', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(7, 1, '1', 'مدينة السادس من أكتوبر', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(8, 1, '1', 'الشيخ زايد', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(9, 1, '1', 'مدينة العاشر من رمضان', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(10, 1, '1', 'مدينة بدر', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(11, 1, '1', 'الشروق', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(12, 1, '1', 'العبور', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(13, 1, '1', 'مدينتي', '30.00', '2024-07-24 10:13:44', NULL, 'show'),
-(14, 1, '2', 'بورسعيد', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(15, 1, '2', 'الإسماعلية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(16, 1, '2', 'السويس', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(17, 1, '2', 'السخنه', '60.00', '2024-07-24 10:13:44', '2024-07-24 17:53:34', 'show'),
-(18, 1, '3', 'البحيرة', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(20, 1, '3', 'دمياط', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(21, 1, '3', 'الدقهلية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(22, 1, '3', 'كفر الشيخ', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(23, 1, '3', 'الغربية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(24, 1, '3', 'المنوفية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(25, 1, '3', 'الشرقية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(26, 1, '3', 'القليوبية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(27, 1, '3', 'دمنهور', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(28, 1, '3', 'المنصورة', '0.00', '2024-07-24 10:13:44', NULL, 'show'),
-(29, 1, '3', 'Elsaf', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(30, 1, '3', 'سقارة', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(31, 1, '3', 'البدرشين', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(32, 1, '3', 'الحوامدية', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(33, 1, '3', 'Elkhatatba', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(34, 1, '3', 'دهشور', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(35, 1, '3', 'Owaism', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(36, 1, '3', 'Elharranyia', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(37, 1, '3', 'Shabramant', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(38, 1, '3', 'Atfeeh', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(39, 1, '3', 'أبو النمرس', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(40, 1, '3', 'Burkash', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(41, 1, '3', 'Arab mosaeed', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(42, 1, '3', 'العياط', '60.00', '2024-07-24 10:13:44', NULL, 'show'),
-(43, 1, '4', 'الفيوم', '75.00', '2024-07-24 10:13:44', NULL, 'show'),
-(44, 1, '4', 'بني سويف', '75.00', '2024-07-24 10:13:44', NULL, 'show'),
-(45, 1, '4', 'المنيا', '75.00', '2024-07-24 10:13:44', NULL, 'show'),
-(46, 1, '4', 'أسيوط', '75.00', '2024-07-24 10:13:44', NULL, 'show'),
-(47, 1, '4', 'سوهاج', '75.00', '2024-07-24 10:13:44', NULL, 'show'),
-(48, 1, '5', 'قنا', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(49, 1, '5', 'الأقصر', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(50, 1, '5', 'أسوان', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(51, 1, '5', 'شرم الشيخ', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(52, 1, '5', 'الغردقة', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(53, 1, '5', 'عيون موسي', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(54, 1, '5', 'راس سدر', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(55, 1, '5', 'شمال سيناء', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(56, 1, '5', 'الساحل الشمالي', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(57, 1, '5', 'مرسي مطروح', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(58, 1, '5', 'دهب', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(59, 1, '5', 'الطور', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(60, 1, '5', 'نويبع', '85.00', '2024-07-24 10:13:44', NULL, 'show'),
-(61, 1, '6', 'جنوب سيناء', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(62, 1, '6', 'مرسي علم', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(63, 1, '6', 'العريش', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(64, 1, '6', 'الجونة', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(65, 1, '6', 'سفاجا', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(66, 1, '6', 'البحر الأحمر', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(67, 1, '6', 'طابا', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(68, 1, '6', 'Kosseir', '95.00', '2024-07-24 10:13:44', NULL, 'show'),
-(69, 1, '3', 'المحلة الكبري', '100.00', '2024-07-24 10:13:44', '2024-08-17 13:12:29', 'show');
+(1, 1, '1', 'القاهرة', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(2, 1, '1', 'الأسكندرية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(3, 1, '1', 'القاهرة الجديدة', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(4, 1, '1', 'الرحاب', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(5, 1, '1', 'حلوان', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(6, 1, '1', 'الجيزة', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(7, 1, '1', 'مدينة السادس من أكتوبر', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(8, 1, '1', 'الشيخ زايد', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(9, 1, '1', 'مدينة العاشر من رمضان', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(10, 1, '1', 'مدينة بدر', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(11, 1, '1', 'الشروق', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(12, 1, '1', 'العبور', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(13, 1, '1', 'مدينتي', 30.00, '2024-07-24 10:13:44', NULL, 'show'),
+(14, 1, '2', 'بورسعيد', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(15, 1, '2', 'الإسماعلية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(16, 1, '2', 'السويس', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(17, 1, '2', 'السخنه', 60.00, '2024-07-24 10:13:44', '2024-07-24 17:53:34', 'show'),
+(18, 1, '3', 'البحيرة', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(20, 1, '3', 'دمياط', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(21, 1, '3', 'الدقهلية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(22, 1, '3', 'كفر الشيخ', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(23, 1, '3', 'الغربية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(24, 1, '3', 'المنوفية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(25, 1, '3', 'الشرقية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(26, 1, '3', 'القليوبية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(27, 1, '3', 'دمنهور', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(28, 1, '3', 'المنصورة', 0.00, '2024-07-24 10:13:44', NULL, 'show'),
+(29, 1, '3', 'Elsaf', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(30, 1, '3', 'سقارة', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(31, 1, '3', 'البدرشين', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(32, 1, '3', 'الحوامدية', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(33, 1, '3', 'Elkhatatba', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(34, 1, '3', 'دهشور', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(35, 1, '3', 'Owaism', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(36, 1, '3', 'Elharranyia', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(37, 1, '3', 'Shabramant', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(38, 1, '3', 'Atfeeh', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(39, 1, '3', 'أبو النمرس', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(40, 1, '3', 'Burkash', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(41, 1, '3', 'Arab mosaeed', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(42, 1, '3', 'العياط', 60.00, '2024-07-24 10:13:44', NULL, 'show'),
+(43, 1, '4', 'الفيوم', 75.00, '2024-07-24 10:13:44', NULL, 'show'),
+(44, 1, '4', 'بني سويف', 75.00, '2024-07-24 10:13:44', NULL, 'show'),
+(45, 1, '4', 'المنيا', 75.00, '2024-07-24 10:13:44', NULL, 'show'),
+(46, 1, '4', 'أسيوط', 75.00, '2024-07-24 10:13:44', NULL, 'show'),
+(47, 1, '4', 'سوهاج', 75.00, '2024-07-24 10:13:44', NULL, 'show'),
+(48, 1, '5', 'قنا', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(49, 1, '5', 'الأقصر', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(50, 1, '5', 'أسوان', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(51, 1, '5', 'شرم الشيخ', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(52, 1, '5', 'الغردقة', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(53, 1, '5', 'عيون موسي', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(54, 1, '5', 'راس سدر', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(55, 1, '5', 'شمال سيناء', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(56, 1, '5', 'الساحل الشمالي', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(57, 1, '5', 'مرسي مطروح', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(58, 1, '5', 'دهب', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(59, 1, '5', 'الطور', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(60, 1, '5', 'نويبع', 85.00, '2024-07-24 10:13:44', NULL, 'show'),
+(61, 1, '6', 'جنوب سيناء', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(62, 1, '6', 'مرسي علم', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(63, 1, '6', 'العريش', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(64, 1, '6', 'الجونة', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(65, 1, '6', 'سفاجا', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(66, 1, '6', 'البحر الأحمر', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(67, 1, '6', 'طابا', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(68, 1, '6', 'Kosseir', 95.00, '2024-07-24 10:13:44', NULL, 'show'),
+(69, 1, '3', 'المحلة الكبري', 100.00, '2024-07-24 10:13:44', '2024-08-17 13:12:29', 'show');
 
 -- --------------------------------------------------------
 
@@ -1372,7 +1533,7 @@ INSERT INTO `shippings` (`id`, `admin_id`, `zone_id`, `city_name`, `cost`, `crea
 
 CREATE TABLE `subscribers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1401,14 +1562,14 @@ INSERT INTO `subscribers` (`id`, `email`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `trackers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `ip` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `hits` int(11) DEFAULT NULL,
   `visit_time` time DEFAULT NULL,
-  `country` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `country` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1420,70 +1581,72 @@ CREATE TABLE `trackers` (
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `added_by` bigint(20) UNSIGNED DEFAULT NULL,
-  `account_type` enum('vendors','admins','subadmins','users') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles_name` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mobile` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country_code` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_type` enum('vendors','admins','subadmins','users') NOT NULL,
+  `roles_name` varchar(200) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `mobile` varchar(100) DEFAULT NULL,
+  `country_code` varchar(50) DEFAULT NULL,
   `mobile_code` int(11) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` enum('pending','accepted','blocked') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` enum('pending','accepted','blocked') NOT NULL DEFAULT 'pending',
   `mobile_verified_at` timestamp NULL DEFAULT NULL,
-  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fcm_id` varchar(120) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) DEFAULT NULL,
+  `provider_id` varchar(255) DEFAULT NULL,
+  `fcm_id` varchar(120) DEFAULT NULL,
   `parent_id` bigint(20) UNSIGNED DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
-  `user_type` enum('owner','agent','co-owner','other') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_number` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `agency_number` int(20) DEFAULT NULL
+  `user_type` enum('owner','agent','co-owner','other') NOT NULL,
+  `id_number` varchar(40) NOT NULL,
+  `agency_number` int(20) DEFAULT NULL,
+  `card_code` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `email`, `mobile`, `country_code`, `mobile_code`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `mobile_verified_at`, `provider`, `provider_id`, `fcm_id`, `parent_id`, `last_login`, `user_type`, `id_number`, `agency_number`) VALUES
-(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-24 08:18:31', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-24 08:18:31', 'owner', '', NULL),
-(2, 1, 'admins', '[\"admin\"]', 'mohamed ahmmed', 'mohamed@admin.com', '1232142232', NULL, NULL, NULL, '$2y$10$6zhGKUsUSf8XoNyLIJS66eZo06LQHMka/HqD95tAlxLtemJGOCTQm', NULL, '2025-01-19 11:54:48', '2025-03-09 09:13:58', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(3, 1, 'subadmins', '[\"order employee\"]', 'yasser ahmed', 'yasser@admin.com', NULL, NULL, NULL, NULL, '$2y$10$pwyYu1W5JVTOhf29Jy7qCu7KcOYomfz7nTb4r9mckP/6ZQx3UJN4G', NULL, '2025-01-19 11:57:02', '2025-01-19 12:37:15', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(25, 1, 'users', '[\"user\"]', 'wessam sakr', 'wessam@user.com', '1097980291', '20', NULL, NULL, '$2y$10$cY8DuxeFlcyAqVjPzSbA8eqd4RZ.iJAGKMVHqN3y.4APAnvPu4Kxe', NULL, '2024-08-02 16:54:36', '2025-02-20 11:15:23', 'accepted', NULL, NULL, NULL, 'ffghjkl', NULL, NULL, 'owner', '', NULL),
-(26, 1, 'users', '[\"user\"]', 'mahekhalifa', 'mahekhalifa@user.com', '0109797069', '20', NULL, NULL, '$2y$10$8rPvKCvXnzgRasR1MJztm.MisHthvn6/tEDaITYfQ8Esr/Zr6XToS', NULL, '2024-08-02 17:37:31', '2025-02-20 11:20:54', 'accepted', NULL, NULL, NULL, 'gbhnjk,l;\'', NULL, NULL, 'owner', '', NULL),
-(32, 1, 'users', '[\"user\"]', 'mai tarek', 'maitarek@gmail.com', '2090987069', '20', NULL, NULL, '$2y$10$92wgv4PVjc75OI6Oc5JhROD24bMpbDrbxp2UbxSYXQrHTwUp/fVyW', NULL, '2024-09-28 16:26:13', '2025-02-20 11:22:47', 'accepted', '2025-01-16 10:02:10', NULL, NULL, 'dfghjk,l.;/\'\\', NULL, NULL, 'owner', '', NULL),
-(36, 1, 'vendors', '[\"vendor\"]', 'Imani Hubbard', 'caxuvugyz@mailinator.com', '1098989866', NULL, NULL, NULL, '$2y$10$pfvLjzmKs4BTSr7jbkGSzOaHGWaZp0ifUEd1HIf0mJBVH5B87N70y', NULL, '2025-01-24 19:11:01', '2025-03-10 09:33:05', 'accepted', NULL, NULL, NULL, NULL, NULL, '2025-03-10 09:33:05', 'owner', '', NULL),
-(37, 1, 'vendors', '[\"vendor\"]', 'dcfgbhk', 'caxuv22ugyz@mailinator.com', '6666666666', NULL, NULL, NULL, '$2y$10$nwzj4Q9zDWCtVNMuXcXR4OPnavIk55dLMVEXKVRx..DshPtJ9GfAG', NULL, '2025-01-24 19:42:48', '2025-01-24 19:42:49', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(38, 1, 'vendors', '[\"vendor\"]', 'Julian Davis', 'potuhoz@mailinator.com', '2666666666', NULL, NULL, NULL, '$2y$10$uR9zRl7ywTmzlAt5tj96auOmDsfYIm7Zh1GSKm7ijaX/OP5OAgVxy', NULL, '2025-01-24 20:33:22', '2025-01-24 20:33:22', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(39, 1, 'vendors', '[\"vendor\"]', 'mai tarek', 'admin@admine.com', '1223333332', NULL, NULL, NULL, '$2y$10$WJeF8doD.avU4VxlUOcwS.it1m4bxW7be/KLBRmhd5juKAkBxWDwS', NULL, '2025-01-25 11:10:59', '2025-01-25 11:11:00', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(40, 1, 'vendors', '[\"vendor\"]', 'dfgh', 'admin@ad1min.com', '0107987069', NULL, NULL, NULL, '$2y$10$HSoGJp7m.f1h7fwO0mB5SebXIxou7eOTdT9LipE7yB04JWd3qvSOG', NULL, '2025-01-25 11:14:02', '2025-01-25 11:14:03', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(41, 1, 'vendors', '[\"vendor\"]', 'mai tarek2', 'admin@admin.c22om', '0129797069', NULL, NULL, NULL, '$2y$10$U1QDoGev3QSJfaIu6vmFQe/.4Gmjqf77CPC.dzhf0NoqPC5RknwGC', NULL, '2025-01-25 11:15:57', '2025-01-25 11:15:57', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(42, 1, 'vendors', '[\"vendor\"]', 'Abdullah Elgazzar', 'info999@email.com', '1234567890', NULL, NULL, NULL, '$2y$10$b8cRu6TqC1/5.biIoQQFvebnyplyseW347dSwARTtPzrvidJJqyIK', NULL, '2025-02-06 12:18:11', '2025-02-06 12:18:11', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(43, 1, 'vendors', '[\"vendor\"]', 'Abdullah', 'elgazzara912@gmail.com', '0109398222', NULL, NULL, NULL, '$2y$10$EpGB1HWaXaRpXOGE/siMMOIPLpeF3wk6Ujri25ZWHoDeF8vB2np2K', NULL, '2025-02-06 13:53:56', '2025-02-06 13:53:56', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(44, 1, 'vendors', '[\"vendor\"]', 'Abdullah Ashraf', 'elgazzara2912@gmail.com', '9663455345', NULL, NULL, NULL, '$2y$10$U/6CtS6PX90hjnUHKPTbMuEuC/IsIQLll3qSZyUZ2Fy3b/w0OrqPW', NULL, '2025-02-06 13:57:02', '2025-02-06 13:57:02', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(45, 1, 'vendors', '[\"vendor\"]', 'Winter Holder', 'zujux@mailinator.com', '1232345678', NULL, NULL, NULL, '$2y$10$RERrIYYHg9Vw8Y.2GfOs9..ukekABqNvB9wJfGy3Ktn/GEvJdAu8y', NULL, '2025-02-06 14:41:16', '2025-03-06 13:28:43', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(46, 1, 'vendors', '[\"vendor\"]', 'Gisela Shaw', 'nypasi@mailinator.com', '1111111181', NULL, NULL, NULL, '$2y$10$oJYe7/V30G0/EeZMYdpb..vmJc4PjcWiSsXOE6hRj.WFPrqMnM4uO', NULL, '2025-02-17 12:21:38', '2025-02-17 12:21:38', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(47, 1, 'admins', '[\"admin\"]', 'ertghjtrrr', 'admin22@admin.com', '1232342232', NULL, NULL, NULL, '$2y$10$TYLvkEFDpGsK4cSXr0aZaeykBh9aPqua9wCVNH9omgSArk9D/w9jW', NULL, '2025-02-18 09:33:48', '2025-02-18 09:33:48', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(48, 1, 'vendors', '[\"vendor\"]', 'fffffff', 'fffffff@admin.com', '1232342232', NULL, NULL, NULL, '$2y$10$WTVWHwyeheLV6NaL9qyU6egGDGYEtfSHu3x3rcQT2c8rnz6YOJ9PK', NULL, '2025-02-18 10:58:17', '2025-02-18 10:58:17', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(49, 1, 'vendors', '[\"vendor\"]', 'Hyatt Frye', 'teju@mailinator.com', '2828222828', NULL, NULL, NULL, '$2y$10$UUKYJfCvpiLuVxOqOQknZu8u4WWubbQRgBQH0WJ1NTABv/wtxf4ji', NULL, '2025-02-18 11:26:25', '2025-02-18 11:31:43', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(50, 1, 'vendors', '[\"vendor\"]', 'mai tarek', 'maitarektt2222@gmail.com', '1097987069', NULL, NULL, NULL, '$2y$10$y4Am7B7zeLZW15MPoDtXwuiMxZksVU8yI9RxHo3n6GlMLsl5O9ZDK', NULL, '2025-02-18 11:38:05', '2025-02-18 11:46:54', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(51, 1, 'vendors', '[\"vendor\"]', 'Mohammad Nielsen', 'suda@mailinator.com', '2929299292', NULL, NULL, NULL, '$2y$10$J8EDggCsnB8z/ryM8EIYjuKO3QLQhExMSImJVAiZR1Eqx3L3Vrdve', NULL, '2025-02-18 11:45:37', '2025-02-18 11:45:37', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(57, 1, 'users', '[\"user\"]', 'mohamed', 'mohamed@user.com', '2222222222', NULL, NULL, NULL, '$2y$10$DdQdaSdBA7ml33c12hx9IeSkFgwSwKu4AuEAZpjGf3MjN5tToJt7K', NULL, '2025-02-19 09:20:13', '2025-02-20 11:16:10', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(58, 1, 'vendors', '[\"vendor\"]', 'محمد الطرشوبي', 'vendor@admin.com', '2222222222', NULL, NULL, NULL, '$2y$10$qtkxqhrsEQ6c8UkP.s86xO3/jeRslvl2VSAZUr1E6SlFmk.ADy3VK', NULL, '2025-02-19 09:30:18', '2025-02-20 09:28:13', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(59, 58, 'subadmins', '[\"subadmin\"]', 'cfghjk', 'cfghjk@admin.com', '2233344444', NULL, NULL, NULL, '$2y$10$SQz7ltUaCCcWFxiAE4rtCOI7lRV2niAuBhATZodX2fjSBl.x2KskO', NULL, '2025-02-19 09:31:40', '2025-02-19 09:31:42', 'accepted', NULL, NULL, NULL, NULL, 58, NULL, 'owner', '', NULL),
-(60, 1, 'vendors', '[\"vendor\"]', 'frgrdg11', 'adminwwww@admin.com', '1232342232', NULL, NULL, NULL, '$2y$10$Orkrvl5d7x7eAQPkf6psEuhzLS5JCHty3yQd5kZQE3iRBZqwtj3G2', NULL, '2025-02-19 10:15:35', '2025-02-19 10:15:35', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(62, NULL, 'vendors', NULL, 'ahmed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-23 09:40:09', '2025-02-23 09:40:09', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(70, NULL, 'users', NULL, 'ahmed', 'medo@user.com', '1097979797', NULL, NULL, NULL, '$2y$10$OtRQtcQpX/ManeK4.csG0uFRUTx69QlE6oWdoMofLoI070E2TIwAu', NULL, '2025-02-23 09:49:59', '2025-03-05 11:21:35', 'accepted', '2025-02-23 13:18:29', NULL, NULL, NULL, NULL, '2025-03-05 11:21:35', 'owner', '', NULL),
-(72, NULL, 'users', NULL, 'ahmed', NULL, '1097979795', NULL, NULL, NULL, '$2y$10$pATqTxOfNHaljePOf1Zki.twGhloRU4m0IY2PV08d1VnJ3khUqJSi', NULL, '2025-02-23 12:21:02', '2025-02-26 13:11:33', 'accepted', '2025-02-26 13:05:11', NULL, NULL, NULL, NULL, '2025-02-26 13:11:33', 'owner', '', NULL),
-(73, NULL, 'users', NULL, 'ahmed', NULL, '1097979793', NULL, NULL, NULL, '$2y$10$V3.B95JsXCVJUQDAJiHeAucWykKOuhKBzznYZA3yHVXytxQdBbnBW', NULL, '2025-02-23 13:20:49', '2025-02-23 13:20:49', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(74, NULL, 'users', NULL, 'ahmed', NULL, '1097979792', NULL, 1234, NULL, '$2y$10$4AH8H7PGdYSeNnT9cUpOAua5OmAxqUiUXFiZw0CNwSncmDJ1E2sJO', NULL, '2025-02-23 13:22:38', '2025-02-23 13:22:38', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(75, 1, 'users', '[\"user\"]', 'ashraf12', 'ashraf12@user.com', '1097987033', NULL, NULL, NULL, '$2y$10$bsqiDzKFk230yHp97VNEpe3Fr6hbzXfsPQoG.A.YMqpCbtggaNJZ6', NULL, '2025-03-09 09:27:13', '2025-03-09 09:27:37', 'accepted', NULL, NULL, NULL, NULL, NULL, '2025-03-09 09:27:37', 'owner', '', NULL),
-(76, 1, 'vendors', '[\"vendor\"]', 'Akeem Pugh', 'zybyxosoci@mailinator.com', '1888282828', NULL, NULL, NULL, '$2y$10$1MbeoxQd0qcCT8Rw1A7SCuIyb3h46fXolpZ77CnU7jY/WHtp0MhoO', NULL, '2025-03-09 11:03:22', '2025-03-09 11:03:22', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL),
-(77, NULL, 'users', NULL, 'lllllllllllll', NULL, '1010101010', '20', NULL, NULL, '$2y$10$lWcUV9hMCcrlJ09PQ7dMiuOXxDgRiAf8TgYUN3OIFAIrXsq1DrAvu', NULL, '2025-04-20 16:29:44', '2025-04-23 13:57:16', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'agent', '22222222222', 2147483647),
-(78, NULL, 'users', NULL, 'أبو طاحون', NULL, '1112342232', NULL, NULL, NULL, '$2y$10$C5cFxJxTIr3idVyOxVDcuuDQe8x5yKcpiFmeF5/o2NVaf3MFuRv1a', NULL, '2025-04-21 12:22:21', '2025-04-21 12:22:21', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '1122333333', NULL);
+INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `email`, `mobile`, `country_code`, `mobile_code`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `mobile_verified_at`, `provider`, `provider_id`, `fcm_id`, `parent_id`, `last_login`, `user_type`, `id_number`, `agency_number`, `card_code`) VALUES
+(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-26 18:52:41', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-26 18:52:41', 'owner', '', NULL, NULL),
+(2, 1, 'admins', '[\"admin\"]', 'mohamed ahmmed', 'mohamed@admin.com', '1232142232', NULL, NULL, NULL, '$2y$10$6zhGKUsUSf8XoNyLIJS66eZo06LQHMka/HqD95tAlxLtemJGOCTQm', NULL, '2025-01-19 11:54:48', '2025-03-09 09:13:58', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(3, 1, 'subadmins', '[\"order employee\"]', 'yasser ahmed', 'yasser@admin.com', NULL, NULL, NULL, NULL, '$2y$10$pwyYu1W5JVTOhf29Jy7qCu7KcOYomfz7nTb4r9mckP/6ZQx3UJN4G', NULL, '2025-01-19 11:57:02', '2025-01-19 12:37:15', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(25, 1, 'users', '[\"user\"]', 'wessam sakr', 'wessam@user.com', '1097980291', '20', NULL, NULL, '$2y$10$cY8DuxeFlcyAqVjPzSbA8eqd4RZ.iJAGKMVHqN3y.4APAnvPu4Kxe', NULL, '2024-08-02 16:54:36', '2025-02-20 11:15:23', 'accepted', NULL, NULL, NULL, 'ffghjkl', NULL, NULL, 'owner', '', NULL, NULL),
+(26, 1, 'users', '[\"user\"]', 'mahekhalifa', 'mahekhalifa@user.com', '0109797069', '20', NULL, NULL, '$2y$10$8rPvKCvXnzgRasR1MJztm.MisHthvn6/tEDaITYfQ8Esr/Zr6XToS', NULL, '2024-08-02 17:37:31', '2025-02-20 11:20:54', 'accepted', NULL, NULL, NULL, 'gbhnjk,l;\'', NULL, NULL, 'owner', '', NULL, NULL),
+(32, 1, 'users', '[\"user\"]', 'mai tarek', 'maitarek@gmail.com', '2090987069', '20', NULL, NULL, '$2y$10$92wgv4PVjc75OI6Oc5JhROD24bMpbDrbxp2UbxSYXQrHTwUp/fVyW', NULL, '2024-09-28 16:26:13', '2025-02-20 11:22:47', 'accepted', '2025-01-16 10:02:10', NULL, NULL, 'dfghjk,l.;/\'\\', NULL, NULL, 'owner', '', NULL, NULL),
+(36, 1, 'vendors', '[\"vendor\"]', 'Imani Hubbard', 'caxuvugyz@mailinator.com', '1098989866', NULL, NULL, NULL, '$2y$10$pfvLjzmKs4BTSr7jbkGSzOaHGWaZp0ifUEd1HIf0mJBVH5B87N70y', NULL, '2025-01-24 19:11:01', '2025-03-10 09:33:05', 'accepted', NULL, NULL, NULL, NULL, NULL, '2025-03-10 09:33:05', 'owner', '', NULL, NULL),
+(37, 1, 'vendors', '[\"vendor\"]', 'dcfgbhk', 'caxuv22ugyz@mailinator.com', '6666666666', NULL, NULL, NULL, '$2y$10$nwzj4Q9zDWCtVNMuXcXR4OPnavIk55dLMVEXKVRx..DshPtJ9GfAG', NULL, '2025-01-24 19:42:48', '2025-01-24 19:42:49', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(38, 1, 'vendors', '[\"vendor\"]', 'Julian Davis', 'potuhoz@mailinator.com', '2666666666', NULL, NULL, NULL, '$2y$10$uR9zRl7ywTmzlAt5tj96auOmDsfYIm7Zh1GSKm7ijaX/OP5OAgVxy', NULL, '2025-01-24 20:33:22', '2025-01-24 20:33:22', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(39, 1, 'vendors', '[\"vendor\"]', 'mai tarek', 'admin@admine.com', '1223333332', NULL, NULL, NULL, '$2y$10$WJeF8doD.avU4VxlUOcwS.it1m4bxW7be/KLBRmhd5juKAkBxWDwS', NULL, '2025-01-25 11:10:59', '2025-01-25 11:11:00', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(40, 1, 'vendors', '[\"vendor\"]', 'dfgh', 'admin@ad1min.com', '0107987069', NULL, NULL, NULL, '$2y$10$HSoGJp7m.f1h7fwO0mB5SebXIxou7eOTdT9LipE7yB04JWd3qvSOG', NULL, '2025-01-25 11:14:02', '2025-01-25 11:14:03', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(41, 1, 'vendors', '[\"vendor\"]', 'mai tarek2', 'admin@admin.c22om', '0129797069', NULL, NULL, NULL, '$2y$10$U1QDoGev3QSJfaIu6vmFQe/.4Gmjqf77CPC.dzhf0NoqPC5RknwGC', NULL, '2025-01-25 11:15:57', '2025-01-25 11:15:57', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(42, 1, 'vendors', '[\"vendor\"]', 'Abdullah Elgazzar', 'info999@email.com', '1234567890', NULL, NULL, NULL, '$2y$10$b8cRu6TqC1/5.biIoQQFvebnyplyseW347dSwARTtPzrvidJJqyIK', NULL, '2025-02-06 12:18:11', '2025-02-06 12:18:11', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(43, 1, 'vendors', '[\"vendor\"]', 'Abdullah', 'elgazzara912@gmail.com', '0109398222', NULL, NULL, NULL, '$2y$10$EpGB1HWaXaRpXOGE/siMMOIPLpeF3wk6Ujri25ZWHoDeF8vB2np2K', NULL, '2025-02-06 13:53:56', '2025-02-06 13:53:56', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(44, 1, 'vendors', '[\"vendor\"]', 'Abdullah Ashraf', 'elgazzara2912@gmail.com', '9663455345', NULL, NULL, NULL, '$2y$10$U/6CtS6PX90hjnUHKPTbMuEuC/IsIQLll3qSZyUZ2Fy3b/w0OrqPW', NULL, '2025-02-06 13:57:02', '2025-02-06 13:57:02', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(45, 1, 'vendors', '[\"vendor\"]', 'Winter Holder', 'zujux@mailinator.com', '1232345678', NULL, NULL, NULL, '$2y$10$RERrIYYHg9Vw8Y.2GfOs9..ukekABqNvB9wJfGy3Ktn/GEvJdAu8y', NULL, '2025-02-06 14:41:16', '2025-03-06 13:28:43', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(46, 1, 'vendors', '[\"vendor\"]', 'Gisela Shaw', 'nypasi@mailinator.com', '1111111181', NULL, NULL, NULL, '$2y$10$oJYe7/V30G0/EeZMYdpb..vmJc4PjcWiSsXOE6hRj.WFPrqMnM4uO', NULL, '2025-02-17 12:21:38', '2025-02-17 12:21:38', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(47, 1, 'admins', '[\"admin\"]', 'ertghjtrrr', 'admin22@admin.com', '1232342232', NULL, NULL, NULL, '$2y$10$TYLvkEFDpGsK4cSXr0aZaeykBh9aPqua9wCVNH9omgSArk9D/w9jW', NULL, '2025-02-18 09:33:48', '2025-02-18 09:33:48', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(48, 1, 'vendors', '[\"vendor\"]', 'fffffff', 'fffffff@admin.com', '1232342232', NULL, NULL, NULL, '$2y$10$WTVWHwyeheLV6NaL9qyU6egGDGYEtfSHu3x3rcQT2c8rnz6YOJ9PK', NULL, '2025-02-18 10:58:17', '2025-02-18 10:58:17', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(49, 1, 'vendors', '[\"vendor\"]', 'Hyatt Frye', 'teju@mailinator.com', '2828222828', NULL, NULL, NULL, '$2y$10$UUKYJfCvpiLuVxOqOQknZu8u4WWubbQRgBQH0WJ1NTABv/wtxf4ji', NULL, '2025-02-18 11:26:25', '2025-02-18 11:31:43', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(50, 1, 'vendors', '[\"vendor\"]', 'mai tarek', 'maitarektt2222@gmail.com', '1097987069', NULL, NULL, NULL, '$2y$10$y4Am7B7zeLZW15MPoDtXwuiMxZksVU8yI9RxHo3n6GlMLsl5O9ZDK', NULL, '2025-02-18 11:38:05', '2025-02-18 11:46:54', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(51, 1, 'vendors', '[\"vendor\"]', 'Mohammad Nielsen', 'suda@mailinator.com', '2929299292', NULL, NULL, NULL, '$2y$10$J8EDggCsnB8z/ryM8EIYjuKO3QLQhExMSImJVAiZR1Eqx3L3Vrdve', NULL, '2025-02-18 11:45:37', '2025-02-18 11:45:37', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(57, 1, 'users', '[\"user\"]', 'mohamed', 'mohamed@user.com', '2222222222', NULL, NULL, NULL, '$2y$10$DdQdaSdBA7ml33c12hx9IeSkFgwSwKu4AuEAZpjGf3MjN5tToJt7K', NULL, '2025-02-19 09:20:13', '2025-02-20 11:16:10', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(58, 1, 'vendors', '[\"vendor\"]', 'محمد الطرشوبي', 'vendor@admin.com', '2222222222', NULL, NULL, NULL, '$2y$10$qtkxqhrsEQ6c8UkP.s86xO3/jeRslvl2VSAZUr1E6SlFmk.ADy3VK', NULL, '2025-02-19 09:30:18', '2025-02-20 09:28:13', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(59, 58, 'subadmins', '[\"subadmin\"]', 'cfghjk', 'cfghjk@admin.com', '2233344444', NULL, NULL, NULL, '$2y$10$SQz7ltUaCCcWFxiAE4rtCOI7lRV2niAuBhATZodX2fjSBl.x2KskO', NULL, '2025-02-19 09:31:40', '2025-02-19 09:31:42', 'accepted', NULL, NULL, NULL, NULL, 58, NULL, 'owner', '', NULL, NULL),
+(60, 1, 'vendors', '[\"vendor\"]', 'frgrdg11', 'adminwwww@admin.com', '1232342232', NULL, NULL, NULL, '$2y$10$Orkrvl5d7x7eAQPkf6psEuhzLS5JCHty3yQd5kZQE3iRBZqwtj3G2', NULL, '2025-02-19 10:15:35', '2025-02-19 10:15:35', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(62, NULL, 'vendors', NULL, 'ahmed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-23 09:40:09', '2025-02-23 09:40:09', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(70, NULL, 'users', NULL, 'ahmed', 'medo@user.com', '1097979797', NULL, NULL, NULL, '$2y$10$OtRQtcQpX/ManeK4.csG0uFRUTx69QlE6oWdoMofLoI070E2TIwAu', NULL, '2025-02-23 09:49:59', '2025-03-05 11:21:35', 'accepted', '2025-02-23 13:18:29', NULL, NULL, NULL, NULL, '2025-03-05 11:21:35', 'owner', '', NULL, NULL),
+(72, NULL, 'users', NULL, 'ahmed', NULL, '1097979795', NULL, NULL, NULL, '$2y$10$pATqTxOfNHaljePOf1Zki.twGhloRU4m0IY2PV08d1VnJ3khUqJSi', NULL, '2025-02-23 12:21:02', '2025-02-26 13:11:33', 'accepted', '2025-02-26 13:05:11', NULL, NULL, NULL, NULL, '2025-02-26 13:11:33', 'owner', '', NULL, NULL),
+(73, NULL, 'users', NULL, 'ahmed', NULL, '1097979793', NULL, NULL, NULL, '$2y$10$V3.B95JsXCVJUQDAJiHeAucWykKOuhKBzznYZA3yHVXytxQdBbnBW', NULL, '2025-02-23 13:20:49', '2025-02-23 13:20:49', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(74, NULL, 'users', NULL, 'ahmed', NULL, '1097979792', NULL, 1234, NULL, '$2y$10$4AH8H7PGdYSeNnT9cUpOAua5OmAxqUiUXFiZw0CNwSncmDJ1E2sJO', NULL, '2025-02-23 13:22:38', '2025-02-23 13:22:38', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(75, 1, 'users', '[\"user\"]', 'ashraf12', 'ashraf12@user.com', '1097987033', NULL, NULL, NULL, '$2y$10$bsqiDzKFk230yHp97VNEpe3Fr6hbzXfsPQoG.A.YMqpCbtggaNJZ6', NULL, '2025-03-09 09:27:13', '2025-03-09 09:27:37', 'accepted', NULL, NULL, NULL, NULL, NULL, '2025-03-09 09:27:37', 'owner', '', NULL, NULL),
+(76, 1, 'vendors', '[\"vendor\"]', 'Akeem Pugh', 'zybyxosoci@mailinator.com', '1888282828', NULL, NULL, NULL, '$2y$10$1MbeoxQd0qcCT8Rw1A7SCuIyb3h46fXolpZ77CnU7jY/WHtp0MhoO', NULL, '2025-03-09 11:03:22', '2025-03-09 11:03:22', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
+(77, NULL, 'users', NULL, 'lllllllllllll', NULL, '1010101010', '20', NULL, NULL, '$2y$10$lWcUV9hMCcrlJ09PQ7dMiuOXxDgRiAf8TgYUN3OIFAIrXsq1DrAvu', NULL, '2025-04-20 16:29:44', '2025-04-23 13:57:16', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'agent', '22222222222', 2147483647, 2025277),
+(78, NULL, 'users', NULL, 'أبو طاحون', NULL, '1112342232', NULL, NULL, NULL, '$2y$10$C5cFxJxTIr3idVyOxVDcuuDQe8x5yKcpiFmeF5/o2NVaf3MFuRv1a', NULL, '2025-04-21 12:22:21', '2025-04-21 12:22:21', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '1122333333', NULL, 2025178),
+(79, NULL, 'users', NULL, 'muhamed', NULL, '1991919191', NULL, NULL, NULL, '$2y$10$ECWy.StsEoJW1bdewMTsTeZtUwpPhDsNyvMRnM0ES8qaTwnCMGMBq', NULL, '2025-04-24 22:45:27', '2025-04-24 22:45:27', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '1123444444', NULL, 2025179);
 
 -- --------------------------------------------------------
 
@@ -1494,14 +1657,14 @@ INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `em
 CREATE TABLE `user_addresses` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `type` enum('apartment','house','office') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mark` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `label_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `street_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('apartment','house','office') DEFAULT NULL,
+  `mark` text DEFAULT NULL,
+  `label_name` text DEFAULT NULL,
+  `street_name` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `apartment_no` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `floor_no` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `apartment_no` varchar(250) DEFAULT NULL,
+  `floor_no` varchar(250) DEFAULT NULL,
   `district_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1538,8 +1701,8 @@ CREATE TABLE `wallet_transactions` (
   `amount` decimal(10,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `type` enum('deposit','withdrawal') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `type` enum('deposit','withdrawal') NOT NULL,
+  `description` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1711,6 +1874,13 @@ ALTER TABLE `product_features`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `product_investments`
+--
+ALTER TABLE `product_investments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_coupon_coupon_id` (`user_id`);
+
+--
 -- Indexes for table `product_letters`
 --
 ALTER TABLE `product_letters`
@@ -1728,13 +1898,6 @@ ALTER TABLE `product_offers`
   ADD KEY `user_coupon_coupon_id` (`user_id`);
 
 --
--- Indexes for table `product_participants`
---
-ALTER TABLE `product_participants`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_coupon_coupon_id` (`user_id`);
-
---
 -- Indexes for table `product_verifications`
 --
 ALTER TABLE `product_verifications`
@@ -1742,6 +1905,14 @@ ALTER TABLE `product_verifications`
   ADD KEY `question_answers_admin_id_foreign` (`user_id`),
   ADD KEY `user_coupon_package_id` (`product_id`),
   ADD KEY `via_user_id` (`via_user_id`);
+
+--
+-- Indexes for table `property_access_links`
+--
+ALTER TABLE `property_access_links`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `source_user_id` (`source_user_id`);
 
 --
 -- Indexes for table `referrals`
@@ -1887,13 +2058,13 @@ ALTER TABLE `contact_replies`
 -- AUTO_INCREMENT for table `locations`
 --
 ALTER TABLE `locations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=462;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=511;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1929,13 +2100,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `product_features`
 --
 ALTER TABLE `product_features`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT for table `product_investments`
+--
+ALTER TABLE `product_investments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_letters`
@@ -1950,16 +2127,16 @@ ALTER TABLE `product_offers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `product_participants`
---
-ALTER TABLE `product_participants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `product_verifications`
 --
 ALTER TABLE `product_verifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `property_access_links`
+--
+ALTER TABLE `property_access_links`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `referrals`
@@ -1995,7 +2172,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `user_addresses`
