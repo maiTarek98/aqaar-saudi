@@ -43,7 +43,7 @@ use App\Http\Controllers\Payment\StripeController;
 
 Route::group(['middleware' => ['csp','lang']], function () {
 
-     Route::get('/property',[HomeController::class,'propertyShow'])->name('property.show');
+     Route::get('/propertys',[HomeController::class,'propertyShow'])->name('property.show');
 
         Route::view('/payment', 'site.stripe')->name('site.payment');
 

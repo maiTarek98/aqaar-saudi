@@ -83,7 +83,7 @@ class ProductController extends Controller
         $product = Product::create([
             'added_by' => auth()->id(),
             'title' => $request->title,
-            'price' => $request->price_.$request->type,
+            'price' => ($request->type == 'auction')?$request->price_auction:$request->price_investment,
             'description' => $request->description,
             'owner_id' => $request->owner_id,
             'status' => 'pending',
@@ -93,7 +93,7 @@ class ProductController extends Controller
             'is_private' => $request->boolean('is_private'),
             'start_date' => $request->start_date,
             'end_date' => $request->end_date
-        ]);
+        ]);  
         $product->feature()->create([
             'plan_number' => $request->plan_number,
             'plot_number' => $request->plot_number,
