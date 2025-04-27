@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2025 at 11:50 PM
+-- Generation Time: Apr 27, 2025 at 09:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `aqaar-saudi`
+-- Database: `aqarr`
 --
 
 -- --------------------------------------------------------
@@ -696,6 +696,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 ('e68a6fb6-33b3-4af0-a93e-a9d9245cfd22', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Winter Holder\",\"redirect\":\"pending_vendors\\/11\",\"data\":[],\"created_at\":\"2025-02-03T13:08:23.000000Z\"}', '2025-02-06 11:29:08', '2025-02-03 13:08:29', '2025-02-06 11:29:08'),
 ('e748af72-6dbf-4f1f-9c83-4127dd65dec8', 'App\\Notifications\\NotifyNewProductToAdmin', 'App\\Models\\User', 47, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0639\\u0642\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f  \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f \\u0648\\u0646\\u0648\\u0639 \\u0627\\u0644\\u0646\\u0638\\u0627\\u0645 \\u0646\\u0638\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629 \\\"\\u0633\\u0648\\u0645\\\"\",\"redirect\":\"products\\/56\",\"data\":{\"notification_type\":3,\"product_id\":56,\"listing_number\":\"AUC11202556\"},\"created_at\":\"2025-04-25T14:55:58.000000Z\"}', NULL, '2025-04-25 14:55:59', '2025-04-25 14:55:59'),
 ('e8806b4c-8167-41d9-8569-cea63bb6eba1', 'App\\Notifications\\NotifyAdminNewVendorCoupon', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628hg;,f,khj\",\"text\":\"\\u0644\\u0642\\u062f \\u0623\\u0636\\u0627\\u0641 \\u0627\\u0644\\u062a\\u0627\\u062c\\u0631   mai tarek \\u0643\\u0648\\u0628\\u0648\\u0646 \\u062e\\u0635\\u0645 \\u062c\\u062f\\u064a\\u062f \\u0628\\u0627\\u0633\\u0645 xcvfbhn\",\"redirect\":\"coupons\\/45\",\"data\":[],\"created_at\":\"2025-01-25T20:22:18.000000Z\"}', '2025-02-06 11:29:08', '2025-01-25 20:22:23', '2025-02-06 11:29:08'),
+('e9b88bc8-802c-41e9-b603-cba9b4835cc1', 'App\\Notifications\\AuctionWinnerNotification', 'App\\Models\\User', 77, '{\"title\":\"\\u0645\\u0628\\u0631\\u0648\\u0643! \\u0644\\u0642\\u062f \\u0641\\u0632\\u062a \\u0628\\u0627\\u0644\\u0645\\u0632\\u0627\\u062f\",\"body\":\"\\u0644\\u0642\\u062f \\u0641\\u0632\\u062a \\u0628\\u0645\\u0632\\u0627\\u062f \\u0627\\u0644\\u0639\\u0642\\u0627\\u0631 \\\"\\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0632\\u0627\\u064a\\u062f\\\" \\u0628\\u0645\\u0628\\u0644\\u063a 1,200,000 \\u0631\\u064a\\u0627\\u0644.\"}', NULL, '2025-04-27 18:43:06', '2025-04-27 18:43:06'),
 ('ebd68921-ed4f-444b-aba2-22e153de8b1a', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Mohammad Nielsen\",\"redirect\":\"pending_vendors\\/4\",\"data\":[],\"created_at\":\"2025-01-24T19:57:38.000000Z\"}', '2025-01-24 20:22:28', '2025-01-24 19:57:38', '2025-01-24 20:22:28'),
 ('eed334f9-e675-43ed-b240-1332e5c9f6df', 'App\\Notifications\\InvestmentCompletedNotification', 'App\\Models\\User', 79, '{\"title\":\"\\u0627\\u0643\\u062a\\u0645\\u0644 \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631\",\"body\":\"\\u062a\\u0645 \\u0627\\u0643\\u062a\\u0645\\u0627\\u0644 \\u0627\\u0644\\u0627\\u0633\\u062a\\u062b\\u0645\\u0627\\u0631 \\u0641\\u064a \\u0627\\u0644\\u0639\\u0642\\u0627\\u0631 \\u0639\\u0642\\u0627\\u0631 \\u0645\\u062a\\u0634\\u0627\\u0631\\u0643 \\u0628\\u0627\\u0644\\u0645\\u0632\\u0627\\u064a\\u062f\\u0629. \\u0634\\u0643\\u0631\\u064b\\u0627 \\u0644\\u0645\\u0634\\u0627\\u0631\\u0643\\u062a\\u0643!\"}', NULL, '2025-04-26 21:04:14', '2025-04-26 21:04:14'),
 ('f312896e-eec4-44a4-a3ec-425d622141f4', 'App\\Notifications\\NotifyAdminNewVendors', 'App\\Models\\User', 1, '{\"title\":\"\\u0644\\u062f\\u064a\\u0643 \\u0625\\u0634\\u0639\\u0627\\u0631 \\u062c\\u062f\\u064a\\u062f \\u062e\\u0627\\u0635 \\u0628\\u062a\\u0633\\u062c\\u064a\\u0644 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u062c\\u062f\\u064a\\u062f\",\"text\":\"\\u062a\\u0645 \\u0625\\u0636\\u0627\\u0641\\u0629 \\u0637\\u0644\\u0628 \\u0645\\u0642\\u062f\\u0645 \\u062e\\u062f\\u0645\\u0629 \\u0628\\u0627\\u0633\\u0645  Abdullah Elgazzar\",\"redirect\":\"pending_vendors\\/12\",\"data\":[],\"created_at\":\"2025-02-06T12:17:01.000000Z\"}', '2025-02-06 12:19:29', '2025-02-06 12:17:01', '2025-02-06 12:19:29'),
@@ -917,7 +918,7 @@ CREATE TABLE `products` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `in_home` enum('yes','no') DEFAULT NULL,
-  `investment_collected` decimal(15,2) NOT NULL DEFAULT 0.00
+  `investment_collected` decimal(15,2) NOT NULL DEFAULT 0.00 COMMENT 'أعلي سعر مزايده اتسجل حتي الان \r\nواعلي سعر مشاركة اتجمع '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='جدول المنتجات';
 
 --
@@ -926,15 +927,34 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `added_by`, `title`, `listing_number`, `qr_code`, `price`, `description`, `map_location`, `owner_id`, `status`, `is_private`, `created_at`, `updated_at`, `views`, `approved_at`, `type`, `deleted_at`, `area_id`, `product_for`, `link_video`, `start_date`, `end_date`, `in_home`, `investment_collected`) VALUES
 (1, 1, 'ggggggggggggggg', 'AUCTION-42-2025', NULL, 1112.00, '2222222erfggg', 'https://www.google.com', NULL, 'shared_onsite', 1, '2025-04-19 22:54:01', '2025-04-26 19:07:11', 0, NULL, 'auction', NULL, 5, 'sale', 'https://www.vide.come', '2025-04-01', '2025-04-09', 'yes', 0.00),
-(43, 77, 'fffffffffffffff', 'AUCTION-2-2025', NULL, 0.00, 'ffffgs', NULL, NULL, 'pending', 0, '2025-04-23 20:51:59', '2025-04-23 20:51:59', 0, NULL, 'auction', NULL, NULL, 'sale', NULL, '2025-04-23', '2025-05-02', NULL, 0.00),
-(44, 77, 'Quisquam sint accusa', 'SHA132025', NULL, 0.00, 'Beatae atque nulla q', NULL, NULL, 'pending', 0, '2025-04-25 01:00:02', '2025-04-25 01:00:02', 0, NULL, 'shared', NULL, NULL, 'sale', NULL, NULL, NULL, NULL, 0.00),
-(45, 77, 'Quisquam sint accusa', 'SHA13202545', NULL, 0.00, 'Beatae atque nulla q', NULL, NULL, 'pending', 0, '2025-04-25 01:02:03', '2025-04-25 01:02:03', 0, NULL, 'shared', NULL, NULL, 'sale', NULL, NULL, NULL, NULL, 0.00),
-(46, 77, 'Quisquam sint accusa', 'SHA13202546', NULL, 0.00, 'Beatae atque nulla q', NULL, NULL, 'pending', 0, '2025-04-25 01:26:59', '2025-04-25 01:26:59', 0, NULL, 'shared', NULL, NULL, 'sale', NULL, NULL, NULL, NULL, 0.00),
 (47, 77, 'عقار متشارك بالمزايدة', 'INV12202547', 'qr_codes/qr_47.png', 10000000.00, 'Itaque anim tempor i', NULL, NULL, 'pending', 0, '2025-04-25 14:42:56', '2025-04-26 21:04:13', 0, NULL, 'investment', NULL, 5, 'sale', NULL, NULL, NULL, NULL, 10000000.00),
-(49, 77, 'عقار متزايد', 'AUC11202548', 'qr_codes/qr_49.png', 0.00, 'Doloribus dignissimo', NULL, NULL, 'pending', 0, '2025-04-25 14:53:06', '2025-04-25 14:53:07', 0, NULL, 'auction', NULL, 5, 'sale', NULL, '2025-04-25', '2025-05-09', NULL, 0.00),
-(62, 77, 'Dolor cillum consequ', 'SHA13202550', NULL, 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:11:17', '2025-04-25 23:11:17', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00),
-(63, 77, 'Dolor cillum consequ', 'SHA13202563', NULL, 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:12:37', '2025-04-25 23:12:37', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00),
-(64, 77, 'Dolor cillum consequ', 'SHA13202564', 'qr_codes/qr_64.png', 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:14:28', '2025-04-25 23:14:32', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00);
+(49, 77, 'عقار متزايد', 'AUC11202548', 'qr_codes/qr_49.png', 100000.00, 'Doloribus dignissimo', NULL, NULL, 'closed', 0, '2025-04-25 14:53:06', '2025-04-27 18:43:03', 0, NULL, 'auction', NULL, 5, 'sale', NULL, '2025-04-25', '2025-05-09', NULL, 1200000.00),
+(64, 77, 'عقار مشاركة خاص', 'SHA13202564', 'qr_codes/qr_64.png', 0.00, 'Sapiente perspiciati', NULL, NULL, 'pending', 0, '2025-04-25 23:14:28', '2025-04-25 23:14:32', 0, NULL, 'shared', NULL, NULL, 'rent', NULL, NULL, NULL, NULL, 0.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_bids`
+--
+
+CREATE TABLE `product_bids` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `amount` decimal(15,2) NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `product_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `status` enum('decline','approve') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_bids`
+--
+
+INSERT INTO `product_bids` (`id`, `created_at`, `updated_at`, `amount`, `user_id`, `product_id`, `status`) VALUES
+(1, '2025-04-27 18:04:28', '2025-04-27 18:04:28', 111111.00, 77, 49, 'decline'),
+(2, '2025-04-27 18:04:54', '2025-04-27 18:04:54', 120000.00, 77, 49, 'decline'),
+(3, '2025-04-27 18:05:13', '2025-04-27 18:05:13', 1200000.00, 77, 49, 'decline');
 
 -- --------------------------------------------------------
 
@@ -1104,6 +1124,23 @@ INSERT INTO `property_access_links` (`id`, `product_id`, `source_user_id`, `toke
 (17, 49, NULL, '44', 2, '2025-04-25 14:53:06', '2025-04-25 14:53:06'),
 (18, 64, NULL, '70d8a1db-0756-4b29-95d4-1ff2d9493855', 2, '2025-04-25 23:14:29', NULL),
 (19, 64, 77, 'ed9d60ce-704d-47ea-81e2-72f801ad60f6', 3, '2025-04-25 23:44:06', '2025-04-25 23:44:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `property_private_links`
+--
+
+CREATE TABLE `property_private_links` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `product_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `receiver_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `token` text DEFAULT NULL,
+  `verification_level` int(20) NOT NULL DEFAULT 2,
+  `used` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1611,7 +1648,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `added_by`, `account_type`, `roles_name`, `name`, `email`, `mobile`, `country_code`, `mobile_code`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `status`, `mobile_verified_at`, `provider`, `provider_id`, `fcm_id`, `parent_id`, `last_login`, `user_type`, `id_number`, `agency_number`, `card_code`) VALUES
-(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-26 18:52:41', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-26 18:52:41', 'owner', '', NULL, NULL),
+(1, 1, 'admins', '[\"Super Admin\"]', 'admin', 'admin@admin.com', '1097987077', '966', 1299, NULL, '$2y$10$BawRjI9.H1yRsa60HkmDUea1KozI1recHEBO/PZd4yzXu7JoKrKf6', '35oHmDVopdy6AfIg33NYRAWzZvCk4go1LZFvc3eXzx8PgXQVTUcDagvt7WGu', '2023-11-14 14:48:38', '2025-04-27 16:12:55', 'accepted', NULL, NULL, NULL, 'sdfghjk', NULL, '2025-04-27 16:12:55', 'owner', '', NULL, NULL),
 (2, 1, 'admins', '[\"admin\"]', 'mohamed ahmmed', 'mohamed@admin.com', '1232142232', NULL, NULL, NULL, '$2y$10$6zhGKUsUSf8XoNyLIJS66eZo06LQHMka/HqD95tAlxLtemJGOCTQm', NULL, '2025-01-19 11:54:48', '2025-03-09 09:13:58', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
 (3, 1, 'subadmins', '[\"order employee\"]', 'yasser ahmed', 'yasser@admin.com', NULL, NULL, NULL, NULL, '$2y$10$pwyYu1W5JVTOhf29Jy7qCu7KcOYomfz7nTb4r9mckP/6ZQx3UJN4G', NULL, '2025-01-19 11:57:02', '2025-01-19 12:37:15', 'accepted', NULL, NULL, NULL, NULL, NULL, NULL, 'owner', '', NULL, NULL),
 (25, 1, 'users', '[\"user\"]', 'wessam sakr', 'wessam@user.com', '1097980291', '20', NULL, NULL, '$2y$10$cY8DuxeFlcyAqVjPzSbA8eqd4RZ.iJAGKMVHqN3y.4APAnvPu4Kxe', NULL, '2024-08-02 16:54:36', '2025-02-20 11:15:23', 'accepted', NULL, NULL, NULL, 'ffghjkl', NULL, NULL, 'owner', '', NULL, NULL),
@@ -1867,6 +1904,14 @@ ALTER TABLE `products`
   ADD KEY `store_id` (`area_id`);
 
 --
+-- Indexes for table `product_bids`
+--
+ALTER TABLE `product_bids`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_coupon_package_id` (`product_id`),
+  ADD KEY `user_coupon_coupon_id` (`user_id`);
+
+--
 -- Indexes for table `product_features`
 --
 ALTER TABLE `product_features`
@@ -1913,6 +1958,14 @@ ALTER TABLE `property_access_links`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`),
   ADD KEY `source_user_id` (`source_user_id`);
+
+--
+-- Indexes for table `property_private_links`
+--
+ALTER TABLE `property_private_links`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `source_user_id` (`receiver_id`);
 
 --
 -- Indexes for table `referrals`
@@ -2103,6 +2156,12 @@ ALTER TABLE `products`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
+-- AUTO_INCREMENT for table `product_bids`
+--
+ALTER TABLE `product_bids`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `product_features`
 --
 ALTER TABLE `product_features`
@@ -2137,6 +2196,12 @@ ALTER TABLE `product_verifications`
 --
 ALTER TABLE `property_access_links`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `property_private_links`
+--
+ALTER TABLE `property_private_links`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `referrals`

@@ -104,8 +104,8 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
     public function orders() {
       return $this->hasMany(\App\Models\Order::class,'user_id');
     }
-    public function carts() {
-      return $this->hasMany(\App\Models\Cart::class,'user_id');
+    public function properties() {
+      return $this->hasMany(\App\Models\Product::class,'added_by');
     }
     public function working_hours() {
       return $this->hasMany(\App\Models\WorkingHour::class,'user_id');

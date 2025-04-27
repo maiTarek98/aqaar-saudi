@@ -38,7 +38,7 @@ use App\Http\Controllers\Site\PropertyController;
 use App\Http\Controllers\Site\PropertyVerificationController;
 use App\Http\Controllers\Site\UserController;
 use App\Http\Controllers\Site\PropertyInvestmentController;
-use App\Http\Controllers\Site\MessageController;
+use App\Http\Controllers\Site\PropertyBidController;
 use App\Http\Controllers\Payment\StripeController;
 
 Route::group(['middleware' => ['csp','lang']], function () {
@@ -163,9 +163,14 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::get('/profile/{user}/property/{code}',[PropertyController::class,'linkProperty'])->name('linkProperty');
 
         Route::get('/profile/{user}/card',[PropertyController::class,'userCard'])->name('userCard');
+        Route::get('/profile/properties', [PropertyController::class, 'myProperties'])->name('myProperties');
+
         Route::get('/verify-property/{token}', [PropertyVerificationController::class, 'verify'])->name('property.verify.link');
         Route::get('/property/{listing_number}', [PropertyVerificationController::class, 'show'])->name('property.show');
         Route::post('/properties/{property}/invest', [PropertyInvestmentController::class, 'store'])->name('property.invest');
+        Route::post('/properties/{property}/bid', [PropertyBidController::class, 'store'])->name('property.bid');
+        Route::post('/properties/{property}/close-auction', [PropertyBidController::class, 'closeAuction'])->name('property.closeAuction');
+        Route::get('/private-property/{token}', [PropertyPrivateLinkController::class, 'verify'])->name('property.private.verify');
 
         Route::post('profile-update', [UserController::class,'update_profile'])->name('edit-profile');
         Route::post('photo-update', [UserController::class,'update_photo'])->name('edit-photo');

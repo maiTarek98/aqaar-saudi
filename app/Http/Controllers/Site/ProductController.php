@@ -148,6 +148,8 @@ class ProductController extends Controller {
         }   
         if($property->type == 'investment'){
         	return view('site.product-investment',compact('property'));
+    	}elseif($property->type == 'auction'){
+        	return view('site.product-auction',compact('property'));
     	}
     }
 

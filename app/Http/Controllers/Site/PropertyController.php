@@ -38,4 +38,11 @@ class PropertyController extends Controller {
         $result = $storeProperty->store($request);
 		return redirect()->route('linkProperty',['user'=> $result['user'],'code'=>$result['code']])->with('success',trans('messages.AddSuccessfully'));
 	}
+
+	public function myProperties(Request $request) {
+		$urlPrevious = url()->current();
+      	session()->put('url.intended', $urlPrevious);
+       $properties= auth('web')->user()->properties;
+		return view('site.auth.owner-properties', compact('properties'));
+	}
 }

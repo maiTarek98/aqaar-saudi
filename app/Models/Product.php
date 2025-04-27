@@ -109,6 +109,10 @@ class Product extends BaseModel implements HasMedia
     public function admin() {
        return $this->belongsTo(\App\Models\User::class,'added_by');
     }
+    public function bids()
+    {
+        return $this->hasMany(\App\Models\ProductBid::class);
+    }
 
      public function area() {
        return $this->belongsTo(\App\Models\Location::class,'area_id');

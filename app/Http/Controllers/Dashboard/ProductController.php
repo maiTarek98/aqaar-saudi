@@ -136,7 +136,7 @@ class ProductController extends Controller
         DB::table('property_access_links')->insert([
             'product_id' => $product->id,
             'token' => $token,
-            'verification_level' => 2, 
+            'current_level' => 2, 
             'created_at' => now(),
             'source_user_id' => auth()->id(),
         ]);

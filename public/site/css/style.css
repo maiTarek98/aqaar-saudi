@@ -335,6 +335,7 @@ ul {
 }
 
 .nice-select .list {
+  min-width: fit-content;
   width: 100%;
   z-index: 98;
 }
@@ -950,7 +951,39 @@ html[dir='ltr'] #filter{
   -ms-border-radius: var(--card-raduis);
   -o-border-radius: var(--card-raduis);
 }
-
+.estate-filter .form-control{
+  background: #F9F9F9 !important;
+  width: fit-content;
+  border-radius: 30px !important;
+  -webkit-border-radius: 30px !important;
+  -moz-border-radius: 30px !important;
+  -ms-border-radius: 30px !important;
+  -o-border-radius: 30px !important;
+}
+.estate-filter .nice-select {
+  display: flex;
+  align-items: center;
+  padding: 0px 36px;
+  padding-inline-end: 50px;
+  border-radius: 0;
+  border-width: 0px;
+  font-size: 1.1rem;
+  height: 38.78px;
+  width: fit-content;
+  float: none;
+  text-align: start !important;
+}
+.estate-filter .current {
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--main);
+}
+.estate-filter .nice-select:after {
+  border-color: var(--secondary);
+  height: 8px;
+  width: 8px;
+  inset-inline-end: 30px;
+}
 .estate-category {
   color: var(--white);
   background-color: var(--secondary);
@@ -958,7 +991,7 @@ html[dir='ltr'] #filter{
   font-size: 14px;
   border-radius:  4px ;
   position: absolute;
-  top: 1.5rem;
+  top: 2rem;
   inset-inline-start: -10px;
   z-index: 8;
   -webkit-border-radius:  4px ;
@@ -1503,6 +1536,11 @@ html[lang='en'] .our-estates .badge {
   background: #1C1C1C;
   color: #fff;
 }
+.estates .card.agent th, .estates .card.agent td {
+  padding: 1.25rem 1rem !important;
+  background: transparent;
+  color: #dddddd;
+}
 .card.co-owner{
   background: #BDC3C7 ;
 }
@@ -1689,9 +1727,10 @@ footer .sub-footer span {
 }
 
 .contactUs .contact-data .social i {
-  width: 65px;
-  height: 65px;
-  background-color: var(--white) ;
+  width: 100%;
+  aspect-ratio: 1/1;
+  height: unset;
+  background-color: var(--white);
   font-size: 22px;
   color: var(--secondary);
 }
@@ -1731,7 +1770,7 @@ footer .sub-footer span {
   height: 100vh;
   overflow: hidden;
 }
-.login *{
+.login *:not(.nice-select *){
   max-height: 100%;
 }
 
@@ -1916,7 +1955,7 @@ label{
 
 .card.user-card{
   position: relative;
-  background: #F9D24A;
+  /* background: #F9D24A; */
   border: 0;
   /* overflow: hidden; */
   margin: 3rem ;
@@ -1936,7 +1975,7 @@ label{
   bottom: -10px;
 }
 .card.user-card .card-header{
-  background: #EEB620;
+  /* background: #EEB620; */
   color: var(--white);
   padding: 1.5rem ;
   border: 0;
@@ -1945,6 +1984,18 @@ label{
   -moz-border-radius: .5rem .5rem .65rem .65rem;
   -ms-border-radius: .5rem .5rem .65rem .65rem;
   -o-border-radius: .5rem .5rem .65rem .65rem;
+}
+.card.user-card.co-owner .card-header,
+.card.user-card.co-owner::after{
+  background-color: #8d9295;
+}
+.card.user-card.other .card-header,
+.card.user-card.other::after{
+  background-color: #ab9272;
+}
+.card.user-card.agent .card-header,
+.card.user-card.agent::after{
+  background-color: #252525;
 }
 
 .card.user-card .user-img img{
@@ -2535,6 +2586,14 @@ label{
   footer .footer-images a {
     display: block;
     width: 238px;
+  }
+
+  .estate-controls{
+    font-size: 13px;
+  }
+  .estates th, .estates td {
+    padding: 1.25rem .25rem !important;
+    font-size: 14px;
   }
 }
 
