@@ -55,6 +55,10 @@ class Product extends BaseModel implements HasMedia
     {
         return $this->hasMany(PropertyAccessLink::class);
     }
+    public function private_links()
+    {
+        return $this->hasMany(PropertyPrivateLink::class);
+    }
     public function investments()
     {
         return $this->hasMany(ProductInvestment::class);

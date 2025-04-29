@@ -64,7 +64,7 @@
                 <p class="fw-semibold text-center">
                   ليس لديك حساب؟
                   <a
-                    href="register.html"
+                    href="{{route('register')}}"
                     class="main fw-bold px-1"
                     aria-label="الذهاب الى صفحة انشاء حساب جديد في حالة اذا لم يكن لديك حساب مسبق"
                   >

@@ -6,19 +6,14 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Charts\UserChart;
-use App\Models\Order;
 use App\Models\Category;
-use App\Models\Brand;
-use App\Models\PendingVendor;
 use App\Models\Blog;
-use App\Models\Store;
 use App\Models\Contact;
 use App\Models\GeneralSettings;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App;
-use App\Models\Coupon;
 use App\Models\ProductReview;
 use App\Models\Product;
 use Validator;
@@ -56,144 +51,20 @@ class HomeController extends Controller
         if (auth()->user()->account_type == 'admins') {
             $blogsHideCount = Blog::where('status', 'hide')->count();
             $blogsShowCount = Blog::where('status', 'show')->count();
-            $brandsCount = Brand::count();
-            $brandsYesCount = Brand::where('in_home', 'yes')->count();
-            $contactsCount = Contact::where('is_viewed', 'no')->count();
-            $acceptedVendorsCount = PendingVendor::where('status', 'accepted')->count();
-            $pendingVendorsCount = PendingVendor::where('status', 'pending')->count();
-            $categorysCount = Category::count();
-            
+            $propertiesAdminCount = Product::where('added_by',auth('admin')->user()->id)->count();
+            $propertiesAuctionCount = Product::where('type','auction')->where('added_by','!=',auth('admin')->user()->id)->count();
+            $propertiesSharedCount = Product::where('type','shared')->where('added_by','!=',auth('admin')->user()->id)->count();
+            $propertiesInvestmentCount = Product::where('type','investment')->where('added_by','!=',auth('admin')->user()->id)->count();
+            $contactsCount = Contact::where('is_viewed', 'no')->count();            
             $latest_blogs = Blog::orderBy('views', 'desc')->latest()->take(5)->get();
 
-            $categories = Category::select('categories.*')
-                ->leftJoin('products', 'categories.id', '=', 'products.category_id')
-                ->leftJoin('carts', function ($join) {
-                    $join->on('products.id', '=', 'carts.product_id')
-                        ->leftJoin('orders', function ($orderJoin) {
-                            $orderJoin->on('carts.order_id', '=', 'orders.id')
-                                ->where('orders.status', '!=', 'pending');
-                        });
-                })
-                ->selectRaw('COUNT(carts.id) as products_in_cart')
-                ->groupBy('categories.id')
-                ->orderByDesc('products_in_cart')
-                ->get();
-
-            $topStores = Store::select('stores.*')
-                ->join('orders', 'stores.id', '=', 'orders.store_id')
-                ->where('orders.status', 'completed')
-                ->whereBetween('orders.created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->selectRaw('COUNT(orders.id) as total_sales')
-                ->groupBy('stores.id')
-                ->orderByDesc('total_sales') 
-                ->get();
-
+            $latest_pending_products = Product::whereDate('created_at', Carbon::today())->latest()->take(10)->get();
             $topBlogs = Blog::orderByDesc('views')->take(10)->get(); 
-            $topCustomers = User::select('users.*')
-                ->join('orders', 'users.id', '=', 'orders.user_id')
-                ->where('orders.status', 'completed')
-                ->whereBetween('orders.created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]) 
-                ->selectRaw('COUNT(orders.id) as total_orders')
-                ->groupBy('users.id')
-                ->orderByDesc('total_orders') 
-                ->take(10) 
-                ->get();
-
-            $latestReviews = ProductReview::with('product')->select(
-                    'product_reviews.*', 
-                    'products.name_ar as product_name', 
-                    'stores.name as store_name',
-                    'users.name as customer_name'
-                )
-                ->join('products', 'product_reviews.product_id', '=', 'products.id')
-                ->join('stores', 'products.store_id', '=', 'stores.id')
-                ->join('users', 'product_reviews.user_id', '=', 'users.id') 
-                ->orderByDesc('product_reviews.created_at')
-                ->take(10)
-                ->get();
-
-            $latestOrders = Order::where('status', '!=', 'pending')
-                ->orderByDesc('created_at') 
-                ->take(10)
-                ->get();
-
-            $topCoupons = Coupon::select(
-                    'coupons.*', 
-                    'users.name as owner_name', 
-                    DB::raw('COUNT(orders.id) as usage_count')
-                )
-                ->join('orders', 'coupons.id', '=', 'orders.coupon_id')
-                ->join('users', 'coupons.added_by', '=', 'users.id')
-                ->whereNotNull('orders.coupon_id') 
-                ->groupBy('coupons.id', 'users.name')
-                ->orderByDesc('usage_count')
-                ->take(10)
-                ->get();
-            
-            $latestPendingVendors = PendingVendor::where('status', 'pending')
-                ->orderByDesc('created_at')
-                ->take(10)
-                ->get();
-
-            $chart = $salesChart->build();
-            $chart2 = $categorysChart->build();
-            $chart3 = $salesByVendorChart->build();
-            $chart4 = $orderStatusChart->build();
 
             return view('admin.home', compact(
-                'blogsHideCount', 'blogsShowCount', 'brandsCount', 'acceptedVendorsCount', 'pendingVendorsCount', 
-                'categorysCount', 'latest_blogs', 'contactsCount', 'brandsYesCount', 'categories', 'topStores', 
-                'topBlogs', 'topCustomers', 'latestReviews', 'latestOrders', 'topCoupons', 'latestPendingVendors', 
-                'chart', 'chart2', 'chart3', 'chart4'
+                'blogsHideCount', 'blogsShowCount', 'propertiesAdminCount','propertiesAuctionCount','propertiesSharedCount','propertiesInvestmentCount', 'latest_blogs', 'contactsCount', 
+                'topBlogs','latest_pending_products'
             ));
-        } elseif (auth()->user()->account_type == 'vendors') {
-            $products = Product::orderByDesc('id')->count();
-            $orders = Order::orderByDesc('created_at')->get();
-            $totalSpent = Order::where('status', 'completed')->get()->sum('grand_total');
-            $latestReviews = ProductReview::whereHas('product',function($q){
-                $q->where('store_id', auth('admin')->user()->store?->id);
-            })->orderByDesc('created_at')->get();
-            return view('admin.vendor_home', compact('orders', 'totalSpent', 'latestReviews','products'));
-        }else {
-            $orders = Order::orderByDesc('created_at')->get();
-            $totalSpent = Order::where('status', 'completed')->get()->sum('grand_total');
-            $store = auth()->user()->parent?->store;
-            $reminderHours = [
-                'pending' => $store->reminder_hours_pending,
-                'accepted' => $store->reminder_hours_accepted,
-                'shipped' => $store->reminder_hours_shipped,
-            ];
-        $latest_status_days = 0;
-        
-        $reminders = Order::whereIn('status', ['pending', 'accepted', 'shipped'])
-            ->get()
-            ->filter(function ($order) use ($reminderHours, &$latest_status_days) {
-                $lastStatusChangeActivity = Activity::where('subject_type', 'App\Models\Order')
-                    ->where('subject_id', $order->id)
-                    ->where(function ($q) {
-                        $q->whereRaw("JSON_EXTRACT(properties, '$.attributes.status') = 'accepted'")
-                            ->whereRaw("JSON_EXTRACT(properties, '$.old.status') = 'pending'")
-                            ->orWhere(function ($q2) {
-                                $q2->whereRaw("JSON_EXTRACT(properties, '$.attributes.status') = 'shipped'")
-                                    ->whereRaw("JSON_EXTRACT(properties, '$.old.status') = 'accepted'");
-                            });
-                    })
-                    ->latest()
-                    ->first();
-        
-                if (!$lastStatusChangeActivity) {
-                    return false;
-                }
-        
-                $statusChangeTime = $lastStatusChangeActivity->created_at;
-                $hoursThreshold = $reminderHours[$order->status] ?? null;
-                $latest_status_days = $statusChangeTime->diffInDays(now());
-        
-                if (!$hoursThreshold) return false;
-                return $latest_status_days >= $hoursThreshold;
-            });
-        
-        return view('admin.subadmin_home', compact('orders', 'totalSpent', 'reminders', 'latest_status_days'));
         }
     }
 

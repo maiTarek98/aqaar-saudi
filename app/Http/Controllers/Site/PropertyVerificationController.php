@@ -32,7 +32,7 @@ class PropertyVerificationController extends Controller {
         }
     }
 
-    public function verify($token)
+    public function verify($token,Request $request)
     {
         $access = PropertyAccessLink::where('token', $token)->firstOrFail();
         $user = auth()->user();
@@ -44,23 +44,36 @@ class PropertyVerificationController extends Controller {
             return redirect()->route('property.show', $access->property?->listing_number)
                 ->with('info', 'أنت موثّق بالفعل.');
         }
-        ProductVerification::create([
-            'product_id' => $access->product_id,
-            'user_id' => $user->id,
-            'via_user_id' => $access->source_user_id,
-            'verification_level' => $access->current_level + 1,
-            'method' => 'link',
-        ]);
-        $newToken = Str::uuid();
-        PropertyAccessLink::create([
-            'product_id' => $access->product_id,
-            'token' => $newToken,
-            'current_level' => $access->current_level + 1,
-            'source_user_id' => $user->id,
-        ]);
+        $latest = PropertyAccessLink::where('product_id', $access->product_id)
+            ->latest()
+            ->first();
 
-        return redirect()->route('property.show', $access->property?->listing_number)
-            ->with('success', 'تم توثيقك كجهة رقم ' . ($access->current_level + 1));
+        $referralId = $request->query('ref');
+        if((int)$referralId==2)
+        {
+            $link = $latest->current_level +1;
+        }else{
+            $link =$referralId;
+        }
+        if(auth()->user()->id != $access->property?->added_by){
+            ProductVerification::create([
+                'product_id' => $access->product_id,
+                'user_id' => $user->id,
+                'via_user_id' => $access->source_user_id,
+                'verification_level' => $link,
+                'method' => (request('source'))?'link':'qr',
+            ]);
+            $newToken = Str::uuid();
+            PropertyAccessLink::create([
+                'product_id' => $access->product_id,
+                'token' => $newToken,
+                'current_level' => $link,
+                'source_user_id' => $user->id,
+            ]);
+            return redirect()->route('property.show', $access->property?->listing_number)
+                ->with('success', 'تم توثيقك كجهة رقم ' . ($link));
+        }
+        return redirect()->route('property.show', $access->property?->listing_number);
     }
 
 

@@ -190,6 +190,34 @@
                               <b> رقم العرض </b>
                               <span>{{$property->listing_number}}</span>
                             </div>
+
+                            @if($property->access_links->where('source_user_id', auth('web')->user()->id)->isNotEmpty())
+                            @php $link = $property->access_links->where('source_user_id', auth('web')->user()->id)->first(); @endphp
+
+                            <div class="private-link col-md-6 m-auto">
+                              <div class="copy-text">
+                                <input type="text" class="text" value="{{url('verify-property/'.$link->token.'?source=external&ref='.$link->current_level)}}">
+                                <button><i class="fa fa-clone"></i></button>
+                              </div>
+                            </div>
+                            <div class="estate-qr col-lg-2 col-md-3 col-4 m-auto">
+                              <img src="{{ asset('storage/qr_codes/qr_' . $property->id . '.png') }}" alt="QR Code for Product {{ $property->id }}">
+                            </div>
+                            @elseif($property->private_links)
+                            @foreach($property->private_links as $key => $val)
+                            <div class="private-link col-md-6 m-auto">
+                             @php $numbers = json_decode($property->phone_numbers, true); @endphp
+                              {{$numbers[$key]}}
+                              <div class="copy-text">
+                                <input type="text" class="text" value="{{url('private-property/'.$val->token.'?source=external')}}">
+                                <button><i class="fa fa-clone"></i></button>
+                              </div>
+                            </div>
+                            <div class="estate-qr col-lg-2 col-md-3 col-4 m-auto">
+                              <img src="{{ asset('storage/qr_codes/qr_' . $property->id .'_'. $key.'.png') }}" alt="QR Code for Product {{ $property->id }}">
+                            </div>
+                            @endforeach
+                            @endif
                           </td>
                         </tr>
                       </tbody>

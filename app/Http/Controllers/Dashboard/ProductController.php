@@ -129,24 +129,50 @@ class ProductController extends Controller
                 $product->addMedia( $file)->toMediaCollection('document','products_images');
             }
         }
-
+        
         $listingNumber = $product->listing_number;
         $token = Str::uuid(); 
-        $secureUrl = route('property.verify.link', ['token' => $token]);
-        DB::table('property_access_links')->insert([
-            'product_id' => $product->id,
-            'token' => $token,
-            'current_level' => 2, 
-            'created_at' => now(),
-            'source_user_id' => auth()->id(),
-        ]);
+        
         $qrFileName = 'qr_' . $product->id . '.png';
-        $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
-        Storage::disk('public')->put("qr_codes/{$qrFileName}", $qrImage);
-        $product->update([
-            'qr_code' => "qr_codes/{$qrFileName}"
-        ]);
+        if($request->type == 'shared' && $request->phone_numbers != null){
+            $product->update([
+                'phone_numbers' => explode(',', $request->phone_numbers)
+            ]);
+            $qrCodes = [];
+            foreach (explode(',', $request->phone_numbers) as $key => $value) {
+                $token = Str::uuid();
+                $secureUrl = route('property.private.verify', ['token' => $token]);
 
+                $qrFileName = 'qr_' . $product->id . '_' . $key . '.png';
+                $qrPath = "qr_codes/{$qrFileName}";
+                $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
+                Storage::disk('public')->put($qrPath, $qrImage);
+                $qrCodes[] = $qrPath;
+                DB::table('property_private_links')->insert([
+                    'product_id' => $product->id,
+                    'token' => $token,
+                    'verification_level' => 3,
+                    'phone_number' => trim($value),
+                ]);
+            }
+            $product->update([
+                'qr_code' => json_encode($qrCodes),
+            ]);
+        }else{
+            $secureUrl = route('property.verify.link', ['token' => $token, 'ref' => 2]);
+            DB::table('property_access_links')->insert([
+                'product_id' => $product->id,
+                'token' => $token,
+                'current_level' => 2, 
+                'created_at' => now(),
+                'source_user_id' => auth()->id(),
+            ]);
+            $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
+            Storage::disk('public')->put("qr_codes/{$qrFileName}", $qrImage);
+            $product->update([
+                'qr_code' => "qr_codes/{$qrFileName}"
+            ]);
+        }
         $admins = User::where('account_type','admins')->where('id','!=',$product->added_by)->get();
         foreach ($admins as $key => $value) {   
             if($value->hasPermissionTo('products-list')){

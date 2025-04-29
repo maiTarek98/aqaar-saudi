@@ -39,11 +39,11 @@ use App\Http\Controllers\Site\PropertyVerificationController;
 use App\Http\Controllers\Site\UserController;
 use App\Http\Controllers\Site\PropertyInvestmentController;
 use App\Http\Controllers\Site\PropertyBidController;
-use App\Http\Controllers\Payment\StripeController;
+use App\Http\Controllers\Site\PropertyPrivateLinkController;
 
 Route::group(['middleware' => ['csp','lang']], function () {
 
-     Route::get('/propertys',[HomeController::class,'propertyShow'])->name('property.show');
+     // Route::get('/propertys',[HomeController::class,'propertyShow'])->name('property.show');
 
         Route::view('/payment', 'site.stripe')->name('site.payment');
 
@@ -166,7 +166,7 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::get('/profile/properties', [PropertyController::class, 'myProperties'])->name('myProperties');
 
         Route::get('/verify-property/{token}', [PropertyVerificationController::class, 'verify'])->name('property.verify.link');
-        Route::get('/property/{listing_number}', [PropertyVerificationController::class, 'show'])->name('property.show');
+        Route::get('/propertys/{listing_number}', [PropertyVerificationController::class, 'show'])->name('property.show');
         Route::post('/properties/{property}/invest', [PropertyInvestmentController::class, 'store'])->name('property.invest');
         Route::post('/properties/{property}/bid', [PropertyBidController::class, 'store'])->name('property.bid');
         Route::post('/properties/{property}/close-auction', [PropertyBidController::class, 'closeAuction'])->name('property.closeAuction');

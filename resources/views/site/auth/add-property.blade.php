@@ -797,6 +797,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-12 shared-fields">
+                            <div class="builder-option">
+                                <div class="builder-option-name">
+                                  <h5>@lang('main.products.enter mobiles numbers')</h5>
+                                </div>
+                                <input name="phone_numbers" value="" class="form-control" />
+                            </div>
+                        </div>
+
                         <div class="col-12 investment-fields">
                             <div class="builder-option">
                                 <div class="builder-option-name">
@@ -902,10 +911,17 @@
             if ($('#product_type').val() === 'auction') {
                 $('.auction-fields').show();
                 $('.investment-fields').hide();
+                $('.shared-fields').hide();
             }else if($('#product_type').val() === 'investment') {
                 $('.investment-fields').show();
                 $('.auction-fields').hide();
-            } else {
+                $('.shared-fields').hide();
+            } else if($('#product_type').val() === 'shared') {
+                $('.shared-fields').show();
+                $('.auction-fields').hide();
+                $('.investment-fields').hide();
+            } else{
+                $('.shared-fields').hide();
                 $('.auction-fields').hide();
                 $('.investment-fields').hide();
             }
