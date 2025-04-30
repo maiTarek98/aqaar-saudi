@@ -26,9 +26,15 @@
                 </div>
                 <div class="form-group mb-4">
                     <label for="">رقم الهاتف <span class="text-danger">*</span></label>
-                    <input type="text" name="mobile" class="form-control" placeholder="@lang('site.mobile')" value="{{ old('mobile') }}">
+                    <div class="input-group border mb-3">
+                      <span class="input-group-text">
+                      +966
+                      </span>
+                      <input type="text" name="mobile" class="form-control" placeholder="@lang('site.mobile')" value="{{ old('mobile') }}">
+                    </div>
                     <span class="text-danger error-msg mobile"></span>
                 </div>
+
                 <div class="form-group mb-4">
                     <label for="">نوع المستخدم <span class="text-danger">*</span></label>
                     <select name="user_type" class="form-control" placeholder="@lang('site.user_type')" value="{{ old('user_type') }}">
