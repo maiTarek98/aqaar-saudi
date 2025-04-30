@@ -72,14 +72,14 @@
                                  <i class="bi bi-tag"></i>
                                  <div>
                                     <small class="fw-bold mb-1"> @lang('main.products.type')</small>
-                                    <p class="m-0">{{_('main.products.'.$product->type)}}</p>
+                                    <p class="m-0">{{__('main.products.'.$product->type)}}</p>
                                  </div>
                               </div>
                               <div class="d-flex gap-2">
                                  <i class="bi bi-tag"></i>
                                  <div>
                                     <small class="fw-bold mb-1"> @lang('main.products.product_for')</small>
-                                    <p class="m-0">{{_('main.products.'.$product->product_for)}}</p>
+                                    <p class="m-0">{{__('main.products.'.$product->product_for)}}</p>
                                  </div>
                               </div>
                               @if($product->owner_id)

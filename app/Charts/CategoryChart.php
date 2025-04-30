@@ -1,7 +1,7 @@
 <?php
 namespace App\Charts;
 
-// use ArielMejiaDev\LarapexCharts\LarapexChart;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Cart;
 use App\Models\Category;
 

@@ -45,6 +45,7 @@
                     </select>
                     <span class="text-danger error-msg user_type"></span>
                 </div>
+                
                 <div class="form-group mb-4">
                     <label for="">رقم الهوية <span class="text-danger">*</span></label>
                     <input type="text" maxlength="10" pattern="[1-2][0-9]{9}" name="id_number" value=""class="form-control @error('id_number') is-invalid @enderror" id="id_number" placeholder="@lang('main.users.id_number')">
@@ -60,23 +61,27 @@
 
                 <div class="form-group mb-4">
                   <label for="">كلمة المرور <span class="text-danger">*</span></label>
-                  <div class="input-group border mb-3">
-                    <input type="password" id="InputPassword" name="password" class="form-control" placeholder="@lang('site.password')">
-                    <button
-                      type="button"
-                      class="input-group-text fs-4 pass"
-                      title="show pass"
-                      aria-label="اظهار كلمة المرور"
-                    >
-                      <i class="bi bi-lock"></i>
-                    </button>
+                  <div class="mb-3">
+                    <div class="input-group border">
+                        <input type="password" id="InputPassword" name="password" class="form-control" placeholder="@lang('site.password')">
+                        <button
+                          type="button"
+                          class="input-group-text fs-4 pass"
+                          title="show pass"
+                          aria-label="اظهار كلمة المرور"
+                        >
+                          <i class="bi bi-lock"></i>
+                        </button>
+                    </div>
                     <span class="text-danger error-msg password"></span>
+                      
                   </div>
                 </div>
 
                 <div class="form-group mb-4">
                   <label for="">تأكيد كلمة المرور <span class="text-danger">*</span></label>
-                  <div class="input-group border mb-3">
+                  <div class="mb-3">
+                    <div class="input-group border">
                     <input
                     type="password" name="password_confirmation"
                     class="form-control"
@@ -92,6 +97,7 @@
                     >
                       <i class="bi bi-lock"></i>
                     </button>
+                  </div>
                     <span class="text-danger error-msg password_confirmation"></span>
                   </div>
                 </div>

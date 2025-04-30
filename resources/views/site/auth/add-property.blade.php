@@ -17,7 +17,15 @@
         <div class="row d-flex justify-content-between align-items-start">
         @include('site.includes.profile-menu')
         <!-- profile data col -->
-           <div class="profile-data col col-md-7 col-lg-9">
+           <div class="profile-data col col-md-7 col-lg-8">
+               <div class="alert alert-warning d-flex align-items-center" role="alert">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" class="bi flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:" fill="var(--secondary)">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                  </svg>
+                  <div>
+                        جميع الحقول التي تحتوي على ( <span class="text-danger fs-5">*</span> ) هي إلزامية، أما الحقول التي لا تحمل العلامة فهي اختيارية يمكنك تعبئتها إن وُجدت.
+                  </div>
+                </div>
             <form action="{{route('storeProperty',auth('web')->user()->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                     @if ($errors->any())
@@ -32,9 +40,12 @@
 
                 <input type="number" name="added_by" value="{{ Auth::guard('web')->user()->id }}" class="form-control" hidden>
                 <input type="text" name="status" value="pending" class="form-control" hidden>
-                <input type="text" name="represented_by" value="{{Auth::guard('web')->user()->user_type}}" class="form-control" readonly>
+                <!--<input type="text" name="represented_by" value="{{Auth::guard('web')->user()->user_type}}" class="form-control" readonly>-->
 
                 <div class="profile-wrapper mb-3">
+                    <div class="border-bottom mb-3 pb-3">
+                        <h3 class="fs-4 fw-bold main">{{Auth::guard('web')->user()->user_type}}</h3>
+                    </div>
                   <div class="section-title d-flex align-items-center gap-2 mb-4">
                     <div class="section-img">
                       <img loading="lazy" src="{{url('site')}}/images/1.svg" alt="change image" />
@@ -169,7 +180,7 @@
                   <div class="builder-options w-75">
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.plan_number')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.plan_number')  </h5>
                       </div>
                       <input
                         name="plan_number" value="{{old('plan_number')}}"
@@ -180,7 +191,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.plot_number')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.plot_number')  </h5>
                       </div>
                       <input
                         name="plot_number" value="{{old('plot_number')}}"
@@ -191,7 +202,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.area')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.area')  </h5>
                       </div>
                       <input
                         name="area" value="{{old('area')}}"
@@ -202,7 +213,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.area_after_development')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.area_after_development')  </h5>
                       </div>
                       <input
                         name="area_after_development" value="{{old('area_after_development')}}"
@@ -213,7 +224,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.valuation')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.valuation')  </h5>
                       </div>
                       <input
                         name="valuation" value="{{old('valuation')}}"
@@ -225,7 +236,7 @@
 
                     <div class="builder-option">
                       <div class="builder-option-name">
-                            <h5>@lang('main.products.valuation_date')  <span class="text-info">@lang('main.optional')</span></h5>
+                            <h5>@lang('main.products.valuation_date')  </h5>
                       </div>
                       <input
                         name="valuation_date" value="{{old('valuation_date')}}"           type="date"
@@ -233,10 +244,12 @@
                         placeholder=""
                       />
                     </div>
-    
-                    <div class="builder-option">
+                    
+                    <div class="row row-cols-lg-3">
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.has_planning_diagram') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.has_planning_diagram') </h5>
                       </div>
     
                       <input
@@ -263,10 +276,11 @@
                       </label>
                       
                     </div>
-
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.has_electronic_deed') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.has_electronic_deed') </h5>
                       </div>
     
                       <input
@@ -293,9 +307,11 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.has_real_estate_market') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.has_real_estate_market') </h5>
                       </div>
     
                       <input
@@ -322,9 +338,11 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.has_survey_decision') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.has_survey_decision') </h5>
                       </div>
     
                       <input
@@ -351,9 +369,11 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.has_mortgage') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.has_mortgage') </h5>
                       </div>
     
                       <input
@@ -380,9 +400,11 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.has_penalties') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.has_penalties') </h5>
                       </div>
     
                       <input
@@ -409,9 +431,11 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.accepts_mortgage')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.accepts_mortgage')  </h5>
                       </div>
     
                       <input
@@ -438,9 +462,11 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.usufruct_lease') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.usufruct_lease') </h5>
                       </div>
     
                       <input
@@ -467,38 +493,45 @@
                       </label>
                       
                     </div>
-                    <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.is_rented') <span class="text-info">@lang('main.optional')</span></h5>
-                      </div>
-    
-                      <input
-                        name="is_rented"
-                        type="radio"
-                        class="btn-check"
-                        id="is_rented_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="is_rented_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="is_rented"
-                        type="radio"
-                        class="btn-check"
-                        id="is_rented_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="is_rented_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
+                        </div>
+                        <div class="col">
+                            <div class="builder-option">
+                              <div class="builder-option-name">
+                                <h5>@lang('main.products.is_rented') </h5>
+                              </div>
+            
+                              <input
+                                name="is_rented"
+                                type="radio"
+                                class="btn-check"
+                                id="is_rented_yes"
+                                value="1"
+                                autocomplete="off"
+                              />
+                              <label class="btn px-4" for="is_rented_yes">
+                                <span>@lang('main.yes')</span>
+                              </label>
+                              <input
+                                name="is_rented"
+                                type="radio"
+                                class="btn-check"
+                                id="is_rented_no"
+                                value="0"
+                                autocomplete="off"
+                              />
+                              <label class="btn px-4" for="is_rented_no">
+                                <span>@lang('main.no')</span>
+                              </label>
+                              
+                            </div>
+                        </div>
                     </div>
+    
+
+                    
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.annual_rent')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.annual_rent')  </h5>
                       </div>
                       <input
                         name="annual_rent" value="{{old('annual_rent')}}"
@@ -509,7 +542,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.remaining_lease_years')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.remaining_lease_years')  </h5>
                       </div>
                       <input
                         name="remaining_lease_years" value="{{old('remaining_lease_years')}}"
@@ -520,7 +553,7 @@
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.penalty_type') <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.penalty_type') </h5>
                       </div>
     
                       <input
@@ -550,7 +583,7 @@
     
                     <div class="builder-option">
                       <div class="builder-option-name">
-                        <h5>@lang('main.products.license_number')  <span class="text-info">@lang('main.optional')</span></h5>
+                        <h5>@lang('main.products.license_number')  </h5>
                       </div>
                       <input
                         name="license_number" value="{{old('license_number')}}"
@@ -689,7 +722,8 @@
                     </div>
                     <h5 class="fw-bold m-0">تفاصيل إضافية</h5>
                   </div>
-                  <div class="builder-option">
+                  <div class="builder-options w-75">
+                    <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>@lang('main.products.title') <span class="text-danger">*</span></h5>
                       </div>
@@ -700,7 +734,6 @@
                         placeholder="متر مربع 250"
                       />
                   </div>
-                  <div class="builder-options w-75">
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>
@@ -797,6 +830,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-12 shared-fields">
+                            <div class="builder-option">
+                                <div class="builder-option-name">
+                                  <h5>@lang('main.products.enter mobiles numbers')</h5>
+                                </div>
+                                <input name="phone_numbers" value="" class="form-control" />
+                            </div>
+                        </div>
+
                         <div class="col-12 investment-fields">
                             <div class="builder-option">
                                 <div class="builder-option-name">
@@ -830,11 +872,11 @@
                                 <input name="end_date" value="{{ old('end_date') }}"  type="date" class="form-control" />
                             </div>
                         </div>
-                        <div class="builder-options w-75">
-                            <div class="builder-option">
+                    </div>
+                    <div class="builder-option">
                               <div class="builder-option-name">
                                 <h5>
-                                 @lang('main.products.additional_info')  <span class="text-info">@lang('main.optional')</span>
+                                 @lang('main.products.additional_info') 
                                 </h5>
                               </div>
                               <textarea
@@ -844,8 +886,7 @@
                                 id="additional_info"
                               >{{old('additional_info')}}</textarea>
                             </div>
-                          </div>
-                    </div>
+
     
                   </div>
                 </div>
@@ -902,10 +943,17 @@
             if ($('#product_type').val() === 'auction') {
                 $('.auction-fields').show();
                 $('.investment-fields').hide();
+                $('.shared-fields').hide();
             }else if($('#product_type').val() === 'investment') {
                 $('.investment-fields').show();
                 $('.auction-fields').hide();
-            } else {
+                $('.shared-fields').hide();
+            } else if($('#product_type').val() === 'shared') {
+                $('.shared-fields').show();
+                $('.auction-fields').hide();
+                $('.investment-fields').hide();
+            } else{
+                $('.shared-fields').hide();
                 $('.auction-fields').hide();
                 $('.investment-fields').hide();
             }

@@ -2,7 +2,7 @@
 
 namespace App\Charts;
 
-// use ArielMejiaDev\LarapexCharts\LarapexChart;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Order;
 use App\Models\Store;
 class SalesByVendorChart

@@ -23,24 +23,27 @@
                 </div>
                 <div class="form-group mb-4">
                   <label for="">كلمة المرور <span class="text-danger">*</span></label>
-                  <div class="input-group border mb-3">
-                    <input
-                      type="password" name="password"
-                      class="form-control"
-                      id="InputPassword"
-                      placeholder="كلمة المرور"
-                      required
-                    />
-                    <button
-                      type="button"
-                      class="input-group-text fs-4 pass"
-                      title="show pass"
-                      aria-label="اظهار كلمة المرور"
-                    >
-                      <i class="bi bi-lock"></i>
-                    </button>
-                    <small class="text-danger password d-block"></small>
-                  </div>
+                    <div class="mb-3">
+                      <div class="input-group border">
+                        <input
+                          type="password" name="password"
+                          class="form-control"
+                          id="InputPassword"
+                          placeholder="كلمة المرور"
+                          required
+                        />
+                        <button
+                          type="button"
+                          class="input-group-text fs-4 pass"
+                          title="show pass"
+                          aria-label="اظهار كلمة المرور"
+                        >
+                          <i class="bi bi-lock"></i>
+                        </button>
+                      </div>
+                      <small class="text-danger password d-block"></small>
+                        
+                    </div>
 
                   <a
                     href="forgot-pass.html"
