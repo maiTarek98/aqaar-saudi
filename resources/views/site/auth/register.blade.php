@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group mb-4">
                     <label for="">نوع المستخدم <span class="text-danger">*</span></label>
-                    <select name="user_type" class="form-select" placeholder="@lang('site.user_type')" value="{{ old('user_type') }}">
+                    <select name="user_type" class="form-control" placeholder="@lang('site.user_type')" value="{{ old('user_type') }}">
                         <option value="owner">@lang('main.products.owner')</option>
                         <option value="agent">@lang('main.products.agent')</option>
                         <option value="co-owner">@lang('main.products.co-owner')</option>

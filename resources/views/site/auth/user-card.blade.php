@@ -21,7 +21,7 @@
           <div class="profile-data col col-md-7 col-lg-8">
             <div class="profile-wrapper">
               <div class="card-wrapper">
-                <div class="card {{auth('web')->user()->user_type}}-card">
+                <div class="card user-card {{auth('web')->user()->user_type}}">
                     <div class="card-header px-5">
                         <h4 class="card-title fs-5 m-0">بطاقة هوية رقمية</h4>
                     </div>
