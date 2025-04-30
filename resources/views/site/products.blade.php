@@ -339,29 +339,29 @@ data-bs-parent="#accordionFlushExample"
 @push('custom-js')
 <script>
     // price from .. to ..
-  var inputLeft = document.getElementById("input-left");
-  var inputRight = document.getElementById("input-right");
-  var thumbLeft = document.querySelector(".slider > .thumb.left");
-  var thumbRight = document.querySelector(".slider > .thumb.right");
-  var range = document.querySelector(".slider > .range");
-  var priceFrom = document.querySelector(".price-from");
-  var priceTo = document.querySelector(".price-to");
+    var inputLeft = document.getElementById("input-left");
+    var inputRight = document.getElementById("input-right");
+    var thumbLeft = document.querySelector(".slider > .thumb.left");
+    var thumbRight = document.querySelector(".slider > .thumb.right");
+    var range = document.querySelector(".slider > .range");
+    var priceFrom = document.querySelector(".price-from");
+    var priceTo = document.querySelector(".price-to");
+    
+    var priceFromInput = document.querySelector("[name='from_price']");
+    var priceToInput = document.querySelector("[name='to_price']");
+    
+    if (inputLeft !== null) {
+      function setLeftValue() {
+        var _this = inputLeft,
+          min = parseInt(_this.min),
+          max = parseInt(_this.max);
 
-  var priceFromInput = document.querySelector("[name='from_price']");
-  var priceToInput = document.querySelector("[name='to_price']");
+        _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
 
-  if (inputLeft !== null) {
-    function setLeftValue() {
-      var _this = inputLeft,
-      min = parseInt(_this.min),
-      max = parseInt(_this.max);
+        var percent = ((_this.value - min) / (max - min)) * 100;
 
-      _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
-
-      var percent = ((_this.value - min) / (max - min)) * 100;
-
-      thumbLeft.style.left = percent + "%";
-      range.style.left = percent + "%";
+        thumbLeft.style.left = percent + "%";
+        range.style.left = percent + "%";
 
         // Calculate price based on range value
         var price = parseInt(inputLeft.value) ; // Adjust this formula based on your requirements
@@ -372,8 +372,8 @@ data-bs-parent="#accordionFlushExample"
 
       function setRightValue() {
         var _this = inputRight,
-        min = parseInt(_this.min),
-        max = parseInt(_this.max);
+          min = parseInt(_this.min),
+          max = parseInt(_this.max);
 
         _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
 
@@ -420,5 +420,5 @@ data-bs-parent="#accordionFlushExample"
         thumbRight.classList.remove("active");
       });
     }
-  </script>
-  @endpush
+</script>
+@endpush
