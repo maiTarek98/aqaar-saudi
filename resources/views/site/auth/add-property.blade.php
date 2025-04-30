@@ -1,7 +1,7 @@
 @extends('site.index')
-@section('title', trans('site.profile') )
+@section('title', trans('site.add-property') )
 @section('content')
-      @include('site.includes.breadcrumb-section',['title' => trans('site.profile')])
+      @include('site.includes.breadcrumb-section',['title' => trans('site.add-property')])
     <section class="profile py-5">
       <div class="container-fluid">
         <!-- profile nav-sm -->
@@ -750,7 +750,7 @@
                   </div>
                 </div>
     
-                <div class="profile-wrapper mb-3">
+                {{--<div class="profile-wrapper mb-3">
                   <div class="section-title d-flex align-items-center gap-2 mb-4">
                     <div class="section-img">
                       <img loading="lazy" src="{{url('site')}}/images/1.svg" alt="change image" />
@@ -781,7 +781,7 @@
                       />
                     </div>
                   </div>
-                </div>
+                </div>--}}
     
                 <div class="profile-wrapper mb-3">
                   <div class="section-title d-flex align-items-center gap-2 mb-4">

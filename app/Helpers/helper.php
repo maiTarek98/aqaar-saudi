@@ -250,7 +250,7 @@ function getMenuData() {
         'settings' => 'bi bi-gear',
         'pages' => 'bi bi-file-richtext',
         'products' => 'bi bi-box-seam',
-        'reports' => 'bi bi-file-earmark-bar-graph',
+        // 'reports' => 'bi bi-file-earmark-bar-graph',
         'blogs' => 'bi bi-newspaper',
         'contacts' => 'bi bi-chat-text',
         'subscribers' => 'bi bi-envelope',

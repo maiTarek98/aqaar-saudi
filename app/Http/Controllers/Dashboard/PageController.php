@@ -81,12 +81,21 @@ class PageController extends Controller
         return redirect()->route('pages.index')->with('success',trans('messages.DeleteSuccessfully'));
     }
 
-    public function deleteAll(Request $request)
+     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        $pages = Page::whereIn('id',explode(",",$ids))->delete();
-        
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        }
+        $ids = array_filter($ids, fn($id) => is_numeric($id));
+    
+        if (empty($ids)) {
+            return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
+        }
+    
+        Page::whereIn('id', $ids)->delete();
+    
+        return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
     public function changeStatus(Page $page){
         $status = request('status');

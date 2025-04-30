@@ -23,19 +23,18 @@
           </div>
           <div class="selected-filters">
             <div class="selected-filters-title">
-                <p> @lang('site.result of filter')</p>
-
-                @if(!empty($_GET) && count($_GET) > 0 && ! request('page')) 
-                <a href="{{ request()->url() }}" id="clear-all-filters" class="main-btn">@lang('site.reset filter') </a>
+                @if(!empty($_GET) && count($_GET) > 0 && ! request('page') && ! request('listing_number')) 
+                  <p> @lang('site.result of filter')</p>
+                  <a href="{{ request()->url() }}" id="clear-all-filters" class="main-btn">@lang('site.reset filter') </a>
                 @endif
             </div>
             <ul id="selected-filters-list">
               @if(request('product_for'))
-                <li data-filter="product_for3">{{__('site.'.request('product_for'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['product_for' => null])}}"><i class="fas fa-times"></i></a></li>    
+                <li data-filter="product_for3">{{__('main.products.'.request('product_for'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['product_for' => null])}}"><i class="fas fa-times"></i></a></li>    
               @endif
 
               @if(request('type'))
-                <li data-filter="type3">{{__('site.'.request('type'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['type' => null])}}"><i class="fas fa-times"></i></a></li>    
+                <li data-filter="type3">{{__('main.products.'.request('type'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['type' => null])}}"><i class="fas fa-times"></i></a></li>    
               @endif
 
               @if(request('area_id'))
@@ -46,7 +45,7 @@
                 <li data-filter="from_price3">{{__('site.start') . request('from_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['from_price' => null])}}"><i class="fas fa-times"></i></a></li>    
               @endif
               @if(request('to_price'))
-                <li data-filter="to_price3">{{__('site.start') . request('to_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['to_price' => null])}}"><i class="fas fa-times"></i></a></li>    
+                <li data-filter="to_price3">{{__('site.to') . request('to_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['to_price' => null])}}"><i class="fas fa-times"></i></a></li>    
               @endif
             </ul>
           </div>
@@ -96,7 +95,7 @@
                 id="categorysale"
                 />
                 <label class="form-check-label" for="categorysale">
-                  Sale ({{$count}})
+                  @lang('main.products.sale') ({{$count}})
                 </label>
               </div>
             </li>
@@ -116,7 +115,7 @@
                 id="categoryrent"
                 />
                 <label class="form-check-label" for="categoryrent">
-                  rent ({{$count}})
+                  @lang('main.products.rent') ({{$count}})
                 </label>
               </div>
             </li>
@@ -161,7 +160,7 @@
             id="categoryauction"
             />
             <label class="form-check-label" for="categoryauction">
-              auction ({{$count}})
+              @lang('main.products.auction') ({{$count}})
             </label>
           </div>
         </li>
@@ -181,7 +180,7 @@
             id="categoryshared"
             />
             <label class="form-check-label" for="categoryshared">
-              shared ({{$count}})
+              @lang('main.products.shared') ({{$count}})
             </label>
           </div>
         </li>
@@ -200,7 +199,7 @@
             id="categoryinvestment"
             />
             <label class="form-check-label" for="categoryinvestment">
-              investment ({{$count}})
+              @lang('main.products.investment') ({{$count}})
             </label>
           </div>
         </li>
@@ -272,7 +271,7 @@ data-bs-parent="#accordionFlushExample"
     aria-expanded="false"
     aria-controls="flush-collapseTwo"
     >
-    نوع العقار
+    سعر العقار
   </button>
 </h2>
 <div

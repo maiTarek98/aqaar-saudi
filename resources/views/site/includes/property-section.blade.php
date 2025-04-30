@@ -8,7 +8,7 @@
           ></a>
 
           <div class="estate-category"> 
-            {{$property->type}}
+            {{__('main.products.'.$property->type)}}
           </div>
 
           <!-- estate img -->

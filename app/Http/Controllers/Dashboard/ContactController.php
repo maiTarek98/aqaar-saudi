@@ -55,11 +55,21 @@ class ContactController extends Controller
         return redirect()->route('contacts.index')->with('success',trans('messages.DeleteSuccessfully'));
     }
 
-    public function deleteAll(Request $request)
+     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        Contact::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        }
+        $ids = array_filter($ids, fn($id) => is_numeric($id));
+    
+        if (empty($ids)) {
+            return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
+        }
+    
+        Contact::whereIn('id', $ids)->delete();
+    
+        return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
 
     public function send_email(Contact $contact, Request $request)

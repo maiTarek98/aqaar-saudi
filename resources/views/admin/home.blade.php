@@ -13,7 +13,7 @@
                     <!-- Small boxes (Stat box) -->
                     <div class="row row-cols-lg-5 g-3">
                         <div class="col">
-                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('admin/categorys')}}">
+                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('admin/products?added_by=1')}}">
                                 <span class="info-box-icon">
                                 <i class="bi bi-ui-checks-grid"></i>
                                 </span>
@@ -35,7 +35,7 @@
                             </a><!-- /.info-box -->
                         </div>
                         <div class="col">
-                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('/admin/brands')}}">
+                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('/admin/products?type=auction')}}">
                                 <span class="info-box-icon">
                                     <i class="bi bi-tags"></i>
                                 </span><!-- /.info-box-icon -->
@@ -50,7 +50,7 @@
                             </a><!-- /.info-box -->
                         </div>
                         <div class="col">
-                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('/')}}">
+                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('/admin/products?type=shared')}}">
                                 <span class="info-box-icon">
                                     <i class="bi bi-person-badge"></i>
                                 </span><!-- /.info-box-icon -->
@@ -65,7 +65,7 @@
                             </a><!-- /.info-box -->
                         </div>
                         <div class="col">
-                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('/')}}">
+                            <a class="info-box shadow-none bg-transparent d-flex align-items-center gap-2 justify-content-between" href="{{url('/admin/products?type=investment')}}">
                                 <span class="info-box-icon">
                                     <i class="bi bi-person-badge"></i>
                                 </span><!-- /.info-box-icon -->

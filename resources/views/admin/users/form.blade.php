@@ -41,6 +41,7 @@
                         <input type="text" maxlength="10" name ="mobile" value="{{ old('mobile', $user->mobile) }}"
                             class="form-control  @error('mobile') is-invalid @enderror" id="mobile" placeholder="@lang('main.users.mobile')">
                     </div>
+                    @if(request('account_type') == 'users')
                     <div class="col-md-6">
                         <label for="email"> @lang('main.'.request('account_type').'.email')</label>
                         @if(request('account_type') != 'users')
@@ -49,7 +50,7 @@
                         <input type="email" name="email" value="{{ old('email', $user->email) }}" class="form-control @error('email') is-invalid @enderror"
                             id="email" placeholder="@lang('main.users.email')">
                     </div>
-                
+                    @endif
         
                 
                     @if(request('account_type') == 'admins')
@@ -94,28 +95,28 @@
                     @if(request('account_type') == 'users')
                     <div class="col-md-6">
                         <label for="user_type">@lang('main.users.user_type')</label><span class="text-danger">*</span>
-                        <select name="user_type" class="form-control @error('user_type') is-invalid @enderror" required>
-                            <option value="">@lang('main.SelectUser_type')</option>
+                        <select name="user_type" class="form-select @error('user_type') is-invalid @enderror" required>
+                            <option value="">@lang('main.users.SelectUser_type')</option>
                             <option value="owner"
                             {{ $user->user_type == 'owner' ? 'selected' : '' }}>
-                            @lang('main.users.owner')
+                            @lang('main.products.owner')
                             </option>
                             <option value="agent"
                             {{ $user->user_type == 'agent' ? 'selected' : '' }}>
-                            @lang('main.users.agent')
+                            @lang('main.products.agent')
                             </option>
                             <option value="co-owner"
                             {{ $user->user_type == 'co-owner' ? 'selected' : '' }}>
-                            @lang('main.users.co-owner')
+                            @lang('main.products.co-owner')
                             </option>
                             <option value="other"
                             {{ $user->user_type == 'other' ? 'selected' : '' }}>
-                            @lang('main.users.other')
+                            @lang('main.products.other')
                             </option>
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <label for="id_number"> @lang('main.id_number')</label><span class="text-danger">*</span>
+                        <label for="id_number"> @lang('main.users.id_number')</label><span class="text-danger">*</span>
                         <div class="input-group">
                             <input type="number" maxlength="10" pattern="[1-2][0-9]{9}" name="id_number" value=""
                                 class="form-control @error('id_number') is-invalid @enderror" id="id_number"
@@ -124,7 +125,7 @@
                     </div>
 
                     <div class="col-md-6" id="agency_number_wrapper" style="display: {{ $user->user_type == 'agent' ? 'block' : 'none' }}">
-                        <label for="agency_number"> @lang('main.agency_number')</label><span class="text-danger">*</span>
+                        <label for="agency_number"> @lang('main.users.agency_number')</label><span class="text-danger">*</span>
                         <div class="input-group">
                             <input type="number" maxlength="10" pattern="[1-2][0-9]{9}" name="agency_number" value=""
                                 class="form-control @error('agency_number') is-invalid @enderror" id="agency_number"

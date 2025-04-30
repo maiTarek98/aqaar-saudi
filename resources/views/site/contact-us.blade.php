@@ -1,6 +1,7 @@
 @extends('site.index')
 @section('title', trans('site.contactus'))
 @section('content')
+@include('site.includes.breadcrumb-section',['title' =>trans('site.contactus')  ])
 <!-- contact us  -->
     <section class="contactUs py-5">
       <div class="container-fluid">
@@ -44,7 +45,7 @@
                       <textarea
                         class="form-control"
                         style="height: 150px"
-                        id="floatingContactText" name="message" id="message" placeholder="@lang('site.message')"
+                        id="floatingContactText" name="message" placeholder="@lang('site.message')"
                         required
                       ></textarea>
                       <label for="floatingContactText">{{old('message')}}</label>

@@ -113,7 +113,7 @@
                 <p class="fw-semibold  text-center">
                   هل لديك حساب؟
                   <a
-                  href="login.html"
+                  href="{{route('login')}}"
                   class="main fw-bold px-1"
                   aria-label="الذهاب الى صفحة تسجيل الدخول في حالة اذا كان لديك حساب مسبق"
                   >

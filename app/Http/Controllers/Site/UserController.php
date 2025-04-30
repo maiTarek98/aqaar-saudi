@@ -51,6 +51,8 @@ class UserController extends Controller {
             'mobile' => 'required|numeric|digits:10|unique:users,mobile',
             'user_type' => 'required|string|in:owner,co-owner,agent,other',
             'id_number' => 'required|numeric',
+            'agency_number' => 'required_if:user_type,agent|numeric',
+
         ];
         $account_type = 'users';
         $mobile =preg_replace('/\s+/','',ltrim($request->mobile,0));

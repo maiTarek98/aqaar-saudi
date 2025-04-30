@@ -17,10 +17,18 @@
                 </a>
               </li>
               <li>
-                <a href="#" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
+                {{-- @if(App::getLocale() == 'ar')
+                <a href="{{url('/change-language/en')}}" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
                   <i class="bi bi-globe"></i>
                   <span id="lang-text">EN</span>
                 </a>
+                @endif
+                @if(App::getLocale() == 'en')
+                <a href="{{url('/change-language/ar')}}" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
+                  <i class="bi bi-globe"></i>
+                  <span id="lang-text">العربية</span>
+                </a>
+                @endif --}}
               </li>
             </ul>
             <ul class="helper-pages m-0 d-flex align-items-center">
@@ -129,11 +137,11 @@
             </ul>
             <!-- مربع البحث -->
             <div class="search-box">
-              <form action="" method="GET">
+              <form action="{{route('propertys')}}" method="GET">
                 <input
                   type="search"
-                  name="reference_number"
-                  class="form-control"
+                  name="listing_number"
+                  class="form-control" value="{{request('listing_number')}}"
                   placeholder="بحث بكود العقار"
                   aria-label="بحث بكود العقار"
                   required

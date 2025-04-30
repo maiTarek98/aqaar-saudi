@@ -352,8 +352,10 @@ return [
 		'type-house' => 'البيت',
 		'type-office' => 'المكتب',
 		'address_type' => 'علامة مميزة ،حفظ العنوان كــ',
-		'' => '',
-
+		'user_type' => 'نوع الحساب',
+		'id_number' => 'رقم الهوية',
+		'agency_number' => 'رقم الوكالة',
+		'SelectUser_type' => 'أختر نوع الحساب',
 	],
 
 	'vendors' => [

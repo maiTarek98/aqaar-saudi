@@ -8,8 +8,8 @@
         <div class="profile-nav-sm rounded-3">
           <p class="m-0">الملف الشخصي</p>
           <button class="btn toggle-profile-nav p-0 border-0 bg-transparent" data-toggle=".profile-nav">
-            <img
-            src="images/menu.png"
+            <img loading="lazy" 
+            src="{{url('site')}}/images/menu.png"
             alt="menu icon"
           />
           </button>
@@ -28,7 +28,7 @@
                     @if($user->photo_profile)
                         <img loading="lazy" class="w-100" src="{{$user->photo_profile}}" alt="{{$user->name}}" id="photo">
                     @else
-                        <img loading="lazy" class="w-100" src="{{url('site/images/profile_user_avatar_icon.webp')}}" alt="{{$user->name}}" id="photo">
+                        <img loading="lazy" class="w-100" src="{{url('site/images/avatar.png')}}" alt="{{$user->name}}" id="photo">
                     @endif
                     <div class="profile-pic-icon">
                         <i class="bi bi-camera-fill"></i>
@@ -38,6 +38,7 @@
                   <div>
                     <p class="fw-bold fs-5 mb-3">{{$user->name}}</p>
                     <p class="text-muted">{{$user->email}}</p>
+                    <p class="text-muted">{{$user->user_type}}</p>
                   </div>
                 </div>
                 
@@ -59,12 +60,12 @@
                       <small class="text-danger" id="mobile_name_error"></small>
                     </div>
                   </div>
-                  <div class="col-md-6">
+                  {{--<div class="col-md-6">
                     <div class="form-group mb-4">
                       <label for=""  class="mb-2">نوع المستخدم</label>
-                      <input class="form-control" readonly name="user_type" value="{{$user->user_type}}" type="tel">
+                      <input class="form-control" readonly name="user_type" value="" type="tel">
                     </div>
-                  </div>
+                  </div>--}}
                   <div class="col-md-6">
                     <div class="form-group mb-4">
                       <label for=""  class="mb-2">رقم الهوية</label>
@@ -72,12 +73,12 @@
                       <small class="text-danger" id="id_number_name_error"></small>
                     </div>
                   </div>
-                  @if($user->agent_number)
+                  @if($user->agency_number)
                   <div class="col-md-6">
                     <div class="form-group mb-4">
                       <label for=""  class="mb-2">رقم الهوية</label>
-                      <input type="text" class="form-control" name="agent_number" value="{{old('agent_number', $user->agent_number)}}" placeholder="الاسم" >
-                      <small class="text-danger" id="agent_number_name_error"></small>
+                      <input type="text" class="form-control" name="agency_number" value="{{old('agency_number', $user->agency_number)}}" placeholder="الاسم" >
+                      <small class="text-danger" id="agency_number_name_error"></small>
                     </div>
                   </div>
                   @endif

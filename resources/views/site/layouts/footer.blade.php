@@ -8,8 +8,8 @@
             <!-- الشركة -->
             <div class="col-12 col-lg-3">
               <div class="footer-info">
-                <img
-                  src="images/logo.png"
+                <img loading="lazy"
+                  src="{{url('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}"
                   alt="شعار الشركة"
                   class="img-fluid"
                 />
@@ -140,7 +140,7 @@
             aria-label="رابط إلى موقع شركة سمارت فيجن"
           >
             <span>تصميم وبرمجة شركة سمارت فيجن للبرمجيات</span>
-            <img src="images/smart-logo.svg" alt="شعار سمارت فيجن" />
+            <img loading="lazy" src="{{url('site')}}/images/smart-logo.svg" alt="شعار سمارت فيجن" />
           </a>
         </p>
       </div>
@@ -199,19 +199,24 @@
             toastr.success('{{ Session::get('success') }}');
         @endif
             });
-    document.addEventListener('DOMContentLoaded', function () {
-        let userTypeSelect = document.querySelector('[name="user_type"]');
-        let agencyWrapper = document.getElementById('agency_number_wrapper');
-        function toggleAgencyField() {
-            if (userTypeSelect.value === 'agent') {
-                agencyWrapper.style.display = 'block';
-            } else {
-                agencyWrapper.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', function () {
+            let userTypeSelect = document.querySelector('[name="user_type"]');
+            let agencyWrapper = document.getElementById('agency_number_wrapper');
+
+            function toggleAgencyField() {
+                if (userTypeSelect.value === 'agent') {
+                    agencyWrapper.style.display = 'block';
+                } else {
+                    agencyWrapper.style.display = 'none';
+                }
             }
-        }
-        toggleAgencyField();
-        userTypeSelect.addEventListener('change', toggleAgencyField);
-    });
+            toggleAgencyField();
+            userTypeSelect.addEventListener('change', toggleAgencyField);
+            document.querySelector('.nice-select').addEventListener('click', function () {
+                setTimeout(toggleAgencyField, 100);
+            });
+        });
+
 </script>
 
 <script>

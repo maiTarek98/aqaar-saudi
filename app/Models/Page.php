@@ -15,5 +15,18 @@ class Page extends Model
    public function admin() {
         return $this->belongsTo(\App\Models\User::class,'added_by');
     }
+    
+      public function getTitleAttribute()
+    {
+        $lang = App::getLocale();
+        $column = "title_" . $lang;
+        return $this->{$column};
+    }
 
+   public function getContentAttribute()
+    {
+        $lang = App::getLocale();
+        $column = "content_" . $lang;
+        return $this->{$column};
+    }    
 }

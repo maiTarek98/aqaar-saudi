@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">
-                            المنتجات
+                            @lang('main.products.products')
                             <b>({{$result->total()}})</b>
                         </h3>
                         @can($model.'-delete')

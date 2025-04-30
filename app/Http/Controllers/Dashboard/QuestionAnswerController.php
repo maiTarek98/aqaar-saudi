@@ -78,11 +78,21 @@ class QuestionAnswerController extends Controller
         $question_answer->delete();
         return redirect()->route('question_answers.index')->with('success',trans('messages.DeleteSuccessfully'));
     }
-    public function deleteAll(Request $request)
+     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        QuestionAnswer::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        }
+        $ids = array_filter($ids, fn($id) => is_numeric($id));
+    
+        if (empty($ids)) {
+            return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
+        }
+    
+        QuestionAnswer::whereIn('id', $ids)->delete();
+    
+        return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
 
     public function changeStatus(QuestionAnswer $question_answer){

@@ -81,7 +81,12 @@ class UserController extends Controller
             $result = $result->paginate((int) $per_page);
             $result->withQueryString();
         }
-        $fields = ['id', 'name', 'mobile', 'email', 'user_type'];
+        if($request->account_type == 'users'){
+            $fields = ['id', 'name', 'mobile', 'user_type'];
+        }
+        else{
+            $fields = ['id', 'name', 'mobile', 'email'];
+        }
         $model = 'users';
 
         if ($request->ajax()) {
@@ -153,12 +158,21 @@ class UserController extends Controller
         Wishlist::where('id',$id)->delete();
         return redirect()->back()->with('success',trans('messages.DeleteSuccessfully'));
     }
-    public function deleteAll(Request $request)
+     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        $this->userRepository->deleteAllUsers($ids);
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
-
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        }
+        $ids = array_filter($ids, fn($id) => is_numeric($id));
+    
+        if (empty($ids)) {
+            return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
+        }
+    
+        User::whereIn('id', $ids)->delete();
+    
+        return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
     public function changeStatus(User $user,Request $request){
         $request->validate(['status' => 'required|string|in:accepted,blocked,pending']);

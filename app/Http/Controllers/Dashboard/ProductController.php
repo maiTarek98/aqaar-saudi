@@ -37,15 +37,12 @@ class ProductController extends Controller
         $sortBy = $request->input('sortBy', 'ASC');
         $query = Product::where(function ($query) use ($searchQuery) {
             $query->where('title', 'like', '%' . $searchQuery . '%')->orWhere('description', 'like', '%' . $searchQuery . '%');
+        })->when($request->query('added_by'), function($query, $added_by) {
+            $query->where('added_by', $added_by );
         })->where(function ($query) use ($searchNumber) {
             $query->where('listing_number', 'like', '%' . $searchNumber . '%');
         })->when($request->query('status'), function($query, $status) {
                 $query->where('status', $status);
-        })->when($request->query('area_id'), function($query, $governorate_id) {
-                $query->whereHas('area.parent.parent', function($q) use($governorate_id) {
-                    $q->where('id', $governorate_id)
-                      ->where('type', 'governorate');
-                });
         })->when($request->query('type'), function($query, $type) {
                 $query->where('type', $type);
             })->when($request->query('in_home'), function($query, $in_home) {
@@ -268,11 +265,21 @@ class ProductController extends Controller
         return redirect()->route('products.index',['page'=> $this->currentPage])->with('success',trans('messages.DeleteSuccessfully'));
     }
 
-    public function deleteAll(Request $request)
+     public function deleteAll(Request $request)
     {
         $ids = $request->ids;
-        $products = Product::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        }
+        $ids = array_filter($ids, fn($id) => is_numeric($id));
+    
+        if (empty($ids)) {
+            return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
+        }
+    
+        product::whereIn('id', $ids)->delete();
+    
+        return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
     public function toggleStatus(Product $product){
         $status = (request('status') == 'on')? 'show' :'hide';
@@ -374,8 +381,7 @@ public function storeMedia(Request $request)
             return redirect()->route('products.index')->with('error',trans('messages.Product not found'));
         }
         $newProduct = $product->replicate();
-        $newProduct->name_ar = $product->name_ar . ' (Copy)';
-        $newProduct->name_en = $product->name_en . ' (Copy)';
+        $newProduct->title = $product->title . ' (Copy)';
         $newProduct->save(); 
         if ($product->hasMedia('products_image')) {
             $media = $product->getFirstMedia('products_image'); // Get the single image
