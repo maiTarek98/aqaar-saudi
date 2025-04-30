@@ -3,13 +3,11 @@
 @section('content')
 @include('site.includes.breadcrumb-section',['title' => trans('site.change-password')])
     <!-- profile -->
-    <div class="container-fluid mb-5 pb-md-4">
-        <!-- profile -->
-        <section class="profile mb-5">
-            <div class="container-lg">
-                <div class="row">
-                 @include('site.includes.profile-menu')
-                 <main class="col col-md-8 col-lg-9">
+    <section class="profile py-5">
+        <div class="container-fluid">
+            <div class="row">
+                @include('site.includes.profile-menu')
+                <main class="col col-md-8 col-lg-8">
                         <!-- action : open profile nav @ sm media -->
                         <button id="profile_nav" class="d-md-none">
                             <h6>@lang('site.change-password')</h6>

@@ -4,14 +4,12 @@
 <!-- contact us  -->
     <section class="contactUs py-5">
       <div class="container-fluid">
-        <div class="row align-items-center gy-3">
+        <div class="row gy-3">
           <!-- contact form -->
           <div class="col-md-7 col-lg-8">
-            <div class="contact-form py-4 px-4">
-              <h5 class="fw-bold fs-3">@lang('site.contactus')</h5>
-              <p class="text-muted my-3">
-               @lang('site.contact text')
-              </p>
+            <div class="contact-form h-100 py-4 px-4">
+              <h5 class="fw-bold fs-3 mb-4">@lang('site.contactus')</h5>
+              
               <form id="contactUsForm" class="form">
                         {{ csrf_field() }}
                         <div class="alert alert-danger print-contacterror-msg" style="display:none">
@@ -75,7 +73,7 @@
           </div>
           <!-- contact data -->
           <div class="col-12 col-md-5 col-lg-4">
-            <div class="contact-data bg-main">
+            <div class="contact-data">
               <div class="contact-info pb-4">
                 <ul class="d-flex flex-column gap-4">
                   @if(app(App\Models\GeneralSettings::class)->email)
@@ -105,27 +103,24 @@
                 </ul>
               </div>
               <!-- وسائل التواصل الاجتماعي -->
-              <div class="followUs">
-                <p class="fw-semibold fs-4 text-white mb-4">@lang('site.follow us')</p>
-              </div>
-              <div class="social d-flex gap-3">
+              <div class="social row row-cols-4 g-2">
                 @if(app(App\Models\SocialSettings::class)->twitter_link)
-                <a href="{{app(App\Models\SocialSettings::class)->twitter_link}}" target="_blank" aria-label="رابط إلى تويتر">
+                <a href="{{app(App\Models\SocialSettings::class)->twitter_link}}"  class="col" target="_blank" aria-label="رابط إلى تويتر">
                   <i class="fa-brands fa-x-twitter"></i>
                 </a>
                 @endif
                 @if(app(App\Models\SocialSettings::class)->facebook_link)
-                <a href="{{app(App\Models\SocialSettings::class)->facebook_link}}" target="_blank" aria-label="رابط إلى فيسبوك">
+                <a href="{{app(App\Models\SocialSettings::class)->facebook_link}}"  class="col" target="_blank" aria-label="رابط إلى فيسبوك">
                   <i class="fa-brands fa-facebook-f"></i>
                 </a>
                 @endif
                 @if(app(App\Models\SocialSettings::class)->linkedin_link)
-                <a href="{{app(App\Models\SocialSettings::class)->linkedin_link}}" target="_blank" aria-label="رابط إلى لينكد إن">
+                <a href="{{app(App\Models\SocialSettings::class)->linkedin_link}}"  class="col" target="_blank" aria-label="رابط إلى لينكد إن">
                   <i class="fa-brands fa-linkedin-in"></i>
                 </a>
                 @endif
                 @if(app(App\Models\SocialSettings::class)->snapchat_link)
-                <a href="{{app(App\Models\SocialSettings::class)->snapchat_link}}" target="_blank" aria-label="رابط إلى سناب شات">
+                <a href="{{app(App\Models\SocialSettings::class)->snapchat_link}}"  class="col" target="_blank" aria-label="رابط إلى سناب شات">
                   <i class="fa-brands fa-snapchat"></i>
                 </a>
                 @endif
