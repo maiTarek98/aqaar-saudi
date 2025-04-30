@@ -18,7 +18,7 @@
         <div class="row d-flex justify-content-between align-items-start">
         @include('site.includes.profile-menu')
         <!-- profile data col -->
-          <div class="profile-data col col-md-7 col-lg-9">
+          <div class="profile-data col col-md-7 col-lg-8">
             <div class="profile-wrapper">
               <form id="updateForm" action="{{route('edit-profile')}}" enctype="multipart/form-data" method="post">
                             @csrf
@@ -51,12 +51,12 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-4">
-                        <label for="mobile">@lang('site.mobile')</label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="phone_num">+966</span>
-                            <input class="form-control" name="mobile" value="{{old('mobile', $user->mobile)}}" type="tel">
-                        </div>
-                        <small class="text-danger" id="mobile_name_error"></small>
+                      <label for="mobile">@lang('site.mobile')</label>
+                      <div class="input-group border mb-3">
+                        <span class="input-group-text" id="phone_num">+966</span>
+                        <input class="form-control" name="mobile" value="{{old('mobile', $user->mobile)}}" type="tel">
+                      </div>
+                      <small class="text-danger" id="mobile_name_error"></small>
                     </div>
                   </div>
                   <div class="col-md-6">
