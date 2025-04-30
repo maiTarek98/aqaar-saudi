@@ -1,5 +1,5 @@
 
-<div class="profile-nav col col-md-5 col-lg-3" id="profile-nav">
+<div class="profile-nav col col-md-5 col-lg-4" id="profile-nav">
             <div class="profile-wrapper">
               <button class="close-profile-nav" data-close=".profile-nav">
                 <i class="bi bi-x-lg"></i>
