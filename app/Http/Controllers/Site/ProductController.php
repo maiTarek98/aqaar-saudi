@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\ProductReview;
 use App\Models\CategoryYear;
-use App\Models\InspectionReport;
+use App\Models\PropertyAccessLink;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Response;
@@ -20,43 +20,69 @@ use Illuminate\Support\Facades\Cache;
 use Alkoumi\LaravelHijriDate\Hijri;
 
 class ProductController extends Controller {
-	public function products(Request $request) {
-		$urlPrevious = url()->current();
-		$searchQuery = trim($request->query('search'));
-        $searchNumber = trim($request->query('listing_number'));
-      	session()->put('url.intended', $urlPrevious);
-      	$propertys = Product::query();
-      	$areas = getGovernorates();
-		$propertys = $propertys->where(function ($query) use ($searchQuery) {
-            $query->where('title', 'like', '%' . $searchQuery . '%')->orWhere('description', 'like', '%' . $searchQuery . '%');
-        })->where(function ($query) use ($searchNumber) {
-            $query->where('listing_number', 'like', '%' . $searchNumber . '%');
-        })->when($request->query('area_id'), function($query, $governorate_id) {
-                $query->whereHas('area.parent.parent', function($q) use($governorate_id) {
-                    $q->where('id', $governorate_id)
-                      ->where('type', 'governorate');
-                });
-            });
-		if(!empty($_GET['product_for'])){
-			$checkedId=explode(',',$_GET['product_for']);
-			$propertys= $propertys->whereIn('product_for', $checkedId);
-		}
-		if(!empty($_GET['type'])){
-			$checkedId=explode(',',$_GET['type']);
-			$propertys= $propertys->whereIn('type', $checkedId);
-		}
-		if(!empty($_GET['from_price'])){
-			$from_price = floor($_GET['from_price']);
-			$propertys = $propertys->where('price','>=' ,$from_price);
-		}
-		if( !empty($_GET['to_price'])){
-			$to_price = ceil($_GET['to_price']) ?? 0;
-			$propertys = $propertys->where('price','<=' ,$to_price);
-		}
+public function products(Request $request) {
+    $urlPrevious = url()->current();
+    $searchQuery = trim($request->query('search'));
+    $searchNumber = trim($request->query('listing_number'));
+    $governorate_id = $request->query('area_id');
 
-        $propertys = $propertys->where('status','shared_onsite')->latest()->paginate(8);
-		return view('site.products', compact('propertys','areas'));
-	}
+    session()->put('url.intended', $urlPrevious);
+
+    $propertys = Product::query();
+    $areas = getGovernorates();
+
+    // Flag to determine if filters are applied
+    $hasFilters = $searchQuery || $searchNumber || $governorate_id || 
+                  $request->filled('product_for') || $request->filled('type') ||
+                  $request->filled('from_price') || $request->filled('to_price');
+
+    if ($searchQuery) {
+        $propertys->where(function ($query) use ($searchQuery) {
+            $query->where('title', 'like', '%' . $searchQuery . '%')
+                  ->orWhere('description', 'like', '%' . $searchQuery . '%');
+        });
+    }
+
+    if ($searchNumber) {
+        $propertys->where('listing_number', $searchNumber);
+    }
+
+    if ($governorate_id) {
+        $propertys->whereHas('area.parent.parent', function ($q) use ($governorate_id) {
+            $q->where('id', $governorate_id)
+              ->where('type', 'governorate');
+        });
+    }
+
+    if ($request->filled('product_for')) {
+        $checkedId = explode(',', $request->query('product_for'));
+        $propertys->whereIn('product_for', $checkedId);
+    }
+
+    if ($request->filled('type')) {
+        $checkedId = explode(',', $request->query('type'));
+        $propertys->whereIn('type', $checkedId);
+    }
+
+    if ($request->filled('from_price')) {
+        $from_price = floor($request->query('from_price'));
+        $propertys->where('price', '>=', $from_price);
+    }
+
+    if ($request->filled('to_price')) {
+        $to_price = ceil($request->query('to_price'));
+        $propertys->where('price', '<=', $to_price);
+    }
+
+    // إذا مفيش فلاتر، رجّع فقط العقارات المشتركة
+    if (!$hasFilters) {
+        $propertys->where('form_type','site_property');
+    }
+
+    $propertys = $propertys->latest()->paginate(8);
+
+    return view('site.products', compact('propertys', 'areas'));
+}
 	// Track car view
     private function trackView(Car $property)
     {
@@ -139,21 +165,47 @@ class ProductController extends Controller {
 		return redirect()->route('propertys',$search_url.$cat_url.$subcat_url.$cat_year_url.$from_price.$to_price);
 	}
 
-	public function productsingle($listing_number){
+    public function productsingle($listing_number)
+    {
         $urlPrevious = url()->current();
         session()->put('url.intended', $urlPrevious);
-        $property = Product::where('listing_number',$listing_number)->first(); 
-        if(!$property){
+        $property = Product::where('listing_number', $listing_number)->first(); 
+        if (!$property) {
             return back();
-        }   
-        if($property->type == 'investment'){
-        	return view('site.product-investment',compact('property'));
-    	}elseif($property->type == 'auction'){
-        	return view('site.product-auction',compact('property'));
-    	}
+        }
+        $allLinks = PropertyAccessLink::where('product_id', $property->id)->get()->toArray();
+        $structuredTree = $this->buildTree($allLinks, null);
+        if($property->form_type == 'site_property'){
+            $viewName = 'site.product-single';
+        }else{
+            if(auth('web')->check()){
+                $viewName = match($property->type) {
+                    'investment' => 'site.product-investment',
+                    'auction' => 'site.product-auction',
+                    'shared' => 'site.product-shared',
+                    default => abort(404),
+                };
+            }else{
+                abort(404);
+            }
+        }
+        return view($viewName, compact('property', 'structuredTree'));
+    }
+    
+    private function buildTree(array $elements, $parentId = null)
+    {
+        $branch = [];
+        foreach ($elements as $element) {
+            if ($element['parent_id'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id']);
+                $element['children'] = $children;
+                $branch[] = $element;
+            }
+        }
+        return $branch;
     }
 
-     public function storeComment($product_id, Request $request)
+    public function storeComment($product_id, Request $request)
     {
 		$rules = [
 			'review' => 'sometimes|nullable|string',

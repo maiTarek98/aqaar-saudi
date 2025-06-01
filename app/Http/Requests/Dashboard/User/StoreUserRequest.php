@@ -49,8 +49,8 @@ class StoreUserRequest extends FormRequest
         }else{
             if(request('account_type') == 'users'){
                 $rules['email'] = 'nullable|email|unique:users,email';
-                $rules['id_number'] = 'required|numeric';
-                $rules['agency_number'] = 'required_if:user_type,agent|numeric';
+                // $rules['id_number'] = 'required|numeric';
+                // $rules['agency_number'] = 'required_if:user_type,agent|numeric';
 
             }else{
                 $rules['email'] = 'required|email|unique:users,email';
@@ -72,8 +72,8 @@ class StoreUserRequest extends FormRequest
         }else{
             if(request('account_type') == 'users'){
                 $rules['email'] = 'nullable|email|unique:users,email,'.$id;
-                $rules['id_number'] = 'required|numeric';
-                $rules['agency_number'] = 'required_if:user_type,agent|numeric';
+                // $rules['id_number'] = 'required|numeric';
+                // $rules['agency_number'] = 'required_if:user_type,agent|numeric';
             }else{
                 $rules['email'] = 'required|email|unique:users,email,'.$id;
             }

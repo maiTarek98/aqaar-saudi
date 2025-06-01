@@ -11,14 +11,18 @@ class ProductFeature extends Model
 {
     use HasFactory;
     protected $guarded = []; 
-   protected static function boot()
+    protected static function boot()
     {
         parent::boot();
     }
-   public function user() {
+    protected $casts = [
+        'features' => 'array',
+    ];
+
+    public function user() {
         return $this->belongsTo(\App\Models\User::class,'user_id');
     }
-public function product() {
+    public function product() {
         return $this->belongsTo(\App\Models\Product::class,'product_id');
     }
 }

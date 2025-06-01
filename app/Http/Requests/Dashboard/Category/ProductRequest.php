@@ -23,18 +23,24 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
+        if(request('form_type') == 'add_property'){
+            $val_type = 'required|string|in:auction,shared,investment';
+        }else{
+            $val_type = 'sometimes|nullable|string|in:auction,shared,investment';
+        }
         return [ 
-            'added_by'              => 'required|numeric|exists:users,id',
+            'added_by'              => 'sometimes|nullable|numeric|exists:users,id',
             'product_for'           => 'required|string|in:rent,sale',
             'owner_id '             => 'sometimes|nullable|numeric|exists:users,id',
             'area_id'               => 'sometimes|nullable|numeric|exists:locations,id',
-            'type'                  => 'required|string|in:auction,shared,investment',
+            'type'                  => $val_type,
             'title'                 => ['required','min:2', 'max:255'],
             'price'                 => 'sometimes|nullable|numeric',
-            'start_date'            => 'sometimes|nullable|date',
-            'end_date'              => 'sometimes|nullable|date',
+            'investment_min'        => 'sometimes|nullable|integer',
+            'start_date' => 'sometimes|nullable|date|after_or_equal:today',
+            'end_date'   => 'sometimes|nullable|date|after_or_equal:start_date',
             'is_private'            => 'sometimes|nullable|boolean',
-            'in_home'            => 'sometimes|nullable|string|in:yes,no',
+            'in_home'               => 'sometimes|nullable|string|in:yes,no',
             'status'                => 'required|string|in:pending,shared_onsite,approved,rejected,closed',
             'map_location'          => 'sometimes|nullable|string',
             'qr_code'               => 'sometimes|nullable|string',
@@ -49,24 +55,27 @@ class ProductRequest extends FormRequest
             'has_penalties'         => 'sometimes|nullable|boolean',
             'plan_number'           => 'sometimes|nullable|string',
             'plot_number'           => 'sometimes|nullable|string',
-            'area'                  => 'sometimes|nullable|numeric',
-            'area_after_development'=> 'sometimes|nullable|numeric',
+            'area'                  => 'sometimes|nullable|string',
+            'area_after_development'=> 'sometimes|nullable|string',
             'valuation'             => 'sometimes|nullable|numeric',
             'valuation_date'        => 'sometimes|nullable|date',
             'additional_info'       => 'sometimes|nullable|string',
             'license_number'        => 'sometimes|nullable|numeric',
             'annual_rent'           => 'sometimes|nullable|numeric',
-            'remaining_lease_years' => 'sometimes|nullable|integer',
+            'remaining_lease_years' => 'sometimes|nullable|string',
             'valuation_type'        => 'sometimes|nullable|boolean',
             'accepts_mortgage'      => 'sometimes|nullable|boolean',
             'usufruct_lease'        => 'sometimes|nullable|boolean',
             'is_rented'             => 'sometimes|nullable|boolean',
-            'penalty_type'          => 'sometimes|nullable|string|in:cash,installment',
+            'penalty_type'          => 'sometimes|nullable',
             'represented_by'        => 'sometimes|nullable|string|in:owner,agent,co-owner,other',
-            'product_type'          => 'sometimes|nullable|string|in:residential,commercial',
+            'product_type'          => 'sometimes|nullable|string|in:residential,commercial,two',
             'owner_type'            => 'sometimes|nullable|string|in:other,company,individual',
             'link_video'            => 'sometimes|nullable|string',
             'document'              => 'sometimes|nullable|array',
+            'agree'                 => 'required|accepted',
+            'features'              => 'sometimes|nullable|array',
+
          ]
          +
          ($this->isMethod('POST') ? $this->store() : $this->update());

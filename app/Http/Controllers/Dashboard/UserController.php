@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use App\Http\Traits\HomeTraits;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 class UserController extends Controller
 {
     use UploadImageTrait;use HomeTraits;
@@ -105,6 +107,32 @@ class UserController extends Controller
         $roles=Role::whereNotIn('id',[3,4])->select('id','guard_name','name')->get();
         return view('admin.users.create', compact('user','roles'));
     }
+    public function ajaxStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'mobile'   => 'required|unique:users,mobile|numeric|digits:10',
+            'password' => 'required|string|min:6',
+        ]);
+    
+        $user = User::create([
+            'name'     => $validated['name'],
+            'mobile'   => $validated['mobile'],
+            'password' => $validated['password'],
+            'status' => 'accepted',
+            'account_type' => 'users',
+            'added_by' => auth('admin')->user()->id,
+            'user_type' => 'other',
+        ]);
+    
+        return response()->json([
+            'message' => 'تمت الإضافة بنجاح',
+            'id'      => $user->id,
+            'name'    => $user->name,
+            'mobile'  => $user->mobile
+        ]);
+    }
+
     public function store(StoreUserRequest $request)
     {
         $userDetails = $request->except('_token');
@@ -126,7 +154,14 @@ class UserController extends Controller
         if($user->account_type != $request->account_type){
             abort(404);
         }
-        return view('admin.users.show', compact('user'));
+        if($user->account_type == 'users'){
+            $userId = $user->id;
+      	    $url = route('user.properties', ['user' => $userId]);
+           $qrCode = QrCode::size(200)->generate($url);
+        }else{
+            $qrCode = null;
+        }
+        return view('admin.users.show', compact('user','qrCode'));
     }
     public function edit(User $user)
     {   

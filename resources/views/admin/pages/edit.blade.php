@@ -7,14 +7,20 @@
                 @include('admin.partials.breadcrumb')
             </div>
             <div class="content">
-                <form data-toggle="validator" class="from-prevent-multiple-submits" method="post" action="{{ route($model.'.update',[$item->id,'parent_id' => request('parent_id')]) }}"
+                <div class="card">
+                    <div class="card-header">
+                        تعديل ألية النظام
+                    </div>
+                    <div class="card-body">
+                        <form data-toggle="validator" class="from-prevent-multiple-submits" method="post" action="{{ route($model.'.update',[$item->id,'parent_id' => request('parent_id')]) }}"
                             enctype="multipart/form-data">
                             @csrf @method('PUT')
                             @include('admin.'.$model.'.form')
-                </form>
-                
+                        </form>
+                    </div>
+                </div>
             </div>
         <!-- Page end  -->
-    </div>
+        </div>
     </div>
 @endsection

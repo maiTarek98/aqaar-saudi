@@ -212,7 +212,48 @@
        </div>
     </div>
 </div>   
-@endif                    
+@endif
+
+
+
+
+@if(request('q') == 'card_control')
+<!-- Bank account -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="card_text_a" class="form-label">@lang('main.settings.card_text_a')</label>
+            <input type="text" class="form-control" id="card_text_a" name="card_text_a" value="{{old('card_text_a', $settings->card_text_a)}}" >
+       </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="card_text_b" class="form-label">@lang('main.settings.card_text_b')</label>
+            <input type="text" class="form-control" id="card_text_b" name="card_text_b" value="{{old('card_text_b', $settings->card_text_b)}}" >
+       </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="card_text_c" class="form-label">@lang('main.settings.card_text_c')</label>
+            <input type="text" class="form-control" id="card_text_c" name="card_text_c" value="{{old('card_text_c', $settings->card_text_c)}}" >
+       </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label for="card_text_d" class="form-label">@lang('main.settings.card_text_d')</label>
+            <input type="text" class="form-control" id="card_text_d" name="card_text_d" value="{{old('card_text_d', $settings->card_text_d)}}" >
+       </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mb-3 form-check form-switch">
+            <input type="checkbox" class="form-check-input" id="aqar_screen_control" name="aqar_screen_control"
+                value="1" {{ old('aqar_screen_control', $settings->aqar_screen_control) ? 'checked' : '' }}>
+            <label class="form-check-label" for="aqar_screen_control">@lang('main.settings.aqar_screen_control')</label>
+        </div>
+    </div>
+
+</div>   
+@endif
 <div class="order-action mt-4 d-flex gap-3">                
     <button type="submit" class="btn btn-primary px-5 rounded-pill shadow-sm"><i class="fa-regular fa-floppy-disk"></i> @lang('main.save')</button>
     <button type="reset" class="btn btn-danger px-5 rounded-pill shadow-sm"><i class="fa-solid fa-rotate-left"></i> @lang('main.reset')</button>

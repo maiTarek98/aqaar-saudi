@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\MailingList;
+use App\Models\Subscriber;
 use App\Http\Traits\FcmFirebase;
 use Illuminate\Broadcasting\Channel;
 
@@ -21,7 +21,7 @@ class NotifySubscriberNotification extends Notification implements ShouldQueue
      * @return void
      */
     private $msg;
-    public function __construct(MailingList $msg)
+    public function __construct(Subscriber $msg)
     {
         $this->msg=$msg;
     }
@@ -50,7 +50,7 @@ class NotifySubscriberNotification extends Notification implements ShouldQueue
         $this->body_data =[
                 'title'     =>  'لديك إشعار جديد خاص بالنشرة البريدية ',
                 'text'      =>  'تم إرسال رسالة من   '. $this->msg->email ,
-                'redirect'  => 'subscribes/#td-'.$this->msg->id,
+                'redirect'  => 'subscribers/#td-'.$this->msg->id,
                 'created_at' => $this->msg->created_at,
                 'data'       =>  [
                     'notification_type' => 2,

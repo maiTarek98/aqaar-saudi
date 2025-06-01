@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Category;
-use App\Models\MailingList;
+use App\Models\Subscriber;
 use App\Models\Blog;
 use App\Models\SellCar;
 use App\Models\CarBrand;
 use App\Models\Banner;
 use App\Models\About;
-use App\Models\Job;
+use App\Models\Page;
 use App\Models\Contact;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ use Validator;
 use DB;
 use App\Http\Traits\UploadImageTrait;
 use Notification;
-
+	use App\Notifications\NotifySubscriberNotification;
 use App\Models\PendingVendor;
 use Illuminate\Support\Facades\Cache;
 
@@ -36,11 +36,22 @@ class HomeController extends Controller {
     public function home(){
         $urlPrevious = url()->current();
         session()->put('url.intended', $urlPrevious);
-        $propertys = Product::where('in_home','yes')->where('status','shared_onsite')->get();
+        $propertys = Product::where('in_home','yes')->where('form_type','site_property')->get();
         $blogs = Blog::where('in_home','yes')->where('status','show')->get();
 
         return view('site.home',compact('propertys','blogs'));
     }
+    
+    public function helperPages($id)
+    {
+        $urlPrevious = url()->current();
+        session()->put('url.intended', $urlPrevious);
+        $page = Page::where('id', $id)
+                    ->where('status', 'show')
+                    ->firstOrFail();
+        return view('site.helper_page', compact('page'));
+    }
+
 
 	public function terms(){
         // dd(session()->get('sell_mobile_code'));
@@ -96,59 +107,6 @@ class HomeController extends Controller {
         return view('site.blog-single',compact('blog','related_blogs'));
     }
 
-    public function jobs(){
-        $urlPrevious = url()->current();
-        session()->put('url.intended', $urlPrevious);
-        $jobs = Job::latest()->paginate(6);      
-        return view('site.jobs',compact('jobs'));
-    }
-
-    public function jobSingle($q){
-        $urlPrevious = url()->current();
-        session()->put('url.intended', $urlPrevious);
-        $job = Job::where('id',$q)->first();   
-        if(!$job){
-            return back();
-        }   
-        return view('site.job-single',compact('job'));
-    }
-    public function storeJob(Request $request){
-        $rules = [
-            'email' => 'required|email:rfc,dns',
-            'job_title' => 'required|string|min:2|max:300',
-            'mobile' => 'required|numeric',
-            'name' => 'required|string|min:2|max:300',
-            'job_id' => 'required|integer',
-            'upload_cv' => 'required|mimes:pdf,doc,docx|max:4048'
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json(array(
-                'errors' => $validator->getMessageBag()->toArray()
-            ));
-        } else {
-            $data = $request->except("_token", "_method",'upload_cv');
-            $job_replay = JobReplay::create($data);
-            if(request()->hasFile('upload_cv'))
-            {        
-                $job_replay->addMedia(request()->upload_cv)->toMediaCollection('upload_cv', 'job_replays');
-            }
-        
-            if($job_replay){
-                $admins = Admin::get();
-                foreach ($admins as $key => $value) {   
-                    if($value->hasPermissionTo('job-list')){
-                        Notification::send($value,new \App\Notifications\NotifyJobReplayNotification($job_replay));
-                    }
-                }
-                $response_data = 1;
-                return response()->json(array('data' => $response_data));
-            }
-            $response_data = 2;
-            return response()->json(array('data' => $response_data));
-        }
-    }
-
     public function aboutUs(){
         $urlPrevious = url()->current();
         session()->put('url.intended', $urlPrevious);
@@ -202,30 +160,28 @@ class HomeController extends Controller {
 
 
 
-
-    public function storeSubscriber(Request $request){
-        $rules = [
-            'email' => 'required|email:rfc,dns|unique:mailing_lists,email',
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json(array(
-                'errors' => $validator->errors()->all(),
-            ));
-        } else {
-            $data = $request->except("_token", "_method");
-            $user_store = MailingList::create($data);
-            if($user_store){
-                $admins = Admin::get();
-
-                foreach ($admins as $key => $value) {   
-                    if($value->hasPermissionTo('contact-list')){
-                        Notification::send($value,new \App\Notifications\NotifySubscriberNotification($user_store));
-                    }
-                }
-                return 1;
-            }
-            return 2;
+    public function storeSubscriber(Request $request)
+    {
+        $request->validate([
+            'subscribe_email' => 'required|email:rfc,dns|unique:subscribers,email',
+        ], [
+            'subscribe_email.required' => 'البريد الإلكتروني مطلوب.',
+            'subscribe_email.email' => 'صيغة البريد الإلكتروني غير صحيحة.',
+            'subscribe_email.unique' => 'هذا البريد الإلكتروني مشترك بالفعل.',
+        ]);
+    
+        $subscriber = Subscriber::create([
+            'email' => $request->subscribe_email,
+        ]);
+    
+        if ($subscriber) {
+            $admins = User::permission('contacts-list')->get();
+            Notification::send($admins, new NotifySubscriberNotification($subscriber));
+    
+            return redirect()->back()->with('success', 'تم إشتراكك في النشرة البريدية بنجاح.');
         }
+    
+        return redirect()->back()->with('error', 'حدث خطأ أثناء الإشتراك. حاول مرة أخرى.');
     }
+
 }

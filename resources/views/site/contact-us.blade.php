@@ -41,14 +41,14 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <div class="form-floating">
+                    <div class="form-group">
                       <textarea
                         class="form-control"
                         style="height: 150px"
-                        id="floatingContactText" name="message" placeholder="@lang('site.message')"
+                        id="" name="message" 
+                        placeholder="@lang('site.message')"
                         required
                       ></textarea>
-                      <label for="floatingContactText">{{old('message')}}</label>
                     </div>
                   </div>
                 </div>
@@ -91,8 +91,8 @@
                   @endif
                   @if(app(App\Models\GeneralSettings::class)->whatsapp_phone)
                   <li>
-                    <i class="bi bi-telephone-outbound"></i>
-                    <a href="tel:{{app(App\Models\GeneralSettings::class)->whatsapp_phone}}">{{app(App\Models\GeneralSettings::class)->whatsapp_phone}}</a>
+                    <i class="bi bi-whatsapp"></i>
+                    <a href="https://api.whatsapp.com/send?phone={{app(App\Models\GeneralSettings::class)->whatsapp_phone}}">{{app(App\Models\GeneralSettings::class)->whatsapp_phone}}</a>
                   </li>
                   @endif
                   @if(app(App\Models\GeneralSettings::class)->address())
@@ -141,7 +141,7 @@ $(document).ready(function() {
     loadingIndicator.hide();
 
         // Add reCAPTCHA token and submit the form via AJAX
-        $('form').on('submit', function(event) {
+        $('#contactUsForm').on('submit', function(event) {
             event.preventDefault(); // Prevent form submission to generate the token first
             
             // Execute reCAPTCHA and get the token

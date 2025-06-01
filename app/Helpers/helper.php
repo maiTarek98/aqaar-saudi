@@ -331,6 +331,15 @@ function getGovernorates(){
   $area = \App\Models\Location::where('type','governorate')->get();
   return $area;
 }
+
+function getCitiesByGovernorateId($govId) {
+    return \App\Models\Location::where('type', 'city')->where('parent_id', $govId)->get();
+}
+
+function getDistrictsByCityId($cityId) {
+    return \App\Models\Location::where('type', 'district')->where('parent_id', $cityId)->get();
+}
+
 function getStore($storeId){ 
   $store = \App\Models\Store::where('id', $storeId)->first();
   return $store;
@@ -344,7 +353,10 @@ function getCategory($categoryId){
   $category = \App\Models\Category::where('id', $categoryId)->first();
   return $category;
 }
-
+function getFeatures(){ 
+  $features = \App\Models\DynamicFeature::get();
+  return $features;
+}
 function priceOfCapacity($product_id, $amount)
 {
     $product = \App\Models\Product::findOrFail($product_id);

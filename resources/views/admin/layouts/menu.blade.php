@@ -50,8 +50,17 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ url('/admin/dynamic_features') }}"
+                        class="nav-link {{ request()->is('admin/dynamic_features') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-house"></i>
+                        <p>
+                            @lang('main.dynamic_features.dynamic_features')
+                        </p>
+                    </a>
+                </li>
                 @foreach(iconMenuLoop() as $value => $key)
-                    @if(in_array($value, ['settings','pending_vendors'])  && (Auth::guard('admin')->user()->can($value . '-create') || Auth::guard('admin')->user()->can($value . '-list')))
+                    @if(in_array($value, ['settings','pending_vendors','pages'])  && (Auth::guard('admin')->user()->can($value . '-create') || Auth::guard('admin')->user()->can($value . '-list')))
                         <li class="nav-item">
                             <a href="{{ url('/admin/' . $value) }}"
                                 class="nav-link {{ request()->is('admin/'. $value . '*') ? 'active' : '' }}">
@@ -75,27 +84,34 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    @can($value . '-list')
-                                        @if(in_array($value, ['users', 'admins', 'vendors', 'subadmins']))
-                                            <li class="nav-item">
-                                                <a href="{{ url('/admin/users?account_type='.$value) }}" 
-                                                    class="nav-link 
-                                                    {{ request()->is('admin/users') && request()->query('account_type') === $value ? 'sub_active' : '' }}">
-                                                    <i class="far fa-circle nav-icon"></i>
-                                                    <p>{{ __('main.showAllData') }}</p>
-                                                </a>
-                                            </li>
-                                        @else
-                                            <li class="nav-item">
-                                                <a href="{{ url('/admin/' . $value) }}" 
-                                                    class="nav-link 
-                                                    {{ request()->is('admin/'.$value.'*') && !request()->is('admin/'.$value.'/create') ? 'sub_active' : '' }}">
-                                                    <i class="far fa-circle nav-icon"></i>
-                                                    <p>{{ __('main.showAllData') }}</p>
-                                                </a>
-                                            </li>
-                                        @endif
-                                    @endcan
+                                   @can($value . '-list')
+                                    @if(in_array($value, ['users', 'admins', 'vendors', 'subadmins']))
+                                        <li class="nav-item">
+                                            <a href="{{ url('/admin/users?account_type='.$value) }}" 
+                                                class="nav-link 
+                                                {{ request()->is('admin/users') && request()->query('account_type') === $value ? 'sub_active' : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('main.showAllData') }}</p>
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li class="nav-item">
+                                            <a href="{{ $value == 'products' 
+                                                        ? url('/admin/products?form_type=add_property') 
+                                                        : url('/admin/' . $value) }}" 
+                                                class="nav-link 
+                                                {{ 
+                                                    ($value == 'products' && request()->is('admin/products') && request()->query('form_type') == 'add_property') ||
+                                                    ($value != 'products' && request()->is('admin/'.$value.'*') && !request()->is('admin/'.$value.'/create')) 
+                                                    ? 'sub_active' 
+                                                    : '' }}">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>{{ __('main.showAllData') }}</p>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endcan
+
 
                                     @can($value . '-create')
                                         @if(in_array($value, ['users', 'admins', 'vendors', 'subadmins']))
@@ -109,9 +125,16 @@
                                             </li>
                                         @else
                                             <li class="nav-item">
-                                                <a href="{{ url('/admin/'.$value.'/create') }}"
+                                                <a href="{{ $value == 'products' 
+                                                            ? url('/admin/products?form_type=add_property') 
+                                                            : url('/admin/'.$value.'/create') }}"
                                                     class="nav-link 
-                                                    {{ request()->is('admin/'.$value.'/create') ? 'sub_active' : '' }}">
+                                                    {{ 
+                                                        ($value == 'products' && request()->is('admin/products') && request()->query('form_type') == 'add_property') || 
+                                                        ($value != 'products' && request()->is('admin/'.$value.'/create')) 
+                                                        ? 'sub_active' 
+                                                        : '' 
+                                                    }}">
                                                     <i class="fas fa-plus nav-icon"></i>
                                                     <p>{{ __('main.addNew') }}</p>
                                                 </a>

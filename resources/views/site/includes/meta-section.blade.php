@@ -1,54 +1,47 @@
-@if(\Request::route()->getName() != 'site.blogs.show') 
-<meta property="og:title" content="{{app(App\Models\GeneralSettings::class)->site_name()}}" />
-<meta property="og:type" content="website.agency" />
-<meta property="og:url" content="{{url('/')}}" />
-<meta property="og:image" content="{{asset('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" />
-{{--<meta property="og:description" content="{{app(App\Models\GeneralSettings::class)->about()}}" />--}}
-<meta property="og:determiner" content="the" />
-<meta property="og:locale" content="ar_AR" />
-<meta property="og:locale:alternate" content="en_GB" />
-<meta property="og:site_name" content="{{app(App\Models\GeneralSettings::class)->site_name()}}" />
-<meta property="og:image" content="{{asset('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" />
-<meta property="og:image:secure_url" content="{{asset('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:width" content="300" />
-<meta property="og:image:height" content="300" />
-<meta property="og:image:alt" content="Logo for {{app(App\Models\GeneralSettings::class)->site_name()}} website" />
+@php
+    $settings = app(App\Models\GeneralSettings::class);
+    $seo = app(App\Models\SeoSettings::class);
+    $siteName = $settings->site_name();
+    $logoPath = asset('/storage/' . $settings->logo);
+    $metaDescription = ($seo->meta_description()) ?? 'وصف افتراضي';
+    $metaKeywords = $seo->keywords ?? '';
+@endphp
 
-@if(App::getLocale() == 'ar')
-  <meta name="description" content="{{app(App\Models\SeoSettings::class)->meta_description()}}">
+@if(\Request::route()->getName() != 'site.blogs.show')
+    <meta property="og:title" content="{{ $siteName }}" />
+    <meta property="og:type" content="website.agency" />
+    <meta property="og:url" content="{{ url('/') }}" />
+    <meta property="og:image" content="{{ $logoPath }}" />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:site_name" content="{{ $siteName }}" />
+    <!-- باقي الوسوم -->
+    <meta name="description" content="{{ $metaDescription }}">
+    <meta name="keywords" content="{{ $metaKeywords }}">
 @else
-  <meta name="description" content="{{app(App\Models\SeoSettings::class)->meta_description()}}">
-@endif
-  <meta name="keywords" content="{{app(App\Models\SeoSettings::class)->keywords}}">
+    @php
+        $blog = App\Models\Blog::whereHas('blog_seo', function($q) {
+            $q->where('page_url', request()->segment(2));
+        })->first();
+        $blogSeo = $blog?->blog_seo;
+        $pageTitle = $blogSeo->page_title ?? 'افتراضي - تحسينات SEO';
+        $pageDescription = $blogSeo->page_description ?? 'وصف الصفحة الافتراضي';
+        $pageUrl = url('/') . '/blogs/' . ($blogSeo->page_url ?? 'default-url');
+        $ogImage = $blog?->getFirstMediaUrl('blogs_image', 'thumb') ?? url('dashboard/dist/dist/img/no-photo.png');
+    @endphp
 
-@else
-  @php $blog = App\Models\Blog::where('name_en',removeSlug(request('q')))->first(); @endphp
-    <meta name="description" content="{{ $blog?->blog_seo?->page_description ?? 'وصف الصفحة الافتراضي لتحسينات SEO' }}">
-    <meta name="keywords" content="{{$blog?->blog_seo?->keywords}}">
+    <meta name="description" content="{{ $pageDescription }}">
+    <meta name="keywords" content="{{ $blogSeo?->keywords }}">
     <meta name="robots" content="index, follow">
-    
-    {{-- Canonical URL (prevents duplicate content issues) --}}
-    <link rel="canonical" href="{{ url('/') }}/{{ $blog?->blog_seo?->page_url ?? 'default-url' }}">
+    <link rel="canonical" href="{{ $pageUrl }}">
 
-    {{-- Open Graph (Facebook, WhatsApp) --}}
-    <meta property="og:title" content="{{ $blog?->blog_seo?->page_title ?? 'افتراضي - تحسينات SEO' }}">
-    <meta property="og:description" content="{{ $blog?->blog_seo?->page_description ?? 'وصف الصفحة الافتراضي' }}">
-    <meta property="og:url" content="{{ url('/') }}/{{ $blog?->blog_seo?->page_url ?? 'default-url' }}">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDescription }}">
+    <meta property="og:url" content="{{ $pageUrl }}">
     <meta property="og:type" content="website">
-@if(App\Models\Blog::where('name_en',removeSlug(request('q')))->first()?->getFirstMediaUrl('base_image','thumb'))
-      <meta property="og:image" content="{{ App\Models\Blog::where('name_en',removeSlug(request('q')))->first()?->getFirstMediaUrl('base_image','thumb')}}" alt="{{App\Models\Blog::where('name_en',removeSlug(request('q')))->first()?->name_en}}" class="w-100">
-    @else
-      <meta property="og:image" content="{{url('dashboard/dist/dist/img/no-photo.png')}}" alt="" class="w-100">
-    @endif
-
-    {{-- Twitter Card (for Twitter SEO) --}}
+    <meta property="og:image" content="{{ $ogImage }}" alt="{{ $blog?->name_en }}">
+    
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $blog?->blog_seo?->page_title ?? 'افتراضي - تحسينات SEO' }}">
-    <meta name="twitter:description" content="{{ $blog?->blog_seo?->page_description ?? 'وصف الصفحة الافتراضي' }}">
-@if(App\Models\Blog::where('name_en',removeSlug(request('q')))->first()?->getFirstMediaUrl('base_image','thumb'))
-      <meta property="twitter:image" content="{{ App\Models\Blog::where('name_en',removeSlug(request('q')))->first()?->getFirstMediaUrl('base_image','thumb')}}" alt="{{App\Models\Blog::where('name_en',removeSlug(request('q')))->first()?->name_en}}" class="w-100">
-    @else
-      <meta property="twitter:image" content="{{url('dashboard/dist/img/no-photo.png')}}" alt="" class="w-100">
-    @endif
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDescription }}">
+    <meta property="twitter:image" content="{{ $ogImage }}" alt="{{ $blog?->name_en }}">
 @endif

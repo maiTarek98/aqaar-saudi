@@ -34,8 +34,12 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*', function ($view) 
         {
-
-            // $view->with(compact());
+            if(auth('web')->check()){
+                $unreadCount = auth('web')->user()->unreadNotifications()->count();
+            }else{
+                $unreadCount = null;
+            }
+            $view->with(compact('unreadCount'));
 
         });   
 

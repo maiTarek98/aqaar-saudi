@@ -1,12 +1,15 @@
 @extends('site.index')
-@section('title', trans('site.add-property') )
+@php
+$property = \App\Models\Product::where('id',request('property'))->first(); 
+@endphp
+@section('title', (isset($property)) ? trans('site.update-property') : trans('site.add-property') )
 @section('content')
-      @include('site.includes.breadcrumb-section',['title' => trans('site.add-property')])
+    @include('site.includes.breadcrumb-section',['title' => (isset($property)) ? trans('site.update-property') : trans('site.add-property')])
     <section class="profile py-5">
       <div class="container-fluid">
         <!-- profile nav-sm -->
         <div class="profile-nav-sm rounded-3">
-          <p class="m-0">الملف الشخصي</p>
+          <p class="m-0">@lang('site.profile')</p>
           <button class="btn toggle-profile-nav p-0 border-0 bg-transparent" data-toggle=".profile-nav">
             <img
             src="{{url('site')}}/images/menu.png"
@@ -26,7 +29,7 @@
                         جميع الحقول التي تحتوي على ( <span class="text-danger fs-5">*</span> ) هي إلزامية، أما الحقول التي لا تحمل العلامة فهي اختيارية يمكنك تعبئتها إن وُجدت.
                   </div>
                 </div>
-            <form action="{{route('storeProperty',auth('web')->user()->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{ isset($property) ? route('updateProperty', ['user' => auth('web')->user()->id, 'property' => $property->id]) : route('storeProperty', ['user' => auth('web')->user()->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -43,16 +46,51 @@
                 <!--<input type="text" name="represented_by" value="{{Auth::guard('web')->user()->user_type}}" class="form-control" readonly>-->
 
                 <div class="profile-wrapper mb-3">
-                    <div class="border-bottom mb-3 pb-3">
-                        <h3 class="fs-4 fw-bold main">{{Auth::guard('web')->user()->user_type}}</h3>
+                    <div class="section-title d-flex align-items-center gap-2 mb-4">
+                    <div class="section-img">
+                      <img loading="lazy" src="{{url('site')}}/images/1.svg" alt="change image" />
                     </div>
+                    <h5 class="fw-bold m-0"> تفاصيل نوع العرض</h5>
+                  </div>
+                  <div class="builder-options col-lg-9">
+                    <div class="builder-option">
+                        <div class="form-group mb-4">
+                            <label for="represented_by">نوع العرض <span class="text-danger">*</span></label>
+                            <select name="represented_by" id="represented_by" class="form-control" placeholder="@lang('site.user_type')" value="{{ old('user_type') }}">
+                                <option value="owner" @if(isset($property) && $property->feature?->represented_by == 'owner') selected @endif>@lang('main.products.owner')</option>
+                                <option value="agent" @if(isset($property) && $property->feature?->represented_by == 'agent') selected @endif>@lang('main.products.agent')</option>
+                                <option value="co-owner" @if(isset($property) && $property->feature?->represented_by == 'co-owner') selected @endif>@lang('main.products.co-owner')</option>
+                                <option value="other" @if(isset($property) && $property->feature?->represented_by == 'other') selected @endif>@lang('main.products.other')</option>
+                            </select>
+                            <span class="text-danger error-msg user_type"></span>
+                        </div>
+                        
+                        
+                        <div class="form-group mb-4" id="sak_number_wrapper" style="display:none">
+                            <label for="">@lang('main.users.sak_number')</label>
+                            <input type="text" maxlength="10" name="sak_number" value="{{old('sak_number',(isset($property))? ($property->feature->sak_number ?? '') : '')}}"class="form-control @error('sak_number') is-invalid @enderror" id="sak_number" placeholder="@lang('main.users.sak_number')">
+                            <span class="text-danger error-msg sak_number"></span>
+                        </div>
+        
+                        <div class="form-group mb-4" id="agency_number_wrapper" style="display:none">
+                            <label for="">@lang('main.users.agency_number')</label>
+                            <input type="text" maxlength="10" name="agency_number" value="{{old('agency_number',(isset($property))? ($property->feature->agency_number ?? '') : '')}}" class="form-control @error('agency_number') is-invalid @enderror" id="agency_number" placeholder="@lang('main.users.agency_number')">
+                            <span class="text-danger error-msg agency_number"></span>
+                        </div>
+                        <div class="form-group mb-4" id="val_number_wrapper" style="display:none">
+                            <label for="">@lang('main.users.val_number')</label>
+                            <input type="text"  name="val_number" value="{{auth('web')->user()->val_number,(isset($property))? ($property->feature->val_number ?? '') : ''}}"class="form-control @error('val_number') is-invalid @enderror" id="val_number" placeholder="@lang('main.users.val_number')">
+                            <span class="text-danger error-msg val_number"></span>
+                        </div>
+                    </div>
+                 </div>
                   <div class="section-title d-flex align-items-center gap-2 mb-4">
                     <div class="section-img">
                       <img loading="lazy" src="{{url('site')}}/images/1.svg" alt="change image" />
                     </div>
                     <h5 class="fw-bold m-0"> @lang('main.show product details')</h5>
                   </div>
-                  <div class="builder-options w-75">
+                  <div class="builder-options col-lg-9">
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>@lang('main.products.product_for') <span class="text-danger">*</span></h5>
@@ -62,7 +100,7 @@
                         type="radio"
                         class="btn-check"
                         id="sale"
-                        value="sale"
+                        value="sale" @if(isset($property) && $property->product_for == 'sale') checked @endif
                         autocomplete="off"
                       />
                       <label class="btn" for="sale">
@@ -74,7 +112,7 @@
                         name="product_for"
                         type="radio"
                         class="btn-check"
-                        id="rent"
+                        id="rent" @if(isset($property) && $property->product_for == 'rent') checked @endif
                         value="rent"
                         autocomplete="off"
                       />
@@ -94,7 +132,7 @@
                         type="radio"
                         class="btn-check"
                         id="residential"
-                        value="residential"
+                        value="residential" @if(isset($property) && $property->feature?->product_type == 'residential') checked @endif
                         autocomplete="off"
                       />
                       <label class="btn" for="residential">
@@ -107,27 +145,46 @@
                         type="radio"
                         class="btn-check"
                         id="commercial"
-                        value="commercial"
+                        value="commercial" @if(isset($property) && $property->feature?->product_type == 'commercial') checked @endif
                         autocomplete="off"
                       />
                       <label class="btn" for="commercial">
                         <img loading="lazy" src="{{url('site')}}/images/2.svg" alt="change image" />
                         <span>@lang('main.products.commercial')</span>
                       </label>
+                      
+                      <input
+                        name="product_type"
+                        type="radio"
+                        class="btn-check"
+                        id="two"
+                        value="two" @if(isset($property) && $property->feature?->product_type == 'two') checked @endif
+                        autocomplete="off"
+                      />
+                      <label class="btn" for="two">
+                        <img loading="lazy" src="{{url('site')}}/images/2.svg" alt="change image" />
+                        <span>@lang('main.products.two')</span>
+                      </label>
                     </div>
                     </div>
     
                     <div class="builder-option">
                       <div class="builder-option-name col-md-6">
-                        <h5>@lang('main.products.product_address')<span class="text-danger">*</span></h5>
+                        <h5>@lang('main.products.product_address')</h5>
                       </div>
+                      @php
+                            $district = isset($property) ? \App\Models\Location::find($property->area_id) : null;
+                            $city = $district?->parent;
+                            $governorate = $city?->parent;
+                        @endphp
+
                       <div class="row">
                         <div class="col-md-4">
                           <div class="form-group">
                             <select name="" id="governorate_select" class="form-control nice-select">
                                 <option value="" hidden>المنطقة / الحي</option>
                                 @foreach(getGovernorates() as $gov)
-                                    <option value="{{ $gov->id }}" {{ (old('governorate_id') == $gov->id) ? 'selected' : '' }}>
+                                    <option value="{{ $gov->id }}" {{ old('governorate_id', $governorate?->id) == $gov->id ? 'selected' : '' }}>
                                         {{ $gov->name }}
                                     </option>
                                 @endforeach
@@ -138,6 +195,13 @@
                           <div class="form-group">
                             <select name="" id="city_select" class="form-control nice-select">
                               <option value="" hidden>المدينة</option>
+                                @if($governorate)
+                                    @foreach(getCitiesByGovernorateId($governorate->id) as $cityItem)
+                                        <option value="{{ $cityItem->id }}" {{ old('city_id', $city?->id) == $cityItem->id ? 'selected' : '' }}>
+                                            {{ $cityItem->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                           </div>
                         </div>
@@ -145,7 +209,13 @@
                           <div class="form-group">
                             <select name="district_id" id="district_select" class="form-control nice-select">
                                 <option value="">@lang('main.choose')</option>
-                                
+                                @if($city)
+                                    @foreach(getDistrictsByCityId($city->id) as $districtItem)
+                                        <option value="{{ $districtItem->id }}" {{ old('area_id', $district?->id) == $districtItem->id ? 'selected' : '' }}>
+                                            {{ $districtItem->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
                             </select>
                           </div>
                         </div>
@@ -161,7 +231,7 @@
                                 rows="2"
                                 name="map_location"
                                 id="map_location"
-                              >{{old('map_location')}}</textarea>
+                              >{{old('map_location',(isset($property))?? $property->map_location)}}</textarea>
                             </div>
                           <!-- add map to select location -->
                         </div>
@@ -177,13 +247,13 @@
                     </div>
                     <h5 class="fw-bold m-0">@lang('main.products.product_features') </h5>
                   </div>
-                  <div class="builder-options w-75">
+                  <div class="builder-options col-lg-9">
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>@lang('main.products.plan_number')  </h5>
                       </div>
                       <input
-                        name="plan_number" value="{{old('plan_number')}}"
+                        name="plan_number" value="{{old('plan_number',(isset($property))? ($property->feature->plan_number ?? '') : '' )}}"
                         type="text"
                         class="form-control"
                         placeholder=""
@@ -194,7 +264,7 @@
                         <h5>@lang('main.products.plot_number')  </h5>
                       </div>
                       <input
-                        name="plot_number" value="{{old('plot_number')}}"
+                        name="plot_number" value="{{old('plot_number',(isset($property))? ($property->feature->plot_number ?? '') : '')}}"
                         type="text"
                         class="form-control"
                         placeholder=""
@@ -205,7 +275,7 @@
                         <h5>@lang('main.products.area')  </h5>
                       </div>
                       <input
-                        name="area" value="{{old('area')}}"
+                        name="area" value="{{old('area',(isset($property))? ($property->feature->area ?? '') : '')}}"
                         type="text"
                         class="form-control"
                         placeholder="متر مربع 250"
@@ -216,7 +286,7 @@
                         <h5>@lang('main.products.area_after_development')  </h5>
                       </div>
                       <input
-                        name="area_after_development" value="{{old('area_after_development')}}"
+                        name="area_after_development" value="{{old('area_after_development',(isset($property))? ($property->feature->area_after_development ?? '') : '')}}"
                         type="text"
                         class="form-control"
                         placeholder="متر مربع 250"
@@ -227,7 +297,7 @@
                         <h5>@lang('main.products.valuation')  </h5>
                       </div>
                       <input
-                        name="valuation" value="{{old('valuation')}}"
+                        name="valuation" value="{{old('valuation',(isset($property))? ($property->feature->valuation ?? '') : '')}}"
                         type="number" min="1" step="1"
                         class="form-control"
                         placeholder=""
@@ -239,302 +309,59 @@
                             <h5>@lang('main.products.valuation_date')  </h5>
                       </div>
                       <input
-                        name="valuation_date" value="{{old('valuation_date')}}"           type="date"
+                        name="valuation_date" value="{{old('valuation_date',(isset($property))? ($property->feature->valuation_date ?? '') : '')}}"           type="date"
                         class="form-control"
                         placeholder=""
                       />
                     </div>
                     
-                    <div class="row row-cols-lg-3">
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.has_planning_diagram') </h5>
-                      </div>
-    
-                      <input
-                        name="has_planning_diagram"
-                        type="radio"
-                        class="btn-check"
-                        id="has_planning_diagram_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_planning_diagram_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="has_planning_diagram"
-                        type="radio"
-                        class="btn-check"
-                        id="has_planning_diagram_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_planning_diagram_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.has_electronic_deed') </h5>
-                      </div>
-    
-                      <input
-                        name="has_electronic_deed"
-                        type="radio"
-                        class="btn-check"
-                        id="has_electronic_deed_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_electronic_deed_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="has_electronic_deed"
-                        type="radio"
-                        class="btn-check"
-                        id="has_electronic_deed_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_electronic_deed_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.has_real_estate_market') </h5>
-                      </div>
-    
-                      <input
-                        name="has_real_estate_market"
-                        type="radio"
-                        class="btn-check"
-                        id="has_real_estate_market_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_real_estate_market_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="has_real_estate_market"
-                        type="radio"
-                        class="btn-check"
-                        id="has_real_estate_market_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_real_estate_market_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.has_survey_decision') </h5>
-                      </div>
-    
-                      <input
-                        name="has_survey_decision"
-                        type="radio"
-                        class="btn-check"
-                        id="has_survey_decision_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_survey_decision_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="has_survey_decision"
-                        type="radio"
-                        class="btn-check"
-                        id="has_survey_decision_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_survey_decision_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.has_mortgage') </h5>
-                      </div>
-    
-                      <input
-                        name="has_mortgage"
-                        type="radio"
-                        class="btn-check"
-                        id="has_mortgage_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_mortgage_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="has_mortgage"
-                        type="radio"
-                        class="btn-check"
-                        id="has_mortgage_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_mortgage_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.has_penalties') </h5>
-                      </div>
-    
-                      <input
-                        name="has_penalties"
-                        type="radio"
-                        class="btn-check"
-                        id="has_penalties_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_penalties_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="has_penalties"
-                        type="radio"
-                        class="btn-check"
-                        id="has_penalties_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="has_penalties_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.accepts_mortgage')  </h5>
-                      </div>
-    
-                      <input
-                        name="accepts_mortgage"
-                        type="radio"
-                        class="btn-check"
-                        id="accepts_mortgage_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="accepts_mortgage_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="accepts_mortgage"
-                        type="radio"
-                        class="btn-check"
-                        id="accepts_mortgage_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="accepts_mortgage_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                      <div class="builder-option-name">
-                        <h5>@lang('main.products.usufruct_lease') </h5>
-                      </div>
-    
-                      <input
-                        name="usufruct_lease"
-                        type="radio"
-                        class="btn-check"
-                        id="usufruct_lease_yes"
-                        value="1"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="usufruct_lease_yes">
-                        <span>@lang('main.yes')</span>
-                      </label>
-                      <input
-                        name="usufruct_lease"
-                        type="radio"
-                        class="btn-check"
-                        id="usufruct_lease_no"
-                        value="0"
-                        autocomplete="off"
-                      />
-                      <label class="btn px-4" for="usufruct_lease_no">
-                        <span>@lang('main.no')</span>
-                      </label>
-                      
-                    </div>
-                        </div>
-                        <div class="col">
-                            <div class="builder-option">
-                              <div class="builder-option-name">
-                                <h5>@lang('main.products.is_rented') </h5>
-                              </div>
-            
-                              <input
-                                name="is_rented"
-                                type="radio"
-                                class="btn-check"
-                                id="is_rented_yes"
-                                value="1"
-                                autocomplete="off"
-                              />
-                              <label class="btn px-4" for="is_rented_yes">
-                                <span>@lang('main.yes')</span>
-                              </label>
-                              <input
-                                name="is_rented"
-                                type="radio"
-                                class="btn-check"
-                                id="is_rented_no"
-                                value="0"
-                                autocomplete="off"
-                              />
-                              <label class="btn px-4" for="is_rented_no">
-                                <span>@lang('main.no')</span>
-                              </label>
-                              
-                            </div>
-                        </div>
-                    </div>
-    
+                        @php
+                            if(old('features')) {
+                                $selectedFeatures = old('features');
+                            } elseif(isset($property) && $property->feature) {
+                                $selectedFeatures = $property->feature->features ?? [];
+                            } else {
+                                $selectedFeatures = [];
+                            }
+                        @endphp
 
+                    <div class="row row-cols-2 row-cols-lg-3">
+                        @foreach(getFeatures() as $feature)
+                            <div class="col">
+                                <div class="builder-option">
+                                    <div class="builder-option-name">
+                                        <h5>{{ $feature->label_name }}</h5>
+                                    </div>
                     
+                                    <input type="radio"
+                                           class="btn-check"
+                                           name="features[{{ $feature->id }}]"
+                                           id="yes_{{ $feature->id }}"
+                                           value="1"
+                                           {{ (isset($selectedFeatures[$feature->id]) && $selectedFeatures[$feature->id] == '1') ? 'checked' : '' }}>
+                                    <label class="btn btn-outline-success px-4" for="yes_{{ $feature->id }}">
+                                        @lang('main.yes')
+                                    </label>
+                    
+                                    <input type="radio"
+                                           class="btn-check"
+                                           name="features[{{ $feature->id }}]"
+                                           id="no_{{ $feature->id }}"
+                                           value="0"
+                                           {{ (isset($selectedFeatures[$feature->id]) && $selectedFeatures[$feature->id] == '0') ? 'checked' : '' }}>
+                                    <label class="btn btn-outline-danger px-4" for="no_{{ $feature->id }}">
+                                        @lang('main.no')
+                                    </label>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>@lang('main.products.annual_rent')  </h5>
                       </div>
                       <input
-                        name="annual_rent" value="{{old('annual_rent')}}"
+                        name="annual_rent" value="{{old('annual_rent',(isset($property))? ($property->feature->annual_rent ?? '') : '')}}"
                         type="number" min="1" step="1" 
                         class="form-control"
                         placeholder=""
@@ -545,34 +372,33 @@
                         <h5>@lang('main.products.remaining_lease_years')  </h5>
                       </div>
                       <input
-                        name="remaining_lease_years" value="{{old('remaining_lease_years')}}"
+                        name="remaining_lease_years" value="{{old('remaining_lease_years',(isset($property))? ($property->feature->remaining_lease_years ?? '') : '')}}"
                         type="text"
                         class="form-control"
-                        placeholder=""
+                        placeholder="برجاء ادخال المدة المتبقية حسب سنة أو شهر"
                       />
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>@lang('main.products.penalty_type') </h5>
                       </div>
-    
                       <input
-                        name="penalty_type"
-                        type="radio"
+                        name="penalty_type[]"
+                        type="checkbox"
                         class="btn-check"
                         id="penalty_type_cash"
-                        value="cash"
+                        value="cash"  @if(isset($property) && ($property->feature?->penalty_type == 'cash' || $property->feature?->penalty_type == 'cash_installment')) checked @endif
                         autocomplete="off"
                       />
                       <label class="btn px-4" for="penalty_type_cash">
                         <span>@lang('main.products.cash')</span>
                       </label>
                       <input
-                        name="penalty_type"
-                        type="radio"
+                        name="penalty_type[]"
+                        type="checkbox"
                         class="btn-check"
                         id="penalty_type_installment"
-                        value="installment"
+                        value="installment" @if(isset($property) && ($property->feature?->penalty_type == 'installment' || $property->feature?->penalty_type == 'cash_installment')) checked @endif
                         autocomplete="off"
                       />
                       <label class="btn px-4" for="penalty_type_installment">
@@ -586,7 +412,7 @@
                         <h5>@lang('main.products.license_number')  </h5>
                       </div>
                       <input
-                        name="license_number" value="{{old('license_number')}}"
+                        name="license_number" value="{{old('license_number',(isset($property))? ($property->feature->license_number ?? '') : '')}}"
                         type="text"
                         class="form-control"
                         placeholder=""
@@ -604,12 +430,11 @@
                     </div>
                     <h5 class="fw-bold m-0">@lang('main.products.product_up_img') </h5>
                   </div>
-                  <div class="builder-options w-75">
+                  <div class="builder-options col-lg-9">
                      <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>
-                          تحميل صور العقار الخاص بك
-                          <span class="text-danger">*</span>
+                          تحميل صورة العقار الرئيسية الخاص بك
                         </h5>
                       </div>
                       <div class="upload-wrapper mb-3">
@@ -621,13 +446,13 @@
                               <i class="fa-regular fa-image"></i>
     
                               <label class="upload__btn m-0">
-                                <span>تحميل صور</span>
+                                <span>تحميل صورة</span>
                                 <input
                                   name="products_image"
                                   type="file"
                                   data-max_length="20"
-                                  accept="images/*"
-                                  class="upload__inputfile"
+accept="image/png, image/jpeg, image/webp"
+                                  class="upload__inputfile" 
                                 />
                               </label>
                             </div>
@@ -637,6 +462,10 @@
                           </div>
                           <div class="upload__img-wrap"></div>
                         </div>
+                        
+                        @if((isset($property)) && $property->getFirstMediaUrl('products_image','thumb'))
+                            <img src="{{$property->getFirstMediaUrl('products_image','thumb')}}" class="img-fluid rounded-circle mb-3" width="120" alt="product">
+                        @endif
                       </div>
                     </div>
 
@@ -644,8 +473,7 @@
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>
-                          تحميل صور العقار الخاص بك
-                          <span class="text-danger">*</span>
+                          تحميل صور العقار الداخلية
                         </h5>
                       </div>
                       <div class="upload-wrapper mb-3">
@@ -663,7 +491,7 @@
                                   type="file"
                                   multiple=""
                                   data-max_length="20"
-                                  accept="images/*"
+accept="image/png, image/jpeg, image/webp"
                                   max="6"
                                   class="upload__inputfile"
                                 />
@@ -676,6 +504,56 @@
                           <div class="upload__img-wrap"></div>
                         </div>
                       </div>
+                      
+                      @if ((isset($property)) && $property->getMedia('document')->count() > 0)
+                  <div class="card mb-3">
+                     <div class="card-body">
+                        <div class="single-img">
+                           <div class="all">
+                              @if ($property->getMedia('document')->count() > 1)
+                              <div class="slider">
+                                 <div class="owl-carousel owl-theme one">
+                                    @foreach($property->getMedia('document') as $key=> $val)
+                                    <div class="item-box">
+                                       <?php $imageUrl=url('/storage/products_images/'.$val->id.'/'.$val->file_name);?>
+                                       <img src="{{ $imageUrl}}" alt="">
+                                    </div>
+                                    @endforeach
+                                 </div>
+                              </div>
+                              <div class="slider-two">
+                                 <div class="owl-carousel owl-theme two">
+                                    @foreach($property->getMedia('document') as $key=> $val)
+                                    <div class="item">
+                                       <?php $imageUrl=url('/storage/products_images/'.$val->id.'/'.$val->file_name);?>
+                                       <img src="{{ $imageUrl}}" alt="">
+                                    </div>
+                                    @endforeach
+                                 </div>
+                                 <div class="left-t nonl-t">
+                                 <i class="bi bi-chevron-left"></i>
+                                 </div>
+                                 <div class="right-t">
+                                 <i class="bi bi-chevron-right"></i>
+                                 </div>
+                              </div>
+                              @else
+                              <div class="slider">
+                                 @foreach($property->getMedia('document') as $key=> $val)
+                                 <div class="item-box">
+                                    <?php $imageUrl=url('/storage/products_images/'.$val->id.'/'.$val->file_name);?>
+                                    <img src="{{ $imageUrl}}" alt="">
+                                 </div>
+                                 @endforeach
+                              </div>
+                              @endif
+                           </div>
+                        </div>
+
+                        
+                     </div>
+                  </div>
+                  @endif
                     </div>
                     <div class="builder-option">
                       <div class="builder-option-name">
@@ -704,7 +582,7 @@
                                   name="link_video"
                                   class="form-control m-0"
                                   placeholder="ضع رايط الفيديو هنا"
-                                  value="{{old('link_video')}}"
+                                  value="{{old('link_video',(isset($property))? ($property->link_video ?? '') : '')}}"
                                 />
                               </div>
                             </div>
@@ -722,16 +600,16 @@
                     </div>
                     <h5 class="fw-bold m-0">تفاصيل إضافية</h5>
                   </div>
-                  <div class="builder-options w-75">
+                  <div class="builder-options col-lg-9">
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>@lang('main.products.title') <span class="text-danger">*</span></h5>
                       </div>
                       <input
-                        name="title" value="{{old('title')}}"
+                        name="title" value="{{old('title',(isset($property))? ($property->title ?? '') : '')}}"
                         type="text" id="title"
                         class="form-control"
-                        placeholder="متر مربع 250"
+                        placeholder="أضف عنوان مناسب للعرض"
                       />
                   </div>
                     <div class="builder-option">
@@ -745,7 +623,7 @@
                         rows="6"
                         name="description"
                         id="description"
-                      >{{old('description')}}</textarea>
+                      >{{old('description',(isset($property))? ($property->description ?? '') : '')}}</textarea>
                     </div>
                   </div>
                 </div>
@@ -757,7 +635,7 @@
                     </div>
                     <h5 class="fw-bold m-0">إدارة الصلاحيات</h5>
                   </div>
-                  <div class="builder-options w-75">
+                  <div class="builder-options col-lg-9">
                     <div class="builder-option">
                       <div class="builder-option-name">
                         <h5>الموكلين <span class="text-danger">*</span></h5>
@@ -791,51 +669,52 @@
                     <h5 class="fw-bold m-0">خيارات بيع إضافية لعقارك</h5>
                   </div>
     
-                  <div class="builder-options w-75">
-                    <div
-                      class="alert alert-warning d-flex align-items-center"
-                      role="alert"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        class="bi flex-shrink-0 me-2"
-                        viewBox="0 0 16 16"
-                        role="img"
-                        aria-label="Warning:"
-                        fill="var(--secondary)"
-                      >
-                        <path
-                          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-                        />
-                      </svg>
-                      <div>
-                        اختيارك لهذا النظام غير إلزامي، ويمكنك إتمام عملية البيع
-                        بالطريقة التقليدية. لكن إذا رغبت في إضافة ميزة المزايدة أو
-                        المشاركة مع آخرين، يمكنك تفعيلها هنا
-                      </div>
-                    </div>
+                  <div class="builder-options col-lg-9">
+                   
     
                     <div class="row">
                         <div class="col-12">
                             <div class="builder-option">
-                              <div class="builder-option-name">
-                                <h5>@lang('main.products.type') </h5>
+                              <div class="w-100 d-flex justify-content-between">
+                                <h5 class="fw-bold main mb-3">@lang('main.products.type') </h5>
+                                <a href="{{route('pages',['id'=>2])}}" target="_blank">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        class="bi flex-shrink-0 me-2"
+                                        viewBox="0 0 16 16"
+                                        role="img"
+                                        aria-label="Warning:"
+                                        fill="var(--secondary)"
+                                      >
+                                        <path
+                                          d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                                        />
+                                      </svg>
+                                        شرح اليات نظام
+                                      
+                                    </a>  
                               </div>
                                 <select name="type" id="product_type" class="form-control">
                                     <option value="" hidden>نظام البيع</option>
-                                    <option value="auction" @if('auction' == old('type')) selected @endif >@lang('main.products.auction')</option>
-                                    <option value="shared" @if('shared' == old('type')) selected @endif >@lang('main.products.shared')</option>
-                                    <option value="investment" @if('investment' == old('type')) selected @endif >@lang('main.products.investment')</option>
+                                    <option value="auction" @if(isset($property) && $property->type == 'auction') selected @endif >@lang('main.products.auction')</option>
+                                    <option value="shared" @if(isset($property) && $property->type == 'shared') selected @endif >@lang('main.products.shared')</option>
+                                    <option value="investment" @if(isset($property) && $property->type == 'investment') selected @endif >@lang('main.products.investment')</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-12 shared-fields">
                             <div class="builder-option">
                                 <div class="builder-option-name">
+                                  <h5>@lang('main.products.amount_shared')</h5>
+                                </div>
+                                <input name="price_shared" value="{{old('price',(isset($property))? ($property->price ?? '') : '')}}" type="text" class="form-control" placeholder="ريال سعودي 1600000" />
+                            </div>
+                            <div class="builder-option">
+                                <div class="builder-option-name">
                                   <h5>@lang('main.products.enter mobiles numbers')</h5>
                                 </div>
-                                <input name="phone_numbers" value="" class="form-control" />
+                                <input name="phone_numbers" value="" class="input-tags form-control" type="text" data-role="tagsinput"/>
                             </div>
                         </div>
 
@@ -844,7 +723,13 @@
                                 <div class="builder-option-name">
                                   <h5>@lang('main.products.amount_investment')</h5>
                                 </div>
-                                <input name="price_investment" value="{{ old('price') }}" type="text" class="form-control" placeholder="ريال سعودي 1600000" />
+                                <input name="price_investment" value="{{old('price',(isset($property))? ($property->price ?? '') : '')}}" type="text" class="form-control" placeholder="ريال سعودي 1600000" />
+                            </div>
+                            <div class="builder-option">
+                                <div class="builder-option-name">
+                                  <h5>@lang('main.products.investment_min')</h5>
+                                </div>
+                                <input name="investment_min" min="1" max="100" value="{{old('investment_min',(isset($property))? ($property->investment_min ?? '') : '')}}" type="number" class="form-control" placeholder="% " />
                             </div>
                         </div>
 
@@ -853,7 +738,7 @@
                                 <div class="builder-option-name">
                                   <h5>@lang('main.products.amount')</h5>
                                 </div>
-                                <input name="price_auction" value="{{ old('price') }}" type="text" class="form-control" placeholder="ريال سعودي 1600000" />
+                                <input name="price_auction" value="{{old('price',(isset($property))? ($property->price ?? '') : '')}}" type="text" class="form-control" placeholder="ريال سعودي 1600000" />
                             </div>
                         </div>
                         <div class="col-md-6 auction-fields">
@@ -861,7 +746,7 @@
                                 <div class="builder-option-name">
                                   <h5>@lang('main.products.start_date')</h5>
                                 </div>
-                                <input name="start_date" value="{{ old('start_date') }}" type="date" class="form-control" />
+                                <input name="start_date" value="{{old('start_date',(isset($property))? ($property->start_date ?? '') : '')}}" type="date" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-6 auction-fields">
@@ -869,7 +754,7 @@
                                 <div class="builder-option-name">
                                   <h5>@lang('main.products.end_date')</h5>
                                 </div>
-                                <input name="end_date" value="{{ old('end_date') }}"  type="date" class="form-control" />
+                                <input name="end_date" value="{{old('end_date',(isset($property))? ($property->end_date ?? '') : '')}}"  type="date" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -884,15 +769,29 @@
                                 rows="6"
                                 name="additional_info"
                                 id="additional_info"
-                              >{{old('additional_info')}}</textarea>
+                              >{{old('additional_info',(isset($property))? ($property->feature->additional_info ?? '') : '')}}</textarea>
                             </div>
 
     
                   </div>
                 </div>
     
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" class="bi flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:" fill="var(--secondary)">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                  </svg>
+                    <div>
+                        <input type="checkbox" name="agree" required>                         جميع البيانات المُدخلة في نموذج إضافة العقار تقع تحت مسؤوليتك الكاملة، وتقر بصحتها ومطابقتها للواقع وفق أنظمة موقع عقار السعودية
+                    </div>
+                </div>
+                
                 <button type="submit" class="main-outline-btn text-center">
-                  @lang('main.products.add property')  
+                @if(isset($property))
+                    @lang('main.products.update property')  
+                @else
+                    @lang('main.products.add property')  
+                @endif
+
                 </button>
 
             </form>

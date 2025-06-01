@@ -45,8 +45,7 @@ class HomeController extends Controller
         }
         return redirect('admin/dashboard');
     }
-    public function index(GeneralSettings $settings, SalesChart $salesChart, CategoryChart $categorysChart,SalesByVendorChart $salesByVendorChart,
-        OrdersStatusChart $orderStatusChart)
+    public function index(GeneralSettings $settings)
     {       
         if (auth()->user()->account_type == 'admins') {
             $blogsHideCount = Blog::where('status', 'hide')->count();

@@ -7,29 +7,29 @@
           <div class="container-fluid">
             <div class="py-4">
               <div class="login-logo">
-                <img src="images/logo.png" alt="" />
+                <img src="{{ url('/storage/' . app(App\Models\GeneralSettings::class)->logo) }}" alt="{{ app(App\Models\GeneralSettings::class)->site_name() }}" />
               </div>
 
-              <h5 class="fw-bold fs-4 my-5 secondary">تسجيل دخول</h5>
+              <h5 class="fw-bold fs-4 my-5 secondary">@lang('site.signin')</h5>
 
               <form method="post">
                 @csrf
-                <input type="hidden" name="redirect_to" value="{{ url()->previous() }}">
+                <input type="hidden" name="redirect_to" value="{{session()->get('redirect_url')}}">
 
                 <div class="form-group mb-4">
-                  <label for=""> رقم الهاتف <span class="text-danger">*</span></label>
-                  <input type="text" name="mobile" value="{{old('mobile')}}" class="form-control" id="InputPhone" aria-label="Username" aria-describedby="phone_num">
+                  <label for="mobile"> @lang('site.mobile')<span class="text-danger">*</span></label>
+                  <input type="text" name="mobile" value="{{old('mobile')}}" class="form-control" id="mobile" aria-label="Username" aria-describedby="phone_num">
                   <small class="text-danger mobile"></small> 
                 </div>
                 <div class="form-group mb-4">
-                  <label for="">كلمة المرور <span class="text-danger">*</span></label>
+                  <label for="">@lang('site.password') <span class="text-danger">*</span></label>
                     <div class="mb-3">
                       <div class="input-group border">
                         <input
                           type="password" name="password"
                           class="form-control"
                           id="InputPassword"
-                          placeholder="كلمة المرور"
+                          placeholder="@lang('site.password')"
                           required
                         />
                         <button
@@ -45,33 +45,31 @@
                         
                     </div>
 
-                  <a
+                  {{--<a
                     href="forgot-pass.html"
                     class="text-decoration-underline"
                     aria-label="هل نسيت كلمة المرور؟ الذهاب لاعادة التعيين"
                   >
-                    هل نسيت كلمة المرور؟
-                  </a>
+                      @lang('site.are u forget pass')
+                    
+                  </a>--}}
                 </div>
-                <div class="loading-indicator">
-                    <p>Loading...</p> 
-                <!-- ارسال -->
-                    <button
-                      type="submit"
-                      class="btn main-outline-btn w-100 mb-3 send-login-form" 
-                      aria-label="ارسال نموذج تسجيل الدخول "
-                    >
-                      دخول
-                    </button>
-                </div>
+                <button id="loadingIndicator" class="btn main-outline-btn w-100 mb-3 send-login-form" type="submit" aria-label="ارسال نموذج تسجيل الدخول ">
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"  style="display: none;"></span>
+                  <span role="status">
+                       @lang('site.open')
+                  </span>
+                </button>
                 <p class="fw-semibold text-center">
-                  ليس لديك حساب؟
+                    @lang('site.dont have acc')
+                  
                   <a
-                    href="register.html"
+                    href="{{route('register')}}"
                     class="main fw-bold px-1"
                     aria-label="الذهاب الى صفحة انشاء حساب جديد في حالة اذا لم يكن لديك حساب مسبق"
                   >
-                    إنشاء حساب جديد
+                      @lang('site.register')
+                    
                   </a>
                 </p>
               </form>

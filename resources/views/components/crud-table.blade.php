@@ -43,6 +43,11 @@
             <li data-filter="in_home">
                 {{__('main.blogs.in_home')}}: {{__('main.'.request('in_home'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['in_home' => null])}}"><i class="fas fa-times"></i></a></li>    
         @endif
+        
+        @if(request('form_type'))
+            <li data-filter="form_type">
+               {{__('main.'.request('form_type').'.'.request('form_type'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['form_type' => null])}}"><i class="fas fa-times"></i></a></li>    
+        @endif
         @if(request('store_id'))
             <li data-filter="store_id">
                 {{getStore(request('store_id'))->name}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['store_id' => null])}}"><i class="fas fa-times"></i></a></li>    
@@ -248,11 +253,6 @@
         
                         @endphp
                         @if( request()->segment(2) == 'products')
-        
-                        {!! Form::open(['method' => 'POST', 'route' => [$model.'.cloneProduct',$item->id],'style' => 'display:inline',]) !!}
-                        <button type="submit" class="btn btn-outline-success btn-sm show_dupconfirm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.duplicate product')"><i class="fa fa-copy mr-0"></i></button>
-                        {!! Form::close() !!}
-        
                         {{--@can($model1.'-list')
                         @if($item->status == 'show')
                         <a class="btn btn-sm btn-outline-info" target="_blank" href="{{url('/'.$model.'/'.$item->slug)}}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.products.preview')"><i class="fa-solid fa-box-open"></i></a>
@@ -293,7 +293,9 @@
                         @else
                         
                         @can($model1.'-edit')
+                        @if(request()->segment(2) != 'products')
                         <a href="{{ $editUrl }}" class="btn btn-outline-warning btn-sm"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="@lang('main.edit')"><i class="fa fa-edit mr-0"></i></a>
+                        @endif
                         @endcan
                         @can($model1.'-delete')
                             @if(!(request()->segment(2) == 'users' && $item->id == 1)  && !(request()->segment(2) == 'roles' && ($item->id == 1 || $item->id == 3 || $item->id == 4)) && request()->segment(2) != 'pages' )

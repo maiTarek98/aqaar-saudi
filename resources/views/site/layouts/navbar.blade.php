@@ -6,18 +6,25 @@
             class="helper-links w-100 d-flex align-items-center justify-content-between py-2"
           >
             <ul class="helper-pages m-0 d-flex gap-2 align-items-center">
-              <li class="d-md-block d-none">
-                <a href="system.html" aria-label="الذهاب إلى  شرح اليات نظام">
-                  <span>شرح اليات نظام</span>
+              <li class="">
+                <a href="{{route('addRequest')}}" aria-label="إضافة طلب">
+                  <span>إضافة طلب</span>
                 </a>
               </li>
-              <li class="d-md-block d-none">
-                <a href="policy.html" aria-label="الذهاب إلى سياسة الخصوصية">
-                  <span>سياسة الخصوصية</span>
+              <li class="">
+                  @guest('web')
+                    @php $route = route('login'); @endphp
+                  @endguest
+                  
+                  @auth('web')
+                    @php $route = route('addProperty',['user' => auth('web')->user()->id]); @endphp
+                  @endauth
+                <a href="{{$route}}" aria-label="إضافة عرض">
+                  <span>إضافة عرض</span>
                 </a>
               </li>
               <li>
-                {{-- @if(App::getLocale() == 'ar')
+                 @if(App::getLocale() == 'ar')
                 <a href="{{url('/change-language/en')}}" id="lang" aria-label="تغيير اللغة إلى الإنجليزية">
                   <i class="bi bi-globe"></i>
                   <span id="lang-text">EN</span>
@@ -28,7 +35,7 @@
                   <i class="bi bi-globe"></i>
                   <span id="lang-text">العربية</span>
                 </a>
-                @endif --}}
+                @endif 
               </li>
             </ul>
             <ul class="helper-pages m-0 d-flex align-items-center">
@@ -58,11 +65,11 @@
               <!-- if auth -->
               <li>
                 <a
-                  class="secondary"
-                  href="#"
+                  class="secondary @if($unreadCount > 0) notifi @endif"
+                  href="{{route('notifications')}}"
                   aria-label="الاشعارات"
                 >
-                  <i class="bi bi-bell"></i>
+                  <i class="bi bi-bell position-relative"></i>
                   <span>الاشعارات</span>
                 </a>
               </li>
@@ -110,6 +117,7 @@
                   >من نحن</a
                 >
               </li>
+              @if(app(App\Models\GeneralSettings::class)->aqar_screen_control == '1')
               <li class="nav-item">
                 <a
                   class="nav-link"
@@ -118,6 +126,7 @@
                   >العقارات</a
                 >
               </li>
+              @endif
               <li class="nav-item">
                 <a
                   class="nav-link"

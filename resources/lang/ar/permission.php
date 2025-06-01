@@ -70,15 +70,15 @@ return [
 
     'paymob-list' => 'إعدادات بيانات الدفع باي موب',
 
-    'products-list' => 'عرض القائمة',
+    'products-list' => 'عرض العقارات',
     'products-create' => 'إضافة بيانات جديدة',
-    'products-edit' => 'تعديل بيانات القائمة',
-    'products-delete' => 'حذف من القائمة',
+    'products-edit' => 'تعديل بيانات العقارات',
+    'products-delete' => 'حذف من العقارات',
 
-    'categorys-list' => 'عرض أقسام القائمة',
-    'categorys-create' => 'إضافة أقسام القائمة ',
-    'categorys-edit' => 'تعديل بيانات أقسام القائمة',
-    'categorys-delete' => 'حذف من أقسام القائمة',
+    'categorys-list' => 'عرض أقسام العقارات',
+    'categorys-create' => 'إضافة أقسام العقارات ',
+    'categorys-edit' => 'تعديل بيانات أقسام العقارات',
+    'categorys-delete' => 'حذف من أقسام العقارات',
 
 
     'areas-list' => 'عرض الدول',
@@ -131,8 +131,8 @@ return [
     'question_answer' => 'صلاحيات الأسئلة الشائعة',
 
     'pending_vendor' => 'صلاحيات طلبات تسجيل ك تاجر / مندوب',
-    'categorys' => 'صلاحيات أقسام القائمة',
-    'products' => 'صلاحيات القائمة',
+    'categorys' => 'صلاحيات أقسام العقارات',
+    'products' => 'صلاحيات العقارات',
     
     'reports'=>'صلاحيات التقارير',
     'reports-list'=>'عرض التقارير',

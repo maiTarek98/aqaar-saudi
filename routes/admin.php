@@ -28,7 +28,7 @@ use App\Http\Controllers\Dashboard\BrandController;
 use App\Http\Controllers\Dashboard\PendingVendorController;
 use App\Http\Controllers\Dashboard\StoreController;
 use App\Http\Controllers\Dashboard\LocationController;
-use App\Http\Controllers\Dashboard\WalletController;
+use App\Http\Controllers\Dashboard\DynamicFeatureController;
 use App\Http\Controllers\Dashboard\OrderReturnController;
 
 
@@ -117,6 +117,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
         // -------------------------------New Routes-------------------------------
         Route::resource('/banners', BannerController::class);
         Route::delete('bannersDeleteAll', [BannerController::class,'deleteAll']);
+        Route::resource('/dynamic_features', DynamicFeatureController::class);
+        Route::delete('dynamic_featuresDeleteAll', [DynamicFeatureController::class,'deleteAll']);
 
 
         Route::resource('coupons', CouponController::class);
@@ -158,6 +160,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
 
         Route::resource('/cities', CityController::class);
         Route::delete('citiesDeleteAll', [CityController::class,'deleteAll']);
+        Route::post('/users/ajax-store', [UserController::class, 'ajaxStore'])->name('users.ajax.store');
 
         Route::resource('/users', UserController::class);
         Route::delete('usersDeleteAll', [UserController::class,'deleteAll'])->name('users.deleteAll');
@@ -206,9 +209,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['lang','csp']], function () 
         Route::delete('productsDeleteAll', [ProductController::class,'deleteAll'])->name('products.deleteAll');
         Route::post('/fetch-subcategory', [ProductController::class, 'fetchSubcategory']);
         Route::post('productcloneProduct/{product}', [ProductController::class,'cloneProduct'])->name('products.cloneProduct');
+        Route::get('/prduct/{user}/{code}',[ProductController::class,'linkPropertyAdmin'])->name('linkPropertyAdmin');
 
         Route::post('productchangeStatus/{product}', [ProductController::class,'changeStatus'])->name('products.changeStatus');
-        Route::get('product_reviews', [ProductController::class,'productReviews'])->name('products.reviews');
+        Route::get('products/{product}/letters', [ProductController::class,'productLetters'])->name('productLetters');
+        Route::get('products/{product}/letters/{letter}', [ProductController::class,'productSingleLetter'])->name('productSingleLetter');
+        Route::post('products/{product}/letters/{letter}/accept', [ProductController::class,'letterAccept'])->name('letterAccept');
+        Route::post('/property-letters/{letter}/edit-accept', [ProductController::class, 'editAndAccept'])->name('letterEditAccept');
+
         Route::delete('product_reviewsDeleteAll', [ProductController::class,'productReviewsdeleteAll']);
         Route::post('product_reviewstoggleStatus/{product}', [ProductController::class,'productReviewstoggleStatus'])->name('product_reviews.toggleStatus');
         Route::post('toggleStatus/{product}', [ProductController::class,'toggleStatus'])->name('products.toggleStatus');

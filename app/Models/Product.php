@@ -17,8 +17,10 @@ class Product extends BaseModel implements HasMedia
     use HasFactory;
     use InteractsWithMedia;
     use SoftDeletes;
-
-
+    
+    protected $casts = [
+        'request_data' => 'array',
+    ];
     public function generateListingNumber()
     {
         $year = date('Y');
@@ -50,7 +52,10 @@ class Product extends BaseModel implements HasMedia
     {
         return $this->belongsToMany(\App\Models\Coupon::class, 'coupon_product');
     }
-
+  public function property_delegations()
+    {
+        return $this->hasMany(PropertyDelegation::class,'product_id');
+    }
     public function access_links()
     {
         return $this->hasMany(PropertyAccessLink::class);
@@ -113,6 +118,10 @@ class Product extends BaseModel implements HasMedia
     public function admin() {
        return $this->belongsTo(\App\Models\User::class,'added_by');
     }
+    
+    public function winner() {
+       return $this->belongsTo(\App\Models\User::class,'winner_id');
+    }
     public function bids()
     {
         return $this->hasMany(\App\Models\ProductBid::class);
@@ -131,6 +140,12 @@ class Product extends BaseModel implements HasMedia
     public function offers() {
        return $this->hasMany(\App\Models\ProductOffer::class);
     }
+    
+    public function propet_features()
+    {
+        return $this->belongsToMany(\App\Models\ProductFeature::class, 'product_features')->withPivot('value');
+    }
+
    public function letters() {
        return $this->hasMany(\App\Models\ProductLetter::class);
     }

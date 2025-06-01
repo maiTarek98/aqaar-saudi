@@ -41,7 +41,7 @@
                         <input type="text" maxlength="10" name ="mobile" value="{{ old('mobile', $user->mobile) }}"
                             class="form-control  @error('mobile') is-invalid @enderror" id="mobile" placeholder="@lang('main.users.mobile')">
                     </div>
-                    @if(request('account_type') == 'users')
+                    @if(request('account_type') == 'admins')
                     <div class="col-md-6">
                         <label for="email"> @lang('main.'.request('account_type').'.email')</label>
                         @if(request('account_type') != 'users')
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     @endif
-                    @if(request('account_type') == 'users')
+                    {{--@if(request('account_type') == 'users')
                     <div class="col-md-6">
                         <label for="user_type">@lang('main.users.user_type')</label><span class="text-danger">*</span>
                         <select name="user_type" class="form-select @error('user_type') is-invalid @enderror" required>
@@ -132,7 +132,7 @@
                                 placeholder="@lang('main.users.agency_number')">
                         </div>
                     </div>
-                    @endif
+                    @endif --}}
                     
                     
                 </div>

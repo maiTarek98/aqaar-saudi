@@ -57,16 +57,12 @@ class SettingsController extends Controller
             $settings->email = $request->input('email');
             $settings->phone = $request->input('phone');
             $settings->whatsapp_phone = $request->input('whatsapp_phone');
-        }elseif(request('q') == 'feature'){
-            $settings->feature_title_ar = $request->input('feature_title_ar');
-            $settings->feature_title_en = $request->input('feature_title_en');
-            $settings->feature_text_ar = $request->input('feature_text_ar');
-            $settings->feature_text_en = $request->input('feature_text_en');
-            if( $file = $request->file('feature_image') ) {
-                $path = 'settings';
-                $url = $this->uploadImg($file,$path);
-                $settings->feature_image= $url;
-            }
+        }elseif(request('q') == 'card_control'){
+            $settings->card_text_a = $request->input('card_text_a');
+            $settings->card_text_b = $request->input('card_text_b');
+            $settings->card_text_c = $request->input('card_text_c');
+            $settings->card_text_d = $request->input('card_text_d');
+            $settings->aqar_screen_control = $request->has('aqar_screen_control');
         }        
         $settings->save();   
         $social_settings->save();   
@@ -205,25 +201,62 @@ class SettingsController extends Controller
                 $url = $this->uploadImg($file,$path);
                 $settings->banner_image= $url;
             }
+        }elseif($request->type == 'beneficiaries'){
+            $settings->beneficiaries_title_ar = $request->input('beneficiaries_title_ar');
+            $settings->beneficiaries_text_ar = $request->input('beneficiaries_text_ar');
+            $settings->beneficiaries_text_en = $request->input('beneficiaries_text_en');
+            $settings->beneficiaries_title_en = $request->input('beneficiaries_title_en');
+
         }elseif($request->type == 'about'){
-            $settings->about_title_ar = $request->input('about_title_ar');
-            $settings->about_title_en = $request->input('about_title_en');
-            $settings->about_text_ar = $request->input('about_text_ar');
-            $settings->about_text_en = $request->input('about_text_en');
-            if( $file = $request->file('about_image') ) {
+            $settings->about_title_one_ar = $request->input('about_title_one_ar');
+            $settings->about_title_one_en = $request->input('about_title_one_en');
+            $settings->about_text_one_ar = $request->input('about_text_one_ar');
+            $settings->about_text_one_en = $request->input('about_text_one_en');
+            if( $file = $request->file('about_image_one') ) {
+                $path = 'settings';
+                $url1 = $this->uploadImg($file,$path);
+                $settings->about_image_one= $url1;
+            }
+            
+            $settings->about_title_two_ar = $request->input('about_title_two_ar');
+            $settings->about_title_two_en = $request->input('about_title_two_en');
+            $settings->about_text_two_ar = $request->input('about_text_two_ar');
+            $settings->about_text_two_en = $request->input('about_text_two_en');
+            if( $file = $request->file('about_image_two') ) {
                 $path = 'settings';
                 $url = $this->uploadImg($file,$path);
-                $settings->about_image= $url;
+                $settings->about_image_two= $url;
             }
         }elseif($request->type == 'feature'){
-            $settings->feature_title_ar = $request->input('feature_title_ar');
-            $settings->feature_title_en = $request->input('feature_title_en');
-            $settings->feature_text_ar = $request->input('feature_text_ar');
-            $settings->feature_text_en = $request->input('feature_text_en');
-            if( $file = $request->file('feature_image') ) {
+            $settings->feature_title_one_ar = $request->input('feature_title_one_ar');
+            $settings->feature_title_one_en = $request->input('feature_title_one_en');
+            $settings->feature_text_one_ar = $request->input('feature_text_one_ar');
+            $settings->feature_text_one_en = $request->input('feature_text_one_en');
+
+            $settings->feature_title_two_ar = $request->input('feature_title_two_ar');
+            $settings->feature_title_two_en = $request->input('feature_title_two_en');
+            $settings->feature_text_two_ar = $request->input('feature_text_two_ar');
+            $settings->feature_text_two_en = $request->input('feature_text_two_en');
+
+            $settings->feature_title_three_ar = $request->input('feature_title_three_ar');
+            $settings->feature_title_three_en = $request->input('feature_title_three_en');
+            $settings->feature_text_three_ar = $request->input('feature_text_three_ar');
+            $settings->feature_text_three_en = $request->input('feature_text_three_en');
+
+            if( $file = $request->file('feature_image_one') ) {
                 $path = 'settings';
-                $url = $this->uploadImg($file,$path);
-                $settings->feature_image= $url;
+                $url1 = $this->uploadImg($file,$path);
+                $settings->feature_image_one= $url1;
+            }
+            if( $file = $request->file('feature_image_two') ) {
+                $path = 'settings';
+                $url2 = $this->uploadImg($file,$path);
+                $settings->feature_image_two= $url2;
+            }
+            if( $file = $request->file('feature_image_three') ) {
+                $path = 'settings';
+                $url3 = $this->uploadImg($file,$path);
+                $settings->feature_image_three= $url3;
             }
         }
         $settings->save();   

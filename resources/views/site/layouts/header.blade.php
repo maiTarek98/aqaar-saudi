@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title') </title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{url('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" sizes="65x65" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{url('/storage/'.app(App\Models\GeneralSettings::class)->favicon)}}" sizes="65x65" />
     @include('site.includes.meta-section')
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -17,6 +17,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    @stack('custom-css')
 
     <!-- Bootstrap link  -->
     <link
@@ -35,6 +36,11 @@
 
     <!-- fancybox link -->
     <link rel="stylesheet" href="{{url('site')}}/css/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    
+    
+    <!-- tagsinput -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="{{url('site')}}/css/style.css" />
@@ -44,6 +50,7 @@
         color:red;
         font-weight:bolder;
     }
+    </style>
   </head>
 
   <body>

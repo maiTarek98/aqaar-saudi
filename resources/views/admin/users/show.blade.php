@@ -116,9 +116,9 @@
                     @if($user->account_type == 'users')
                     <ul class="nav nav-pills mb-3 user-pills" id="pills-tab" role="tablist">
                         <li class="nav-item active">
-                            <a class="nav-link active" id="pills-userorders-tab" data-bs-toggle="pill" data-bs-target="#pills-userorders" type="button" role="tab" aria-controls="pills-userorders" aria-selected="true"> <i class="bi bi-cart3"></i> @lang('main.users.show all user orders')</a>
+                            <a class="nav-link active" id="pills-userorders-tab" data-bs-toggle="pill" data-bs-target="#pills-userorders" type="button" role="tab" aria-controls="pills-userorders" aria-selected="true"> <i class="bi bi-cart3"></i> @lang('main.users.show all user cards')</a>
                         </li>
-                        <li class="nav-item ">
+                        {{--<li class="nav-item ">
                             <a class="nav-link " id="pills-userwishlist-tab" data-bs-toggle="pill" data-bs-target="#pills-userwishlist" type="button" role="tab" aria-controls="pills-userwishlist" aria-selected="true"><i class="bi bi-heart"></i> @lang('main.users.show all user wishlist')</a>
                         </li>
                         <li class="nav-item">
@@ -126,11 +126,167 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="pills-userwallet-tab" data-bs-toggle="pill" data-bs-target="#pills-userwallet" type="button" role="tab" aria-controls="pills-userwallet" aria-selected="true"> <i class="bi bi-wallet2"></i> @lang('main.users.show all user wallet')</a>
-                        </li>
+                        </li>--}}
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade active show" id="pills-userorders" role="tabpanel" aria-labelledby="pills-userorders-tab">
+                              <div class="accordion" id="accordionPanelsStayOpenExample">
+                  <div class="accordion-item card user-card any">
+                    <h2 class="accordion-header card-header py-1">
+                      <button class="accordion-button d-flex justify-content-between card-title fs-5 m-0 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                        <span>
+                          بطاقة هوية رقمية
+                        </span>
+                        <span>
+                        </span>
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                        <div class="row align-items-center py-3 gy-3">
+                            <div class="col-12">
+                                <h6 class="user-name text-center">
+                                    الاسم/ {{$user->name}} 
+                                </h6>
+                            </div>
                             
+                            <div class="col-4">
+                                <b class="d-block">
+                                    رخصة فال رقم
+                                    <br>
+                                    {{$user->val_license}}
+                                </b>
+                            </div>
+                            
+                            <div class="col-4">
+                                <div class="copy-text flex-column">
+                                  <input type="text" class="text" value="{{route('user.properties',$user->id)}}" style="opacity: 0;margin-bottom: -18px;">
+                                  <button>
+                                    <div class="user-img">
+                                        {!! $qrCode !!}
+                                    </div>
+                                  </button>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <b class="d-block">ID: {{$user->card_code}}</b>
+                                <b class="d-block">
+                                    عدد العروض
+                                    {{$user->properties?->count()}}
+                                </b>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  @if($user->propertys_access_link->count() > 0)
+                    @foreach($user->propertys_access_link as $key => $property_access)
+                        @php $val = $property_access->property; @endphp
+                        @php
+                            $user = $user;
+                            $hasDelegation = $user->property_delegations()
+                                                ->where('product_id', $val->id)
+                                                ->exists();
+                        @endphp
+                      <div class="accordion-item card user-card @if($property_access->current_level == 2) {{$val->feature?->represented_by}} @elseif($hasDelegation) agent @else other @endif">
+                        <h2 class="accordion-header card-header py-1">
+                          <button class="accordion-button d-flex justify-content-between card-title fs-5 m-0 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$key}}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{$key}}">
+                            <span>
+                              بطاقة هوية رقمية - {{$val->listing_number}}
+                            </span>
+                            <span>
+                            @if($property_access->current_level == 2)
+                                ({{ __('main.products.' . ($val->feature?->represented_by ?? '')) }})
+                            @elseif($hasDelegation)
+                                ({{ __('main.products.agent')}})
+                            @else
+                                (ساعي)
+                            @endif
+                            </span>
+                          </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapse{{$key}}" class="accordion-collapse collapse">
+                          <div class="accordion-body">
+                            <div class="row align-items-center py-3 gy-3">
+                            <div class="col-12">
+                                <a href="{{route('property.show',$val->listing_number)}}" class="text-decoration-underline d-flex gap-1 justify-content-center">
+                                    <i class="bi bi-link-45deg fs-5"></i>
+                                    <b>رقم العرض {{$val->listing_number}}</b>
+                                </a>
+                                <b style="float:inline-end;">{{$property_access->current_level}}</b>
+                            </div>
+                            <div class="col-4">
+                                <b class="d-block">
+                                    الاسم/ {{explode(' ', trim($user->name))[0] }}
+                                </b>
+                                <b class="d-block">
+                                    @if($val->feature?->represented_by == 'owner')
+                                    {{__('main.users.sak_number')}}
+                                    <br/>
+                                    {{$val->feature?->sak_number}}
+                                    @elseif($val->feature?->represented_by == 'agent')
+                                    {{__('main.users.agency_number')}}
+                                    <br/>
+                                    {{$val->feature?->agency_number}}
+                                    @else
+                                    {{__('main.users.val_number')}}
+                                    <br/>
+                                    {{$val->feature?->val_number}}
+                                    @endif
+                                </b>
+                            </div>
+                            
+                            <div class="col-4">
+                                <div class="user-img">
+                                    @if($val->access_links->where('source_user_id', $user->id)->isNotEmpty())
+                                        @php $link = $val->access_links->where('source_user_id', $user->id)->first(); 
+                                                $url = url('verify-property/'.$link->token.'?source=external&ref='.$link->current_level);
+                                                $qrCode_v = \SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($url);
+                                        @endphp
+                                        <div class="copy-text flex-column">
+                                          <input type="text" class="text" value="{{$url}}" style="opacity: 0;margin-bottom: -18px;">
+                                          <button>
+                                            <div class="user-img">
+                                                {!! $qrCode_v !!}
+                                            </div>
+                                          </button>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="d-flex align-items-center gap-2">
+                                    <b> الصفة </b>
+                                    <span> {{__('main.products.'.$val->feature?->represented_by)}}</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <b> نوع العرض </b>
+                                    <span>{{__('main.products.'.$val->type)}}</span>
+                                </div>
+                                @if($val->start_date)
+                                <div class="d-flex align-items-center gap-2">
+                                    <b> من تاريخ </b>
+                                    <span>{{$val->start_date}}</span>
+                                </div>
+                                @endif
+                                @if($val->end_date)
+                                <div class="d-flex align-items-center gap-2">
+                                    <b> الى تاريخ </b>
+                                    <span>{{$val->end_date}}</span>
+                                </div>
+                                @endif
+                            </div>
+                            {{--<div class="copy-text">
+                                <input type="text" class="text" value="{{$url}}">
+                                <button><i class="fa fa-clone"></i></button>
+                              </div>--}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    @endforeach
+                  @endif
+                </div>
                         </div>
 
                         <div class="tab-pane fade " id="pills-userwishlist" role="tabpanel" aria-labelledby="pills-userwishlist-tab">

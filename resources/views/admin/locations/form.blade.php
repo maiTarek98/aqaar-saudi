@@ -18,7 +18,7 @@
     <div class="col-md-6">                      
         <div class="form-group">
             <label class="float-start">@lang('main.locations.type') <span class="text-danger">*</span></label>
-            <select class="form-select" id="type" name="type" required>
+            <select class="form-control" id="type" name="type" required>
                 <option value="governorate" {{ old('type') == 'governorate' ? 'selected' : '' }}>@lang('main.locations.governorate')</option>
                 <option value="city" {{ old('type') == 'city' ? 'selected' : '' }}>@lang('main.locations.city')</option>
                 <option value="district" {{ old('type') == 'district' ? 'selected' : '' }}>@lang('main.locations.district')</option>
@@ -28,7 +28,7 @@
     <div class="col-md-6">                      
         <div class="form-group">
             <label for="parent_id"> @lang('main.locations.belongs to') :</label>
-            <select class="form-select" name="parent_id">
+            <select class="form-control" name="parent_id">
                 <option value="">@lang('main.choose')</option>
                 @foreach(\App\Models\Location::get() as $value)
                 <option value="{{$value->id}}" @if($value->id == $item->parent_id) selected @endif>{{$value->name}}</option>
@@ -99,19 +99,20 @@
         const parentSelect = document.querySelector('select[name="parent_id"]');
 
         const allOptions = [...parentSelect.options];
+        const location = @json(\App\Models\Location::all()->keyBy('id')); 
 
         function filterParentOptions(type) {
             if (type === 'governorate') {
                 parentDiv.style.display = 'none';
                 parentSelect.innerHTML = '';
+                parentSelect.removeAttribute('required');
             } else {
                 parentDiv.style.display = 'block';
                 parentSelect.innerHTML = '<option value="">اختر</option>';
+                parentSelect.setAttribute('required', 'required');
 
                 allOptions.forEach(option => {
                     if (option.value === '') return;
-
-                    let location = @json(\App\Models\Location::all()->keyBy('id')); 
 
                     let item = location[option.value];
                     if (!item) return;
@@ -124,10 +125,12 @@
                 });
             }
         }
+
         filterParentOptions(typeSelect.value);
         typeSelect.addEventListener('change', function () {
             filterParentOptions(this.value);
         });
     });
 </script>
+
 @endpush

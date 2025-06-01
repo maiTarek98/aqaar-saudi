@@ -7,6 +7,8 @@
         'areas' => request('parent_id') ? __('main.area') : __('main.city'),
         'users' => __('main.'.request('account_type').'.'.request('account_type')),
         'categories' => request('parent_id') ? __('main.subcategory') : __('main.categorys.categorys'),
+        'products' => __('main.'.request('form_type').'.'.request('form_type')),
+
         default => trans('main.'.$entity.'.'.$entity),
     };
     $breadcrumb = [];
@@ -15,6 +17,9 @@
         if ($segments[$i] === 'users' && request('account_type')) {
             $b_name = ucfirst(request('account_type'));
             $breadcrumb[] = ['name' => $b_name, 'url' => $url];
+        }elseif ($segments[$i] === 'products' && request('form_type')) {
+            $b_name = ucfirst(request('form_type'));
+            $breadcrumb[] = ['name' => $b_name, 'url' => $url];
         }else{
             $breadcrumb[] = ['name' => ucfirst($segments[$i]), 'url' => $url];
         }
@@ -22,13 +27,15 @@
 
     $isEditOrCreate = str_contains($routeName, 'create') || str_contains($routeName, 'edit');
     $buttonText = $isEditOrCreate ? __('main.showAll') : __('main.addNew');
-    if(request()->segment(2) == 'contacts'|| request()->segment(2) == 'settings'|| request()->segment(2) == 'pages'){
+    if(request()->segment(2) == 'contacts'||request()->segment(2) == 'subscribers'|| request()->segment(2) == 'settings'|| request()->segment(2) == 'pages' || (request()->segment(2) == 'products' && request('form_type') == null) ){
         $buttonRoute = null;
     }elseif(request()->segment(2) == 'stores' && auth('admin')->user()->account_type == 'vendors'){
         $buttonRoute = null;
     }else{
         if(request('account_type')){
             $buttonRoute = $isEditOrCreate ? route("$entity.index",['account_type' => request('account_type')]) : route("$entity.create",['account_type' => request('account_type')]);
+        }elseif(request('form_type')){
+            $buttonRoute = $isEditOrCreate ? route("$entity.index",['form_type' => request('form_type')]) : route("$entity.create",['form_type' => request('form_type')]);
         }else{
             if(request()->segment(2) == 'orders' && $isEditOrCreate == false && auth('admin')->user()->account_type != 'admins'){
                 $buttonRoute = null;
@@ -50,6 +57,13 @@
                     @if (!$loop->last)
                         @if(request('account_type'))
                         <a href="{{ $item['url'].'?account_type='.request('account_type') }}" class="fs-6 fw-bold">
+                            {{ $key == 0
+                                ? __('main.'.lcfirst($item['name']).'.'.lcfirst($item['name'])) 
+                                :$item['name'] 
+                            }}
+                        </a>
+                        @elseif(request('form_type'))
+                        <a href="{{ $item['url'].'?form_type='.request('form_type') }}" class="fs-6 fw-bold">
                             {{ $key == 0
                                 ? __('main.'.lcfirst($item['name']).'.'.lcfirst($item['name'])) 
                                 :$item['name'] 

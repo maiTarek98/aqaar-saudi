@@ -19,23 +19,24 @@
   
             <form method="POST" id="register-form">
                 @csrf
+                <input type="hidden" name="redirect_to" value="{{session()->get('redirect_url')}}">
                 <div class="form-group mb-4">
-                    <label for="">الاسم <span class="text-danger">*</span></label>
-                    <input type="text" name="name" class="form-control" placeholder="@lang('site.name')" value="{{ old('name') }}">
+                    <label for="name">الاسم <span class="text-danger">*</span></label>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="برجاء ادخال الاسم بالكامل" value="{{ old('name') }}">
                     <span class="text-danger error-msg name"></span>
                 </div>
                 <div class="form-group mb-4">
-                    <label for="">رقم الهاتف <span class="text-danger">*</span></label>
+                    <label for="mobile">@lang('site.mobile') <span class="text-danger">*</span></label>
                     <div class="input-group border mb-3">
                       <span class="input-group-text">
                       +966
                       </span>
-                      <input type="text" name="mobile" class="form-control" placeholder="@lang('site.mobile')" value="{{ old('mobile') }}">
+                      <input type="text" name="mobile" id="mobile" class="form-control" placeholder="@lang('site.mobile')" value="{{ old('mobile') }}">
                     </div>
                     <span class="text-danger error-msg mobile"></span>
                 </div>
-
-                <div class="form-group mb-4">
+                <input type="hidden" name="user_type" value="other">
+                {{--<div class="form-group mb-4">
                     <label for="">نوع المستخدم <span class="text-danger">*</span></label>
                     <select name="user_type" class="form-control" placeholder="@lang('site.user_type')" value="{{ old('user_type') }}">
                         <option value="owner">@lang('main.products.owner')</option>
@@ -47,23 +48,27 @@
                 </div>
                 
                 <div class="form-group mb-4">
-                    <label for="">رقم الهوية <span class="text-danger">*</span></label>
-                    <input type="text" maxlength="10" pattern="[1-2][0-9]{9}" name="id_number" value=""class="form-control @error('id_number') is-invalid @enderror" id="id_number" placeholder="@lang('main.users.id_number')">
+                    <label for="">رقم الهوية </label>
+                    <input type="text" maxlength="10" name="id_number" value=""class="form-control @error('id_number') is-invalid @enderror" id="id_number" placeholder="@lang('main.users.id_number')">
                     <span class="text-danger error-msg id_number"></span>
                 </div>
 
                 <div class="form-group mb-4" id="agency_number_wrapper" style="display:none">
-                    <label for="">@lang('main.users.agency_number') <span class="text-danger">*</span></label>
-                    <input type="text" maxlength="10" pattern="[1-2][0-9]{9}" name="agency_number" value=""class="form-control @error('agency_number') is-invalid @enderror" id="agency_number" placeholder="@lang('main.users.agency_number')">
+                    <label for="">@lang('main.users.agency_number')</label>
+                    <input type="text" maxlength="10" name="agency_number" value=""class="form-control @error('agency_number') is-invalid @enderror" id="agency_number" placeholder="@lang('main.users.agency_number')">
                     <span class="text-danger error-msg agency_number"></span>
-                </div>
-
+                </div>--}}
 
                 <div class="form-group mb-4">
-                  <label for="">كلمة المرور <span class="text-danger">*</span></label>
+                    <label for="">@lang('main.users.val_license')</label>
+                    <input type="text" maxlength="10" name="val_license" value=""class="form-control @error('val_license') is-invalid @enderror" id="val_license" placeholder="@lang('main.users.val_license')">
+                    <span class="text-danger error-msg val_license"></span>
+                </div>
+                <div class="form-group mb-4">
+                  <label for="">@lang('site.password') <span class="text-danger">*</span></label>
                   <div class="mb-3">
                     <div class="input-group border">
-                        <input type="password" id="InputPassword" name="password" class="form-control" placeholder="@lang('site.password')">
+                        <input type="password" id="InputPassword" name="password" class="form-control" placeholder="@lang('main.password')">
                         <button
                           type="button"
                           class="input-group-text fs-4 pass"
@@ -103,12 +108,11 @@
                 </div>
                 
                 <!-- ارسال -->
-                <button
-                  type="submit"
-                  class="btn main-outline-btn w-100 mb-3 send-form"
-                  aria-label="ارسال نموذج إنشاء حساب "
-                >
-                إنشاء حساب
+                <button id="loadingIndicator" class="btn main-outline-btn w-100 mb-3 send-form" type="submit">
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"  style="display: none;"></span>
+                  <span role="status">
+                         إنشاء حساب
+                  </span>
                 </button>
                 <p class="fw-semibold  text-center">
                   هل لديك حساب؟
@@ -117,7 +121,7 @@
                   class="main fw-bold px-1"
                   aria-label="الذهاب الى صفحة تسجيل الدخول في حالة اذا كان لديك حساب مسبق"
                   >
-                   تسجيل دخول
+                   @lang('site.signin')
                   </a>
                 </p>
               </form>
@@ -153,7 +157,7 @@
                     if (response.data === 1) {
                         $('#register-form')[0].reset();
                         setTimeout(function() {
-                            window.location.href = "{{ route('home') }}";
+                            window.location.href = response.redirect;
                         }, 2000); // 2 second delay
                         toastr.success("@lang('site.registeration done')");
                     }

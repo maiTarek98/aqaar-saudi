@@ -50,8 +50,9 @@ class UserController extends Controller {
             'password' => 'required|min:6|string|confirmed',
             'mobile' => 'required|numeric|digits:10|unique:users,mobile',
             'user_type' => 'required|string|in:owner,co-owner,agent,other',
-            'id_number' => 'required|numeric',
-            'agency_number' => 'required_if:user_type,agent|numeric',
+            // 'id_number' => 'sometimes|nullable|numeric',
+            // 'agency_number' => 'sometimes|nullable|numeric',
+            'val_license' => 'sometimes|nullable|string',
 
         ];
         $account_type = 'users';
@@ -62,7 +63,7 @@ class UserController extends Controller {
                 'errors' => $validator->getMessageBag()->toArray()
             ));
         } else {
-            $data = $request->except("_token", "_method",'password_confirmation');
+            $data = $request->except("_token", "_method",'password_confirmation','redirect_to');
             $data['status'] = 'accepted';
             $user_store = User::create($data+ ['account_type' => $account_type]);
             $user_store->card_code = $user_store->generateCardCode();
@@ -86,7 +87,8 @@ class UserController extends Controller {
           //           $data = route('home');
           //       }
         $response_data = 1;
-        return response()->json(array('data' => $response_data));
+        $redirectTo = ($request->redirect_to)?$request->redirect_to:route('home'); 
+        return response()->json(array('data' => $response_data, 'redirect' => $redirectTo));
             
         }
     }
@@ -126,8 +128,9 @@ class UserController extends Controller {
         }
     }
  
-  public function notifications () {
+    public function notifications () {
         $user = auth('web')->user();
+        auth('web')->user()->unreadNotifications->markAsRead();
         return view('site.notifications', compact('user'));
     }
     public function profile() {
@@ -135,49 +138,52 @@ class UserController extends Controller {
         return view('site.profile', compact('user'));
     }
     public function update_profile(Request $request)
-{
-    $user = Auth::guard('web')->user();
-
-    $rules = [
-        'name' => 'required|string|min:2|max:45',
-        'mobile' => 'required|numeric|unique:users,mobile,' . $user->id,
-        'id_number' => 'sometimes|nullable|integer',
-        'agent_number' => 'sometimes|nullable|integer',
-        'photo_profile' => 'sometimes|nullable|image|max:2040',
-    ];
-
-    $mobile = preg_replace('/\s+/', '', ltrim($request->mobile, 0));
-    $validator = Validator::make(
-        $request->except('_token', 'mobile') + ['mobile' => $mobile],
-        $rules
-    );
-
-    if ($validator->fails()) {
-        return response()->json([
-            'errors' => $validator->errors() // هنا الفرق الأساسي
-        ]);
+    {
+        $user = Auth::guard('web')->user();
+    
+        $rules = [
+            'name' => 'required|string|min:2|max:45',
+            'mobile' => 'required|numeric|unique:users,mobile,' . $user->id,
+            'val_license' => 'sometimes|nullable|string',
+            'agent_number' => 'sometimes|nullable|integer',
+            'photo_profile' => 'sometimes|nullable|image|max:2040',
+        ];
+    
+        $mobile = preg_replace('/\s+/', '', ltrim($request->mobile, 0));
+        $validator = Validator::make(
+            $request->except('_token', 'mobile') + ['mobile' => $mobile],
+            $rules
+        );
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors() 
+            ]);
+        }
+    
+        $data = $request->except('_token', 'photo_profile', 'mobile');
+        $data['mobile'] = $mobile;
+        $data['name'] = $request->name;
+    
+        if(request()->hasFile('photo_profile') && request()->file('photo_profile')->isValid())
+        {
+            $this->convertImageToWebp(request('photo_profile'),$user,'photo_profile','users');
+        }
+    // dd($data);
+        $updated = $user->update([
+            'mobile' => $data['mobile'],
+            'name' => $data['name'],
+            'val_license' => $data['val_license'],
+            ]);
+    
+        if ($updated) {
+            return response()->json([
+                'success' => true
+            ]);
+        }
+    
+        return response()->json(2);
     }
-
-    $data = $request->except('_token', 'photo_profile', 'mobile');
-    $data['mobile'] = $mobile;
-    $data['name'] = $request->name;
-
-    if ($file = $request->file('photo_profile')) {
-        $path = 'users';
-        $url = $this->uploadImg($file, $path);
-        $data['photo_profile'] = 'storage' . $url;
-    }
-
-    $updated = $user->update($data);
-
-    if ($updated) {
-        return response()->json([
-            'success' => true
-        ]);
-    }
-
-    return response()->json(2);
-}
 
     
     public function update_photo(Request $request)
@@ -194,9 +200,9 @@ class UserController extends Controller {
         }
         
          if($data){
-            return back()->with('success',trans('messages.UpdateSuccessfully'));;
+            return back()->with('success',trans('messages.UpdateSuccessfully'));
         }else{
-            return back()->with('error',trans('messages.error'));;
+            return back()->with('error',trans('messages.error'));
             }
         
     }
@@ -215,21 +221,19 @@ class UserController extends Controller {
         ];
             $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json(array(
-
-                'errors' => $validator->errors()->all(),
-            ));
-        } else {
+            return back()->withErrors($validator)->withInput();
+        }
+        else {
          $data->update($request->except('_token','current_password','password_confirmation'));
             if($data){
-                return 1;
+                return redirect()->back()->with('success',trans('site.UpdateSuccessfully'));
             }else{
-                return 2;
+                return redirect()->back()->with('error',trans('site.error'));
                 }
             }
         }else
         {
-            return 3;
+            return redirect()->back()->with('error',trans('site.error in current password'));
         }
     }
 

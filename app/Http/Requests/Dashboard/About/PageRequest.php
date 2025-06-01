@@ -26,9 +26,9 @@ class PageRequest extends FormRequest
         return [
             // 'added_by' => 'required|exists:users,id',
             'title_ar' => 'required|string|min:3|max:255',
-            'title_en' => 'required|string|min:2|max:7255',
-            'content_ar' => 'required|string|min:2|max:255',
-            'content_en' => 'required|string|min:3|max:7255',
+            'title_en' => 'required|string|min:2|max:255',
+            'content_ar' => 'required|string|min:2',
+            'content_en' => 'required|string|min:3',
      ]  
         +
          ($this->isMethod('POST') ? $this->store() : $this->update());

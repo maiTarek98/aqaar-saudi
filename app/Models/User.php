@@ -105,7 +105,14 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
       return $this->hasMany(\App\Models\Order::class,'user_id');
     }
     public function properties() {
-      return $this->hasMany(\App\Models\Product::class,'added_by');
+      return $this->hasMany(\App\Models\Product::class,'added_by')->where('form_type','add_property');
+    }
+    public function requests() {
+      return $this->hasMany(\App\Models\Product::class,'added_by')->where('form_type','add_request');
+    }
+    
+    public function approved_delegations() {
+      return $this->hasMany(\App\Models\PropertyDelegation::class,'agent_id')->where('status','approved');
     }
     public function working_hours() {
       return $this->hasMany(\App\Models\WorkingHour::class,'user_id');
@@ -116,6 +123,38 @@ class User extends Authenticatable implements JWTSubject, HasMedia{
     public function wallet()
     {
         return $this->hasOne(\App\Models\Wallet::class,'user_id');
+    }
+    
+     public function access_link()
+    {
+        return $this->hasOne(\App\Models\PropertyAccessLink::class,'source_user_id')->whereHas('property', function ($query) {
+                    $query->whereNull('deleted_at');
+                });
+    }
+    
+     public function propertys_access_link()
+    {
+        return $this->hasMany(\App\Models\PropertyAccessLink::class,'source_user_id')->whereHas('property', function ($query) {
+                    $query->whereNull('deleted_at'); 
+                });
+    }
+ public function property_delegations()
+    {
+        return $this->hasMany(PropertyDelegation::class,'agent_id')->whereHas('property', function ($query) {
+                    $query->whereNull('deleted_at'); 
+                });
+    }
+    
+    public function delegations()
+    {
+        return $this->hasMany(PropertyDelegation::class, 'agent_id')->whereHas('property', function ($query) {
+                    $query->whereNull('deleted_at'); 
+                });
+    }
+    
+    public function delegatedForProduct($productId)
+    {
+        return $this->delegations()->where('status','approved')->where('product_id', $productId);
     }
 
     public function generateReferralCode()

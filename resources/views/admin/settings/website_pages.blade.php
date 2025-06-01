@@ -48,6 +48,20 @@
           </a>
           <!-- /.info-box -->
         </div>
+        
+        
+        <div class="col-md-3 col-sm-6 col-12">
+          <a href="{{route('settings.websitePages.data',['control'=>'beneficiaries'])}}" class="info-box text-center">
+            <span class="info-box-icon mb-2">
+                <svg class="stroke" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="" x="0" y="0" viewBox="0 0 512.002 512.002" style="enable-background:new 0 0 512 512" xml:space="preserve"><g><path d="M116.626 347.001h-36.5m-1.625 30.001v-60c0-11 9-20 20-20h0c11 0 20 9 20 20v60M416.001 300.065v76.937M398.501 297.002h35M258.501 297.002h0c11 0 20 9 20 20v40.001c0 11-9 20-20 20h0c-11 0-20-9-20-20v-40.001c0-11 9-20 20-20zM158.501 297.002h20c11 0 20 8.999 20 20h0c0 11-8.999 20-20 20 11 0 20 9 20 20h0c0 11-8.999 20-20 20h-20v-80zM163.251 337.002h15.25M358.501 297.002v60c0 11-9 20-20 20s-20-9-20-20v-60M310.896 425.692l-5.317-2.202c-9.986-4.135-21.539.649-25.674 10.635-4.136 9.985.649 21.538 10.634 25.674l5.317 2.202 5.318 2.202c9.984 4.136 14.77 15.689 10.634 25.674-4.135 9.986-15.689 14.771-25.674 10.635l-5.317-2.202M238.706 422.002v60c0 11-9 20-20 20s-20-9-20-20v-60M96.001 10h320v180h-115l-45 45-45-45h-115zM195.998 100h.007M255.997 100h.008M315.997 100h.008" style="fill-rule: evenodd; clip-rule: evenodd; stroke-linecap: round; stroke-linejoin: round; stroke-miterlimit: 22.9256;" fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="20.0001px" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="22.9256" data-original="#000000"></path></g></svg>
+            </span>
+            <div class="info-box-content">
+              <span class="info-box-text">@lang('main.settings.control beneficiaries')</span>
+            </div>
+            <!-- /.info-box-content -->
+          </a>
+          <!-- /.info-box -->
+        </div>
       </div>
     </div><!-- /.content -->
   </div><!-- /.container-fluid -->

@@ -2,7 +2,7 @@
         <div class="card produ-section{{$property->id}}">
           <!-- estate link -->
           <a
-          href="estate-details.html"
+          href="{{route('property.show',$property->listing_number)}}"
           aria-label="مشاهدة تفاصيل عقار اسم العقار"
           class="link"
           ></a>
@@ -16,7 +16,7 @@
             @if ($firstImage= $property->getFirstMediaUrl('products_image','thumb'))
               <img loading="lazy" src="{{ $firstImage }}" alt="{{$property->title}}" class="card-img-top">
             @else
-              <img src="{{url('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" loading="lazy" alt="{{$property->title}}" class="card-img-top">
+              <img src="{{url('/storage/'.app(App\Models\GeneralSettings::class)->logo)}}" loading="lazy" alt="{{$property->title}}" class="card-img-top"style="object-fit: contain">
             @endif
           </div>
           <!-- estate info -->

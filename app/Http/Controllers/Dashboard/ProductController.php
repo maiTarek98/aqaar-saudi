@@ -7,13 +7,17 @@ use App\Http\Requests\Dashboard\Category\ProductRequest;
 use App\Http\Traits\UploadImageTrait;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\PropertyAccessLink;
 use App\Models\Category;
+use App\Models\ProductLetter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use DB;
 use Notification;        
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Notifications\NewPropertyLetterNotification;
+
 class ProductController extends Controller
 {
     use UploadImageTrait;
@@ -43,7 +47,9 @@ class ProductController extends Controller
             $query->where('listing_number', 'like', '%' . $searchNumber . '%');
         })->when($request->query('status'), function($query, $status) {
                 $query->where('status', $status);
-        })->when($request->query('type'), function($query, $type) {
+        })->when($request->query('form_type'), function($query, $form_type) {
+                $query->where('form_type', $form_type);
+            })->when($request->query('type'), function($query, $type) {
                 $query->where('type', $type);
             })->when($request->query('in_home'), function($query, $in_home) {
                 $query->where('in_home', $in_home);
@@ -54,7 +60,11 @@ class ProductController extends Controller
             $result = $query->paginate((int) $per_page);
             $result->withQueryString();
         }
-        $fields = ['id','title','type','price', 'property_status','created_at'];
+        if(request('form_type') == 'site_property'){
+                    $fields = ['id','title','price','created_at'];
+        }else{
+            $fields = ['id','title','type','price','created_at'];
+        }
         $model = 'products';
         $queryParameters = $request->query(); // Get query parameters
         if ($request->ajax()) {
@@ -77,20 +87,45 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
+        if($request->type == 'auction'){
+            $price =$request->price_auction; 
+        }elseif($request->type == 'investment'){
+            $price =$request->price_investment; 
+        }elseif($request->type == 'shared'){
+            $price =$request->price_shared; 
+        }else{
+            $price =$request->price; 
+        }
         $product = Product::create([
-            'added_by' => auth()->id(),
+            'added_by' => $request->added_by,
             'title' => $request->title,
-            'price' => ($request->type == 'auction')?$request->price_auction:$request->price_investment,
+            'in_home' => ($request->in_home)?? null,
+            'price' => $price,
             'description' => $request->description,
             'owner_id' => $request->owner_id,
+            'investment_min' => $request->investment_min,
             'status' => 'pending',
             'type' => $request->type,
             'product_for' => $request->product_for,
+            'map_location' => $request->map_location,
+            'link_video' => $request->link_video,
             'area_id' => $request->district_id,
             'is_private' => $request->boolean('is_private'),
             'start_date' => $request->start_date,
-            'end_date' => $request->end_date
+            'end_date' => $request->end_date,
+            'form_type' => $request->input('form_type')?? 'add_property',
         ]);  
+        if( $request->input('name') != null && $request->input('mobile') != null){
+            $product['request_data'] = [
+                'name' => $request->input('name'),
+                'mobile' => $request->input('mobile'),
+            ];
+            $product->save();
+        }
+        if($request->input('added_by_user')){
+            $product->added_by = $request->input('added_by_user');
+            $product->save();
+        }
         $product->feature()->create([
             'plan_number' => $request->plan_number,
             'plot_number' => $request->plot_number,
@@ -98,24 +133,28 @@ class ProductController extends Controller
             'area_after_development' => $request->area_after_development,
             'valuation' => $request->valuation,
             'valuation_date' => $request->valuation_date,
-            'has_planning_diagram' => $request->boolean('has_planning_diagram'),
-            'has_electronic_deed' => $request->boolean('has_electronic_deed'),
-            'has_real_estate_market' => $request->boolean('has_real_estate_market'),
-            'has_survey_decision' => $request->boolean('has_survey_decision'),
-            'penalty_type' => $request->penalty_type,
+            // 'has_planning_diagram' => $request->boolean('has_planning_diagram'),
+            // 'has_electronic_deed' => $request->boolean('has_electronic_deed'),
+            // 'has_real_estate_market' => $request->boolean('has_real_estate_market'),
+            // 'has_survey_decision' => $request->boolean('has_survey_decision'),
+            'penalty_type' => ($request->penalty_type)?implode('_', $request->penalty_type):null,
             'valuation_type' => $request->valuation_type,
-            'has_penalties' => $request->boolean('has_penalties'),
-            'has_mortgage' => $request->boolean('has_mortgage'),
-            'accepts_mortgage' => $request->boolean('accepts_mortgage'),
-            'usufruct_lease' => $request->boolean('usufruct_lease'),
-            'is_rented' => $request->boolean('is_rented'),
+            // 'has_penalties' => $request->boolean('has_penalties'),
+            // 'has_mortgage' => $request->boolean('has_mortgage'),
+            // 'accepts_mortgage' => $request->boolean('accepts_mortgage'),
+            // 'usufruct_lease' => $request->boolean('usufruct_lease'),
+            // 'is_rented' => $request->boolean('is_rented'),
             'annual_rent' => $request->annual_rent,
             'remaining_lease_years' => $request->remaining_lease_years,
             'license_number' => $request->license_number,
             'additional_info' => $request->additional_info,
             'represented_by' => $request->represented_by,
+            'agency_number' => $request->agency_number,
+            'val_number' => $request->val_number,
+            'sak_number' => $request->sak_number,
             'product_type' => $request->product_type,
             'owner_type' => $request->owner_type,
+            'features' => $request->input('features', []),
         ]);
         if(request()->hasFile('products_image') && request()->file('products_image')->isValid())
         {
@@ -135,62 +174,95 @@ class ProductController extends Controller
             $product->update([
                 'phone_numbers' => explode(',', $request->phone_numbers)
             ]);
-            $qrCodes = [];
-            foreach (explode(',', $request->phone_numbers) as $key => $value) {
-                $token = Str::uuid();
-                $secureUrl = route('property.private.verify', ['token' => $token]);
+            // $qrCodes = [];
+            // foreach (explode(',', $request->phone_numbers) as $key => $value) {
+            //     $token = Str::uuid();
+            //     $secureUrl = route('property.private.verify', ['token' => $token]);
 
-                $qrFileName = 'qr_' . $product->id . '_' . $key . '.png';
-                $qrPath = "qr_codes/{$qrFileName}";
-                $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
-                Storage::disk('public')->put($qrPath, $qrImage);
-                $qrCodes[] = $qrPath;
-                DB::table('property_private_links')->insert([
-                    'product_id' => $product->id,
-                    'token' => $token,
-                    'verification_level' => 3,
-                    'phone_number' => trim($value),
-                ]);
-            }
-            $product->update([
-                'qr_code' => json_encode($qrCodes),
-            ]);
-        }else{
+            //     $qrFileName = 'qr_' . $product->id . '_' . $key . '.png';
+            //     $qrPath = "qr_codes/{$qrFileName}";
+            //     $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
+            //     Storage::disk('public')->put($qrPath, $qrImage);
+            //     $qrCodes[] = $qrPath;
+            //     DB::table('property_private_links')->insert([
+            //         'product_id' => $product->id,
+            //         'token' => $token,
+            //         'verification_level' => 3,
+            //         'phone_number' => trim($value),
+            //     ]);
+            // }
+            // $product->update([
+            //     'qr_code' => json_encode($qrCodes),
+            // ]);
+        }
             $secureUrl = route('property.verify.link', ['token' => $token, 'ref' => 2]);
             DB::table('property_access_links')->insert([
                 'product_id' => $product->id,
                 'token' => $token,
-                'current_level' => 2, 
+                'current_level' => 1, 
                 'created_at' => now(),
-                'source_user_id' => auth()->id(),
+                'source_user_id' => $product->added_by,
             ]);
             $qrImage = QrCode::format('png')->size(300)->generate($secureUrl);
             Storage::disk('public')->put("qr_codes/{$qrFileName}", $qrImage);
             $product->update([
                 'qr_code' => "qr_codes/{$qrFileName}"
             ]);
-        }
+        
         $admins = User::where('account_type','admins')->where('id','!=',$product->added_by)->get();
         foreach ($admins as $key => $value) {   
             if($value->hasPermissionTo('products-list')){
                 Notification::send($value,new \App\Notifications\NotifyNewProductToAdmin($product));
             }
         }
-        if(auth()->user()->account_type == 'admins'){
-            return redirect()->back()->with('success',trans('messages.AddSuccessfully'));
-        }else{
+        if(($product->form_type == 'add_request') || ($product->form_type == 'site_property') && auth('admin')->check()){
+                return redirect()->back()->with('success',trans('messages.AddSuccessfully'));
+            }
+        if($product->request_data != null || $request->input('added_by_user') != null){
+            $arr  = ['user'=> $product->added_by,'code'=>$product->listing_number];
+            return redirect()->route('linkPropertyAdmin',['user'=> $arr['user'],'code'=>$arr['code']])->with('success',trans('messages.AddSuccessfully'));
+        }
+        // dd(auth('web')->check());
+        if(auth('web')->check() && $product->admin?->account_type == 'users'){
             $arr  = ['user'=> $product->added_by,'code'=>$product->listing_number];
             return $arr;
+        }else{
+            return redirect()->back()->with('success',trans('messages.AddSuccessfully'));
         }
     }
 
+	public function linkPropertyAdmin($user , $code) {
+		$urlPrevious = url()->current();
+		$product = Product::where('listing_number',$code)->first();
+      	session()->put('url.intended', $urlPrevious);
+		return view('admin.products.link-property',compact('product'));
+	}
     public function show(Product $product)
     {
         $product->load(['feature','offers']);
-        return view('admin.products.show', compact('product'));
+        $root = PropertyAccessLink::where('product_id', $product->id)
+            ->orderBy('current_level')
+            ->first();
+        if (!$root) {
+            return "لا توجد توثيقات لهذا العقار.";
+        }
+        $allLinks = PropertyAccessLink::where('product_id', $product->id)->get()->toArray();
+        $structuredTree = $this->buildTree($allLinks, null);
+        return view('admin.products.show', compact('product','structuredTree'));
     }
 
-
+  private function buildTree(array $elements, $parentId = null)
+    {
+        $branch = [];
+        foreach ($elements as $element) {
+            if ($element['parent_id'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id']);
+                $element['children'] = $children;
+                $branch[] = $element;
+            }
+        }
+        return $branch;
+    }
     public function edit(Product $product)
     {
         $document = DB::table('media')->where('model_type','App\Models\Product')->where('collection_name','document')->where('model_id', $product->id)->get();
@@ -204,12 +276,20 @@ class ProductController extends Controller
             $product->clearMediaCollection('products_image'); 
             $this->convertImageToWebp(request('products_image'),$product,'products_image','products');
         } 
+        if($request->type == 'auction'){
+            $price =$request->price_auction; 
+        }elseif($request->type == 'investment'){
+            $price =$request->price_investment; 
+        }else{
+            $price =$request->price_shared; 
+        }
         $product->update([
             'added_by' => auth()->id(),
             'title' => $request->title,
-            'price' => ($request->type == 'auction')?$request->price_auction:$request->price_investment,
+            'price' => $price,
             'description' => $request->description,
-            'owner_id' => $request->owner_id,
+            'owner_id' => $request->investment_min,
+            'investment_min' => $request->investment_min,
             'status' => $request->status,
             'type' => $request->type,
             'product_for' => $request->product_for,
@@ -225,24 +305,28 @@ class ProductController extends Controller
             'area_after_development' => $request->area_after_development,
             'valuation' => $request->valuation,
             'valuation_date' => $request->valuation_date,
-            'has_planning_diagram' => $request->boolean('has_planning_diagram'),
-            'has_electronic_deed' => $request->boolean('has_electronic_deed'),
-            'has_real_estate_market' => $request->boolean('has_real_estate_market'),
-            'has_survey_decision' => $request->boolean('has_survey_decision'),
+            // 'has_planning_diagram' => $request->boolean('has_planning_diagram'),
+            // 'has_electronic_deed' => $request->boolean('has_electronic_deed'),
+            // 'has_real_estate_market' => $request->boolean('has_real_estate_market'),
+            // 'has_survey_decision' => $request->boolean('has_survey_decision'),
             'penalty_type' => $request->penalty_type,
             'valuation_type' => $request->valuation_type,
-            'has_penalties' => $request->boolean('has_penalties'),
-            'has_mortgage' => $request->boolean('has_mortgage'),
-            'accepts_mortgage' => $request->boolean('accepts_mortgage'),
-            'usufruct_lease' => $request->boolean('usufruct_lease'),
-            'is_rented' => $request->boolean('is_rented'),
+            // 'has_penalties' => $request->boolean('has_penalties'),
+            // 'has_mortgage' => $request->boolean('has_mortgage'),
+            // 'accepts_mortgage' => $request->boolean('accepts_mortgage'),
+            // 'usufruct_lease' => $request->boolean('usufruct_lease'),
+            // 'is_rented' => $request->boolean('is_rented'),
             'annual_rent' => $request->annual_rent,
             'remaining_lease_years' => $request->remaining_lease_years,
             'license_number' => $request->license_number,
             'additional_info' => $request->additional_info,
             'represented_by' => $request->represented_by,
+            'agency_number' => $request->agency_number,
+            'val_number' => $request->val_number,
+            'sak_number' => $request->sak_number,
             'product_type' => $request->product_type,
             'owner_type' => $request->owner_type,
+            'features' => $request->input('features', []),
         ]);
         
         $product->save();
@@ -277,7 +361,7 @@ class ProductController extends Controller
             return response()->json(['error' => 'لم يتم تحديد عناصر للحذف.'], 400);
         }
     
-        product::whereIn('id', $ids)->delete();
+        Product::whereIn('id', $ids)->delete();
     
         return response()->json(['success' => trans('messages.RecordsDeleteSuccessfully')]);
     }
@@ -349,22 +433,76 @@ public function storeMedia(Request $request)
         return response()->json(['success' => true, 'message' => trans('messages.UpdateSuccessfully')]);
     }
 
-     public function productWishlists()
+     public function productLetters(Product $product)
     {
-        $product_wishlists = Wishlist::paginate(30);
-        return view('admin.products.wishlists', compact('product_wishlists') );
+        $letters = ProductLetter::where('product_id',$product->id)->whereNull('letter_id')->paginate(30);
+        return view('admin.products.letters', compact('letters') );
     }
+     public function productSingleLetter(Product $product,ProductLetter $letter)
+    {
+        $replies = ProductLetter::where('letter_id', $letter->id)->latest()->get();
+        return view('admin.products.letter', compact('letter','product','replies') );
+    }
+    public function letterAccept(Product $product , ProductLetter $letter)
+    {
+        $letter->update(['status' => 'accept']);
+        if ($letter->product->added_by != $letter->sender_id) {
+            $owner = $letter->product->admin;
+            if ($owner) {
+                $owner->notify(new NewPropertyLetterNotification($letter));
+            }
+        }
+        $agent = $letter->product->property_delegations()
+            ->where('status', 'accept')
+            ->latest()
+            ->first();
+        if ($agent && $agent->agent_id != $letter->sender_id) {
+            $agentUser = \App\Models\User::find($agent->agent_id);
+            if ($agentUser) {
+                $agentUser->notify(new NewPropertyLetterNotification($letter));
+            }
+        }
 
-    public function productWishlistDelete(Wishlist $product)
-    {
-        $product->delete();      
-        return redirect()->route('products.index',['page'=> $this->currentPage])->with('success',trans('messages.DeleteSuccessfully'));
+        return redirect()->back()->with('success', 'تم قبول الخطاب وإرسال الإشعارات');
     }
-    public function productWishlistsdeleteAll(Request $request)
+    public function editAndAccept(Request $request, ProductLetter $letter)
     {
-        $ids = $request->ids;
-        $products = Wishlist::whereIn('id',explode(",",$ids))->delete();
-        return response()->json(['success'=> trans('messages.RecordsDeleteSuccessfully')]);
+        $request->validate([
+            'message' => 'required|string',
+        ]);
+        $letter->update([
+            'message' => $request->message,
+            'status'  => 'accept',
+        ]);
+        
+        if ($request->hasFile('attachments')) {
+        $letter->clearMediaCollection('attachments');
+            foreach ($request->file('attachments') as $file) {
+                if ($file->isValid()) {
+                    $letter->addMedia($file)->toMediaCollection('attachments','product_letters');
+                }
+            }
+        }
+        
+        if ($request->hasFile('attachment')) {
+        $letter->clearMediaCollection('attachment');
+           $file = $request->file('attachment') ;
+        $letter->addMedia($file)->toMediaCollection('attachment','product_letters');
+        }
+        if ($letter->product->added_by != $letter->sender_id) {
+            $owner = $letter->product->admin;
+            if ($owner) {
+                $owner->notify(new NewPropertyLetterNotification($letter));
+            }
+        }
+        $agent = $letter->product->property_delegations()->where('status', 'accept')->latest()->first();
+        if ($agent && $agent->agent_id != $letter->sender_id) {
+            $agentUser = \App\Models\User::find($agent->agent_id);
+            if ($agentUser) {
+                $agentUser->notify(new NewPropertyLetterNotification($letter));
+            }
+        }
+        return redirect()->back()->with('success', 'تم تعديل الخطاب وقبوله وإرسال الإشعارات.');
     }
 
     public function restore($id)

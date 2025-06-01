@@ -22,6 +22,7 @@ class Authenticate extends Middleware
             if(auth('admin')->check()){
                 return route('dashboard');
             }else{
+                session(['redirect_url' => $request->fullUrl()]);
                 return route('login');
             }
         }else{

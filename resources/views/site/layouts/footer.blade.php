@@ -53,44 +53,67 @@
             <div class="col-6 col-md-3 col-lg-auto mt-3">
               <h4>روابط سريعة</h4>
               <ul class="list-unstyled">
+                @php
+                  $pageExists1 = \App\Models\Page::where('status','show')->find(1);
+                @endphp
+                
+                @if($pageExists1)
                 <li>
                   <a
-                    href="policy.html"
+                    href="{{route('pages',['id'=>1])}}"
                     aria-label="الانتقال إلى صفحة سياسة الخصوصية"
                     >سياسة الخصوصية</a
                   >
                 </li>
+                @endif
+                @php
+                  $pageExists = \App\Models\Page::where('status','show')->find(3);
+                @endphp
+                
+                @if($pageExists)
+                  <li>
+                    <a href="{{ route('pages', ['id' => 3]) }}" aria-label="الانتقال إلى صفحة الشروط والأحكام">
+                      الشروط والأحكام
+                    </a>
+                  </li>
+                @endif
+                @php
+                  $pageExists2 = \App\Models\Page::where('status','show')->find(2);
+                @endphp
+                
+                @if($pageExists2)
                 <li>
                   <a
-                    href="terms.html"
-                    aria-label="الانتقال إلى صفحة الشروط والأحكام"
-                    > الشروط والأحكام</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="system.html"
+                    href="{{route('pages',['id'=>2])}}"
                     aria-label="الانتقال إلى صفحة شرح اليات نظام"
                     >شرح اليات نظام</a
                   >
                 </li>
+                @endif
+                @php
+                  $pageExists4 = \App\Models\Page::where('status','show')->find(4);
+                @endphp
+                
+                @if($pageExists4)
                 <li>
                   <a
-                    href="paid-servics.html"
+                    href="{{route('pages',['id'=>4])}}"
                     aria-label="الانتقال إلى صفحة المصداقية والخدمات المدفوعة"
                     >المصداقية والخدمات المدفوعة</a
                   >
                 </li>
+                @endif
               </ul>
             </div>
 
             <!-- الاشتراك وتحديثات العقارات -->
             <div class="col-12 col-md-5 col-lg-3 mt-3">
               <h4>اشترك لتلقي تحديثات العقارات</h4>
-              <form action="">
+              <form action="{{route('subscriber.store')}}" method="post">
+                  @csrf
                 <div class="input-group border my-3">
                   <input
-                    type="email"
+                    type="email" name="subscribe_email"
                     class="form-control border-0"
                     placeholder="البريد الإلكتروني"
                     aria-label="إدخال البريد الإلكتروني"
@@ -110,46 +133,21 @@
               <!-- وسائل التواصل الاجتماعي -->
                <h4>تابعنا</h4>
               <div
-                class="social d-flex justify-content-lg-start justify-content-center gap-3"
+                class="social d-flex justify-content-lg-start justify-content-center flex-wrap gap-3"
               >
-                <a href="#" target="_blank" aria-label="رابط إلى تويتر">
-                  <i class="fa-brands fa-x-twitter"></i>
-                </a>
-                <a href="#" target="_blank" aria-label="رابط إلى فيسبوك">
-                  <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="#" target="_blank" aria-label="رابط إلى لينكد إن">
-                  <i class="fa-brands fa-linkedin-in"></i>
-                </a>
-                <a href="#" target="_blank" aria-label="رابط إلى سناب شات">
-                  <i class="fa-brands fa-snapchat"></i>
-                </a>
+                  @include('site.includes.social-f-section')
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- الفوتر الفرعي -->
-      <div class="sub-footer py-2">
-        <p class="text-center mb-0">
-          <a
-            href="https://smartvision4p.com"
-            target="_blank"
-            class="d-flex align-items-center gap-2 justify-content-center text-white text-decoration-none"
-            aria-label="رابط إلى موقع شركة سمارت فيجن"
-          >
-            <span>تصميم وبرمجة شركة سمارت فيجن للبرمجيات</span>
-            <img loading="lazy" src="{{url('site')}}/images/smart-logo.svg" alt="شعار سمارت فيجن" />
-          </a>
-        </p>
-      </div>
     </footer>
 @endif
-
     <!-- jQuery script -->
     <script src="{{url('site')}}/js/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.0/js/toastr.js"></script>
     @stack('custom-js')
 
@@ -164,6 +162,9 @@
 
     <!-- fancybox script -->
     <script src="{{url('site')}}/js/jquery.fancybox.min.js"></script>
+    
+    <!-- tagsinput script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
     <!-- custom js file link  -->
     <script src="{{url('site')}}/js/script.js"></script>
@@ -199,23 +200,42 @@
             toastr.success('{{ Session::get('success') }}');
         @endif
             });
-        document.addEventListener('DOMContentLoaded', function () {
-            let userTypeSelect = document.querySelector('[name="user_type"]');
-            let agencyWrapper = document.getElementById('agency_number_wrapper');
-
-            function toggleAgencyField() {
-                if (userTypeSelect.value === 'agent') {
-                    agencyWrapper.style.display = 'block';
-                } else {
-                    agencyWrapper.style.display = 'none';
-                }
+      document.addEventListener('DOMContentLoaded', function () {
+        const userTypeSelect = document.querySelector('[name="represented_by"]');
+        const agencyWrapper = document.getElementById('agency_number_wrapper');
+        const sakWrapper = document.getElementById('sak_number_wrapper');
+        const valWrapper = document.getElementById('val_number_wrapper');
+        const allWrappers = [agencyWrapper, sakWrapper, valWrapper];
+        function hideAllWrappers() {
+            allWrappers.forEach(wrapper => {
+                if (wrapper) wrapper.style.display = 'none';
+            });
+        }
+        function toggleAgencyField() {
+            hideAllWrappers();
+            switch (userTypeSelect.value) {
+                case 'agent':
+                    agencyWrapper && (agencyWrapper.style.display = 'block');
+                    break;
+                case 'owner':
+                    sakWrapper && (sakWrapper.style.display = 'block');
+                    break;
+                case 'co-owner':
+                case 'other':
+                    valWrapper && (valWrapper.style.display = 'block');
+                    break;
             }
-            toggleAgencyField();
-            userTypeSelect.addEventListener('change', toggleAgencyField);
-            document.querySelector('.nice-select').addEventListener('click', function () {
+        }
+        toggleAgencyField();
+        userTypeSelect.addEventListener('change', toggleAgencyField);
+        const niceSelect = document.querySelector('.nice-select');
+        if (niceSelect) {
+            niceSelect.addEventListener('click', function () {
                 setTimeout(toggleAgencyField, 100);
             });
-        });
+        }
+    });
+
 
 </script>
 
@@ -296,53 +316,6 @@ $(document).ready(function() {
     });
 });
 
-        $(document).on('submit', '#updatePassword', function (e) {
-          e.preventDefault();
-          var $this = $(this).parent();
-          $.ajax({
-            method: "POST",
-            url: $(this).prop('action'),
-            data: new FormData(this),
-            dataType: 'JSON',
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function (data) {
-              if ((data.errors)) {
-                // console.log(data.errors)
-                // $('#current_password_error').text(data.errors[0])
-                $('#password_error').text(data.errors[0])
-                $('#password_confirmation_error').text(data.errors[1])
-              }
-              else if (data == 1) {
-                $(".print-pass-error-msg").fadeOut();
-                $this.find('button.submit-btn').prop('disabled', false);
-                Toast.fire({
-                  icon: 'success',
-                  title: '@lang('site.updated-done')',
-                })
-                // location.reload();
-    
-              }
-              else if (data == 2) {
-                $this.find('button.submit-btn').prop('disabled', false);
-                Toast.fire({
-                  icon: 'error',
-                  title: '@lang('site.error')',
-                })
-    
-              }
-              else if (data == 3) {
-                $this.find('button.submit-btn').prop('disabled', false);
-                Toast.fire({
-                  icon: 'error',
-                  title: '@lang('site.error_in_current_pass')',
-                })
-              }
-    
-            }
-          });
-        });
 
     
     $(document).ajaxStart(function () {

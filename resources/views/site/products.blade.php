@@ -6,49 +6,22 @@
 <!-- section -->
 <section class="estates my-5 pb-5">
   <div class="container-fluid">
-    <div class="row gx-lg-5">
-      <div class="col-5 col-lg-4 filter px-3">
-        <div class="filter-header d-flex justify-content-between d-md-none">
-          <p class="m-0 fw-bold fs-5">التصفيه</p>
-          <button
-          data-close=".filter"
-          class="close-filter">
-          <i class="bi bi-x-lg"></i>
-        </button>
-      </div>
+    <div class="row gy-3 gx-lg-5">
+      <div class="col-12 col-lg-4 filter px-3">
+      <!--  <div class="filter-header d-flex justify-content-between d-md-none">-->
+      <!--    <p class="m-0 fw-bold fs-5">التصفيه</p>-->
+      <!--    <button-->
+      <!--    data-close=".filter"-->
+      <!--    class="close-filter">-->
+      <!--    <i class="bi bi-x-lg"></i>-->
+      <!--  </button>-->
+      <!--</div>-->
 
-      <div class="filter-header d-md-none">
-            <h5>@lang('site.filters')</h5>
-            <button class="btn-close"></button>
-          </div>
-          <div class="selected-filters">
-            <div class="selected-filters-title">
-                @if(!empty($_GET) && count($_GET) > 0 && ! request('page') && ! request('listing_number')) 
-                  <p> @lang('site.result of filter')</p>
-                  <a href="{{ request()->url() }}" id="clear-all-filters" class="main-btn">@lang('site.reset filter') </a>
-                @endif
-            </div>
-            <ul id="selected-filters-list">
-              @if(request('product_for'))
-                <li data-filter="product_for3">{{__('main.products.'.request('product_for'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['product_for' => null])}}"><i class="fas fa-times"></i></a></li>    
-              @endif
-
-              @if(request('type'))
-                <li data-filter="type3">{{__('main.products.'.request('type'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['type' => null])}}"><i class="fas fa-times"></i></a></li>    
-              @endif
-
-              @if(request('area_id'))
-                <li data-filter="area_id3">{{getArea(request('area_id'))->name}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['area_id' => null])}}"><i class="fas fa-times"></i></a></li>    
-              @endif
-
-              @if(request('from_price'))
-                <li data-filter="from_price3">{{__('site.start') . request('from_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['from_price' => null])}}"><i class="fas fa-times"></i></a></li>    
-              @endif
-              @if(request('to_price'))
-                <li data-filter="to_price3">{{__('site.to') . request('to_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['to_price' => null])}}"><i class="fas fa-times"></i></a></li>    
-              @endif
-            </ul>
-          </div>
+        <!--<div class="filter-header d-md-none">-->
+        <!--    <h5>@lang('site.filters')</h5>-->
+        <!--    <button class="btn-close"></button>-->
+        <!--  </div>-->
+          
       <form action="{{route('product.filter')}}" method="post">
         @csrf
         <div class="input-group my-3">
@@ -81,7 +54,7 @@
         <div class="accordion-body px-1">
           <ul>
             <li>
-              @php $count=\App\Models\Product::where('status','shared_onsite')->where('product_for', 'sale')->count(); @endphp
+              @php $count=\App\Models\Product::where('form_type','site_property')->where('product_for', 'sale')->count(); @endphp
               @if(!empty( $_GET['product_for']))
               @php
               $filter_product_fors=explode(',',$_GET['product_for']);
@@ -101,7 +74,7 @@
             </li>
 
             <li>
-              @php $count=\App\Models\Product::where('status','shared_onsite')->where('product_for', 'rent')->count(); @endphp
+              @php $count=\App\Models\Product::where('form_type','site_property')->where('product_for', 'rent')->count(); @endphp
               @if(!empty( $_GET['product_for']))
               @php
               $filter_product_fors=explode(',',$_GET['product_for']);
@@ -124,7 +97,7 @@
       </div>
     </div>
     <!-- فئة العقار -->
-    <div class="accordion-item">
+    {{--<div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingFour">
         <button
         class="accordion-button px-1 collapsed"
@@ -146,7 +119,7 @@
     <div class="accordion-body px-1">
       <ul>
         <li>
-          @php $count=\App\Models\Product::where('status','shared_onsite')->where('type', 'auction')->count(); @endphp
+          @php $count=\App\Models\Product::where('form_type','site_property')->where('type', 'auction')->count(); @endphp
           @if(!empty( $_GET['type']))
           @php
           $filter_types=explode(',',$_GET['type']);
@@ -166,7 +139,7 @@
         </li>
 
         <li>
-          @php $count=\App\Models\Product::where('status','shared_onsite')->where('type', 'shared')->count(); @endphp
+          @php $count=\App\Models\Product::where('form_type','site_property')->where('type', 'shared')->count(); @endphp
           @if(!empty( $_GET['type']))
           @php
           $filter_types=explode(',',$_GET['type']);
@@ -185,7 +158,7 @@
           </div>
         </li>
         <li>
-          @php $count=\App\Models\Product::where('status','shared_onsite')->where('type', 'investment')->count(); @endphp
+          @php $count=\App\Models\Product::where('form_type','site_property')->where('type', 'investment')->count(); @endphp
           @if(!empty( $_GET['type']))
           @php
           $filter_types=explode(',',$_GET['type']);
@@ -206,7 +179,7 @@
       </ul>
     </div>
   </div>
-</div>
+</div>--}}
 <!-- اختر المدينة  -->
 <div class="accordion-item">
   <h2 class="accordion-header" id="flush-headingOne">
@@ -232,7 +205,7 @@ data-bs-parent="#accordionFlushExample"
     @foreach($areas as $area)
     <li>
       @php  
-      $count = \App\Models\Product::where('status', 'shared_onsite')
+      $count = \App\Models\Product::where('form_type', 'site_property')
       ->whereHas('area.parent.parent', function($q) use ($area) {
         $q->where('id', $area->id)
         ->where('type', 'governorate');
@@ -281,7 +254,119 @@ aria-labelledby="flush-headingTwo"
 data-bs-parent="#accordionFlushExample"
 >
 <div class="accordion-body">
-  <div class="middle">
+    <input type="hidden" id="from_price" name="from_price" value="">
+    <input type="hidden" id="to_price" name="to_price" value="">
+    <div class="price-range-slider">
+      <p class="range-value">
+        <input type="text" id="amount" readonly>
+      </p>
+      <div id="slider-range" class="range-bar"></div>
+    </div>
+    <style>
+        .price-range-slider {
+            width: 100%;
+            float: left;
+            padding-bottom: 1.5rem;
+        }
+
+        .price-range-slider .range-value {
+            margin: 0;
+        }
+
+        .price-range-slider .range-value input {
+            width: 100%;
+            background: none;
+            color: #000;
+            font-size: 16px;
+            font-weight: initial;
+            box-shadow: none;
+            border: none;
+            margin: 20px 0 20px 0;
+        }
+
+        .price-range-slider .range-bar {
+            border: none;
+            background: var(--bs-accordion-border-color);
+            height: 7px;
+            width: 100%;
+            margin-left: 8px;
+            border-radius: 5px;
+        }
+
+        .price-range-slider .range-bar .ui-slider-range {
+            background: var(--secondary);
+        }
+
+        .price-range-slider .range-bar .ui-slider-handle {
+            border: none;
+            border-radius: 25px;
+            background: #fff;
+            box-shadow: 0 0 8px 2px #33333340;
+            height: 17px;
+            width: 17px;
+            top: -0.42em;
+            cursor: pointer;
+        }
+
+        .price-range-slider .range-bar .ui-slider-handle + span {
+            background: var(--secondary);
+        }
+        .selected-filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .selected-filters ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .selected-filters li {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 5px;
+            background: rgba(var(--secondaryOp),.15);
+            padding: 4px 15px;
+            border-radius: 8px;
+            position: relative;
+            padding-inline-end: 8px; }
+
+        .remove-filter-btn {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            opacity: .5;
+        }
+
+        .remove-filter-btn:hover {
+            opacity: 1;
+        }
+
+        #clear-all-filters {
+            min-width: max-content;
+            width: auto;
+            height: fit-content;
+            padding-inline: 14px; padding-block: 4px; margin-bottom: 0;
+        }
+        /*--- /.price-range-slider ---*/
+    </style>
+  {{--<div class="middle">
     <div class="multi-range-slider">
       <input type="hidden" id="from_price" name="from_price" value="">
       <input type="hidden" id="to_price" name="to_price" value="">
@@ -306,7 +391,7 @@ data-bs-parent="#accordionFlushExample"
       <span> - </span>
       <span class="price-from">0 @lang('site.sar')</span>
     </div>
-  </div>
+  </div>--}}
 </div>  
 </div>
 </div>
@@ -317,11 +402,46 @@ data-bs-parent="#accordionFlushExample"
 </div>
 <div class="col filter-data">
   <div class="our-estates">
-      <div class="row gy-3 row-cols-lg-2 row-cols-1">
+      <div class="selected-filters">
+            <div class="selected-filters-title">
+                @if(!empty($_GET) && count($_GET) > 0 && ! request('page') && ! request('listing_number')) 
+                  <span> @lang('site.result of filter')</span>
+                @endif
+            </div>
+            <ul id="selected-filters-list">
+              @if(request('product_for'))
+                <li data-filter="product_for3">{{__('main.products.'.request('product_for'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['product_for' => null])}}"><i class="fas fa-times"></i></a></li>    
+              @endif
+
+              @if(request('type'))
+                <li data-filter="type3">{{__('main.products.'.request('type'))}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['type' => null])}}"><i class="fas fa-times"></i></a></li>    
+              @endif
+
+              @if(request('area_id'))
+                <li data-filter="area_id3">{{getArea(request('area_id'))->name}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['area_id' => null])}}"><i class="fas fa-times"></i></a></li>    
+              @endif
+
+              @if(request('from_price'))
+                <li data-filter="from_price3">{{__('site.start') . request('from_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['from_price' => null])}}"><i class="fas fa-times"></i></a></li>    
+              @endif
+              @if(request('to_price'))
+                <li data-filter="to_price3">{{__('site.to') . request('to_price')}}<a class="remove-filter-btn" href="{{request()->fullUrlWithQuery(['to_price' => null])}}"><i class="fas fa-times"></i></a></li>    
+              @endif
+            </ul>
+            @if(!empty($_GET) && count($_GET) > 0 && ! request('page') && ! request('listing_number')) 
+                  <a href="{{ request()->url() }}" id="clear-all-filters" class="main-btn">@lang('site.reset filter') </a>
+                @endif
+          </div>
+      <div class="row gy-3 row-cols-lg-2 row-cols-1 mb-3">
         @forelse($propertys as $property)
             @include('site.includes.property-section',['property' => $property])
         @empty
-          <h3>@lang('site.NoData')</h3>
+        <div class="col text-center m-auto">
+            <div class="py-5">
+              <p class="fw-bold fs-5">@lang('site.NoData')</p>
+              <img class="w-100" src="{{ asset('images/empty-box.png') }}" >
+            </div>
+        </div>
         @endforelse
       </div>
       {{$propertys->appends($_GET)->links('vendor.pagination.custom')}}
@@ -332,11 +452,38 @@ data-bs-parent="#accordionFlushExample"
 </section>
 
 <!-- filter  btn -->
-<button id="filter" data-toggle=".filter"><i class="bi bi-sliders fs-5"></i></button>
-
+<!--<button id="filter" data-toggle=".filter"><i class="bi bi-sliders fs-5"></i></button>-->
+@php $propertys_max = \App\Models\Product::where('form_type','site_property')->whereNotNull('price')->max('price');
+if($propertys_max == null)
+{
+$propertys_max= 0;
+}
+@endphp
 @endsection
 @push('custom-js')
 <script>
+
+    $(function() {
+        // let currekncy = "@lang('site.sar')";
+        var priceFromInput = document.querySelector("[name='from_price']");
+        var priceToInput = document.querySelector("[name='to_price']");
+    	$( "#slider-range" ).slider({
+            range: true,
+            min: 0,
+            max: {{$propertys_max}},
+            values: [ 0, {{$propertys_max}} ],
+            slide: function( event, ui ) {
+                $("#amount").val("ر.س" + ui.values[0] + " - ر.س" + ui.values[1]);
+                priceFromInput.value = ui.values[0] ;
+                priceToInput.value = ui.values[1] ;
+            }
+        });
+        $("#amount").val("ر.س" + $("#slider-range").slider("values", 0) + " - ر.س" + $("#slider-range").slider("values", 1));
+        priceFromInput.value = ui.values[0] ;
+        priceToInput.value = ui.values[1] ;
+    });
+    
+    {{--
     // price from .. to ..
     var inputLeft = document.getElementById("input-left");
     var inputRight = document.getElementById("input-right");
@@ -419,5 +566,6 @@ data-bs-parent="#accordionFlushExample"
         thumbRight.classList.remove("active");
       });
     }
+    --}}
 </script>
 @endpush

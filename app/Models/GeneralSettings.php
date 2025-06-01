@@ -26,7 +26,13 @@ class GeneralSettings extends Settings
     public string|null  $bank_account_name;
     public string|null  $bank_name;
     public string|null  $iban_number;
+    public string|null  $aqar_screen_control;
 
+
+    public string|null  $card_text_a;
+    public string|null  $card_text_b;
+    public string|null  $card_text_c;
+    public string|null  $card_text_d;
     
     public static function group(): string
     {

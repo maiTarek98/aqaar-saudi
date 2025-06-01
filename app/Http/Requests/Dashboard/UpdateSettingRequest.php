@@ -54,6 +54,15 @@ class UpdateSettingRequest extends FormRequest
                 'vodafone_cash_number' => 'sometimes|nullable|numeric',
             ];
         }
+        elseif(request('q') == 'card_control'){
+             $rules = [
+                'card_text_a' => 'sometimes|nullable|string',
+                'card_text_b' => 'sometimes|nullable|string',
+                'card_text_c' => 'sometimes|nullable|string',
+                'card_text_d' => 'sometimes|nullable|string',
+                'aqar_screen_control' => 'sometimes|nullable|string',
+            ];
+        }
         if(request()->segment(3) == 'update-landing'){
             if(request('type') == 'banner'){
                 $rules = [
@@ -64,24 +73,48 @@ class UpdateSettingRequest extends FormRequest
 
                         'banner_image' => 'sometimes|nullable|image',
                     ];
+            }elseif(request('type') == 'beneficiaries'){
+                $rules = [
+                        'beneficiaries_title_ar' => 'required|string|min:3|max:1000',
+                        'beneficiaries_title_en' => 'required|string|min:3|max:1000',
+                        'beneficiaries_text_ar' => 'required|string|min:3|max:8000',
+                        'beneficiaries_text_en' => 'required|string|min:3|max:8000',
+                    ];
             }elseif(request('type') == 'feature'){
                 $rules = [
-                        'feature_title_ar' => 'required|string|min:3|max:1000',
-                        'feature_title_en' => 'required|string|min:3|max:1000',
-                        'feature_text_ar' => 'required|string|min:3|max:8000',
-                        'feature_text_en' => 'required|string|min:3|max:8000',
+                        'feature_title_one_ar' => 'required|string|min:3|max:1000',
+                        'feature_title_one_en' => 'required|string|min:3|max:1000',
+                        'feature_text_one_ar' => 'required|string|min:3|max:8000',
+                        'feature_text_one_en' => 'required|string|min:3|max:8000',
+                        'feature_image_one' => 'sometimes|nullable|image',
+                        
+                        'feature_title_two_ar' => 'required|string|min:3|max:1000',
+                        'feature_title_two_en' => 'required|string|min:3|max:1000',
+                        'feature_text_two_ar' => 'required|string|min:3|max:8000',
+                        'feature_text_two_en' => 'required|string|min:3|max:8000',
+                        'feature_image_two' => 'sometimes|nullable|image',
 
-                        'feature_image' => 'sometimes|nullable|image',
+                        'feature_title_three_ar' => 'required|string|min:3|max:1000',
+                        'feature_title_three_en' => 'required|string|min:3|max:1000',
+                        'feature_text_three_ar' => 'required|string|min:3|max:8000',
+                        'feature_text_three_en' => 'required|string|min:3|max:8000',
+                        'feature_image_three' => 'sometimes|nullable|image',
+
                     ];
             }
             elseif(request('type') == 'about'){
                 $rules = [
-                        'about_title_ar' => 'required|string|min:3|max:1000',
-                        'about_title_en' => 'required|string|min:3|max:1000',
-                        'about_text_ar' => 'required|string|min:3|max:8000',
-                        'about_text_en' => 'required|string|min:3|max:8000',
-
-                        'about_image' => 'sometimes|nullable|image',
+                        'about_title_one_ar' => 'required|string|min:3|max:1000',
+                        'about_title_one_en' => 'required|string|min:3|max:1000',
+                        'about_text_one_ar' => 'required|string|min:3|max:8000',
+                        'about_text_one_en' => 'required|string|min:3|max:8000',
+                        'about_image_one' => 'sometimes|nullable|image',
+                        
+                        'about_title_two_ar' => 'required|string|min:3|max:1000',
+                        'about_title_two_en' => 'required|string|min:3|max:1000',
+                        'about_text_two_ar' => 'required|string|min:3|max:8000',
+                        'about_text_two_en' => 'required|string|min:3|max:8000',
+                        'about_image_two' => 'sometimes|nullable|image',
                     ];
             }
         }else if(request()->segment(3) == 'update-seo'){

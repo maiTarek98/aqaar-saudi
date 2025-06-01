@@ -25,8 +25,8 @@
                 <div class="d-flex align-items-center gap-3 mb-5 border-bottom pb-4">
                   <!-- profile-picture -->
                   <div class="profile-pic position-relative bg-light">
-                    @if($user->photo_profile)
-                        <img loading="lazy" class="w-100" src="{{$user->photo_profile}}" alt="{{$user->name}}" id="photo">
+                    @if ($user->getFirstMediaUrl('photo_profile','thumb'))
+                        <img loading="lazy" class="w-100" src="{{ $user->getFirstMediaUrl('photo_profile','thumb') }}" alt="{{$user->name}}" id="photo">
                     @else
                         <img loading="lazy" class="w-100" src="{{url('site/images/avatar.png')}}" alt="{{$user->name}}" id="photo">
                     @endif
@@ -38,21 +38,21 @@
                   <div>
                     <p class="fw-bold fs-5 mb-3">{{$user->name}}</p>
                     <p class="text-muted">{{$user->email}}</p>
-                    <p class="text-muted">{{$user->user_type}}</p>
+                    <p class="text-muted">حساب مستخدم</p>
                   </div>
                 </div>
                 
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group mb-4">
-                      <label for="InputUserName" class="mb-2">الاسم </label>
+                      <label for="InputUserName" class="mb-2">الاسم <span class="text-danger">*</span> </label>
                       <input class="form-control" id="name" name="name" value="{{old('name', $user->name)}}"  type="text">
                       <small class="text-danger" id="name_error"></small>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-4">
-                      <label for="mobile">@lang('site.mobile')</label>
+                      <label for="mobile">@lang('site.mobile')<span class="text-danger">*</span> </label>
                       <div class="input-group border mb-3">
                         <span class="input-group-text" id="phone_num">+966</span>
                         <input class="form-control" name="mobile" value="{{old('mobile', $user->mobile)}}" type="tel">
@@ -68,15 +68,15 @@
                   </div>--}}
                   <div class="col-md-6">
                     <div class="form-group mb-4">
-                      <label for=""  class="mb-2">رقم الهوية</label>
-                      <input type="text" class="form-control" name="id_number" value="{{old('id_number', $user->id_number)}}" placeholder="الاسم" >
-                      <small class="text-danger" id="id_number_name_error"></small>
+                      <label for="val_license"  class="mb-2">@lang('main.users.val_license')</label>
+                      <input type="text" id="val_license" class="form-control" name="val_license" value="{{old('val_license', $user->val_license)}}" placeholder="@lang('main.users.val_license')" >
+                      <small class="text-danger" id="val_license_name_error"></small>
                     </div>
                   </div>
                   @if($user->agency_number)
                   <div class="col-md-6">
                     <div class="form-group mb-4">
-                      <label for=""  class="mb-2">رقم الهوية</label>
+                      <label for=""  class="mb-2">رقم الوكالة</label>
                       <input type="text" class="form-control" name="agency_number" value="{{old('agency_number', $user->agency_number)}}" placeholder="الاسم" >
                       <small class="text-danger" id="agency_number_name_error"></small>
                     </div>

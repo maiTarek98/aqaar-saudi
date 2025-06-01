@@ -6,10 +6,10 @@
       <div class="container-fluid">
         <!-- profile nav-sm -->
         <div class="profile-nav-sm rounded-3">
-          <p class="m-0">الملف الشخصي</p>
+          <p class="m-0">@lang('site.profile')</p>
           <button class="btn toggle-profile-nav p-0 border-0 bg-transparent" data-toggle=".profile-nav">
             <img
-            src="images/menu.png"
+            src="{{url('site')}}/images/menu.png"
             alt="menu icon"
           />
           </button>
@@ -42,7 +42,7 @@
 
               <div class="our-estates">
                 <div class="row gy-3 row-cols-1">
-                  @foreach($properties as $property)
+                  @forelse($properties as $property)
                   <div class="col">
                     <div class="card d-lg-flex flex-lg-row align-items-center">
                       <!-- estate img -->
@@ -112,7 +112,14 @@
                       </div>
                     </div>
                   </div>
-                  @endforeach
+                  @empty
+                    <div class="col text-center m-auto">
+                        <div class="py-5">
+                          <p class="fw-bold fs-5">@lang('site.NoData')</p>
+                          <img class="w-100" src="{{ asset('images/empty-box.png') }}" >
+                        </div>
+                    </div>
+                  @endforelse
                 </div>
               </div>
             </div>

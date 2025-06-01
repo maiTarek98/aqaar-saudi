@@ -7,6 +7,9 @@
     <div>
         
         <form action="{{ $route }}" method="get" class="filter-form">
+                               <input type="hidden" name="account_type" value="{{request()->account_type}}">
+                               <input type="hidden" name="form_type" value="{{request()->form_type}}">
+
             <div class="row g-3 row-cols-1 align-items-end">
                 @if(request()->segment(2) == 'reports' || request()->segment(2) == 'orders')
                 <input type="hidden" name="type" value="{{isset($type)}}">
@@ -21,7 +24,7 @@
                     </select>        
                 </div>
         
-                <div class="col">
+                {{--<div class="col">
                     <label for="vendor_id">@lang('main.vendor_name')</label>
                     <select class="form-select" name="vendor_id" id="vendor_id">
                         <option value="" hidden>@lang('main.vendor_name')</option>
@@ -29,20 +32,20 @@
                         <option value="{{$vendor->id}}" @if($vendor->id == request()->vendor_id) selected @endif>{{$vendor->name}}</option>
                         @endforeach
                     </select>        
-                </div>
+                </div>--}}
                 @endif
               
                 @if(request()->segment(2) != 'products' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'pending_vendors' && request()->segment(2) != 'orders' && request()->segment(2) != 'users' && request()->segment(2) != 'roles')
-                <div class="col">
+                {{--<div class="col">
                     <label for="status">@lang('main.filterByStatus')</label>
                     <select class="form-select" name="status" id="status">
                         <option value="" hidden>@lang('main.filterBy')</option>
                         <option @if('show' == request()->status) selected @endif value="show">@lang('main.show')</option>
                         <option @if('hide' == request()->status) selected @endif value="hide">@lang('main.hide')</option>
                     </select>        
-                </div>
+                </div>--}} 
                 @endif
-                @if(request()->segment(2) != 'coupons' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'pages' && request()->segment(2) != 'stores' && request()->segment(2) != 'users' && request()->segment(2) != 'pending_vendors'&& request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'orders' && request()->segment(2) != 'roles')
+                @if(request()->segment(2) != 'coupons' && request()->segment(2) != 'subscribers' && request()->segment(2) != 'settings' && request()->segment(2) != 'locations' && request()->segment(2) != 'pages' && request()->segment(2) != 'stores' && request()->segment(2) != 'users' && request()->segment(2) != 'pending_vendors'&& request()->segment(2) != 'reports' && request()->segment(2) != 'contacts' && request()->segment(2) != 'orders' && request()->segment(2) != 'roles')
                 <div class="col">
                     <label for="in_home">@lang('main.filterByHome')</label>
                     <select class="form-select" name="in_home" id="in_home">
@@ -53,7 +56,7 @@
                 </div>
                 @endif
                 @if(request()->segment(2) == 'products')
-                <div class="col">
+                {{-- <div class="col">
                     <label for="status">@lang('main.filterByProductStatus')</label>
                     <select class="form-select" name="status" id="status">
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>@lang('main.products.pending')</option>
@@ -62,7 +65,7 @@
                         <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>@lang('main.products.rejected')</option>
                         <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>@lang('main.products.closed')</option>
                     </select>        
-                </div>
+                </div>--}}
                 <div class="col">
                     <label for="listing_number">@lang('main.searchByProductCode') </label>
                     <input type="text" name="listing_number" value="{{ request()->listing_number }}" class="form-control"
@@ -72,9 +75,9 @@
                     <label for="area_id">@lang('main.product_type')</label>
                     <select name="type" id="product_type" class="form-select">
                         <option value="">@lang('main.choose')</option>
-                        <option value="auction" @if('auction' == old('type', request('type')) selected @endif >@lang('main.products.auction')</option>
-                        <option value="shared" @if('shared' == old('type', request('type')) selected @endif >@lang('main.products.shared')</option>
-                        <option value="investment" @if('investment' == old('type', request('type')) selected @endif >@lang('main.products.investment')</option>
+                        <option value="auction" {{ request('type') == 'auction' ? 'selected' : '' }}>@lang('main.products.auction')</option>
+                        <option value="shared" {{ request('type') == 'shared' ? 'selected' : '' }}>@lang('main.products.shared')</option>
+                        <option value="investment" {{ request('type') == 'investment' ? 'selected' : '' }}>@lang('main.products.investment')</option>
                     </select>       
                 </div>
                 <div class="col">
@@ -105,7 +108,7 @@
                 </div>
                 @endif
                 @if(request()->segment(2) == 'users')
-                <div class="col">
+                {{--<div class="col">
                     <input type="hidden" name="account_type" value="{{request()->account_type}}">
                     <label for="role">@lang('main.role_name')</label>
                     <select class="form-select" name="role" id="role">
@@ -114,7 +117,7 @@
                         <option value="{{$role->name}}" @if($role->name == request()->role) selected @endif>{{$role->name}}</option>
                         @endforeach
                     </select>        
-                </div>
+                </div>--}}
                 @if(request()->segment(2) != 'reports')
                 <div class="col">
                     <label for="from_date">@lang('main.fromDate')</label>

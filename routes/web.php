@@ -40,27 +40,20 @@ use App\Http\Controllers\Site\UserController;
 use App\Http\Controllers\Site\PropertyInvestmentController;
 use App\Http\Controllers\Site\PropertyBidController;
 use App\Http\Controllers\Site\PropertyPrivateLinkController;
+use App\Http\Controllers\Site\PropertyLetterController;
 
 Route::group(['middleware' => ['csp','lang']], function () {
 
      // Route::get('/propertys',[HomeController::class,'propertyShow'])->name('property.show');
 
-        Route::view('/payment', 'site.stripe')->name('site.payment');
-
-        Route::post('create-payment-intent', [StripeController::class, 'createSubscription']);
-        
- 
     Route::get('/',[HomeController::class,'home'])->name('home');
+    Route::get('/pages/{id}', [HomeController::class, 'helperPages'])->name('pages');
+
     // Route::get('/',function(){
     //     return redirect('admin/dashboard');})->name('home');
     Route::get('/term-conditions',[HomeController::class,'terms'])->name('terms');
     Route::get('/about-us',[HomeController::class,'aboutUs'])->name('aboutus');
  
-    Route::get('/sell-car-form',[CarController::class,'sellCar'])->name('sellCar');
-    Route::post('/sellTempForm',[CarController::class,'sellTempForm'])->name('sellTempForm');
-    Route::post('/sellMobileVerify',[CarController::class,'sellMobileVerify'])->name('sellMobileVerify');
-    Route::post('/sellCar/send-otp', [CarController::class, 'sendOtp'])->name('sellCar.otp');
-
     Route::get('/app-features',[HomeController::class,'appFeatures'])->name('appFeatures');
     Route::get('/contact-us',[HomeController::class,'contactus'])->name('contactus');
     Route::post('/store-contact',[HomeController::class,'storeContact'])->name('storeContact');
@@ -79,6 +72,7 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::get('/jobs/{q}',[HomeController::class,'jobSingle'])->name('jobs.single');
         Route::post('/jobs-store',[HomeController::class,'storeJob'])->name('storeJob');
 
+        Route::get('/add-property-request',[PropertyController::class,'addPropertyRequest'])->name('addRequest');
 
         Route::get('/properties',[ProductController::class,'products'])->name('propertys');
         Route::get('/propertys/{q}',[ProductController::class,'productSingle'])->name('propertys.single');
@@ -146,6 +140,8 @@ Route::group(['middleware' => ['csp','lang']], function () {
         Route::post('/continueRegisterationForm',[UserController::class,'continueRegisterationForm'])->name('continueRegisterationForm');
 
     });
+        Route::post('/store-property',[PropertyController::class,'storeProperty'])->name('storeProperty');
+        Route::get('/user-properties/{user}', [PropertyController::class,'showUserProperties'])->name('user.properties');
 
 
     Route::group(['middleware' => 'auth:web'], function () {
@@ -157,33 +153,46 @@ Route::group(['middleware' => ['csp','lang']], function () {
 
 
         Route::get('/profile',[UserController::class,'profile'])->name('profile');
-        Route::get('/profile/{user}/add-property',[PropertyController::class,'addProperty'])->name('addProperty');
+        Route::get('/profile/{user}/add-property/{property?}',[PropertyController::class,'addProperty'])->name('addProperty');
 
-        Route::post('/profile/{user}/store-property',[PropertyController::class,'storeProperty'])->name('storeProperty');
         Route::get('/profile/{user}/property/{code}',[PropertyController::class,'linkProperty'])->name('linkProperty');
+        Route::post('/user-request-delegation/{propertyId}', [PropertyController::class,'requestDelegation'])->name('user.requestDelegation');
+        Route::post('/user-respond-delegation/{delegationId}', [PropertyController::class,'respondDelegation'])->name('user.respondDelegation');
+        Route::post('/update-property/{property}',[PropertyController::class,'updateProperty'])->name('updateProperty');
+        Route::delete('/delete-property/{property}',[PropertyController::class,'deleteProperty'])->name('deleteProperty');
 
         Route::get('/profile/{user}/card',[PropertyController::class,'userCard'])->name('userCard');
         Route::get('/profile/properties', [PropertyController::class, 'myProperties'])->name('myProperties');
+        Route::get('/profile/{user}/properties',[PropertyController::class,'allProperties'])->name('allProperties');
 
         Route::get('/verify-property/{token}', [PropertyVerificationController::class, 'verify'])->name('property.verify.link');
         Route::get('/propertys/{listing_number}', [PropertyVerificationController::class, 'show'])->name('property.show');
         Route::post('/properties/{property}/invest', [PropertyInvestmentController::class, 'store'])->name('property.invest');
         Route::post('/properties/{property}/bid', [PropertyBidController::class, 'store'])->name('property.bid');
         Route::post('/properties/{property}/close-auction', [PropertyBidController::class, 'closeAuction'])->name('property.closeAuction');
+        Route::post('/properties/{id}/resume-auction', [PropertyBidController::class, 'resumeAuction'])->name('property.resumeAuction');
+
         Route::get('/private-property/{token}', [PropertyPrivateLinkController::class, 'verify'])->name('property.private.verify');
+        Route::get('/profile/{user}/private-property/{property}/offers', [PropertyPrivateLinkController::class, 'offers'])->name('property.private.offers');
+        Route::post('/private-property/{property}/store', [PropertyPrivateLinkController::class, 'storeOffer'])->name('property.storeOffer');
+        Route::post('/private-property/offer/{offer}', [PropertyPrivateLinkController::class, 'approveOffer'])->name('offers.approve');
+
+        Route::post('/properties/{property}/letters/store', [PropertyLetterController::class, 'storeLetter'])->name('letters.store');
+        Route::get('/profile/{user}/properties/{property}/letters', [PropertyLetterController::class, 'getLetters'])->name('property.letters');
+        Route::get('/profile/{user}/properties/{property}/letters/{letter}', [PropertyLetterController::class, 'getSingleLetter'])->name('property.letters.single');
+        Route::get('/letter/{product_id}/{user1}/{user2}', [PropertyLetterController::class, 'showLetterMessages'])->name('letter.messages');
+        Route::post('/letters/{id}/accept', [PropertyLetterController::class, 'accept'])->name('letters.accept');
+        Route::post('/letters/{id}/reject', [PropertyLetterController::class, 'reject'])->name('letters.reject');
+        Route::get('/letters/{id}/reply', [PropertyLetterController::class, 'replyForm'])->name('letters.replyForm');
+        Route::post('/letters/{id}/reply', [PropertyLetterController::class, 'replySend'])->name('letters.replySend');
 
         Route::post('profile-update', [UserController::class,'update_profile'])->name('edit-profile');
         Route::post('photo-update', [UserController::class,'update_photo'])->name('edit-photo');
         Route::get('/change-password',[UserController::class,'changePassword'])->name('change-password'); 
         Route::post('update-password', [UserController::class,'update_password_profile'])->name('update-password-profile');
-        Route::get('/favorites',[UserController::class,'favorites'])->name('favorites'); 
         Route::get('/notifications',[UserController::class,'notifications'])->name('notifications'); 
 
         Route::post('/ulogout', [UserController::class,'ulogout'])->name('ulogout');  
-        Route::get('/my-ads',[UserController::class,'ads'])->name('ads'); 
-        Route::get('/track-ads',[UserController::class,'trackOrders'])->name('trackOrders'); 
-        Route::post('/orders/{order}',[UserController::class,'changeStatus'])->name('orders.changeStatus'); 
-        Route::get('/my-cars',[UserController::class,'usercars'])->name('usercars'); 
 
     });
 

@@ -5,6 +5,10 @@
     @if(\Route::currentRouteName() == 'products.edit')
     <input type="hidden" class="product_id" value="{{$product->id}}">
     @endif
+    <input type="checkbox" name="agree" value="1" checked style="display: none;">
+    <input type="hidden" name="status" @if(request('form_type') == 'site_property') value="shared_onsite" @else value="pending" @endif class="form-control" hidden>
+    <input type="hidden" name="form_type" value="{{ request('form_type') }}" class="form-control">
+
     <div class="col-lg-4">
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between">
@@ -37,7 +41,7 @@
                         </div>
                     </div>
                  
-                    <div class="col-md-12">                      
+                    {{--<div class="col-md-12">                      
                         <div class="form-group">
                             <label>@lang('main.products.status') </label>
                             <select name="status" class="form-select">
@@ -57,8 +61,8 @@
                                 <option value="0" @if($product->is_private == '0') selected @endif>@lang('main.no')</option>
                             </select>
                         </div>
-                    </div>
-
+                    </div> --}}
+                    @if(request('form_type') == 'site_property')
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="in_home"> @lang('main.products.in_home')</label>
@@ -67,7 +71,8 @@
                                 <option value="no" @if($product->in_home == 'no') selected @endif>@lang('main.no')</option>
                             </select>
                         </div>
-                    </div> 
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>  
@@ -98,39 +103,49 @@
                             : collect();
                     @endphp
 
-                        <div class="col-md-4">
-                            <label>@lang('main.locations.governorate')</label>
-                            <select name="" id="governorate_select" class="form-select">
-                                <option value="">@lang('main.choose')</option>
-                                @foreach(getGovernorates() as $gov)
-                                    <option value="{{ $gov->id }}" {{ (old('governorate_id', $product->area?->parent?->parent?->id ?? '') == $gov->id) ? 'selected' : '' }}>
-                                        {{ $gov->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                    <div class="col-md-4">
+                        <label>@lang('main.locations.governorate')</label>
+                        <select name="" id="governorate_select" class="form-select">
+                            <option value="">@lang('main.choose')</option>
+                            @foreach(getGovernorates() as $gov)
+                                <option value="{{ $gov->id }}" {{ (old('governorate_id', $product->area?->parent?->parent?->id ?? '') == $gov->id) ? 'selected' : '' }}>
+                                    {{ $gov->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label>@lang('main.locations.city')</label>
+                        <select name="" id="city_select" class="form-select">
+                            <option value="">@lang('main.choose')</option>
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}" {{ (old('city_id', $product->area?->parent?->id ?? '') == $city->id) ? 'selected' : '' }}>
+                                    {{ $city->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label>@lang('main.locations.district')</label>
+                        <select name="district_id" id="district_select" class="form-select">
+                            <option value="">@lang('main.choose')</option>
+                            @foreach($districts as $dist)
+                                <option value="{{ $dist->id }}" {{ ($selectedDistrict == $dist->id) ? 'selected' : '' }}>
+                                    {{ $dist->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @if(request('form_type') == 'site_property')
+                    <div class="col-md-12">                      
+                        <div class="form-group">
+                            <label>@lang('main.products.price')</label>
+                            <input type="text" name="price" value="{{ old('price', $product->price) }}" class="form-control @error('price') is-invalid @enderror">
                         </div>
-                        <div class="col-md-4">
-                            <label>@lang('main.locations.city')</label>
-                            <select name="" id="city_select" class="form-select">
-                                <option value="">@lang('main.choose')</option>
-                                @foreach($cities as $city)
-                                    <option value="{{ $city->id }}" {{ (old('city_id', $product->area?->parent?->id ?? '') == $city->id) ? 'selected' : '' }}>
-                                        {{ $city->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label>@lang('main.locations.district')</label>
-                            <select name="district_id" id="district_select" class="form-select">
-                                <option value="">@lang('main.choose')</option>
-                                @foreach($districts as $dist)
-                                    <option value="{{ $dist->id }}" {{ ($selectedDistrict == $dist->id) ? 'selected' : '' }}>
-                                        {{ $dist->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                    </div>
+                    @endif
                     <div class="col-md-12">                      
                         <div class="form-group">
                             <label>@lang('main.products.map_location')</label>
@@ -138,13 +153,69 @@
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
-                    
                 </div>                             
             </div>
         </div>                        
     </div>
     <div class="col-lg-8">
+        @if(request('form_type') != 'site_property' && \Route::currentRouteName() == 'products.edit')
         <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="card-title">بيانات صاحب الطلب</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-sm p-0 px-1 btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="card-body row g-3">
+                <div id="user-added-message">
+                    اسم المستخدم : {{$product->admin?->name}}, رقم الجوال : <a href="tel:{{$product->admin?->mobile}}">{{$product->admin?->mobile}}</a>
+                </div>
+            </div>
+        </div>
+        @endif
+        @if(request('form_type') != 'site_property' && \Route::currentRouteName() == 'products.create')
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="card-title">بيانات صاحب الطلب</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-sm p-0 px-1 btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="card-body row g-3">
+                <div id="user-added-message"></div>
+                <input type="hidden" name="added_by_user" id="main-id" value="">
+                @php $request_data = $product->request_data; @endphp
+                <div class="col-md-12 user_data">
+                    <label>هل تريد إضافة مستخدم جديد؟</label>
+                    <select id="userOption" class="form-control">
+                        <option value="exist">أدخل بيانات مستخدم</option>
+                        <option value="new">إضافة مستخدم جديد</option>
+                    </select>
+                </div>
+                <div id="existingUserFields" class="card-body row g-3 mt-3">
+                    <div class="col-md-12">                      
+                        <div class="form-group">
+                            <label>@lang('main.users.name')<span class="text-danger">*</span></label>
+                            <input type="text" name="name" value="{{ old('name', $request_data['name'] ?? null) }}" class="form-control @error('name') is-invalid @enderror">
+                        </div>
+                    </div>
+                    <div class="col-md-12">                      
+                        <div class="form-group">
+                            <label>@lang('main.users.mobile')</label>
+                            <input type="text" name="mobile" value="{{ old('mobile', $request_data['mobile'] ?? null) }}" class="form-control @error('mobile') is-invalid @enderror">
+                        </div>
+                    </div>
+                </div>
+                <div id="addUserButton" class="mt-3" style="display: none;">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        إضافة مستخدم جديد
+                    </button>
+                </div>
+               
+            </div>
+        </div>
+        @endif
+        <div class="card my-3">
             <div class="card-header d-flex justify-content-between">
                 <h3 class="card-title">@lang('main.products.product_informations')</h3>
                 <div class="card-tools">
@@ -167,6 +238,7 @@
                         </div>
                     </div>
                 </div>
+                @if(request('form_type') != 'site_property')
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="type">
@@ -182,6 +254,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <div class="col-md-4 auction-fields">                      
                     <div class="form-group">
                         <label>@lang('main.products.start_date')</label>
@@ -197,7 +270,13 @@
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
-
+                <div class="col-md-4 shared-fields">                      
+                    <div class="form-group">
+                        <label>@lang('main.products.amount_shared')</label>
+                        <input type="text" name="price_shared" value="{{ old('price', $product->price) }}" class="form-control @error('price') is-invalid @enderror" id="price">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
                 <div class="col-md-4 auction-fields">                      
                     <div class="form-group">
                         <label>@lang('main.products.amount')</label>
@@ -210,6 +289,11 @@
                     <div class="form-group">
                         <label>@lang('main.products.amount_investment')</label>
                         <input type="text" name="price_investment" value="{{ old('price', $product->price) }}" class="form-control @error('price') is-invalid @enderror" id="price">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>@lang('main.products.investment_min')</label>
+                        <input type="number" name="investment_min" value="{{ old('investment_min', $product->investment_min) }}" class="form-control @error('investment_min') is-invalid @enderror" id="investment_min">
                         <div class="help-block with-errors"></div>
                     </div>
                 </div>
@@ -338,32 +422,50 @@
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
+                    @if(request('form_type') != 'site_property')
                     <div class="col-md-6">                      
                         <div class="form-group">
                             <label>@lang('main.products.represented_by') </label>
                             <select name="represented_by" class="form-select">
-                                <option value="owner" {{ $product->represented_by == 'owner' ? 'selected' : '' }}>@lang('main.products.owner')</option>
-                                <option value="agent" {{ $product->represented_by == 'agent' ? 'selected' : '' }}>@lang('main.products.agent')</option>
-                                <option value="co-owner" {{ $product->represented_by == 'co-owner' ? 'selected' : '' }}>@lang('main.products.co-owner')</option>
-                                <option value="other" {{ $product->represented_by == 'other' ? 'selected' : '' }}>@lang('main.products.other')</option>
+                                <option value="owner" {{ $product->feature?->represented_by == 'owner' ? 'selected' : '' }}>@lang('main.products.owner')</option>
+                                <option value="agent" {{ $product->feature?->represented_by == 'agent' ? 'selected' : '' }}>@lang('main.products.agent')</option>
+                                <option value="co-owner" {{ $product->feature?->represented_by == 'co-owner' ? 'selected' : '' }}>@lang('main.products.co-owner')</option>
+                                <option value="other" {{ $product->feature?->represented_by == 'other' ? 'selected' : '' }}>@lang('main.products.other')</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div> 
-
+                    @endif
+                        <div class="form-group mb-4" id="sak_number_wrapper" style="display:none">
+                            <label for="">@lang('main.users.sak_number')</label>
+                            <input type="text" maxlength="10" name="sak_number" value="{{$product->feature?->sak_number}}" class="form-control @error('sak_number') is-invalid @enderror" id="sak_number" placeholder="@lang('main.users.sak_number')">
+                            <span class="text-danger error-msg sak_number"></span>
+                        </div>
+        
+                        <div class="form-group mb-4" id="agency_number_wrapper" style="display:none">
+                            <label for="">@lang('main.users.agency_number')</label>
+                            <input type="text" maxlength="10" name="agency_number" value="{{$product->feature?->agency_number}}" class="form-control @error('agency_number') is-invalid @enderror" id="agency_number" placeholder="@lang('main.users.agency_number')">
+                            <span class="text-danger error-msg agency_number"></span>
+                        </div>
+                        <div class="form-group mb-4" id="val_number_wrapper" style="display:none">
+                            <label for="">@lang('main.users.val_number')</label>
+                            <input type="text"  name="val_number" value="{{$product->feature?->val_number}}" class="form-control @error('val_number') is-invalid @enderror" id="val_number" placeholder="@lang('main.users.val_number')">
+                            <span class="text-danger error-msg val_number"></span>
+                        </div>
                     <div class="col-md-6">                      
                         <div class="form-group">
                             <label>@lang('main.products.product_type') </label>
                             <select name="product_type" class="form-select">
                                 <option value="residential" {{ $product->product_type == 'residential' ? 'selected' : '' }}>@lang('main.products.residential')</option>
                                 <option value="commercial" {{ $product->product_type == 'commercial' ? 'selected' : '' }}>@lang('main.products.commercial')</option>
+                                <option value="two" {{ $product->product_type == 'two' ? 'selected' : '' }}>@lang('main.products.two')</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
 
 
-                    <div class="col-md-6">                      
+                    {{--<div class="col-md-6">                      
                         <div class="form-group">
                             <label>@lang('main.products.owner_type') </label>
                             <select name="owner_type" class="form-select">
@@ -373,7 +475,7 @@
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
-                    </div> 
+                    </div> --}}
                     <div class="col-md-6">                      
                         <div class="form-group">
                             <label>@lang('main.products.remaining_lease_years')</label>
@@ -389,7 +491,8 @@
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
-                    <div class="col-md-4">  
+                    
+                    {{--<div class="col-md-4">  
                         <hr class="mt-0">                    
                         <div class="form-group">
                             <div class="d-flex align-items-center justify-content-between gap-2">
@@ -448,7 +551,7 @@
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
-                    </div>
+                    </div>-}}
 
                     <div class="col-md-12">                      
                         <div class="form-group">
@@ -456,11 +559,12 @@
                             <select name="penalty_type" class="form-select">
                                 <option value="cash" {{ $product->penalty_type == 'cash' ? 'selected' : '' }}>@lang('main.products.cash')</option>
                                 <option value="installment" {{ $product->penalty_type == 'installment' ? 'selected' : '' }}>@lang('main.products.installment')</option>
+                                <option value="cash_installment" {{ $product->penalty_type == 'cash_installment' ? 'selected' : '' }}>@lang('main.products.cash_installment')</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div> 
-                    <div class="col-md-4">  
+                    {{--<div class="col-md-4">  
                         <hr class="mt-0">                    
                         <div class="form-group">
                             <div class="d-flex align-items-center justify-content-between gap-2">
@@ -500,8 +604,51 @@
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
+                    </div>--}}
+                    <div class="col-12">
+                        <div class="row row-cols-1 row-cols-lg-3">
+                        @php
+                            if(old('features')) {
+                                $selectedFeatures = old('features');
+                            } elseif(isset($product) && $product->feature) {
+                                $selectedFeatures = $product->feature->features ?? [];
+                            } else {
+                                $selectedFeatures = [];
+                            }
+                        @endphp
+                        @foreach(getFeatures() as $feature)
+                            <div class="col">
+                                <label class="d-block">{{$feature->label_name}} </label>
+                                <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="features[{{ $feature->id }}]"
+                                    id="yes_{{ $feature->id }}"
+                                    value="1"
+                                    autocomplete="off"
+                                    {{ (isset($selectedFeatures[$feature->id]) && $selectedFeatures[$feature->id] == '1') ? 'checked' : '' }}
+                                >
+                                <label class="btn btn-sm btn-outline-success px-3" for="yes_{{ $feature->id }}">
+                                    @lang('main.yes')
+                                </label>
+                
+                                <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="features[{{ $feature->id }}]"
+                                    id="no_{{ $feature->id }}"
+                                    value="0"
+                                    autocomplete="off"
+                                    {{ (isset($selectedFeatures[$feature->id]) && $selectedFeatures[$feature->id] == '0') ? 'checked' : '' }}
+                                >
+                                <label class="btn btn-sm btn-outline-danger px-3" for="no_{{ $feature->id }}">
+                                    @lang('main.no')
+                                </label>
+                            </div>
+                        @endforeach
+
                     </div>
-                    
+                    </div>
                     <div class="col-md-12">                      
                         <div class="form-group">
                             <label>@lang('main.products.additional_info')</label>
@@ -591,12 +738,19 @@
             if ($('#product_type').val() === 'auction') {
                 $('.auction-fields').show();
                 $('.investment-fields').hide();
+                $('.shared-fields').hide();
             }else if($('#product_type').val() === 'investment') {
                 $('.investment-fields').show();
                 $('.auction-fields').hide();
+                $('.shared-fields').hide();
+            } else if($('#product_type').val() === 'shared') {
+                $('.auction-fields').hide();
+                $('.investment-fields').hide();
+                $('.shared-fields').show();
             } else {
                 $('.auction-fields').hide();
                 $('.investment-fields').hide();
+                $('.shared-fields').hide();
             }
         }
         toggleFields();
@@ -604,5 +758,104 @@
             toggleFields();
         });
     });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userOption = document.getElementById('userOption');
+        const existingFields = document.getElementById('existingUserFields');
+        const addUserBtn = document.getElementById('addUserButton');
+
+        function toggleFields() {
+            if (userOption.value === 'new') {
+                existingFields.style.display = 'none';
+                addUserBtn.style.display = 'block';
+            } else {
+                existingFields.style.display = 'block';
+                addUserBtn.style.display = 'none';
+            }
+        }
+
+        userOption.addEventListener('change', toggleFields);
+        toggleFields(); 
+    });
+    
+$(document).ready(function() {
+    $('#ajaxAddUserForm').on('submit', function(e) {
+        e.preventDefault();
+
+        let formData = $(this).serialize();
+        let $form = $(this);
+
+        $.ajax({
+            url: '{{ route("users.ajax.store") }}',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#addUserModal').modal('hide');
+                $('#ajaxAddUserForm')[0].reset();
+                $('#addUserErrors').addClass('d-none').empty();
+                alert("تم إضافة المستخدم بنجاح");
+                $('#main-id').val(response.id);
+
+                $('#main-name').val(response.name);
+                $('#main-mobile').val(response.mobile);
+                $('.user_data').hide();
+                $('#addUserButton').hide();
+                $('#user-added-message').html(`
+                    <div class="alert alert-success mt-2">
+                        تم إدخال بيانات: <strong>${response.name}</strong> ورقم الجوال: <strong>${response.mobile}</strong>
+                    </div>
+                `);
+            },
+            error: function(xhr) {
+                let errors = xhr.responseJSON.errors;
+                let errorHtml = '<ul>';
+                $.each(errors, function(key, value) {
+                    errorHtml += '<li>' + value[0] + '</li>';
+                });
+                errorHtml += '</ul>';
+                $('#addUserErrors').html(errorHtml).removeClass('d-none');
+            }
+        });
+    });
+
+
+});
+     document.addEventListener('DOMContentLoaded', function () {
+        const userTypeSelect = document.querySelector('[name="represented_by"]');
+        const agencyWrapper = document.getElementById('agency_number_wrapper');
+        const sakWrapper = document.getElementById('sak_number_wrapper');
+        const valWrapper = document.getElementById('val_number_wrapper');
+        const allWrappers = [agencyWrapper, sakWrapper, valWrapper];
+        function hideAllWrappers() {
+            allWrappers.forEach(wrapper => {
+                if (wrapper) wrapper.style.display = 'none';
+            });
+        }
+        function toggleAgencyField() {
+            hideAllWrappers();
+            switch (userTypeSelect.value) {
+                case 'agent':
+                    agencyWrapper && (agencyWrapper.style.display = 'block');
+                    break;
+                case 'owner':
+                    sakWrapper && (sakWrapper.style.display = 'block');
+                    break;
+                case 'co-owner':
+                case 'other':
+                    valWrapper && (valWrapper.style.display = 'block');
+                    break;
+            }
+        }
+        toggleAgencyField();
+        userTypeSelect.addEventListener('change', toggleAgencyField);
+        const niceSelect = document.querySelector('.nice-select');
+        if (niceSelect) {
+            niceSelect.addEventListener('click', function () {
+                setTimeout(toggleAgencyField, 100);
+            });
+        }
+    });
+
 </script>
 @endpush
